@@ -1,0 +1,65 @@
+<div class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable mb-3" (click)="alternarDesplegar()">
+    <span>
+        <img alt="" *ngIf="desplegado" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
+        <img alt="" *ngIf="!desplegado" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
+    </span>
+    <span class="fs-14px fw-semibold texto">
+        INFORMACION SOBRE POLIZAS VIGENTES RESPONSABILIDAD CIVIL CONTRACTUAL:
+    </span>
+</div>
+<div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !desplegado, 'd-block': desplegado}">
+    <div class="d-flex mx-3 mb-3">
+        <div class="col-6 encabezado">
+            <div class="row mx-0 mb-3">
+                <div class="col-6 justify-content-start">
+                    <span class="fs-14px">Número de póliza</span>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" type="number" placeholder="Número de póliza">
+                </div>
+            </div>
+            <div class="row mx-0 mb-3">
+                <div class="col-6 justify-content-center">
+                    <span class="fs-14px">Seleccione Entidad Aseguradora</span>
+                </div>
+                <div class="col-6 justify-content-start">
+                    <select class="form-select" title="Seleccione una opción">
+                        <option value="">Seleccione una opción</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 encabezado">
+            <div class="row mx-0 mb-3">
+                <div class="col-7 justify-content-start">
+                    <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
+                </div>
+                <div class="col-5">
+                    <input class="form-control" type="date" placeholder="Número de póliza">
+                </div>
+            </div>
+            <div class="row mx-0 mb-3">
+                <div class="col-7 justify-content-center">
+                    <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
+                </div>
+                <div class="col-5">
+                    <input class="form-control" type="date" placeholder="Número de póliza">
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-amparos-basicos></app-amparos-basicos>
+    <app-amparos-adicionales></app-amparos-adicionales>
+    <div class="d-flex mx-3 mb-3">
+        <samp>
+            ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector Transporte?
+        </samp>
+        <div class="clasificacion d-flex w-100 cursor-pointer mb-3" (click)="alternarDesplegar()">
+            <span class="fs-14px fw-semibold">
+                SI
+            </span>
+        </div>
+    </div>
+    
+    
+</div>
