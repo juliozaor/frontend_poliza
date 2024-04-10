@@ -5,7 +5,7 @@
             <img alt="" *ngIf="!desplegado" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
         </span>
         <span class="fs-14px fw-semibold texto">
-            AMPAROS BASICOS:
+            AMPAROS ADICIONALES:
         </span>
     </div>
 </div>
@@ -29,12 +29,12 @@
                     <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
                 </div>
             </div>
-            <div class="row mx-0 mb-3" *ngFor="let amparosBasicos of amparosBasicos">
+            <div class="row mx-0 mb-3" *ngFor="let amparosAdicionales of amparosAdicionales">
                 <div class="col-4 justify-content-start" >
-                    <span class="fs-14px">{{amparosBasicos.descripcion}}</span>
+                    <span class="fs-14px">{{amparosAdicionales.descripcion}}</span>
                 </div>
                 <div class="col-2 justify-content-start">
-                    <span class="fs-14px">{{amparosBasicos.nombre}}</span>
+                    <span class="fs-14px">{{amparosAdicionales.nombre}}</span>
                 </div>
                 <div class="col-2 justify-content-start">
                     <input class="form-control" type="number" placeholder="Valor Asegurado">

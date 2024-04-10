@@ -45,9 +45,11 @@ export class InicioSesionComponent implements OnInit {
           this.enrutador.navigateByUrl('/actualizar-contrasena')
         } else {
           if(respuesta.rol.modulos.length > 0){
-            if(!respuesta.rol.modulos[0].ruta && respuesta.rol.modulos[0].submodulos.length > 0){
+            if(!respuesta.rol.modulos[0]?.ruta && respuesta.rol.modulos[0]?.submodulos?.length > 0){
+              //console.log("Entro 1")
               this.enrutador.navigateByUrl(`/administrar${respuesta.rol.modulos[0].submodulos[0].ruta}`);
             }else{
+              //console.log("Entro 2")
               this.enrutador.navigateByUrl(`/administrar${respuesta.rol.modulos[0].ruta}`);
             }
           }

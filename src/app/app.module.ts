@@ -15,6 +15,10 @@ import { PolizasRceComponent } from './administrar-polizas/componentes/polizas-r
 import { AmparosBasicosComponent } from './administrar-polizas/componentes/polizas-rcc/amparos/amparos-basicos/amparos-basicos.component';
 import { FormsModule } from '@angular/forms';
 import { AmparosAdicionalesComponent } from './administrar-polizas/componentes/polizas-rcc/amparos/amparos-adicionales/amparos-adicionales.component';
+import { FondoResponsabilidadComponent } from './administrar-polizas/componentes/polizas-rcc/fondo-responsabilidad/fondo-responsabilidad.component';
+import { FondoResponsabilidadRceComponent } from './administrar-polizas/componentes/polizas-rce/fondo-responsabilidad-rce/fondo-responsabilidad-rce.component';
+import { AmparosAdicionalesRceComponent } from './administrar-polizas/componentes/polizas-rce/amparos/amparos-adicionales-rce/amparos-adicionales-rce.component';
+import { AmparosBasicosRceComponent } from './administrar-polizas/componentes/polizas-rce/amparos/amparos-basicos-rce/amparos-basicos-rce.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,10 @@ import { AmparosAdicionalesComponent } from './administrar-polizas/componentes/p
     PolizasRceComponent,
     AmparosBasicosComponent,
     AmparosAdicionalesComponent,
+    FondoResponsabilidadComponent,
+    FondoResponsabilidadRceComponent,
+    AmparosAdicionalesRceComponent,
+    AmparosBasicosRceComponent,
   ],
   imports: [
     BrowserModule,

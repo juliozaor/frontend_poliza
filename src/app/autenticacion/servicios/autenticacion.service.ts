@@ -16,6 +16,7 @@ export class AutenticacionService {
   public readonly llaveTokenLocalStorage = 'jwt'
   public readonly llaveUsuarioLocalStorage = 'Usuario'
   public readonly llaveRolesLocalStorage = 'rol'
+  public readonly poliza = 'poliza'
 
 
   constructor(private clientHttp:HttpClient) {
@@ -34,6 +35,7 @@ export class AutenticacionService {
     localStorage.removeItem(this.llaveUsuarioLocalStorage)
     localStorage.removeItem(this.llaveTokenLocalStorage)
     localStorage.removeItem(this.llaveRolesLocalStorage)
+    localStorage.removeItem(this.poliza)
   }
 
   public guardarInformacionInicioSesion(jwt:string, rol:object, Usuario: object):void{
