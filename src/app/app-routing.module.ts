@@ -10,7 +10,7 @@ import { PaginaSoportesComponent } from './soportes/paginas/pagina-soportes/pagi
 import { PaginaResponderSoporteComponent } from './soportes/paginas/pagina-responder-soporte/pagina-responder-soporte.component';
 import { SoporteAccesoComponent } from './autenticacion/componentes/soporte-acceso/soporte-acceso.component';
 import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
-import { CrearUsuariosComponent } from './crear-usuarios/crear-usuarios.component';
+import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
 
 
 
@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'crear-usuarios',
-        component: CrearUsuariosComponent
+        component: PaginaCrearUsuarioComponent
       },
       {
         path: 'administrar-poliza',

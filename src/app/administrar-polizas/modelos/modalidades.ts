@@ -1,5 +1,5 @@
-interface modalidades{
-    id: number
-    nombre: string
-    estado: true
+export interface modalidades{
+    id: number,
+    nombre: string,
+    estado: boolean,
 }

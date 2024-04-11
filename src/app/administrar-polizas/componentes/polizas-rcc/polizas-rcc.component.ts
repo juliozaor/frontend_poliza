@@ -32,7 +32,7 @@ export class PolizasRccComponent{
   obtenerAseguradora(){
     this.servicioAdministrarPoliza.obtenerAseguradora().subscribe({
       next: (aseguradora: any) =>{
-        this.aseguradoras = aseguradora
+        this.aseguradoras = aseguradora['aseguradoras']
       }
     })
   }
