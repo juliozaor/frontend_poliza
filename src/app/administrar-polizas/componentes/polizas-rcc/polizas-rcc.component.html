@@ -27,7 +27,9 @@
                 <div class="col-6 justify-content-start">
                     <select class="form-select" title="Seleccione una opción">
                         <option value="">Seleccione una opción</option>
-                        <option *ngFor="let aseguradoras of aseguradoras" [value]="aseguradoras.id">{{aseguradoras.nombre}}</option>
+                        <option *ngFor="let aseguradoras of aseguradoras" [value]="aseguradoras.id">
+                            {{aseguradoras.nit}} - {{aseguradoras.nombre}}
+                        </option>
                     </select>
                 </div>
             </div>

@@ -1,12 +1,13 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ServicioAdministrarPolizas } from './servicios/administrar-polizas.service';
+import { modalidades } from './modelos/modalidades';
 
 @Component({
   selector: 'app-administrar-polizas',
   templateUrl: './administrar-polizas.component.html',
   styleUrls: ['./administrar-polizas.component.css']
 })
-export class AdministrarPolizasComponent {
+export class AdministrarPolizasComponent{
   titulo: string = "SISI/POLIZA"
   polizas: any
   modalidades: any
@@ -29,7 +30,7 @@ export class AdministrarPolizasComponent {
   obtenerModalidades(){
     this.servicioAdministrarPoliza.obtenerModalidades().subscribe({
       next: (modalidad: any) =>{
-        this.modalidades = modalidad
+        this.modalidades = modalidad['modalidades']
       }
     })
   }

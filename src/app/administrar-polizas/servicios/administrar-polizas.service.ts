@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Autenticable } from "src/app/administrador/servicios/compartido/Autenticable";
 import { environment } from 'src/environments/environment';
 import { Observable } from "rxjs";
+import { modalidades } from "../modelos/modalidades";
 
 @Injectable({
     providedIn: 'root'

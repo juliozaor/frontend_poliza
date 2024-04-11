@@ -12,8 +12,8 @@
                 <div>
                     <select title="modalidad" id="modalidad" class="form-select text-center">
                         <option value="">Selecione una modalidad</option>
-                        <option *ngFor="let modalidades of modalidades" [value]="modalidades.id">
-                            {{modalidades.nombre}}
+                        <option *ngFor="let modalidad of modalidades" [value]="modalidad.id!">
+                            {{modalidad.nombre!}}
                         </option>
                     </select>
                 </div>
