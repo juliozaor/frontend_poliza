@@ -10,12 +10,14 @@ import { PipesModule } from '../pipes/pipes.module';
 import { FondoResponsabilidadComponent } from './componentes/polizas/fondo-responsabilidad/fondo-responsabilidad.component';
 import { AutenticacionModule } from '../autenticacion/autenticacion.module';
 import { PolizasComponent } from './componentes/polizas/polizas.component';
+import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.component';
 
 @NgModule({
     declarations: [
         AdministrarPolizasComponent,
         FondoResponsabilidadComponent,
         PolizasComponent,
+        VehiculosComponent,
     ],
     imports: [
         CommonModule,
