@@ -7,7 +7,6 @@ import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Util
 import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
 import { Rol } from '../../modelos/Rol';
 import { DateTime } from 'luxon';
-import { ServicioDepartamentos } from '../../servicios/departamentos.service';
 import { Departamento } from '../../modelos/Departamento';
 import { Ciudad } from '../../modelos/Ciudad';
 
@@ -29,8 +28,7 @@ export class ModalActualizarUsuarioComponent implements OnInit{
 
   constructor(
     private servicioModal: NgbModal, 
-    private servicio: ServicioUsuarios, 
-    private servicioDepartamento: ServicioDepartamentos
+    private servicio: ServicioUsuarios,
   ){
     this.usuarioActualizado = new EventEmitter<void>();
     this.formulario = new FormGroup({
@@ -40,24 +38,12 @@ export class ModalActualizarUsuarioComponent implements OnInit{
       fechaNacimiento: new FormControl(undefined, [ Validators.required ]),
       correo: new FormControl(undefined, [ Validators.required ]),
       telefono: new FormControl(undefined),
-      rol: new FormControl("", [ Validators.required ]),
-      departamento: new FormControl("", [Validators.required]),
-      municipio: new FormControl("", [Validators.required])
+      rol: new FormControl("", [ Validators.required ])
     })
   }
 
   ngOnInit(): void {
     this.obtenerRoles()
-    this.obtenerDepartamentos()
-    this.formulario.controls['departamento'].valueChanges.subscribe({
-      next: (idDepartamento)=>{
-        if(idDepartamento && idDepartamento !== ""){
-          this.obtenerMunicipios(idDepartamento)
-        }else{
-          this.municipios = []
-        }
-      }
-    })
   }
 
   abrir(usuario: Usuario){
@@ -86,9 +72,7 @@ export class ModalActualizarUsuarioComponent implements OnInit{
       fechaNacimiento: controls['fechaNacimiento'].value,
       identificacion: controls['identificacion'].value,
       idRol: controls['rol'].value,
-      telefono: controls['telefono'].value,
-      departamentoId: Number(controls['departamento'].value),
-      municipioId: Number(controls['municipio'].value)
+      telefono: controls['telefono'].value
     }).subscribe({
       next: ()=>{
         this.usuarioActualizado.emit();
@@ -111,8 +95,6 @@ export class ModalActualizarUsuarioComponent implements OnInit{
     controls['identificacion'].setValue(usuario.identificacion)
     controls['rol'].setValue(usuario.idRol)
     controls['telefono'].setValue(usuario.telefono)
-    controls['departamento'].setValue(usuario.departamentoId)
-    controls['municipio'].setValue(usuario.municipioId)
   }
 
   limpiarFormulario(){
@@ -124,22 +106,6 @@ export class ModalActualizarUsuarioComponent implements OnInit{
     this.servicio.listarRoles().subscribe({
       next: (respuesta) => {
         this.roles = respuesta.rols
-      }
-    })
-  }
-
-  obtenerDepartamentos(){
-    this.servicioDepartamento.obtenerDepartamentos().subscribe({
-      next: (departamentos)=>{
-        this.departamentos = departamentos
-      }
-    })
-  }
-
-  obtenerMunicipios(departamentoId: number){
-    this.servicioDepartamento.obtenerCiudades(departamentoId).subscribe({
-      next: (municipios)=>{
-        this.municipios = municipios 
       }
     })
   }

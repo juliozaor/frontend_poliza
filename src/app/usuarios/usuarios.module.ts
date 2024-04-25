@@ -15,7 +15,7 @@ import { ModalActualizarUsuarioComponent } from './componentes/modal-actualizar-
 @NgModule({
   declarations: [
     PaginaCrearUsuarioComponent,
-    ModalActualizarUsuarioComponent
+    ModalActualizarUsuarioComponent,
   ],
   imports: [
     CommonModule,

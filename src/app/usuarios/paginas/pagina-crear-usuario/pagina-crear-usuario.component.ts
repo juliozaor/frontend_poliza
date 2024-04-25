@@ -26,10 +26,11 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   termino: string = ""
   rol: string = ""
   roles: Rol[] = []
-  cargo: string = ""
   formulario: FormGroup
+
+  /* cargo: string = ""
   departamentos: Departamento[] = []
-  municipios: Ciudad[] = []
+  municipios: Ciudad[] = [] */
 
   constructor(
     private servicio: ServicioUsuarios
@@ -81,9 +82,8 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   }
 
   crear(){
-    
     if(this.formulario.invalid){
-      console.log("aqui llega")
+      //console.log("aqui llega")
       marcarFormularioComoSucio(this.formulario)
       return;
     }
