@@ -7,6 +7,7 @@ import * as saveAs from "file-saver";
 import * as XLSX from 'xlsx';
 import { ServicioArchivos } from "src/app/archivos/servicios/archivos.service";
 import { ArchivoGuardado } from "src/app/archivos/modelos/ArchivoGuardado";
+import { FiltrosVehiculos } from "../modelos/FiltrosVehiculos";
 
 @Injectable({
     providedIn: 'root'
@@ -83,15 +84,18 @@ export class ServicioAdministrarPolizas extends Autenticable{
       )
     }
 
-    cargarArchivoPDF(archivo: File){
-      const endpoint = `/api/v1/archivos`
-      const formData = new FormData()
-      formData.append('archivo', archivo)
-      return this.http.post<ArchivoGuardado>(
-        `${this.host}${endpoint}`, 
-        formData, 
-        { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
-      )
+    vehiculos(pagina: number, limite: number, filtros?:FiltrosVehiculos, vigiladoId?:string) {
+      let endpoint = `/api/v1/poliza/vehiculos?pagina=${pagina}&limite=${limite}`;
+      
+      if(filtros){
+       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;      
+      }
+      if (vigiladoId) {
+        endpoint+=`&vigiladoId=${vigiladoId}`;
+      }
+      
+      return this.http.get(`${this.host}${endpoint}`,{ headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } })
+ 
     }
     
 }
