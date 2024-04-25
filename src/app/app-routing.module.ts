@@ -11,6 +11,7 @@ import { PaginaResponderSoporteComponent } from './soportes/paginas/pagina-respo
 import { SoporteAccesoComponent } from './autenticacion/componentes/soporte-acceso/soporte-acceso.component';
 import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
+import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
 
 
 
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'soportes',
         component: PaginaSoportesComponent
+      },
+      {
+        path: 'vehiculos',
+        component: VehiculosComponent
       }
     ]
   },
