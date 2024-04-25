@@ -5,6 +5,9 @@ import { Form, FormControl, FormGroup } from '@angular/forms';
 import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-polizas',
@@ -17,6 +20,7 @@ export class PolizasComponent implements OnInit{
   archivoExcel:any
   base64String!: string
   archivoCargado: string = ""
+  archivoPDF?: ArchivoGuardado
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
@@ -55,6 +59,9 @@ export class PolizasComponent implements OnInit{
       valorAseguradoAA1: new FormControl(undefined),
       limitesAA1: new FormControl(undefined),
       deducibleAA1: new FormControl(undefined),
+      //----- Cargue de archivos -----//
+      cargarExcel: new FormControl(undefined),
+      cargarPDF: new FormControl(undefined),
     })
 
     this.formExtracontractual = new FormGroup({
@@ -116,52 +123,70 @@ export class PolizasComponent implements OnInit{
   }
 
   cargarArchivoXLSX(event: any, tipoPoliza: number){
-    const archivoSeleccionado = event.target.files[0];
-    if (archivoSeleccionado) {
-      if(tipoPoliza == 1){
-        const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
-        if(numeroPliza){
-          console.log(numeroPliza)
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
-            next: (respuesta) =>{
-              this.archivoCargado = respuesta.mensaje
-              console.log(this.archivoCargado)
-              this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
-            },
-            error: (error: HttpErrorResponse) =>{
-              this.archivoCargado = error.error.mensaje
-              console.log('Error: ',error.error.errores[0].error)
-            }
-          })
-        }else{
-          console.log("No has agregado un número de poliza")
-        }
-      }else 
-      if(tipoPoliza == 2){
-        const numeroPliza = this.formExtracontractual.controls['numeroPolizaE'].value
-        if(numeroPliza){
-          console.log(numeroPliza)
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
-            next: (respuesta) =>{
-              this.archivoCargado = respuesta.mensaje
-              console.log(this.archivoCargado)
-              //this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
-            },
-            error: (error: HttpErrorResponse) =>{
-              this.archivoCargado = error.error.mensaje
-              console.log('Error: ',error.error.errores[0].error)
-            }
-          })
-        }else{
-          console.log("No has agregado un número de poliza")
-        }
+    if(tipoPoliza == 1){
+      const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
+      if(numeroPliza){
+        const archivoSeleccionado = event.target.files[0];
+        console.log(archivoSeleccionado, numeroPliza)
+        this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
+          next: (respuesta) =>{
+            this.archivoCargado = respuesta.mensaje
+            console.log(this.archivoCargado)
+            this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
+          },
+          error: (error: HttpErrorResponse) =>{
+            this.archivoCargado = error.error.mensaje
+            console.log('Error: ',this.archivoCargado)
+          }
+        })
+      }else{
+        console.log("No has agregado un número de poliza")
+        Swal.fire({
+          text: "No has agregado un número de poliza",
+          icon: "warning",
+        })
+        this.formContractual.controls['cargarExcel'].setValue('')
       }
-      console.log('Se ha cargado un archivo:', archivoSeleccionado.name);
+    }
+    else if(tipoPoliza == 2){
+      const numeroPliza = this.formExtracontractual.controls['numeroPolizaE'].value
+      if(numeroPliza){
+        const archivoSeleccionado = event.target.files[0];
+        this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
+          next: (respuesta) =>{
+            this.archivoCargado = respuesta.mensaje
+            console.log(this.archivoCargado)
+            this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
+          },
+          error: (error: HttpErrorResponse) =>{
+            this.archivoCargado = error.error.mensaje
+            console.log('Error: ',error.error.errores[0].error)
+          }
+        })
+      }else{
+        console.log("No has agregado un número de poliza")
+        Swal.fire({
+          text: "No has agregado un número de poliza",
+          icon: "warning",
+        })
+        this.formExtracontractual.controls['cargarExcel'].setValue('')
+      }
     }
   }
 
-  cargarPDf(){
-
+  cargarPDf(event: any){
+    const archivoSeleccionado = event.target.files[0];
+    if (archivoSeleccionado) {
+      this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
+        next: (respuesta) =>{
+          this.archivoPDF = respuesta
+          console.log(this.archivoPDF)
+        },
+        error: (error: HttpErrorResponse) =>{
+          console.log('Error: ',error.error.mensaje)
+        }
+      })
+    }
   }
 
   alternarDesplegarRCC(){
