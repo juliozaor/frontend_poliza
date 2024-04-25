@@ -71,12 +71,23 @@ export class ServicioAdministrarPolizas extends Autenticable{
       return new Blob([workbookArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     }
 
-    cargarArchivoXLSX(archivo:File, numeroPoliza: string){
+    cargarArchivoXLSX(archivo: File, numeroPoliza: string){
       const endpoint = `/api/v1/vehiculos/importar`
       const formData = new FormData()
       formData.append('archivo', archivo)
       formData.append('poliza', numeroPoliza)
       return this.http.post<any>(
+        `${this.host}${endpoint}`, 
+        formData, 
+        { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+      )
+    }
+
+    cargarArchivoPDF(archivo: File){
+      const endpoint = `/api/v1/archivos`
+      const formData = new FormData()
+      formData.append('archivo', archivo)
+      return this.http.post<ArchivoGuardado>(
         `${this.host}${endpoint}`, 
         formData, 
         { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
