@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { AlertasModule } from './alertas/alertas.module';
 import { AdministrarPolizasModule } from './administrar-polizas/administrar-polizas.module';
+import { AseguradorasModule } from './aseguradoras/aseguradoras.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AdministrarPolizasModule } from './administrar-polizas/administrar-poli
     UsuariosModule,
     AdministrarPolizasModule,
     AlertasModule,
+    AseguradorasModule
   ],
   exports:[
   ],

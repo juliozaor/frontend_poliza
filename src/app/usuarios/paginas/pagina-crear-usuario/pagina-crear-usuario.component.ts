@@ -51,7 +51,7 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.paginador.inicializar(1, 30)
+    this.paginador.inicializar(1, 5)
     this.obtenerRoles()
     /* this.obtenerDepartamentos()
     this.formulario.controls['departamento'].valueChanges.subscribe({

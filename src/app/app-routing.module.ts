@@ -12,6 +12,7 @@ import { SoporteAccesoComponent } from './autenticacion/componentes/soporte-acce
 import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
 import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
+import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
 
 
 
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path: 'vehiculos',
         component: VehiculosComponent
+      },
+      {
+        path: 'aseguradoras',
+        component: AseguradoraComponent
       }
     ]
   },
