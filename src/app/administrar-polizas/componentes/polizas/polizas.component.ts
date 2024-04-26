@@ -6,8 +6,9 @@ import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.componen
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
-
+import { GuardarPoliza } from '../../modelos/guardarPoliza';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-polizas',
@@ -17,7 +18,7 @@ import Swal from 'sweetalert2';
 export class PolizasComponent implements OnInit{
   @ViewChild('popup') popup!: PopupComponent
 
-  archivoExcel:any
+  guardarPoliza?: GuardarPoliza
   base64String!: string
   archivoCargado: string = ""
   archivoPDF?: ArchivoGuardado
@@ -26,7 +27,8 @@ export class PolizasComponent implements OnInit{
   desplegarRCE: boolean = true
   desplegarAmparosB: boolean = true
   desplegarAmparosA: boolean = true
-  fondoResponsabilidad: boolean = false
+  fondoResponsabilidadC: boolean = false
+  fondoResponsabilidadE: boolean = false
 
   aseguradoras: Aseguradoras[] = []
 
@@ -62,6 +64,16 @@ export class PolizasComponent implements OnInit{
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined),
       cargarPDF: new FormControl(undefined),
+      //----- Responsabilidad -----//
+      fechaConstitucion: new FormControl(undefined),
+      numeroResolucion: new FormControl(undefined),
+      fechaResolucion: new FormControl(undefined),
+      valorReserva: new FormControl(undefined),
+      fechaCorteReserva: new FormControl(undefined),
+      infoComplementaria: new FormControl(undefined),
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined)
     })
 
     this.formExtracontractual = new FormGroup({
@@ -80,6 +92,16 @@ export class PolizasComponent implements OnInit{
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined),
       cargarPDF: new FormControl(undefined),
+      //----- Responsabilidad -----//
+      fechaConstitucion: new FormControl(undefined),
+      numeroResolucion: new FormControl(undefined),
+      fechaResolucion: new FormControl(undefined),
+      valorReserva: new FormControl(undefined),
+      fechaCorteReserva: new FormControl(undefined),
+      infoComplementaria: new FormControl(undefined),
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined)
     })
   }
 
@@ -112,12 +134,87 @@ export class PolizasComponent implements OnInit{
     }
     const controlsC = this.formContractual.controls
     const controlsE = this.formExtracontractual.controls
+
+    this.servicioAdministrarPoliza.guardarPoliza({
+      polizaContractual: {
+        numero: controlsC['numeroPolizaC'].value,
+        aseguradoraId: controlsC['aseguradorasC'].value,
+        inicioVigencia: controlsC['vigenciaPolizaInicioC'].value,
+        finVigencia: controlsC['vigenciaPolizaFinalC'].value,
+        amparos:[
+          {
+            coberturaId: controlsC[''].value,
+            valorAsegurado: controlsC['valorAseguradoAB1'].value,
+            limite: controlsC['limitesAB1'].value,
+            deducible: controlsC['deducibleAB1'].value,
+          },
+          {
+            coberturaId: controlsC[''].value,
+            valorAsegurado: controlsC['valorAseguradoAA1'].value,
+            limite: controlsC['limitesAA1'].value,
+            deducible: controlsC['deducibleAA1'].value,
+          }
+        ],
+        responsabilidad:{
+          fechaConstitucion: controlsC['fechaConstitucion'].value,
+          resolucion: controlsC['numeroResolucion'].value,
+          fechaResolucion: controlsC['fechaResolucion'].value,
+          valorReserva: controlsC[''].value,
+          fechaReserva: controlsC[''].value,
+          informacion: controlsC[''].value,
+          operacion: controlsC[''].value,
+          valorCumplimientoUno: controlsC[''].value,
+          valorCumplimientoDos: controlsC[''].value,
+        },
+        caratula:{
+          nombre: this.archivoPDF?.nombreAlmacenado,
+          nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
+          ruta: this.archivoPDF?.ruta
+        }
+      },
+      polizaExtracontractual:{
+        numero: controlsE['numeroPolizaE'].value,
+        aseguradoraId: controlsE['aseguradorasE'].value,
+        inicioVigencia: controlsE['vigenciaPolizaInicioE'].value,
+        finVigencia: controlsE['vigenciaPolizaFinalE'].value,
+        amparos:[
+          {
+            coberturaId: controlsE[''].value,
+            valorAsegurado: controlsE['valorAseguradoAB2'].value,
+            limite: controlsE['limitesAB2'].value,
+            deducible: controlsE['deducibleAB2'].value,
+          },
+          {
+            coberturaId: controlsE[''].value,
+            valorAsegurado: controlsE['valorAseguradoAA2'].value,
+            limite: controlsE['limitesAA2'].value,
+            deducible: controlsE['deducibleAA2'].value,
+          }
+        ],
+        responsabilidad:{
+          fechaConstitucion: controlsE['fechaConstitucion'].value,
+          resolucion: controlsE['numeroResolucion'].value,
+          fechaResolucion: controlsE['fechaResolucion'].value,
+          valorReserva: controlsE[''].value,
+          fechaReserva: controlsE[''].value,
+          informacion: controlsE[''].value,
+          operacion: controlsE[''].value,
+          valorCumplimientoUno: controlsE[''].value,
+          valorCumplimientoDos: controlsE[''].value,
+        },
+        caratula:{
+          nombre: this.archivoPDF?.nombreAlmacenado,
+          nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
+          ruta: this.archivoPDF?.ruta
+        }
+      }
+    })
   }
 
   descargarArchivoXLSX(): any{
     this.servicioAdministrarPoliza.descargarCadenaBase64().subscribe({
       next: (respuesta) => { // Cadena base64 del archivo, que obtienes de tu API
-        this.servicioAdministrarPoliza.descargarArchivoXLSX(respuesta);
+        this.servicioAdministrarPoliza.descargarArchivoXLSX(respuesta, 'vehiculos.xlsx');
       }
     });
   }
@@ -127,20 +224,37 @@ export class PolizasComponent implements OnInit{
       const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
       if(numeroPliza){
         const archivoSeleccionado = event.target.files[0];
-        console.log(archivoSeleccionado, numeroPliza)
         this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
           next: (respuesta) =>{
             this.archivoCargado = respuesta.mensaje
-            console.log(this.archivoCargado)
-            this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
+            this.popup.abrirPopupExitoso(this.archivoCargado)
           },
           error: (error: HttpErrorResponse) =>{
             this.archivoCargado = error.error.mensaje
-            console.log('Error: ',this.archivoCargado)
+            if(error.status == 415){
+              Swal.fire({
+                text:error.error.mensaje,
+                icon:"error"
+              })
+              this.formContractual.controls['cargarExcel'].setValue('')
+            }else if(error.status == 422){
+              Swal.fire({
+                text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                icon:"error",
+                showCancelButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: "Descargar",
+                cancelButtonText:"Cancelar"
+              }).then((result) =>{
+                if(result.isConfirmed){
+                  this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                }
+              })
+              this.formContractual.controls['cargarExcel'].setValue('')
+            }            
           }
         })
       }else{
-        console.log("No has agregado un número de poliza")
         Swal.fire({
           text: "No has agregado un número de poliza",
           icon: "warning",
@@ -155,16 +269,34 @@ export class PolizasComponent implements OnInit{
         this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado,numeroPliza).subscribe({
           next: (respuesta) =>{
             this.archivoCargado = respuesta.mensaje
-            console.log(this.archivoCargado)
-            this.popup.abrirPopupExitoso('Excelente',this.archivoCargado)
+            this.popup.abrirPopupExitoso(this.archivoCargado)
           },
           error: (error: HttpErrorResponse) =>{
             this.archivoCargado = error.error.mensaje
-            console.log('Error: ',error.error.errores[0].error)
+            if(error.status == 415){
+              Swal.fire({
+                text:error.error.mensaje,
+                icon:"error"
+              })
+              this.formContractual.controls['cargarExcel'].setValue('')
+            }else if(error.status == 422){
+              Swal.fire({
+                text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                icon:"error",
+                showCancelButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: "Descargar",
+                cancelButtonText:"Cancelar"
+              }).then((result) =>{
+                if(result.isConfirmed){
+                  this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                }
+              })
+              this.formContractual.controls['cargarExcel'].setValue('')
+            }
           }
         })
       }else{
-        console.log("No has agregado un número de poliza")
         Swal.fire({
           text: "No has agregado un número de poliza",
           icon: "warning",
@@ -174,16 +306,29 @@ export class PolizasComponent implements OnInit{
     }
   }
 
-  cargarPDf(event: any){
+  cargarArchivoPDf(event: any, tipoPoliza: number){
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
       this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
         next: (respuesta) =>{
           this.archivoPDF = respuesta
-          console.log(this.archivoPDF)
+          Swal.fire({
+            text: "Has cargado el archivo '"+this.archivoPDF.nombreOriginalArchivo+"' correctamente",
+            icon: "success",
+          })
         },
         error: (error: HttpErrorResponse) =>{
           console.log('Error: ',error.error.mensaje)
+          Swal.fire({
+            text: "¡Lo sentimos! No hemos podido cargar el archivo",
+            icon: "warning",
+          })
+          if(tipoPoliza == 1){
+            this.formContractual.controls['cargarPDF'].setValue('')
+          }else if(tipoPoliza == 2){
+            this.formExtracontractual.controls['cargarPDF'].setValue('')
+          }
+          
         }
       })
     }
@@ -202,8 +347,12 @@ export class PolizasComponent implements OnInit{
     this.desplegarAmparosA = !this.desplegarAmparosA
   }
 
-  DesplegarFondoResponsabilidad(estado: boolean){
-    this.fondoResponsabilidad = estado
+  DesplegarFondoResponsabilidad(estado: boolean, tipoPoliza: number){
+    if(tipoPoliza == 1){
+      this.fondoResponsabilidadC = estado
+    }else if(tipoPoliza == 2){
+      this.fondoResponsabilidadE = estado
+    }
   }
 
   

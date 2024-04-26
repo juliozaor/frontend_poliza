@@ -1,5 +1,4 @@
 export interface GuardarPoliza{
-    modalidadId: number
     polizaContractual:{
         numero: number
         aseguradoraId: number
@@ -7,6 +6,7 @@ export interface GuardarPoliza{
         finVigencia: Date
         amparos:Amparos[]
         responsabilidad: Responsabilidad
+        caratula: Caratula
     }
     polizaExtracontractual:{
         numero: number
@@ -15,6 +15,7 @@ export interface GuardarPoliza{
         finVigencia: Date
         amparos:Amparos[]
         responsabilidad: Responsabilidad
+        caratula: Caratula
     }
 }
 
@@ -35,4 +36,10 @@ interface Responsabilidad{
     operacion: number
     valorCumplimientoUno: number
     valorCumplimientoDos: number
+}
+
+interface Caratula{
+    nombre?: string
+    nombreOriginal?: string
+    ruta?: string
 }
