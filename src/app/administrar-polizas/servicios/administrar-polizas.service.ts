@@ -52,7 +52,13 @@ export class ServicioAdministrarPolizas extends Autenticable{
     }
 
     guardarPoliza(poliza: GuardarPoliza){
-      
+      console.log(poliza)
+      const endpoint = `/api/v1/poliza`
+      return this.http.post<any>(
+        `${this.host}${endpoint}`,
+        poliza,
+        { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } }
+      )
     }
 
     descargarCadenaBase64():Observable<string>{

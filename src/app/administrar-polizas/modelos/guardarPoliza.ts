@@ -1,18 +1,18 @@
 export interface GuardarPoliza{
     polizaContractual:{
-        numero: number
-        aseguradoraId: number
-        inicioVigencia: Date
-        finVigencia: Date
+        numero: string
+        aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
         amparos:Amparos[]
         responsabilidad: Responsabilidad
         caratula: Caratula
     }
     polizaExtracontractual:{
-        numero: number
-        aseguradoraId: number
-        inicioVigencia: Date
-        finVigencia: Date
+        numero: string
+        aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
         amparos:Amparos[]
         responsabilidad: Responsabilidad
         caratula: Caratula
@@ -20,22 +20,22 @@ export interface GuardarPoliza{
 }
 
 interface Amparos{
-    coberturaId: number
-    valorAsegurado: number
-    limite: number
-    deducible: number
+    coberturaId: string
+    valorAsegurado: string
+    limite: string
+    deducible: string
 }
 
 interface Responsabilidad{
-    fechaConstitucion: Date
-    resolucion: number
-    fechaResolucion: Date
-    valorReserva: number
-    fechaReserva: Date
+    fechaConstitucion: string
+    resolucion: string
+    fechaResolucion: string
+    valorReserva: string
+    fechaReserva: string
     informacion: string
-    operacion: number
-    valorCumplimientoUno: number
-    valorCumplimientoDos: number
+    operacion: string
+    valorCumplimientoUno: string
+    valorCumplimientoDos: string
 }
 
 interface Caratula{

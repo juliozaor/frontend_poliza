@@ -16,11 +16,16 @@
             <div class="col-6 encabezado">
                 <div class="row mx-0 mb-3">
                     <div class="col-6 justify-content-start">
-                        <span class="fs-14px">Número de póliza</span>
+                        <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
                     </div>
                     <div class="col-6">
                         <input formControlName="numeroPolizaC"
                         class="form-control" type="number" placeholder="Número de póliza">
+                        <app-validacion
+                            [validacion]="'required'"
+                            [texto]="'El número de la poliza es requerido.'"
+                            [control]="this.formContractual.controls['numeroPolizaC']"
+                            />
                     </div>
                 </div>
                 <div class="row mx-0 mb-3">
@@ -35,6 +40,11 @@
                                 {{aseguradora.nit}} - {{aseguradora.nombre}}
                             </option>
                         </select>
+                        <app-validacion
+                            [validacion]="'required'"
+                            [texto]="'La aseguradora es requerida.'"
+                            [control]="this.formContractual.controls['aseguradorasC']"
+                            /> 
                     </div>
                 </div>
             </div>
@@ -46,6 +56,11 @@
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaInicioC"
                         class="form-control" type="date" placeholder="Fecha inicial">
+                        <app-validacion
+                            [validacion]="'required'"
+                            [texto]="'La fecha inicial de la vigencia es requerida.'"
+                            [control]="this.formContractual.controls['vigenciaPolizaInicioC']"
+                            /> 
                     </div>
                 </div>
                 <div class="row mx-0 mb-3">
@@ -55,6 +70,11 @@
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaFinalC"
                         class="form-control" type="date" placeholder="Fecha final">
+                        <app-validacion
+                            [validacion]="'required'"
+                            [texto]="'La fecha final de la vigencia es requerida.'"
+                            [control]="this.formContractual.controls['vigenciaPolizaFinalC']"
+                            /> 
                     </div>
                 </div>
             </div>
@@ -97,7 +117,7 @@
                                 <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <ul class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span>
                             </ul>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB1"
@@ -154,7 +174,7 @@
                                 <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <div class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span>
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA1"
@@ -232,7 +252,7 @@
             <div class="col-6 encabezado">
                 <div class="row mx-0 mb-3">
                     <div class="col-6 justify-content-start">
-                        <span class="fs-14px">Número de póliza</span>
+                        <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
                     </div>
                     <div class="col-6">
                         <input formControlName="numeroPolizaE"
@@ -240,7 +260,7 @@
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de la poliza es requerido.'"
-                            [control]="this.formContractual.controls['numeroPolizaE']"
+                            [control]="this.formExtracontractual.controls['numeroPolizaE']"
                             /> 
                     </div>
                 </div>
@@ -258,7 +278,7 @@
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'La aseguradora es requerida.'"
-                            [control]="this.formContractual.controls['aseguradoras']"
+                            [control]="this.formExtracontractual.controls['aseguradorasE']"
                             /> 
                     </div>
                 </div>
@@ -274,7 +294,7 @@
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'La fecha inicial de la vigencia es requerida.'"
-                            [control]="this.formContractual.controls['vigenciaPolizaInicioE']"
+                            [control]="this.formExtracontractual.controls['vigenciaPolizaInicioE']"
                             /> 
                     </div>
                 </div>
@@ -288,7 +308,7 @@
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'La fecha final de la vigencia es requerida.'"
-                            [control]="this.formContractual.controls['vigenciaPolizaFinalE']"
+                            [control]="this.formExtracontractual.controls['vigenciaPolizaFinalE']"
                             />
                     </div>
                 </div>
@@ -332,7 +352,7 @@
                                 <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <ul class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span>
                             </ul>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB2"
@@ -389,7 +409,7 @@
                                 <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <div class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span>
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA2"
@@ -449,4 +469,12 @@
         </div>
     </div>
 </form>
-<app-popup #popup ></app-popup>
+<div class="p-5 pt-0" >
+    
+    <hr>
+    <div class="text-center">
+        <button class="btn btn-primary"
+        (click)="guardarPolizas()">Guardar</button>
+    </div>
+</div>
+<app-popup #popup/>

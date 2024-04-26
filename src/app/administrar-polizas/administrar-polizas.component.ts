@@ -34,4 +34,8 @@ export class AdministrarPolizasComponent implements OnInit{
       }
     })
   }
+
+  guardarPolizas(){
+    
+  }
 }

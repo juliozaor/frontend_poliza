@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Aseguradoras } from '../../modelos/aseguradoras';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
-import { Form, FormControl, FormGroup } from '@angular/forms';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
 import { GuardarPoliza } from '../../modelos/guardarPoliza';
 import Swal from 'sweetalert2';
+import { amparos } from '../../modelos/amparos';
 
 
 @Component({
@@ -22,6 +23,10 @@ export class PolizasComponent implements OnInit{
   base64String!: string
   archivoCargado: string = ""
   archivoPDF?: ArchivoGuardado
+  coberturaId1: number = 0
+  coberturaId2: number = 0
+  coberturaId3: number = 0
+  coberturaId4: number = 0
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
@@ -32,14 +37,22 @@ export class PolizasComponent implements OnInit{
 
   aseguradoras: Aseguradoras[] = []
 
-  amparosBasicosC: string[] = [
-    'Muerte Accidental','Incapacidad Temporal','Incapacidad Permanente','Gastos Médicos Hospitalarios'
+  amparosBasicosC: amparos[] = [
+    {nombre:'Muerte Accidental', id:'1'},
+    {nombre:'Incapacidad Temporal', id:'2'},
+    {nombre:'Incapacidad Permanente', id:'3'},
+    {nombre:'Gastos Médicos Hospitalarios', id:'4'}
   ]
-  amparosBasicosE: string[] = [
-    'Daños a bienes de terceros','Lesiones o Muerte a 1 persona','Lesiones o Muerte a 2 o mas personas'
+  amparosBasicosE: amparos[] = [
+    {nombre:'Daños a bienes de terceros', id:'5'},
+    {nombre:'Lesiones o Muerte a 1 persona', id:'6'},
+    {nombre:'Lesiones o Muerte a 2 o mas personas', id:'7'}
   ]
-  amparosAdicionales: string[] = [
-    'Amparo patrimonial','Asistencia Juridica en proceso penal y civil','Perjuicios patrimoniales y extrapatrimoniales','Otras'
+  amparosAdicionales: amparos[] = [
+    {nombre:'Amparo patrimonial', id:'8'},
+    {nombre:'Asistencia Juridica en proceso penal y civil', id:'9'},
+    {nombre:'Perjuicios patrimoniales y extrapatrimoniales', id:'10'},
+    {nombre:'Otras', id:'11'}
   ]
 
   formContractual: FormGroup;
@@ -49,10 +62,10 @@ export class PolizasComponent implements OnInit{
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
   ){
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined),
-      aseguradorasC: new FormControl(""),
-      vigenciaPolizaInicioC: new FormControl(undefined),
-      vigenciaPolizaFinalC: new FormControl(undefined),
+      numeroPolizaC: new FormControl(undefined,[ Validators.required ]),
+      aseguradorasC: new FormControl("",[ Validators.required ]),
+      vigenciaPolizaInicioC: new FormControl(undefined,[ Validators.required ]),
+      vigenciaPolizaFinalC: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos basicos -----//
       valorAseguradoAB1: new FormControl(undefined),
       limitesAB1: new FormControl(undefined),
@@ -77,10 +90,10 @@ export class PolizasComponent implements OnInit{
     })
 
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined),
-      aseguradorasE: new FormControl(""),
-      vigenciaPolizaInicioE: new FormControl(undefined),
-      vigenciaPolizaFinalE: new FormControl(undefined),
+      numeroPolizaE: new FormControl(undefined, [ Validators.required ]),
+      aseguradorasE: new FormControl("",[ Validators.required ]),
+      vigenciaPolizaInicioE: new FormControl(undefined,[ Validators.required ]),
+      vigenciaPolizaFinalE: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos basicos -----//
       valorAseguradoAB2: new FormControl(undefined),
       limitesAB2: new FormControl(undefined),
@@ -125,7 +138,15 @@ export class PolizasComponent implements OnInit{
     })
   }
 
-  guardar(){
+  validacionExtra(){
+    if(this.formExtracontractual.controls['numeroPolizaE'].value){
+      return `[Validators.required]`
+    }else{
+      return
+    }
+  }
+
+  guardarPolizas(){
     if(this.formContractual.invalid && this.formExtracontractual.invalid){
       //console.log("aqui llega")
       marcarFormularioComoSucio(this.formContractual)
@@ -143,13 +164,13 @@ export class PolizasComponent implements OnInit{
         finVigencia: controlsC['vigenciaPolizaFinalC'].value,
         amparos:[
           {
-            coberturaId: controlsC[''].value,
+            coberturaId: this.amparosBasicosC[this.coberturaId1++].id,
             valorAsegurado: controlsC['valorAseguradoAB1'].value,
             limite: controlsC['limitesAB1'].value,
             deducible: controlsC['deducibleAB1'].value,
           },
           {
-            coberturaId: controlsC[''].value,
+            coberturaId: this.amparosAdicionales[this.coberturaId2++].id,
             valorAsegurado: controlsC['valorAseguradoAA1'].value,
             limite: controlsC['limitesAA1'].value,
             deducible: controlsC['deducibleAA1'].value,
@@ -159,12 +180,12 @@ export class PolizasComponent implements OnInit{
           fechaConstitucion: controlsC['fechaConstitucion'].value,
           resolucion: controlsC['numeroResolucion'].value,
           fechaResolucion: controlsC['fechaResolucion'].value,
-          valorReserva: controlsC[''].value,
-          fechaReserva: controlsC[''].value,
-          informacion: controlsC[''].value,
-          operacion: controlsC[''].value,
-          valorCumplimientoUno: controlsC[''].value,
-          valorCumplimientoDos: controlsC[''].value,
+          valorReserva: controlsC['valorReserva'].value,
+          fechaReserva: controlsC['fechaCorteReserva'].value,
+          informacion: controlsC['infoComplementaria'].value,
+          operacion: controlsC['capas'].value,
+          valorCumplimientoUno: controlsC['capa1'].value,
+          valorCumplimientoDos: controlsC['capa2'].value,
         },
         caratula:{
           nombre: this.archivoPDF?.nombreAlmacenado,
@@ -179,13 +200,13 @@ export class PolizasComponent implements OnInit{
         finVigencia: controlsE['vigenciaPolizaFinalE'].value,
         amparos:[
           {
-            coberturaId: controlsE[''].value,
+            coberturaId: this.amparosBasicosE[this.coberturaId3++].id,
             valorAsegurado: controlsE['valorAseguradoAB2'].value,
             limite: controlsE['limitesAB2'].value,
             deducible: controlsE['deducibleAB2'].value,
           },
           {
-            coberturaId: controlsE[''].value,
+            coberturaId: this.amparosAdicionales[this.coberturaId4++].id,
             valorAsegurado: controlsE['valorAseguradoAA2'].value,
             limite: controlsE['limitesAA2'].value,
             deducible: controlsE['deducibleAA2'].value,
@@ -195,18 +216,27 @@ export class PolizasComponent implements OnInit{
           fechaConstitucion: controlsE['fechaConstitucion'].value,
           resolucion: controlsE['numeroResolucion'].value,
           fechaResolucion: controlsE['fechaResolucion'].value,
-          valorReserva: controlsE[''].value,
-          fechaReserva: controlsE[''].value,
-          informacion: controlsE[''].value,
-          operacion: controlsE[''].value,
-          valorCumplimientoUno: controlsE[''].value,
-          valorCumplimientoDos: controlsE[''].value,
+          valorReserva: controlsE['valorReserva'].value,
+          fechaReserva: controlsE['fechaCorteReserva'].value,
+          informacion: controlsE['infoComplementaria'].value,
+          operacion: controlsE['capas'].value,
+          valorCumplimientoUno: controlsE['capa1'].value,
+          valorCumplimientoDos: controlsE['capa2'].value,
         },
         caratula:{
           nombre: this.archivoPDF?.nombreAlmacenado,
           nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
           ruta: this.archivoPDF?.ruta
         }
+      }
+    }).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta.mensaje)
+        Swal.fire({
+          text: respuesta.mensaje,
+          icon: "success",
+
+        })
       }
     })
   }
