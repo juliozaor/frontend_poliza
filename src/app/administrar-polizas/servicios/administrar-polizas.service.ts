@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { ServicioArchivos } from "src/app/archivos/servicios/archivos.service";
 import { ArchivoGuardado } from "src/app/archivos/modelos/ArchivoGuardado";
 import { FiltrosVehiculos } from "../modelos/FiltrosVehiculos";
+import { GuardarPoliza } from "../modelos/guardarPoliza";
 
 @Injectable({
     providedIn: 'root'
@@ -50,7 +51,7 @@ export class ServicioAdministrarPolizas extends Autenticable{
         )
     }
 
-    guardar(){
+    guardarPoliza(poliza: GuardarPoliza){
       
     }
 
@@ -62,10 +63,10 @@ export class ServicioAdministrarPolizas extends Autenticable{
       )
     }
 
-    descargarArchivoXLSX(cadenaBase64: string): void {
+    descargarArchivoXLSX(cadenaBase64: string, nombre: string): void {
       const workbook: XLSX.WorkBook = XLSX.read(cadenaBase64, { type: 'base64' });
       const archivoBlob = this.convertirWorkbookABlob(workbook);
-      saveAs(archivoBlob, 'vehiculos.xlsx');
+      saveAs(archivoBlob, nombre);
     }
     private convertirWorkbookABlob(workbook: XLSX.WorkBook): Blob {
       const workbookArray = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
@@ -78,6 +79,17 @@ export class ServicioAdministrarPolizas extends Autenticable{
       formData.append('archivo', archivo)
       formData.append('poliza', numeroPoliza)
       return this.http.post<any>(
+        `${this.host}${endpoint}`, 
+        formData, 
+        { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+      )
+    }
+
+    cargarArchivoPDF(archivoPDF: File){
+      const endpoint = `/api/v1/archivos`
+      const formData = new FormData()
+      formData.append('archivo', archivoPDF)
+      return this.http.post<ArchivoGuardado>(
         `${this.host}${endpoint}`, 
         formData, 
         { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
