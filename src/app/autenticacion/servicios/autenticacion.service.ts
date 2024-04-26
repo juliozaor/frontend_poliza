@@ -17,7 +17,7 @@ export class AutenticacionService {
   public readonly llaveUsuarioLocalStorage = 'Usuario'
   public readonly llaveRolesLocalStorage = 'rol'
   public readonly poliza = 'poliza'
-
+  userToken: string = '';
 
   constructor(private clientHttp:HttpClient) {
     this.urlBackend = environment.urlBackend
@@ -61,4 +61,15 @@ export class AutenticacionService {
     peticion.adjunto ? formData.append('adjunto', peticion.adjunto) : undefined;
     return this.clientHttp.post<Soporte>(`${this.urlBackend}${endpoint}`, formData)
   }
+
+  leerToken() {
+    if (localStorage.getItem('token')) {
+      this.userToken = localStorage.getItem('jwt')!;
+    } else {
+      this.userToken = '';
+    }
+
+    return this.userToken;
+  }
+
 }
