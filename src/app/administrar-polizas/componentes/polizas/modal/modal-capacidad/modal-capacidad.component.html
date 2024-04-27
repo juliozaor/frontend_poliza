@@ -1,0 +1,17 @@
+<ng-template #modal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title fs-14px  fw-bolder">Modalidades</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form">
+        </form>
+    </div>
+    <div class="modal-footer d-flex">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="boton primario relleno">
+              ENVIAR A LA ST
+            </button>
+          </div>
+    </div>
+</ng-template>

@@ -11,6 +11,7 @@ import { FondoResponsabilidadComponent } from './componentes/polizas/fondo-respo
 import { AutenticacionModule } from '../autenticacion/autenticacion.module';
 import { PolizasComponent } from './componentes/polizas/polizas.component';
 import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.component';
+import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capacidad/modal-capacidad.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.co
         FondoResponsabilidadComponent,
         PolizasComponent,
         VehiculosComponent,
+        ModalCapacidadComponent,
     ],
     imports: [
         CommonModule,

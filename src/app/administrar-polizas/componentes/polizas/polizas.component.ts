@@ -6,7 +6,7 @@ import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.componen
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
-import { GuardarPoliza } from '../../modelos/guardarPoliza';
+import { CaratulaModel, GuardarPoliza, PolizaContractualModel, PolizaExtracontractualModel, PolizaJsonModel, ResponsabilidadModel } from '../../modelos/guardarPoliza';
 import Swal from 'sweetalert2';
 import { amparos } from '../../modelos/amparos';
 
@@ -19,14 +19,10 @@ import { amparos } from '../../modelos/amparos';
 export class PolizasComponent implements OnInit{
   @ViewChild('popup') popup!: PopupComponent
 
-  guardarPoliza?: GuardarPoliza
   base64String!: string
   archivoCargado: string = ""
   archivoPDF?: ArchivoGuardado
-  coberturaId1: number = 0
-  coberturaId2: number = 0
-  coberturaId3: number = 0
-  coberturaId4: number = 0
+  obligatorio: boolean = false
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
@@ -62,60 +58,66 @@ export class PolizasComponent implements OnInit{
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
   ){
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined,[ Validators.required ]),
+      numeroPolizaC: new FormControl<string | undefined>(undefined,[ Validators.required ]),
       aseguradorasC: new FormControl("",[ Validators.required ]),
       vigenciaPolizaInicioC: new FormControl(undefined,[ Validators.required ]),
       vigenciaPolizaFinalC: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos basicos -----//
-      valorAseguradoAB1: new FormControl(undefined),
-      limitesAB1: new FormControl(undefined),
-      deducibleAB1: new FormControl(undefined),
+      valorAseguradoAB1: new FormControl(undefined,[ Validators.required ]),
+      limitesAB1: new FormControl(undefined,[ Validators.required ]),
+      deducibleAB1: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA1: new FormControl(undefined),
-      limitesAA1: new FormControl(undefined),
-      deducibleAA1: new FormControl(undefined),
+      valorAseguradoAA1: new FormControl(undefined,[ Validators.required ]),
+      limitesAA1: new FormControl(undefined,[ Validators.required ]),
+      deducibleAA1: new FormControl(undefined,[ Validators.required ]),
       //----- Cargue de archivos -----//
-      cargarExcel: new FormControl(undefined),
-      cargarPDF: new FormControl(undefined),
+      cargarExcel: new FormControl(undefined,[ Validators.required ]),
+      cargarPDF: new FormControl(undefined,[ Validators.required ]),
       //----- Responsabilidad -----//
-      fechaConstitucion: new FormControl(undefined),
-      numeroResolucion: new FormControl(undefined),
-      fechaResolucion: new FormControl(undefined),
-      valorReserva: new FormControl(undefined),
-      fechaCorteReserva: new FormControl(undefined),
-      infoComplementaria: new FormControl(undefined),
-      capas: new FormControl(undefined),
-      capa1: new FormControl(undefined),
-      capa2: new FormControl(undefined)
+      fechaConstitucion: new FormControl(undefined,[ Validators.required ]),
+      numeroResolucion: new FormControl(undefined,[ Validators.required ]),
+      fechaResolucion: new FormControl(undefined,[ Validators.required ]),
+      valorReserva: new FormControl(undefined,[ Validators.required ]),
+      fechaCorteReserva: new FormControl(undefined,[ Validators.required ]),
+      infoComplementaria: new FormControl(undefined,[ Validators.required ]),
+      capas: new FormControl(undefined,[ Validators.required ]),
+      capa1: new FormControl(undefined,[ Validators.required ]),
+      capa2: new FormControl(undefined,[ Validators.required ]),
+
+      checkResponsabilidadC: new FormControl(false)
     })
+    this.formContractual.get('checkResponsabilidadC')?.enable()
 
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined, [ Validators.required ]),
+      numeroPolizaE: new FormControl(undefined,[ Validators.required ]),
       aseguradorasE: new FormControl("",[ Validators.required ]),
       vigenciaPolizaInicioE: new FormControl(undefined,[ Validators.required ]),
       vigenciaPolizaFinalE: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos basicos -----//
-      valorAseguradoAB2: new FormControl(undefined),
-      limitesAB2: new FormControl(undefined),
-      deducibleAB2: new FormControl(undefined),
+      valorAseguradoAB2: new FormControl(undefined,[ Validators.required ]),
+      limitesAB2: new FormControl(undefined,[ Validators.required ]),
+      deducibleAB2: new FormControl(undefined,[ Validators.required ]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA2: new FormControl(undefined),
-      limitesAA2: new FormControl(undefined),
-      deducibleAA2: new FormControl(undefined),
-      //----- Cargue de archivos -----//
-      cargarExcel: new FormControl(undefined),
-      cargarPDF: new FormControl(undefined),
+      valorAseguradoAA2: new FormControl(undefined,[ Validators.required ]),
+      limitesAA2: new FormControl(undefined,[ Validators.required ]),
+      deducibleAA2: new FormControl(undefined,[ Validators.required ]),
+       //----- Cargue de archivos -----//
+      cargarExcel: new FormControl(undefined,[ Validators.required ]),
+      cargarPDF: new FormControl(undefined,[ Validators.required ]),
       //----- Responsabilidad -----//
-      fechaConstitucion: new FormControl(undefined),
-      numeroResolucion: new FormControl(undefined),
-      fechaResolucion: new FormControl(undefined),
-      valorReserva: new FormControl(undefined),
-      fechaCorteReserva: new FormControl(undefined),
-      infoComplementaria: new FormControl(undefined),
-      capas: new FormControl(undefined),
-      capa1: new FormControl(undefined),
-      capa2: new FormControl(undefined)
+      fechaConstitucion: new FormControl(undefined,[ Validators.required ]),
+      numeroResolucion: new FormControl(undefined,[ Validators.required ]),
+      fechaResolucion: new FormControl(undefined,[ Validators.required ]),
+      valorReserva: new FormControl(undefined,[ Validators.required ]),
+      fechaCorteReserva: new FormControl(undefined,[ Validators.required ]),
+      infoComplementaria: new FormControl(undefined,[ Validators.required ]),
+      capas: new FormControl(undefined,[ Validators.required ]),
+      capa1: new FormControl(undefined,[ Validators.required ]),
+      capa2: new FormControl(undefined,[ Validators.required ]),
+
+      checkResponsabilidadE: new FormControl(false)
     })
+    this.formExtracontractual.get('checkResponsabilidadE')?.disable()
   }
 
   ngOnInit(): void {
@@ -138,46 +140,72 @@ export class PolizasComponent implements OnInit{
     })
   }
 
-  validacionExtra(){
-    if(this.formExtracontractual.controls['numeroPolizaE'].value){
-      return `[Validators.required]`
-    }else{
-      return
-    }
-  }
-
   guardarPolizas(){
-    if(this.formContractual.invalid && this.formExtracontractual.invalid){
-      //console.log("aqui llega")
+    if(this.formContractual.invalid){
       marcarFormularioComoSucio(this.formContractual)
-      marcarFormularioComoSucio(this.formExtracontractual)
       return;
     }
+    
     const controlsC = this.formContractual.controls
     const controlsE = this.formExtracontractual.controls
-
-    this.servicioAdministrarPoliza.guardarPoliza({
-      polizaContractual: {
-        numero: controlsC['numeroPolizaC'].value,
+    const polizaContractual:PolizaContractualModel = {
+      numero: controlsC['numeroPolizaC'].value,
         aseguradoraId: controlsC['aseguradorasC'].value,
         inicioVigencia: controlsC['vigenciaPolizaInicioC'].value,
         finVigencia: controlsC['vigenciaPolizaFinalC'].value,
         amparos:[
           {
-            coberturaId: this.amparosBasicosC[this.coberturaId1++].id,
+            coberturaId: '1',
             valorAsegurado: controlsC['valorAseguradoAB1'].value,
             limite: controlsC['limitesAB1'].value,
             deducible: controlsC['deducibleAB1'].value,
           },
           {
-            coberturaId: this.amparosAdicionales[this.coberturaId2++].id,
+            coberturaId: '2',
+            valorAsegurado: controlsC['valorAseguradoAB1'].value,
+            limite: controlsC['limitesAB1'].value,
+            deducible: controlsC['deducibleAB1'].value,
+          },
+          {
+            coberturaId: '3',
+            valorAsegurado: controlsC['valorAseguradoAB1'].value,
+            limite: controlsC['limitesAB1'].value,
+            deducible: controlsC['deducibleAB1'].value,
+          },
+          {
+            coberturaId: '4',
+            valorAsegurado: controlsC['valorAseguradoAB1'].value,
+            limite: controlsC['limitesAB1'].value,
+            deducible: controlsC['deducibleAB1'].value,
+          },
+          {
+            coberturaId: '5',
+            valorAsegurado: controlsC['valorAseguradoAA1'].value,
+            limite: controlsC['limitesAA1'].value,
+            deducible: controlsC['deducibleAA1'].value,
+          },
+          {
+            coberturaId: '6',
+            valorAsegurado: controlsC['valorAseguradoAA1'].value,
+            limite: controlsC['limitesAA1'].value,
+            deducible: controlsC['deducibleAA1'].value,
+          },
+          {
+            coberturaId: '7',
+            valorAsegurado: controlsC['valorAseguradoAA1'].value,
+            limite: controlsC['limitesAA1'].value,
+            deducible: controlsC['deducibleAA1'].value,
+          },
+          {
+            coberturaId: '8',
             valorAsegurado: controlsC['valorAseguradoAA1'].value,
             limite: controlsC['limitesAA1'].value,
             deducible: controlsC['deducibleAA1'].value,
           }
-        ],
-        responsabilidad:{
-          fechaConstitucion: controlsC['fechaConstitucion'].value,
+        ]
+    }
+    const responsabilidadC:ResponsabilidadModel = {
+      fechaConstitucion: controlsC['fechaConstitucion'].value,
           resolucion: controlsC['numeroResolucion'].value,
           fechaResolucion: controlsC['fechaResolucion'].value,
           valorReserva: controlsC['valorReserva'].value,
@@ -186,34 +214,64 @@ export class PolizasComponent implements OnInit{
           operacion: controlsC['capas'].value,
           valorCumplimientoUno: controlsC['capa1'].value,
           valorCumplimientoDos: controlsC['capa2'].value,
-        },
-        caratula:{
-          nombre: this.archivoPDF?.nombreAlmacenado,
-          nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
-          ruta: this.archivoPDF?.ruta
-        }
-      },
-      polizaExtracontractual:{
-        numero: controlsE['numeroPolizaE'].value,
+    }
+    const caratulaC: CaratulaModel = {
+      nombre: this.archivoPDF?.nombreAlmacenado,
+      nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
+      ruta: this.archivoPDF?.ruta
+    }
+    const polizaExtracontractual: PolizaExtracontractualModel = {
+      numero: controlsE['numeroPolizaE'].value,
         aseguradoraId: controlsE['aseguradorasE'].value,
         inicioVigencia: controlsE['vigenciaPolizaInicioE'].value,
         finVigencia: controlsE['vigenciaPolizaFinalE'].value,
         amparos:[
           {
-            coberturaId: this.amparosBasicosE[this.coberturaId3++].id,
+            coberturaId: '9',
             valorAsegurado: controlsE['valorAseguradoAB2'].value,
             limite: controlsE['limitesAB2'].value,
             deducible: controlsE['deducibleAB2'].value,
           },
           {
-            coberturaId: this.amparosAdicionales[this.coberturaId4++].id,
+            coberturaId: '10',
+            valorAsegurado: controlsE['valorAseguradoAB2'].value,
+            limite: controlsE['limitesAB2'].value,
+            deducible: controlsE['deducibleAB2'].value,
+          },
+          {
+            coberturaId: '11',
+            valorAsegurado: controlsE['valorAseguradoAB2'].value,
+            limite: controlsE['limitesAB2'].value,
+            deducible: controlsE['deducibleAB2'].value,
+          },
+          {
+            coberturaId: '12',
             valorAsegurado: controlsE['valorAseguradoAA2'].value,
             limite: controlsE['limitesAA2'].value,
             deducible: controlsE['deducibleAA2'].value,
-          }
-        ],
-        responsabilidad:{
-          fechaConstitucion: controlsE['fechaConstitucion'].value,
+          },
+          {
+            coberturaId: '13',
+            valorAsegurado: controlsE['valorAseguradoAA2'].value,
+            limite: controlsE['limitesAA2'].value,
+            deducible: controlsE['deducibleAA2'].value,
+          },
+          {
+            coberturaId: '14',
+            valorAsegurado: controlsE['valorAseguradoAA2'].value,
+            limite: controlsE['limitesAA2'].value,
+            deducible: controlsE['deducibleAA2'].value,
+          },
+          {
+            coberturaId: '15',
+            valorAsegurado: controlsE['valorAseguradoAA2'].value,
+            limite: controlsE['limitesAA2'].value,
+            deducible: controlsE['deducibleAA2'].value,
+          },
+        ]
+    }
+    const responsabilidadE: ResponsabilidadModel = {
+      fechaConstitucion: controlsE['fechaConstitucion'].value,
           resolucion: controlsE['numeroResolucion'].value,
           fechaResolucion: controlsE['fechaResolucion'].value,
           valorReserva: controlsE['valorReserva'].value,
@@ -222,21 +280,73 @@ export class PolizasComponent implements OnInit{
           operacion: controlsE['capas'].value,
           valorCumplimientoUno: controlsE['capa1'].value,
           valorCumplimientoDos: controlsE['capa2'].value,
-        },
-        caratula:{
-          nombre: this.archivoPDF?.nombreAlmacenado,
-          nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
-          ruta: this.archivoPDF?.ruta
-        }
-      }
-    }).subscribe({
-      next: (respuesta) => {
-        console.log(respuesta.mensaje)
-        Swal.fire({
-          text: respuesta.mensaje,
-          icon: "success",
+    }
+    const caratulaE: CaratulaModel = {
+      nombre: this.archivoPDF?.nombreAlmacenado,
+      nombreOriginal: this.archivoPDF?.nombreOriginalArchivo,
+      ruta: this.archivoPDF?.ruta
+    }
 
-        })
+    polizaContractual.caratula = caratulaC //Añade la caratula correspondiente a la poliza contractual
+    if(this.formContractual.get('checkResponsabilidadC')?.value == true){ //corrobora si tiene o no responsabilidad
+      polizaContractual.responsabilidad = responsabilidadC
+    }
+
+    polizaExtracontractual.caratula = caratulaE //Añade la caratula correspondiente a la poliza extracontractual
+    if(this.formExtracontractual.get('checkResponsabilidadE')?.value == true){ //corrobora si tiene o no responsabilidad
+      polizaExtracontractual.responsabilidad = responsabilidadE
+    }
+
+    const polizaJson:any = {
+      polizaContractual: polizaContractual,
+    };
+    
+    if(this.formExtracontractual.controls['numeroPolizaE'].value && this.formExtracontractual.controls['numeroPolizaE'].value != ""){
+      if(this.formExtracontractual.invalid){
+        marcarFormularioComoSucio(this.formExtracontractual)
+        return;
+      }
+      polizaJson.polizaExtracontractual = polizaExtracontractual
+    }
+
+    this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
+      next: (respuesta) => {
+        console.log(respuesta)
+        if(respuesta){
+          Swal.fire({
+            titleText: respuesta.mensaje,
+            text: "Estimado usuario si desea cargar otra póliza por favor de clic en el botón cargar nuevo o si no de clic en enviar",
+            icon: "success",
+            showCancelButton: true,
+            allowOutsideClick: false,
+            cancelButtonText: "Cargar nuevo",
+            confirmButtonText: "Enviar",
+          }).then((result) =>{
+            if(result.isConfirmed){
+
+            }else if(result.isDismissed){
+              this.formContractual.reset()
+              this.formExtracontractual.reset()
+            }
+          })
+        }else{
+          Swal.fire({
+            text: "No se ha recibido ninguna respuesta",
+            icon: "question",
+            titleText: "¡Lo sentimos!",
+            showCancelButton: true,
+            allowOutsideClick: false,
+            cancelButtonText: "Cargar nuevo",
+            confirmButtonText: "Enviar",
+          }).then((result) =>{
+            if(result.isConfirmed){
+              
+            }else if(result.isDismissed){
+              this.formContractual.reset()
+              this.formExtracontractual.reset()
+            }
+          })
+        }
       }
     })
   }
@@ -308,7 +418,7 @@ export class PolizasComponent implements OnInit{
                 text:error.error.mensaje,
                 icon:"error"
               })
-              this.formContractual.controls['cargarExcel'].setValue('')
+              this.formExtracontractual.controls['cargarExcel'].setValue('')
             }else if(error.status == 422){
               Swal.fire({
                 text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
@@ -322,7 +432,7 @@ export class PolizasComponent implements OnInit{
                   this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
                 }
               })
-              this.formContractual.controls['cargarExcel'].setValue('')
+              this.formExtracontractual.controls['cargarExcel'].setValue('')
             }
           }
         })
@@ -378,12 +488,24 @@ export class PolizasComponent implements OnInit{
   }
 
   DesplegarFondoResponsabilidad(estado: boolean, tipoPoliza: number){
+    this.formContractual.get('checkResponsabilidadC')?.disable()
+    this.formExtracontractual.get('checkResponsabilidadE')?.disable()
+    
     if(tipoPoliza == 1){
       this.fondoResponsabilidadC = estado
     }else if(tipoPoliza == 2){
       this.fondoResponsabilidadE = estado
     }
   }
-
+  
+  numeroPolizaELleno(){
+    if(this.formExtracontractual.controls['numeroPolizaE'].value){
+      this.obligatorio = true
+      this.formExtracontractual.get('checkResponsabilidadE')?.enable()
+    }else{
+      this.obligatorio = false
+      this.formExtracontractual.get('checkResponsabilidadE')?.disable()
+    }
+  }
   
 }

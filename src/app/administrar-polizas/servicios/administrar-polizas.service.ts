@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 import { ServicioArchivos } from "src/app/archivos/servicios/archivos.service";
 import { ArchivoGuardado } from "src/app/archivos/modelos/ArchivoGuardado";
 import { FiltrosVehiculos } from "../modelos/FiltrosVehiculos";
-import { GuardarPoliza } from "../modelos/guardarPoliza";
+import { GuardarPoliza, PolizaJsonModel } from "../modelos/guardarPoliza";
 
 @Injectable({
     providedIn: 'root'
@@ -51,12 +51,12 @@ export class ServicioAdministrarPolizas extends Autenticable{
         )
     }
 
-    guardarPoliza(poliza: GuardarPoliza){
-      console.log(poliza)
+    guardarPoliza(polizaJson: PolizaJsonModel){
+      console.log(polizaJson)
       const endpoint = `/api/v1/poliza`
       return this.http.post<any>(
         `${this.host}${endpoint}`,
-        poliza,
+        polizaJson,
         { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } }
       )
     }

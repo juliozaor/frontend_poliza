@@ -30,7 +30,7 @@
                 </div>
                 <div class="row mx-0 mb-3">
                     <div class="col-6 justify-content-center">
-                        <span class="fs-14px">Seleccione Entidad Aseguradora</span>
+                        <span class="fs-14px">Seleccione Entidad Aseguradora</span><span class="validacion">*</span>
                     </div>
                     <div class="col-6 justify-content-start">
                         <select formControlName="aseguradorasC" 
@@ -51,7 +51,7 @@
             <div class="col-6 encabezado">
                 <div class="row mx-0 mb-3">
                     <div class="col-7 justify-content-start">
-                        <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
+                        <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span><span class="validacion">*</span>
                     </div>
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaInicioC"
@@ -65,7 +65,7 @@
                 </div>
                 <div class="row mx-0 mb-3">
                     <div class="col-7 justify-content-center">
-                        <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
+                        <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span><span class="validacion">*</span>
                     </div>
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaFinalC"
@@ -117,19 +117,34 @@
                                 <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <ul class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre.nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span><span class="validacion">*</span>
                             </ul>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB1"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El valor asegurado es requerido.'"
+                                [control]="this.formContractual.controls['valorAseguradoAB1']"
+                                />
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB1"
                                 class="form-control" type="number" placeholder="Límites">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El limite es requerido.'"
+                                [control]="this.formContractual.controls['limitesAB1']"
+                                />
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB1"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El deducible es requerido.'"
+                                [control]="this.formContractual.controls['deducibleAB1']"
+                                />
                             </div>
                         </li>
                     </ul>
@@ -174,19 +189,34 @@
                                 <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Limites - Deducible</span>
                             </div>
                             <div class="col-2 justify-content-start" name="nombre">
-                                <span class="fs-14px">{{nombre.nombre}}</span>
+                                <span class="fs-14px">{{nombre.nombre}}</span><span class="validacion">*</span>
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA1"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El valor asegurado es requerido.'"
+                                [control]="this.formContractual.controls['valorAseguradoAA1']"
+                                />
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA1"
                                 class="form-control" type="number" placeholder="Límites">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El limite es requerido.'"
+                                [control]="this.formContractual.controls['limitesAA1']"
+                                />
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA1"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <app-validacion
+                                [validacion]="'required'"
+                                [texto]="'El deducible es requerido.'"
+                                [control]="this.formContractual.controls['deducibleAA1']"
+                                />
                             </div>
                         </li>
                     </ul>
@@ -198,14 +228,9 @@
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector Transporte?
             </samp>
             <div class="mx-3 cursor-pointer texto2">
-                <span class="fw-semibold" 
-                (click)="DesplegarFondoResponsabilidad(true, 1)">
-                    SI
-                </span>/
-                <span class="fw-semibold"
-                (click)="DesplegarFondoResponsabilidad(false, 1)">
-                    NO
-                </span>
+                <input type="checkbox" title="Marcar para ver formulario" class="checkbox"
+                formControlName="checkResponsabilidadC"
+                (change)="DesplegarFondoResponsabilidad(true, 1)">SI
             </div>
         </div>
         <div *ngIf="fondoResponsabilidadC" class="d-flex mx-3 mb-3">
@@ -219,13 +244,13 @@
                 </button>
             </div>
             <div class="col-4 mx-3 mb-3">
-                <label>Cargar el Excel</label>
+                <label>Cargar el Excel</label><span class="validacion">*</span>
                 <input type="file" class="form-control" placeholder="descargar" accept=".xlsx" maxlength="1"
                 formControlName="cargarExcel"
                 (change)="cargarArchivoXLSX($event,1)">
             </div>
             <div class="col-4 mx-3 mb-3">
-                <label>Cargar clausulado y caratula en PDF</label>
+                <label>Cargar clausulado y caratula en PDF</label><span class="validacion">*</span>
                 <input type="file" class="form-control" placeholder="descargar" accept=".pdf" maxlength="1"
                 formControlName="cargarPDF"
                 (change)="cargarArchivoPDf($event, 1)">
@@ -252,11 +277,13 @@
             <div class="col-6 encabezado">
                 <div class="row mx-0 mb-3">
                     <div class="col-6 justify-content-start">
-                        <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
+                        <span class="fs-14px">Número de póliza</span>
+                        <span *ngIf="obligatorio" class="validacion">*</span>
                     </div>
                     <div class="col-6">
                         <input formControlName="numeroPolizaE"
-                        class="form-control" type="number" placeholder="Número de póliza">
+                        class="form-control" type="number" placeholder="Número de póliza"
+                        (change)="numeroPolizaELleno()">
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de la poliza es requerido.'"
@@ -267,6 +294,7 @@
                 <div class="row mx-0 mb-3">
                     <div class="col-6 justify-content-center">
                         <span class="fs-14px">Seleccione Entidad Aseguradora</span>
+                        <span *ngIf="obligatorio" class="validacion">*</span>
                     </div>
                     <div class="col-6 justify-content-start">
                         <select formControlName="aseguradorasE" class="form-select" title="Lista de aseguradoras">
@@ -287,6 +315,7 @@
                 <div class="row mx-0 mb-3">
                     <div class="col-7 justify-content-start">
                         <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
+                        <span *ngIf="obligatorio" class="validacion">*</span>
                     </div>
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaInicioE"
@@ -301,6 +330,7 @@
                 <div class="row mx-0 mb-3">
                     <div class="col-7 justify-content-center">
                         <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
+                        <span *ngIf="obligatorio" class="validacion">*</span>
                     </div>
                     <div class="col-5">
                         <input formControlName="vigenciaPolizaFinalE"
@@ -353,6 +383,7 @@
                             </div>
                             <ul class="col-2 justify-content-start" name="nombre">
                                 <span class="fs-14px">{{nombre.nombre}}</span>
+                                <span *ngIf="obligatorio" class="validacion">*</span>
                             </ul>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB2"
@@ -410,6 +441,7 @@
                             </div>
                             <div class="col-2 justify-content-start" name="nombre">
                                 <span class="fs-14px">{{nombre.nombre}}</span>
+                                <span *ngIf="obligatorio" class="validacion">*</span>
                             </div>
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA2"
@@ -434,14 +466,9 @@
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector Transporte?
             </samp>
             <div class="mx-3 cursor-pointer texto2">
-                <span class="fw-semibold" 
-                (click)="DesplegarFondoResponsabilidad(true, 2)">
-                    SI
-                </span>/
-                <span class="fw-semibold"
-                (click)="DesplegarFondoResponsabilidad(false, 2)">
-                    NO
-                </span>
+                <input type="checkbox" title="Marcar para ver formulario"
+                formControlName="checkResponsabilidadE"
+                (change)="DesplegarFondoResponsabilidad(true, 2)">
             </div>
         </div>
         <div *ngIf="fondoResponsabilidadE" class="d-flex mx-3 mb-3">
@@ -455,13 +482,13 @@
                 </button>
             </div>
             <div class="col-4 mx-3 mb-3">
-                <label>Cargar el Excel</label>
+                <label>Cargar el Excel</label><span *ngIf="obligatorio" class="validacion">*</span>
                 <input type="file" class="form-control" placeholder="descargar" accept=".xlsx" maxlength="1"
                 formControlName="cargarExcel"
                 (change)="cargarArchivoXLSX($event,2)">
             </div>
             <div class="col-4 mx-3 mb-3">
-                <label>Cargar clausulado y caratula en PDF</label>
+                <label>Cargar clausulado y caratula en PDF</label><span *ngIf="obligatorio" class="validacion">*</span>
                 <input type="file" class="form-control" placeholder="descargar" accept=".pdf" maxlength="1"
                 formControlName="cargarPDF"
                 (change)="cargarArchivoPDf($event,2)">
