@@ -23,7 +23,7 @@ export class AdministrarPolizasComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    this.obtenerModalidades()
+    //this.obtenerModalidades()
   }
 
   obtenerModalidades(){
@@ -33,5 +33,9 @@ export class AdministrarPolizasComponent implements OnInit{
         //console.log(this.modalidades)
       }
     })
+  }
+
+  guardarPolizas(){
+    
   }
 }

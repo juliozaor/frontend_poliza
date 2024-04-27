@@ -1,44 +1,69 @@
 export interface GuardarPoliza{
     polizaContractual:{
-        numero: number
-        aseguradoraId: number
-        inicioVigencia: Date
-        finVigencia: Date
-        amparos:Amparos[]
-        responsabilidad: Responsabilidad
-        caratula: Caratula
+        numero: string
+        aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
+        amparos:AmparosModel[]
+        responsabilidad?: ResponsabilidadModel
+        caratula?: CaratulaModel
     }
     polizaExtracontractual:{
-        numero: number
-        aseguradoraId: number
-        inicioVigencia: Date
-        finVigencia: Date
-        amparos:Amparos[]
-        responsabilidad: Responsabilidad
-        caratula: Caratula
+        numero: string
+        aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
+        amparos:AmparosModel[]
+        responsabilidad?: ResponsabilidadModel
+        caratula?: CaratulaModel
     }
 }
 
-interface Amparos{
-    coberturaId: number
-    valorAsegurado: number
-    limite: number
-    deducible: number
+export interface PolizaJsonModel {
+    polizaContractual: PolizaContractualModel,
+    polizaExtracontractual?: PolizaExtracontractualModel
 }
 
-interface Responsabilidad{
-    fechaConstitucion: Date
-    resolucion: number
-    fechaResolucion: Date
-    valorReserva: number
-    fechaReserva: Date
+export interface PolizaContractualModel{
+    numero: string
+    aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
+        amparos:AmparosModel[]
+        responsabilidad?: ResponsabilidadModel
+        caratula?: CaratulaModel
+}
+
+export interface PolizaExtracontractualModel{
+    numero: string
+        aseguradoraId: string
+        inicioVigencia: string
+        finVigencia: string
+        amparos:AmparosModel[]
+        responsabilidad?: ResponsabilidadModel
+        caratula?: CaratulaModel
+}
+
+export interface AmparosModel{
+    coberturaId: string
+    valorAsegurado: string
+    limite: string
+    deducible: string
+}
+
+export interface ResponsabilidadModel{
+    fechaConstitucion: string
+    resolucion: string
+    fechaResolucion: string
+    valorReserva: string
+    fechaReserva: string
     informacion: string
-    operacion: number
-    valorCumplimientoUno: number
-    valorCumplimientoDos: number
+    operacion: string
+    valorCumplimientoUno: string
+    valorCumplimientoDos: string
 }
 
-interface Caratula{
+export interface CaratulaModel{
     nombre?: string
     nombreOriginal?: string
     ruta?: string
