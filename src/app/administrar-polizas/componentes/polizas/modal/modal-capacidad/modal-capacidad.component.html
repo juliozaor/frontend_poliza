@@ -5,13 +5,142 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="form">
+            <!-- Modal MX -->
+            <div *ngIf="modalidades[0].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarMX()">
+                    <div class="mx-3">
+                        <span>
+                            <img alt="" *ngIf="desplegarMX" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
+                            <img alt="" *ngIf="!desplegarMX" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
+                        </span>
+                        <span class="fs-14px fw-semibold texto">
+                            {{modalidades[0].nombre}}
+                        </span>
+                    </div>
+            </div>
+            <div *ngIf="modalidades[0].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarMX, 'd-block': desplegarMX}">
+                    <div class="col-12">
+                        <div class="row">
+                            <fieldset>
+                                <label for="numeroResolucionVigente" class="fw-semibold">
+                                    Número de resolución vigente
+                                </label>
+                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRMX">
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset>
+                                <label for="fechaResolucionVigente" class="fw-semibold">
+                                    Fecha de la resolución vigente
+                                </label>
+                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX">
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset>
+                                <label for="PDFResolucionVigente" class="fw-semibold">
+                                    PDF con el documento vigente
+                                </label>
+                                <input title="PDF resolución" type="file" class="form-control" 
+                                formControlName="PDFRMX" accept=".pdf" maxlength="1"
+                                (change)="cargarArchivoPDf($event,1)">
+                            </fieldset>
+                        </div>
+                    </div>
+            </div>
+                
+            <!--  Modal ES -->
+            <div *ngIf="modalidades[1].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarES()">
+                <div class="mx-3">
+                    <span>
+                        <img alt="" *ngIf="desplegarES" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
+                        <img alt="" *ngIf="!desplegarES" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
+                    </span>
+                    <span class="fs-14px fw-semibold texto">
+                        {{modalidades[1].nombre}}
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="modalidades[1].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarES, 'd-block': desplegarES}">
+                <div class="col-12">
+                    <div class="row">
+                        <fieldset>
+                            <label for="numeroResolucionVigente" class="fw-semibold">
+                                Número de resolución vigente
+                            </label>
+                            <input title="número resolución" type="text" class="form-control" formControlName="numeroRES">
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <fieldset>
+                            <label for="fechaResolucionVigente" class="fw-semibold">
+                                Fecha de la resolución vigente
+                            </label>
+                            <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES">
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <fieldset>
+                            <label for="PDFResolucionVigente" class="fw-semibold">
+                                PDF con el documento vigente
+                            </label>
+                            <input title="PDF resolución" type="file" class="form-control" 
+                            formControlName="PDFRES" accept=".pdf" maxlength="1"
+                            (change)="cargarArchivoPDf($event,2)">
+                        </fieldset>
+                    </div>
+                </div> 
+            </div>
+             <!-- Modal PC  -->
+            <div *ngIf="modalidades[2].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarPC()">
+                <div class="mx-3">
+                    <span>
+                        <img alt="" *ngIf="desplegarPC" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
+                        <img alt="" *ngIf="!desplegarPC" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
+                    </span>
+                    <span class="fs-14px fw-semibold texto">
+                        {{modalidades[2].nombre}}
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="modalidades[2].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarPC, 'd-block': desplegarPC}">
+                <div class="col-12">
+                    <div class="row">
+                        <fieldset>
+                            <label for="numeroResolucionVigente" class="fw-semibold">
+                                Número de resolución vigente
+                            </label>
+                            <input title="número resolución" type="text" class="form-control" formControlName="numeroRPC">
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <fieldset>
+                            <label for="fechaResolucionVigente" class="fw-semibold">
+                                Fecha de la resolución vigente
+                            </label>
+                            <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC">
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                            <fieldset>
+                            <label for="PDFResolucionVigente" class="fw-semibold">
+                                PDF con el documento vigente
+                            </label>
+                            <input title="PDF resolución" type="file" class="form-control" 
+                            formControlName="PDFRPC" accept=".pdf" maxlength="1"
+                            (change)="cargarArchivoPDf($event,3)">
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer d-flex">
         <div class="d-flex justify-content-end">
-            <button type="button" class="boton primario relleno">
-              ENVIAR A LA ST
+            <button type="button" class="boton primario relleno"
+            (click)="guardarCapacidades()">
+              <span class="fw-semibold">Enviar a ST</span>
             </button>
           </div>
     </div>
 </ng-template>
+<app-popup #popup />
