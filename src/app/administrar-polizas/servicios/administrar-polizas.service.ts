@@ -9,6 +9,7 @@ import { ServicioArchivos } from "src/app/archivos/servicios/archivos.service";
 import { ArchivoGuardado } from "src/app/archivos/modelos/ArchivoGuardado";
 import { FiltrosVehiculos } from "../modelos/FiltrosVehiculos";
 import { GuardarPoliza, PolizaJsonModel } from "../modelos/guardarPoliza";
+import { CapacidadesModel } from "../modelos/modalidades";
 
 @Injectable({
     providedIn: 'root'
@@ -57,6 +58,16 @@ export class ServicioAdministrarPolizas extends Autenticable{
       return this.http.post<any>(
         `${this.host}${endpoint}`,
         polizaJson,
+        { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } }
+      )
+    }
+
+    guardarCapacidades(capacidadJson?: CapacidadesModel){
+      console.log(capacidadJson)
+      const endpoint = `/api/v1/poliza/capacidades`
+      return this.http.post<any>(
+        `${this.host}${endpoint}`,
+        capacidadJson,
         { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } }
       )
     }

@@ -9,6 +9,7 @@ import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
 import { CaratulaModel, GuardarPoliza, PolizaContractualModel, PolizaExtracontractualModel, PolizaJsonModel, ResponsabilidadModel } from '../../modelos/guardarPoliza';
 import Swal from 'sweetalert2';
 import { amparos } from '../../modelos/amparos';
+import { ModalCapacidadComponent } from './modal/modal-capacidad/modal-capacidad.component';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { amparos } from '../../modelos/amparos';
   styleUrls: ['./polizas.component.css']
 })
 export class PolizasComponent implements OnInit{
+  @ViewChild('modalCapacidad') modalCapacidad!: ModalCapacidadComponent
   @ViewChild('popup') popup!: PopupComponent
 
   base64String!: string
@@ -74,6 +76,7 @@ export class PolizasComponent implements OnInit{
       cargarExcel: new FormControl(undefined,[ Validators.required ]),
       cargarPDF: new FormControl(undefined,[ Validators.required ]),
       //----- Responsabilidad -----//
+      checkResponsabilidadC: new FormControl(false),
       fechaConstitucion: new FormControl(undefined,[ Validators.required ]),
       numeroResolucion: new FormControl(undefined,[ Validators.required ]),
       fechaResolucion: new FormControl(undefined,[ Validators.required ]),
@@ -84,7 +87,7 @@ export class PolizasComponent implements OnInit{
       capa1: new FormControl(undefined,[ Validators.required ]),
       capa2: new FormControl(undefined,[ Validators.required ]),
 
-      checkResponsabilidadC: new FormControl(false)
+      
     })
     this.formContractual.get('checkResponsabilidadC')?.enable()
 
@@ -110,7 +113,7 @@ export class PolizasComponent implements OnInit{
       fechaResolucion: new FormControl(undefined,[ Validators.required ]),
       valorReserva: new FormControl(undefined,[ Validators.required ]),
       fechaCorteReserva: new FormControl(undefined,[ Validators.required ]),
-      infoComplementaria: new FormControl(undefined,[ Validators.required ]),
+      infoComplementaria: new FormControl(undefined,[ Validators.required ]),/*  */
       capas: new FormControl(undefined,[ Validators.required ]),
       capa1: new FormControl(undefined,[ Validators.required ]),
       capa2: new FormControl(undefined,[ Validators.required ]),
@@ -122,14 +125,6 @@ export class PolizasComponent implements OnInit{
 
   ngOnInit(): void {
     this.obtenerAseguradora()
-    this.formContractual.controls['aseguradorasC'].valueChanges.subscribe({
-      next: (idAseguradora) =>{
-        console.log(this.formContractual.controls['aseguradorasC'].value)
-        if(idAseguradora && idAseguradora !== null){
-          console.log(idAseguradora)
-        }
-      }
-    })
   }
 
   obtenerAseguradora(){
@@ -311,8 +306,10 @@ export class PolizasComponent implements OnInit{
 
     this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
       next: (respuesta) => {
-        console.log(respuesta)
+        //console.log(respuesta)
         if(respuesta){
+          this.formContractual.reset()
+          this.formExtracontractual.reset()
           Swal.fire({
             titleText: respuesta.mensaje,
             text: "Estimado usuario si desea cargar otra póliza por favor de clic en el botón cargar nuevo o si no de clic en enviar",
@@ -323,7 +320,7 @@ export class PolizasComponent implements OnInit{
             confirmButtonText: "Enviar",
           }).then((result) =>{
             if(result.isConfirmed){
-
+              this.abrirModalCapacidad()
             }else if(result.isDismissed){
               this.formContractual.reset()
               this.formExtracontractual.reset()
@@ -334,17 +331,6 @@ export class PolizasComponent implements OnInit{
             text: "No se ha recibido ninguna respuesta",
             icon: "question",
             titleText: "¡Lo sentimos!",
-            showCancelButton: true,
-            allowOutsideClick: false,
-            cancelButtonText: "Cargar nuevo",
-            confirmButtonText: "Enviar",
-          }).then((result) =>{
-            if(result.isConfirmed){
-              
-            }else if(result.isDismissed){
-              this.formContractual.reset()
-              this.formExtracontractual.reset()
-            }
           })
         }
       }
@@ -485,6 +471,9 @@ export class PolizasComponent implements OnInit{
   }
   alternarDesplegarAA(){
     this.desplegarAmparosA = !this.desplegarAmparosA
+  }
+  abrirModalCapacidad(){
+    this.modalCapacidad.abrir()
   }
 
   DesplegarFondoResponsabilidad(estado: boolean, tipoPoliza: number){
