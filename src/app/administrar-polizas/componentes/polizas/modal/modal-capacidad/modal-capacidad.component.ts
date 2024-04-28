@@ -28,7 +28,6 @@ export class ModalCapacidadComponent implements OnInit{
   archivoPDFMX?: ArchivoGuardado
   archivoPDFES?: ArchivoGuardado
   archivoPDFPC?: ArchivoGuardado
-  serviceModal: any;
 
   constructor(
     private servicioModal: NgbModal,
@@ -120,11 +119,16 @@ export class ModalCapacidadComponent implements OnInit{
             confirmButtonText: "Finalizar",
           }).then((result) =>{
             if(result.isConfirmed){
-              this.closeModal()
+              this.servicioModal.dismissAll();
             }
           })
 
         }
+      })
+    }else{
+      Swal.fire({
+        titleText:'Debe llenar al menos una Modalidad',
+        icon: "warning",
       })
     }
   }
@@ -172,6 +176,6 @@ export class ModalCapacidadComponent implements OnInit{
   }
 
   closeModal() {
-    this.serviceModal.dismissAll();
+    this.servicioModal.dismissAll();
   }
 }
