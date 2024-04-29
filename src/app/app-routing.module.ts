@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [AutenticacionGuard],
     children: [
       {
-        path: 'inicio',
+        path: 'informacion-general',
         component: PaginaInformacionGeneralVigiladoComponent
       },
       {

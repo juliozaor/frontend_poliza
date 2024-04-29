@@ -451,7 +451,7 @@
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector Transporte?
             </samp>
             <div class="mx-3 cursor-pointer texto2">
-                <input type="checkbox" title="Marcar para ver formulario" class="checkbox"
+                <input type="checkbox" title="Marcar para ver formulario"
                 formControlName="checkResponsabilidadC"
                 (change)="DesplegarFondoResponsabilidad(true, 1)">SI
             </div>
@@ -606,25 +606,25 @@
             </div>
             <div class="col-4 mx-3 mb-3">
                 <label>Cargar el Excel</label><span class="validacion">*</span>
-                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" maxlength="1"
+                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx"
                 formControlName="cargarExcel"
                 (change)="cargarArchivoXLSX($event,1)">
-                <!-- <app-validacion
+                <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo excel correspondiente es requerido.'"
                 [control]="this.formContractual.controls['cargarExcelC']"
-                /> -->
+                />
             </div>
             <div class="col-4 mx-3 mb-3">
                 <label>Cargar clausulado y caratula en PDF</label><span class="validacion">*</span>
-                <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" maxlength="1"
+                <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" 
                 formControlName="cargarPDF"
                 (change)="cargarArchivoPDf($event, 1)">
-                <!-- <app-validacion
+                <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo PDF correspondiente es requerido.'"
                 [control]="this.formContractual.controls['cargarPDFC']"
-                /> -->
+                />
             </div>
         </div>
     </div>
@@ -1052,7 +1052,7 @@
             </div>
         </div>
         <!-- RESPONSABILIDAD -->
-        <div class="row d-flex mx-3 mb-3">
+        <div class="d-flex mx-3 mb-3">
             <samp>
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector Transporte?
             </samp>
@@ -1212,25 +1212,25 @@
             </div>
             <div class="col-4 mx-3 mb-3">
                 <label>Cargar el Excel</label><span *ngIf="obligatorio" class="validacion">*</span>
-                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" maxlength="1"
+                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx"
                 formControlName="cargarExcel"
                 (change)="cargarArchivoXLSX($event,2)">
-                <!-- <app-validacion
+                <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo excel correspondiente es requerido.'"
                 [control]="this.formExtracontractual.controls['cargarExcel']"
-                /> -->
+                />
             </div>
             <div class="col-4 mx-3 mb-3">
                 <label>Cargar clausulado y caratula en PDF</label><span *ngIf="obligatorio" class="validacion">*</span>
-                <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" maxlength="1"
+                <input type="file" class="form-control" title="Cargar PDF" accept=".pdf"
                 formControlName="cargarPDF"
                 (change)="cargarArchivoPDf($event,2)">
-                <!-- <app-validacion
+                <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo PDF correspondiente es requerido.'"
                 [control]="this.formExtracontractual.controls['cargarPDF']"
-                /> -->
+                />
             </div>
         </div>
     </div>
