@@ -5,27 +5,25 @@ import { environment } from 'src/environments/environment';
 import { AseguradoraModel } from './Modelos/aseguradora';
 import { FiltrosAseguradora } from './Modelos/filtros';
 import { Paginacion } from '../compartido/modelos/Paginacion';
+import { Autenticable } from '../administrador/servicios/compartido/Autenticable';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AseguradoraService {
+export class AseguradoraService extends Autenticable{
 
 
-  private urlBackend:string
-  headers: HttpHeaders;
-  rute = '/api/v1/aseguradoras'
+  private readonly host = environment.urlBackend
+  private readonly rute = '/api/v1/aseguradoras'
 
-  constructor(private http: HttpClient, private auth:AutenticacionService) {
-    this.urlBackend = environment.urlBackend
-    this.headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "Authorization" : `Bearer ${auth.leerToken()}`
-    })
+  constructor(
+    private http: HttpClient
+  ) {
+      super()
   }
 
   crearAseguradora(aseguradora: AseguradoraModel){
-    return this.http.post(`${this.urlBackend}${this.rute}`, aseguradora, { headers: this.headers } )
+    return this.http.post(`${this.host}${this.rute}`, aseguradora, { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } } )
   }
 
   obtenerAseguradoras(pagina: number, limite: number, filtros?: FiltrosAseguradora){    
@@ -36,11 +34,11 @@ export class AseguradoraService {
         }
     }
     return this.http.get<{aseguradoras: AseguradoraModel[], paginacion: Paginacion}>(
-        `${this.urlBackend}${endpoint}`, { headers: this.headers })
+        `${this.host}${endpoint}`, { headers: { "Content-Type": "application/json",   "Authorization" : `Bearer ${this.obtenerTokenAutorizacion()}` } })
   }
 
   actualizarAseguradora(aseguradora: AseguradoraModel){
-    return this.http.put(`${this.urlBackend}${this.rute}`, aseguradora, { headers: this.headers } )
+    return this.http.put(`${this.host}${this.rute}`, aseguradora, { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } } )
   }
 
 }
