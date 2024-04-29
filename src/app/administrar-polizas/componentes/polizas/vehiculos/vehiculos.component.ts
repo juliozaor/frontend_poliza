@@ -36,7 +36,7 @@ export class VehiculosComponent {
   }
   obtenerVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
     return new Observable<Paginacion>( sub => {
-      this.servicio.vehiculos(pagina, limite, filtros, this.id ).subscribe({
+      this.servicio.vehiculos(pagina, limite, filtros).subscribe({
         next: ( respuesta:any )=>{                  
           this.vehiculos = respuesta.placas          
           sub.next(respuesta.paginacion)
