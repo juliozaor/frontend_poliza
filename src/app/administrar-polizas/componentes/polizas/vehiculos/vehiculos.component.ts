@@ -45,6 +45,11 @@ export class VehiculosComponent {
     })
   }
 
+  exportarVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
+    
+    this.servicio.exportar(pagina, limite, { termino: this.termino })
+  }
+
   actualizarFiltros(){
     this.paginador.filtrar({ termino: this.termino })
   }

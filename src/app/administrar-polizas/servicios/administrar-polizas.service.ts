@@ -126,5 +126,25 @@ export class ServicioAdministrarPolizas extends Autenticable{
       return this.http.get(`${this.host}${endpoint}`,{ headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } })
  
     }
+
+    exportar(pagina: number, limite: number, filtros?:FiltrosVehiculos, vigiladoId?:string) {
+      let endpoint = `/api/v1/exportar/vehiculos?pagina=${pagina}&limite=${limite}`;
+      console.log(filtros);
+      
+      if(filtros){
+       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;      
+      }
+      if (vigiladoId) {
+        endpoint+=`&vigiladoId=${vigiladoId}`;
+      }
+
+      const url = `${this.host}${endpoint}`;
+
+// Abrir la URL en otra ventana
+window.open(url, '_blank');
+      
+      /* this.http.get(`${this.host}${endpoint}`,{ headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }) */
+ 
+    }
     
 }
