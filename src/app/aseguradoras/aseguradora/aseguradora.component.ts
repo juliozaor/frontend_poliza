@@ -31,7 +31,7 @@ export class AseguradoraComponent {
   }
 
   obtenerAseguradoras = (page: number, limit: number, filters?: FiltrosAseguradora) => {    
-    console.log("Entro");
+    //console.log("Entro");
     
     return new Observable<Paginacion>((subscribe) => {
       this.service.obtenerAseguradoras(page, limit, filters).subscribe({
