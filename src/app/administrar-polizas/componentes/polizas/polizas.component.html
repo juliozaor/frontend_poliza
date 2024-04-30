@@ -20,7 +20,10 @@
                     </div>
                     <div class="col-6">
                         <input formControlName="numeroPolizaC"
-                        class="form-control" type="number" placeholder="Número de póliza">
+                        ngModel maxLengt="4"
+                        class="form-control" type="number" placeholder="Número de póliza"
+                        max="9999" >
+                        <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de la poliza es requerido.'"
@@ -122,6 +125,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB1"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAB1')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -131,6 +135,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB1"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAB1')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -140,6 +145,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB1"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAB1')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -159,6 +165,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB2"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAB2')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -168,6 +175,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB2"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAB2')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -177,6 +185,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB2"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAB2')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -196,6 +205,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB3"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAB3')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -205,6 +215,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB3"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAB3')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -214,6 +225,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB3"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAB3')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -233,6 +245,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB4"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAB4')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -242,6 +255,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB4"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAB4')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -251,6 +265,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB4"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAB4')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -305,6 +320,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA5"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAA5')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -314,6 +330,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA5"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAA5')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -323,6 +340,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA5"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAA5')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -342,6 +360,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA6"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAA6')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -351,6 +370,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA6"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAA6')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -360,6 +380,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA6"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAA6')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -379,6 +400,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA7"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAA7')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -388,6 +410,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA7"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAA7')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -397,6 +420,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA7"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAA7')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -416,6 +440,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA8"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formContractual.get('valorAseguradoAA8')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -425,6 +450,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA8"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formContractual.get('limitesAA8')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -434,6 +460,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA8"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formContractual.get('deducibleAA8')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -453,7 +480,7 @@
             <div class="mx-3 cursor-pointer texto2">
                 <input type="checkbox" title="Marcar para ver formulario"
                 formControlName="checkResponsabilidadC"
-                (change)="DesplegarFondoResponsabilidad(true, 1)">SI
+                (change)="DesplegarFondoResponsabilidad(1)">SI
             </div>
         </div>
         <div *ngIf="fondoResponsabilidadC" class="row d-flex mx-3 mb-3">
@@ -486,6 +513,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="Número resolución"
                             formControlName="numeroResolucion">
+                            <span *ngIf="formContractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de resolución es requerido.'"
@@ -514,6 +542,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="valor reservas"
                             formControlName="valorReserva">
+                            <span *ngIf="formContractual.get('valorReserva')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la reserva es requerido.'"
@@ -558,6 +587,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="¿primera o segunda?"
                             formControlName="capas">
+                            <span *ngIf="formContractual.get('capas')?.hasError('capas')" class="validacion">Debe digitar 1 o 2.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'La respuesta es requerida.'"
@@ -572,6 +602,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="primera capa"
                             formControlName="capa1">
+                            <span *ngIf="formContractual.get('capa1')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la capa 1 es requerido.'"
@@ -586,6 +617,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="segunda capa"
                             formControlName="capa2">
+                            <span *ngIf="formContractual.get('capa2')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la capa 2 es requerido.'"
@@ -612,7 +644,7 @@
                 <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo excel correspondiente es requerido.'"
-                [control]="this.formContractual.controls['cargarExcelC']"
+                [control]="this.formContractual.controls['cargarExcel']"
                 />
             </div>
             <div class="col-4 mx-3 mb-3">
@@ -623,7 +655,7 @@
                 <app-validacion
                 [validacion]="'required'"
                 [texto]="'El Archivo PDF correspondiente es requerido.'"
-                [control]="this.formContractual.controls['cargarPDFC']"
+                [control]="this.formContractual.controls['cargarPDF']"
                 />
             </div>
         </div>
@@ -655,6 +687,7 @@
                         <input formControlName="numeroPolizaE"
                         class="form-control" type="number" placeholder="Número de póliza"
                         (change)="numeroPolizaELleno()">
+                        <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                         <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de la poliza es requerido.'"
@@ -759,6 +792,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB9"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAB9')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -768,6 +802,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB9"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAB9')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -777,6 +812,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB9"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAB9')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -797,6 +833,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB10"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAB10')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -806,6 +843,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB10"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAB10')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -815,6 +853,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB10"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAB10')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -835,6 +874,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAB11"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAB11')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -844,6 +884,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAB11"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAB11')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -853,6 +894,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAB11"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAB11')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -908,6 +950,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA12"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAA12')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -917,6 +960,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA12"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAA12')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -926,6 +970,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA12"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAA12')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -946,6 +991,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA13"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAA13')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -955,6 +1001,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA13"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAA13')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -964,6 +1011,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA13"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAA13')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -984,6 +1032,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA14"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAA14')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -993,6 +1042,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA14"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAA14')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -1002,6 +1052,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA14"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAA14')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -1022,6 +1073,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="valorAseguradoAA15"
                                 class="form-control" type="number" placeholder="Valor Asegurado">
+                                <span *ngIf="formExtracontractual.get('valorAseguradoAA15')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El valor asegurado es requerido.'"
@@ -1031,6 +1083,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="limitesAA15"
                                 class="form-control" type="number" placeholder="Límites">
+                                <span *ngIf="formExtracontractual.get('limitesAA15')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El limite es requerido.'"
@@ -1040,6 +1093,7 @@
                             <div class="col-2 justify-content-start">
                                 <input formControlName="deducibleAA15"
                                 class="form-control" type="number" placeholder="Deducible">
+                                <span *ngIf="formExtracontractual.get('deducibleAA15')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 3 digitos.</span>
                                 <app-validacion
                                 [validacion]="'required'"
                                 [texto]="'El deducible es requerido.'"
@@ -1059,7 +1113,7 @@
             <div class="mx-3 cursor-pointer texto2">
                 <input type="checkbox" title="Marcar para ver formulario"
                 formControlName="checkResponsabilidadE"
-                (change)="DesplegarFondoResponsabilidad(true, 2)">SI
+                (change)="DesplegarFondoResponsabilidad(2)">SI
             </div>
         </div>
         <div *ngIf="fondoResponsabilidadE" class="row d-flex mx-3 mb-3">
@@ -1092,6 +1146,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="Número resolución"
                             formControlName="numeroResolucion">
+                            <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El número de resolución es requerido.'"
@@ -1120,6 +1175,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="valor reservas"
                             formControlName="valorReserva">
+                            <span *ngIf="formExtracontractual.get('valorReserva')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la reserva es requerido.'"
@@ -1164,6 +1220,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="¿primera o segunda?"
                             formControlName="capas">
+                             <span *ngIf="formExtracontractual.get('capas')?.hasError('capas')" class="validacion">Debe digitar 1 o 2.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'La respuesta es requerida.'"
@@ -1178,6 +1235,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="primera capa"
                             formControlName="capa1">
+                            <span *ngIf="formExtracontractual.get('capa1')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la capa 1 es requerido.'"
@@ -1192,6 +1250,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="segunda capa"
                             formControlName="capa2">
+                            <span *ngIf="formExtracontractual.get('capa2')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 4 digitos.</span>
                             <app-validacion
                             [validacion]="'required'"
                             [texto]="'El valor de la capa 2 es requerido.'"
@@ -1245,3 +1304,4 @@
 </div>
 <app-modal-capacidad #modalCapacidad></app-modal-capacidad>
 <app-popup #popup/>
+

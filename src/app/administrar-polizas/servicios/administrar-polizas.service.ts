@@ -25,6 +25,15 @@ export class ServicioAdministrarPolizas extends Autenticable{
         super()
     }
 
+    obtenerEstadoVigilado()
+    :Observable<boolean>{
+      let endpoint = `/api/v1/estados/enviadost`
+      return this.http.get<any>(
+        `${this.host}${endpoint}`,
+        { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+      )
+    }
+
     obtenerPolizas(id: number)
     :Observable<any>{
         let endpoint = `/api/v1/poliza?modalidadId=${id}`
