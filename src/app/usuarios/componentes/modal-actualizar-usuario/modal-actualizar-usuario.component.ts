@@ -35,7 +35,7 @@ export class ModalActualizarUsuarioComponent implements OnInit{
       nombre: new FormControl(undefined, [ Validators.required ]),
       apellido: new FormControl(undefined),
       identificacion: new FormControl(undefined, [ Validators.required ]),
-      fechaNacimiento: new FormControl(undefined, [ Validators.required ]),
+      fechaNacimiento: new FormControl(undefined),
       correo: new FormControl(undefined, [ Validators.required ]),
       telefono: new FormControl(undefined),
       rol: new FormControl("", [ Validators.required ])
