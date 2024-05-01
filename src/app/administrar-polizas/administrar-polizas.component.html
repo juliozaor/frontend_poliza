@@ -1,7 +1,6 @@
 <div class="p-5 pt-0">
     <div class="d-block w-100">
-        <h2 class="fs-20px fw-semibold texto-azul-004884 mb-3 text-center mt-3 w-100">INFORMACIÓN GENERAL DEL VIGILADO
-            EN EL SISTEMA VIGÍA</h2>
+        <h2 class="fs-20px fw-semibold texto-azul-004884 mb-3 text-center mt-3 w-100">{{titulo}}</h2>
         <div class="d-flex w-100">
             <p class="w-100 text-center">
                 En caso de no suministrar la información, 
@@ -12,7 +11,8 @@
         </div>
     </div>
 </div>
-<div class="w-100">
-    <app-polizas-rcc></app-polizas-rcc>
-    <app-polizas-rce></app-polizas-rce>
+<!-- *ngIf="polizas" -->
+<div class="p-5 pt-0" >
+    <app-polizas #Polizas></app-polizas>
 </div>
+

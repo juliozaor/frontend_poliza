@@ -10,7 +10,9 @@ import { PaginaSoportesComponent } from './soportes/paginas/pagina-soportes/pagi
 import { PaginaResponderSoporteComponent } from './soportes/paginas/pagina-responder-soporte/pagina-responder-soporte.component';
 import { SoporteAccesoComponent } from './autenticacion/componentes/soporte-acceso/soporte-acceso.component';
 import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
-import { CrearUsuariosComponent } from './crear-usuarios/crear-usuarios.component';
+import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
+import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
+import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
 
 
 
@@ -21,12 +23,12 @@ const routes: Routes = [
     canActivate: [AutenticacionGuard],
     children: [
       {
-        path: 'inicio',
+        path: 'informacion-general',
         component: PaginaInformacionGeneralVigiladoComponent
       },
       {
         path: 'crear-usuarios',
-        component: CrearUsuariosComponent
+        component: PaginaCrearUsuarioComponent
       },
       {
         path: 'administrar-poliza',
@@ -43,6 +45,14 @@ const routes: Routes = [
       {
         path: 'soportes',
         component: PaginaSoportesComponent
+      },
+      {
+        path: 'vehiculos',
+        component: VehiculosComponent
+      },
+      {
+        path: 'aseguradoras',
+        component: AseguradoraComponent
       }
     ]
   },

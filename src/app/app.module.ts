@@ -8,23 +8,15 @@ import { AutenticacionModule } from './autenticacion/autenticacion.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorAutorizacion } from './administrador/interceptores/InterceptorAutorizacion';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
-import { CrearUsuariosComponent } from './crear-usuarios/crear-usuarios.component';
-import { PolizasRccComponent } from './administrar-polizas/componentes/polizas-rcc/polizas-rcc.component';
-import { PolizasRceComponent } from './administrar-polizas/componentes/polizas-rce/polizas-rce.component';
-import { AmparosBasicosComponent } from './administrar-polizas/componentes/polizas-rcc/amparos/amparos-basicos/amparos-basicos.component';
-import { FormsModule } from '@angular/forms';
-import { AmparosAdicionalesComponent } from './administrar-polizas/componentes/polizas-rcc/amparos/amparos-adicionales/amparos-adicionales.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { AlertasModule } from './alertas/alertas.module';
+import { AdministrarPolizasModule } from './administrar-polizas/administrar-polizas.module';
+import { AseguradorasModule } from './aseguradoras/aseguradoras.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdministrarPolizasComponent,
-    CrearUsuariosComponent,
-    PolizasRccComponent,
-    PolizasRceComponent,
-    AmparosBasicosComponent,
-    AmparosAdicionalesComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +26,11 @@ import { AmparosAdicionalesComponent } from './administrar-polizas/componentes/p
     AutenticacionModule,
     SweetAlert2Module.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
+    UsuariosModule,
+    AdministrarPolizasModule,
+    AlertasModule,
+    AseguradorasModule
   ],
   exports:[
   ],
