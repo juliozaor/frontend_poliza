@@ -27,6 +27,7 @@ export class PolizasComponent implements OnInit{
   archivoCargado: string = ""
   archivoPDF?: ArchivoGuardado
   obligatorio: boolean = false
+  deshabilitado: boolean = false
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
@@ -158,14 +159,32 @@ export class PolizasComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.deshabilitarFormularios()
+    //this.deshabilitarFormularios()
     this.obtenerAseguradora()
+  }
+
+  finalizar(){
+    Swal.fire({
+      titleText: "¿Seguro que quiere finalizar?",
+      text: "Despues de enviar a la Superintendencia de Transporte no podrá llenar más polizas.",
+      confirmButtonText: "Finalizar",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar"
+    }).then((result) =>{
+      if(result.isConfirmed){
+        this.abrirModalCapacidad()
+      }else if(result.isDismissed){
+        Swal.close()
+      }
+    })
   }
 
   deshabilitarFormularios() {
     this.servicioAdministrarPoliza.obtenerEstadoVigilado().subscribe({
       next: (deshabilitado: boolean) =>{
         if(deshabilitado){
+          this.deshabilitado = deshabilitado
           this.formContractual.disable()
           this.formExtracontractual.disable()
           Swal.fire({
