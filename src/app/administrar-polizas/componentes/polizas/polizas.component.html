@@ -632,7 +632,7 @@
         <div class="d-flex mx-3 mb-3">
             <div class="col-2 mx-3 mb-3">
                 <label>Descargar estuctura</label>
-                <button class="btn btn-primary" (click)="descargarArchivoXLSX()">
+                <button class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
                     <samp class="fa fa-download">Descargar</samp>
                 </button>
             </div>
@@ -1265,7 +1265,7 @@
         <div class="d-flex mx-3 mb-3">
             <div class="col-2 mx-3 mb-3">
                 <label>Descargar estuctura</label>
-                <button class="btn btn-primary" (click)="descargarArchivoXLSX()">
+                <button class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
                     <samp class="fa fa-download">Descargar</samp>
                 </button>
             </div>
@@ -1297,10 +1297,23 @@
 
 <div class="p-5 pt-0" >
     <hr>
-    <div class="text-center">
-        <button class="btn btn-primary"
-        (click)="guardarPolizas()">Guardar</button>
+    <div class="row">
+        <div class="col-6">
+            <div class="text-center">
+                <button class="btn btn-primary"
+                (click)="guardarPolizas()"
+                [disabled]="deshabilitado">Guardar</button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="text-center">
+                <button class="btn btn-primary"
+                (click)="finalizar()"
+                [disabled]="deshabilitado">Finalizar</button>
+            </div>
+        </div>
     </div>
+    
 </div>
 <app-modal-capacidad #modalCapacidad></app-modal-capacidad>
 <app-popup #popup/>
