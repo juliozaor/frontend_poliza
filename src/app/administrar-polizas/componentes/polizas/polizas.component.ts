@@ -159,7 +159,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.deshabilitarFormularios()
+    this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
 
