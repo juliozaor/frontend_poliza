@@ -1,12 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { CapacidadesModel, ModalidadModel, ModalidadesModel } from 'src/app/administrar-polizas/modelos/modalidades';
 import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicios/administrar-polizas.service';
 import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
 import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
 import Swal from 'sweetalert2';
+import { maxLengthNumberValidator } from '../../validadores/maximo-validador';
+import { valorCeroValidar } from '../../validadores/cero-validacion';
 
 @Component({
   selector: 'app-modal-capacidad',
@@ -16,7 +19,9 @@ import Swal from 'sweetalert2';
 export class ModalCapacidadComponent implements OnInit{
   @ViewChild('modal') modal!: ElementRef
   @ViewChild('popup') popup!:PopupComponent
-  form: FormGroup
+  formMX: FormGroup
+  formES: FormGroup
+  formPC: FormGroup
 
   desplegarMX: boolean = true
   desplegarES: boolean = false
@@ -33,19 +38,23 @@ export class ModalCapacidadComponent implements OnInit{
     private servicioModal: NgbModal,
     private servicioAdministrarPoliza: ServicioAdministrarPolizas
   ){
-    this.form = new FormGroup({
+    this.formMX = new FormGroup({
       // Modalidad MX
-      numeroRMX: new FormControl(undefined),
-      fechaRMX: new FormControl(undefined),
-      PDFRMX: new FormControl(undefined),
+      numeroRMX: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
+      fechaRMX: new FormControl(undefined, [ Validators.required ]),
+      PDFRMX: new FormControl(undefined, [ Validators.required ]),
+    })
+    this.formES = new FormGroup({
       //Modalidad ES
-      numeroRES: new FormControl(undefined),
-      fechaRES: new FormControl(undefined),
-      PDFRES: new FormControl(undefined),
+      numeroRES: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
+      fechaRES: new FormControl(undefined, [ Validators.required ]),
+      PDFRES: new FormControl(undefined, [ Validators.required ]),
+    })
+    this.formPC = new FormGroup({
       //Modalidad PC
-      numeroRPC: new FormControl(undefined),
-      fechaRPC: new FormControl(undefined),
-      PDFRPC: new FormControl(undefined),
+      numeroRPC: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
+      fechaRPC: new FormControl(undefined, [ Validators.required ]),
+      PDFRPC: new FormControl(undefined, [ Validators.required ]),
     })
   }
   ngOnInit(): void {
@@ -71,48 +80,111 @@ export class ModalCapacidadComponent implements OnInit{
     let MX!: ModalidadModel
     let ES!: ModalidadModel
     let PC!: ModalidadModel
-      if(this.form.controls['numeroRMX'].value){
+      if(this.formMX.controls['numeroRMX'].value){
         MX = {
-          numero: this.form.controls['numeroRMX'].value,
-          vigencia: this.form.controls['fechaRMX'].value,
+          numero: this.formMX.controls['numeroRMX'].value,
+          vigencia: this.formMX.controls['fechaRMX'].value,
           modalidadId: this.modalidades[0].id,
           nombre: this.archivoPDFMX?.nombreAlmacenado,
           nombreOriginal: this.archivoPDFMX?.nombreOriginalArchivo,
           ruta: this.archivoPDFMX?.ruta,
         }
       }
-      if(this.form.controls['numeroRES'].value){
+      if(this.formES.controls['numeroRES'].value){
         ES = {
-          numero: this.form.controls['numeroRES'].value,
-          vigencia: this.form.controls['fechaRES'].value,
+          numero: this.formES.controls['numeroRES'].value,
+          vigencia: this.formES.controls['fechaRES'].value,
           modalidadId: this.modalidades[1].id,
           nombre: this.archivoPDFES?.nombreAlmacenado,
           nombreOriginal: this.archivoPDFES?.nombreOriginalArchivo,
           ruta: this.archivoPDFES?.ruta,
         }
       }
-      if(this.form.controls['numeroRPC'].value){
+      if(this.formPC.controls['numeroRPC'].value){
         PC = {
-          numero: this.form.controls['numeroRPC'].value,
-          vigencia: this.form.controls['fechaRPC'].value,
+          numero: this.formPC.controls['numeroRPC'].value,
+          vigencia: this.formPC.controls['fechaRPC'].value,
           modalidadId: this.modalidades[2].id,
           nombre: this.archivoPDFPC?.nombreAlmacenado,
           nombreOriginal: this.archivoPDFPC?.nombreOriginalArchivo,
           ruta: this.archivoPDFPC?.ruta,
         }
       }
-      if(MX && !ES && !PC){capacidadJson.capacidades = [MX]}
-      else if(!MX && ES && !PC){capacidadJson.capacidades = [ES]}
-      else if(!MX && !ES && PC){capacidadJson.capacidades = [PC]}
-      else if(MX && ES && !PC){capacidadJson.capacidades = [MX,ES]}
-      else if(MX && !ES && PC){capacidadJson.capacidades = [MX,PC]}
-      else if(!MX && ES && PC){capacidadJson.capacidades = [ES,PC]}
-      else if(MX && ES && PC){capacidadJson.capacidades = [MX,ES,PC]}
+      if(MX && !ES && !PC){//Solo MX existe
+        /* this.formES.reset();this.formES.markAsPristine()
+        this.formPC.reset();this.formPC.markAsPristine()
+        console.log("MX: ",MX);
+        if(this.formMX.invalid){
+          marcarFormularioComoSucio(this.formMX)
+          Swal.fire({
+            text: "Hay errores en "+this.modalidades[0].nombre+" sin corregir",
+            icon: "error",
+            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
+          })
+          return;
+        } */
+        
+        capacidadJson.capacidades = [MX]
+      }
+      else if(!MX && ES && !PC){//Solo ES existe
+       /*  this.formMX.reset();this.formMX.markAsPristine()
+        this.formPC.reset();this.formPC.markAsPristine()
+        console.log("ES: ",ES);
+        if(this.formES.invalid){
+          marcarFormularioComoSucio(this.formES)
+          Swal.fire({
+            text: "Hay errores en "+this.modalidades[1].nombre+" sin corregir",
+            icon: "error",
+            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
+          })
+          return;
+        } */
+        capacidadJson.capacidades = [ES]
+      }
+      else if(!MX && !ES && PC){//Solo PC existe
+        /* this.formES.reset();this.formES.markAsPristine()
+        this.formMX.reset();this.formMX.markAsPristine()
+        if(this.formPC.invalid){
+          marcarFormularioComoSucio(this.formPC)
+          Swal.fire({
+            text: "Hay errores en "+this.modalidades[2].nombre+" sin corregir",
+            icon: "error",
+            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
+          })
+          return;
+        } */
+        capacidadJson.capacidades = [PC]
+      }
+      else if(MX && ES && !PC){//Solo existe MX y ES
+        /* if(this.formMX.invalid && this.formES.invalid){
+          marcarFormularioComoSucio(this.formMX)
+          marcarFormularioComoSucio(this.formES)
+          Swal.fire({
+            text: "Hay errores en "+this.modalidades[0].nombre+" y "+this.modalidades[1].nombre+" sin corregir",
+            icon: "error",
+            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
+          })
+          return;
+        } */
+        capacidadJson.capacidades = [MX,ES]
+      }
+      else if(MX && !ES && PC){
+        capacidadJson.capacidades = [MX,PC]
+      }
+      else if(!MX && ES && PC){
+        capacidadJson.capacidades = [ES,PC]
+      }
+      else if(MX && ES && PC){
+        capacidadJson.capacidades = [MX,ES,PC]
+      }
 
     if(MX || ES || PC){
-      //console.log(this.capacidadJson);
+      console.log(this.capacidadJson);
       this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
         next: (respuesta) => {
+          this.formMX.reset()
+          this.formES.reset()
+          this.formPC.reset()
           Swal.fire({
             text: respuesta.mensaje,
             icon: "success",
@@ -153,11 +225,11 @@ export class ModalCapacidadComponent implements OnInit{
             icon: "warning",
           })
           if(tipoModalidad == 1){
-            this.form.controls['PDFMX'].setValue('')
+            this.formMX.controls['PDFMX'].setValue('')
           }else if(tipoModalidad == 2){
-            this.form.controls['PDFES'].setValue('')
+            this.formES.controls['PDFES'].setValue('')
           }else if(tipoModalidad == 3){
-            this.form.controls['PDFPC'].setValue('')
+            this.formPC.controls['PDFPC'].setValue('')
           }
           
         }
@@ -177,5 +249,8 @@ export class ModalCapacidadComponent implements OnInit{
 
   closeModal() {
     this.servicioModal.dismissAll();
+    this.formMX.reset()
+    this.formES.reset()
+    this.formPC.reset()
   }
 }
