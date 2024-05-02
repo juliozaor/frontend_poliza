@@ -207,6 +207,11 @@ export class PolizasComponent implements OnInit {
     })
   }
 
+  cambiarNumeroPoliza(tipoPoliza: number){
+    if(tipoPoliza == 1){this.formContractual.controls['cargarExcel'].setValue('')}
+    if(tipoPoliza == 2){this.formExtracontractual.controls['cargarExcel'].setValue('')}
+  }
+
   guardarPolizas() {
     console.log(this.formContractual);
 

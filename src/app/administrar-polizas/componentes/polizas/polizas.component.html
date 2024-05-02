@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-6">
                         <input formControlName="numeroPolizaC"
-                        ngModel maxLengt="4"
+                        ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
                         class="form-control" type="number" placeholder="Número de póliza">
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('cero')" class="validacion">No debe ser 0.</span>
@@ -743,7 +743,7 @@
                     <div class="col-6">
                         <input formControlName="numeroPolizaE"
                         class="form-control" type="number" placeholder="Número de póliza"
-                        (change)="numeroPolizaELleno()">
+                        (change)="[numeroPolizaELleno(),cambiarNumeroPoliza(2)]">
                         <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
                         <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser 0.</span>
                         <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser número negativo.</span>
