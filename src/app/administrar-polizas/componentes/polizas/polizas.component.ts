@@ -399,6 +399,8 @@ export class PolizasComponent implements OnInit {
         })
         controlsC['numeroPolizaC'].setValue('')
         controlsE['numeroPolizaE'].setValue('')
+        controlsC['cargarExcel'].setValue('')
+        controlsE['cargarExcel'].setValue('')
         return;
       }
       polizaJson.polizaExtracontractual = polizaExtracontractual
@@ -583,8 +585,22 @@ export class PolizasComponent implements OnInit {
                   }
                 })
                 this.formExtracontractual.controls['cargarExcel'].setValue('')
+              }else if(error.status == 500){
+                Swal.close();
+                Swal.fire({
+                  text: error.error.mensaje,
+                  icon: "error"
+                })
+                this.formExtracontractual.controls['cargarExcel'].setValue('')
+              }else{
+                Swal.close();
+                Swal.fire({
+                  text: "Hubo un error de conexión, intentelo más tarde.",
+                  icon: "error",
+                  titleText: "¡Lo sentimos!",
+                })
+                this.formExtracontractual.controls['cargarExcel'].setValue('')
               }
-              //Swal.close();
             }
           })
         };
