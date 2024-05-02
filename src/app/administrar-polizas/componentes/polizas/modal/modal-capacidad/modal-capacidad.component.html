@@ -1,10 +1,10 @@
 <ng-template #modal let-modal>
     <div class="modal-header">
         <h4 class="modal-title fs-14px  fw-bolder">Modalidades</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="form">
+        <form >
             <!-- Modal MX -->
             <div *ngIf="modalidades[0].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarMX()">
                     <div class="mx-3">
@@ -18,36 +18,53 @@
                     </div>
             </div>
             <div *ngIf="modalidades[0].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarMX, 'd-block': desplegarMX}">
+                <form [formGroup]="formMX">       
                     <div class="col-12">
-                        <div class="row">
-                            <fieldset>
-                                <label for="numeroResolucionVigente" class="fw-semibold">
-                                    Número de resolución vigente
-                                </label>
-                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRMX">
-                            </fieldset>
-                        </div>
-                        <div class="row">
-                            <fieldset>
-                                <label for="fechaResolucionVigente" class="fw-semibold">
-                                    Fecha de la resolución vigente
-                                </label>
-                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX">
-                            </fieldset>
-                        </div>
-                        <div class="row">
-                            <fieldset>
-                                <label for="PDFResolucionVigente" class="fw-semibold">
-                                    PDF con el documento vigente
-                                </label>
-                                <input title="PDF resolución" type="file" class="form-control" 
-                                formControlName="PDFRMX" accept=".pdf" maxlength="1"
-                                (change)="cargarArchivoPDf($event,1)">
-                            </fieldset>
-                        </div>
+                            <div class="row">
+                                <fieldset>
+                                    <label for="numeroResolucionVigente" class="fw-semibold">
+                                        Número de resolución vigente
+                                    </label>
+                                    <input title="número resolución" type="number" class="form-control" formControlName="numeroRMX">
+                                    <span *ngIf="formMX.get('numeroRMX')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 20 digitos.</span>
+                                    <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [control]="this.formMX.controls['numeroRMX']"
+                                    />
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset>
+                                    <label for="fechaResolucionVigente" class="fw-semibold">
+                                        Fecha de la resolución vigente
+                                    </label>
+                                    <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX">
+                                    <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'La fecha de la resolución vigente es requerida.'"
+                                    [control]="this.formMX.controls['fechaRMX']"
+                                    />
+                                </fieldset>
+                            </div>
+                            <div class="row">
+                                <fieldset>
+                                    <label for="PDFResolucionVigente" class="fw-semibold">
+                                        PDF con el documento vigente
+                                    </label>
+                                    <input title="PDF resolución" type="file" class="form-control" 
+                                    formControlName="PDFRMX" accept=".pdf" maxlength="1"
+                                    (change)="cargarArchivoPDf($event,1)">
+                                    <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'El documento es requerido.'"
+                                    [control]="this.formMX.controls['PDFRMX']"
+                                    />
+                                </fieldset>
+                            </div>
                     </div>
+                </form> 
             </div>
-                
             <!--  Modal ES -->
             <div *ngIf="modalidades[1].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarES()">
                 <div class="mx-3">
@@ -61,34 +78,51 @@
                 </div>
             </div>
             <div *ngIf="modalidades[1].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarES, 'd-block': desplegarES}">
-                <div class="col-12">
-                    <div class="row">
-                        <fieldset>
-                            <label for="numeroResolucionVigente" class="fw-semibold">
-                                Número de resolución vigente
-                            </label>
-                            <input title="número resolución" type="text" class="form-control" formControlName="numeroRES">
-                        </fieldset>
+                <form [formGroup]="formES">
+                    <div class="col-12">
+                        <div class="row">
+                            <fieldset>
+                                <label for="numeroResolucionVigente" class="fw-semibold">
+                                    Número de resolución vigente
+                                </label>
+                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRES">
+                                <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [control]="this.formES.controls['numeroRES']"
+                                    />
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset>
+                                <label for="fechaResolucionVigente" class="fw-semibold">
+                                    Fecha de la resolución vigente
+                                </label>
+                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES">
+                                <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [control]="this.formES.controls['fechaRES']"
+                                    />
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset>
+                                <label for="PDFResolucionVigente" class="fw-semibold">
+                                    PDF con el documento vigente
+                                </label>
+                                <input title="PDF resolución" type="file" class="form-control" 
+                                formControlName="PDFRES" accept=".pdf" maxlength="1"
+                                (change)="cargarArchivoPDf($event,2)">
+                                <app-validacion
+                                    [validacion]="'required'"
+                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [control]="this.formES.controls['PDFRES']"
+                                    />
+                            </fieldset>
+                        </div>
                     </div>
-                    <div class="row">
-                        <fieldset>
-                            <label for="fechaResolucionVigente" class="fw-semibold">
-                                Fecha de la resolución vigente
-                            </label>
-                            <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES">
-                        </fieldset>
-                    </div>
-                    <div class="row">
-                        <fieldset>
-                            <label for="PDFResolucionVigente" class="fw-semibold">
-                                PDF con el documento vigente
-                            </label>
-                            <input title="PDF resolución" type="file" class="form-control" 
-                            formControlName="PDFRES" accept=".pdf" maxlength="1"
-                            (change)="cargarArchivoPDf($event,2)">
-                        </fieldset>
-                    </div>
-                </div> 
+                </form> 
             </div>
              <!-- Modal PC  -->
             <div *ngIf="modalidades[2].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarPC()">
@@ -103,34 +137,51 @@
                 </div>
             </div>
             <div *ngIf="modalidades[2].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarPC, 'd-block': desplegarPC}">
-                <div class="col-12">
-                    <div class="row">
-                        <fieldset>
-                            <label for="numeroResolucionVigente" class="fw-semibold">
-                                Número de resolución vigente
-                            </label>
-                            <input title="número resolución" type="text" class="form-control" formControlName="numeroRPC">
-                        </fieldset>
-                    </div>
-                    <div class="row">
-                        <fieldset>
-                            <label for="fechaResolucionVigente" class="fw-semibold">
-                                Fecha de la resolución vigente
-                            </label>
-                            <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC">
-                        </fieldset>
-                    </div>
-                    <div class="row">
+                <form [formGroup]="formPC">
+                    <div class="col-12">
+                        <div class="row">
                             <fieldset>
-                            <label for="PDFResolucionVigente" class="fw-semibold">
-                                PDF con el documento vigente
-                            </label>
-                            <input title="PDF resolución" type="file" class="form-control" 
-                            formControlName="PDFRPC" accept=".pdf" maxlength="1"
-                            (change)="cargarArchivoPDf($event,3)">
-                        </fieldset>
+                                <label for="numeroResolucionVigente" class="fw-semibold">
+                                    Número de resolución vigente
+                                </label>
+                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRPC">
+                                <app-validacion
+                                        [validacion]="'required'"
+                                        [texto]="'El número de la resolución vigente es requerido.'"
+                                        [control]="this.formPC.controls['numeroRPC']"
+                                        />
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset>
+                                <label for="fechaResolucionVigente" class="fw-semibold">
+                                    Fecha de la resolución vigente
+                                </label>
+                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC">
+                                <app-validacion
+                                        [validacion]="'required'"
+                                        [texto]="'El número de la resolución vigente es requerido.'"
+                                        [control]="this.formPC.controls['fechaRPC']"
+                                        />
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                                <fieldset>
+                                <label for="PDFResolucionVigente" class="fw-semibold">
+                                    PDF con el documento vigente
+                                </label>
+                                <input title="PDF resolución" type="file" class="form-control" 
+                                formControlName="PDFRPC" accept=".pdf" maxlength="1"
+                                (change)="cargarArchivoPDf($event,3)">
+                                <app-validacion
+                                        [validacion]="'required'"
+                                        [texto]="'El número de la resolución vigente es requerido.'"
+                                        [control]="this.formPC.controls['PDFRPC']"
+                                        />
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </form>
     </div>
