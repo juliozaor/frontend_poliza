@@ -25,8 +25,10 @@
                                     <label for="numeroResolucionVigente" class="fw-semibold">
                                         Número de resolución vigente
                                     </label>
-                                    <input title="número resolución" type="number" class="form-control" formControlName="numeroRMX">
+                                    <input title="número resolución" type="number" class="form-control" 
+                                    formControlName="numeroRMX">
                                     <span *ngIf="formMX.get('numeroRMX')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 20 digitos.</span>
+                                    <span *ngIf="formMX.get('numeroRMX')?.hasError('negativo')" class="validacion"> No debe ser número negativo.</span>
                                     <app-validacion
                                     [validacion]="'required'"
                                     [texto]="'El número de la resolución vigente es requerido.'"
@@ -85,7 +87,8 @@
                                 <label for="numeroResolucionVigente" class="fw-semibold">
                                     Número de resolución vigente
                                 </label>
-                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRES">
+                                <input title="número resolución" type="number" class="form-control" 
+                                formControlName="numeroRES">
                                 <app-validacion
                                     [validacion]="'required'"
                                     [texto]="'El número de la resolución vigente es requerido.'"
@@ -101,7 +104,7 @@
                                 <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES">
                                 <app-validacion
                                     [validacion]="'required'"
-                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [texto]="'La fecha de la resolución vigente es requerida.'"
                                     [control]="this.formES.controls['fechaRES']"
                                     />
                             </fieldset>
@@ -116,7 +119,7 @@
                                 (change)="cargarArchivoPDf($event,2)">
                                 <app-validacion
                                     [validacion]="'required'"
-                                    [texto]="'El número de la resolución vigente es requerido.'"
+                                    [texto]="'El documento requerido.'"
                                     [control]="this.formES.controls['PDFRES']"
                                     />
                             </fieldset>
@@ -144,7 +147,8 @@
                                 <label for="numeroResolucionVigente" class="fw-semibold">
                                     Número de resolución vigente
                                 </label>
-                                <input title="número resolución" type="text" class="form-control" formControlName="numeroRPC">
+                                <input title="número resolución" type="number" class="form-control" 
+                                formControlName="numeroRPC">
                                 <app-validacion
                                         [validacion]="'required'"
                                         [texto]="'El número de la resolución vigente es requerido.'"
@@ -160,7 +164,7 @@
                                 <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC">
                                 <app-validacion
                                         [validacion]="'required'"
-                                        [texto]="'El número de la resolución vigente es requerido.'"
+                                        [texto]="'La fecha de la resolución vigente es requerida.'"
                                         [control]="this.formPC.controls['fechaRPC']"
                                         />
                             </fieldset>
@@ -175,7 +179,7 @@
                                 (change)="cargarArchivoPDf($event,3)">
                                 <app-validacion
                                         [validacion]="'required'"
-                                        [texto]="'El número de la resolución vigente es requerido.'"
+                                        [texto]="'El documento es requerido.'"
                                         [control]="this.formPC.controls['PDFRPC']"
                                         />
                             </fieldset>

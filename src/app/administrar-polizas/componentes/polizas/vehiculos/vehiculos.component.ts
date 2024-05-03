@@ -14,7 +14,7 @@ import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 export class VehiculosComponent {
 
   private readonly paginaInicial = 1;
-  private readonly limiteInicial = 5
+  private readonly limiteInicial = 10
   paginador: Paginador<FiltrosVehiculos>
   vehiculos: VehiculoModel[] = []
   id: string = ""
