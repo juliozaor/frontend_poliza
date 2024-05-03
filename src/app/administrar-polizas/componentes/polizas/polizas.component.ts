@@ -162,7 +162,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deshabilitarFormularios()
+    //this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
 
@@ -210,7 +210,7 @@ export class PolizasComponent implements OnInit {
   }
 
   cambiarNumeroPoliza(tipoPoliza: number){
-    if(tipoPoliza == 1){this.formContractual.controls['cargarExcel'].setValue('')}
+    if(tipoPoliza == 1){this.formContractual.controls['cargarExcel'].reset()}
     if(tipoPoliza == 2){this.formExtracontractual.controls['cargarExcel'].setValue('')}
   }
 
