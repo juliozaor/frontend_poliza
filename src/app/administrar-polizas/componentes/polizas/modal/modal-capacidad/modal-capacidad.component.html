@@ -27,7 +27,7 @@
                                     </label>
                                     <input title="número resolución" type="number" class="form-control" 
                                     formControlName="numeroRMX">
-                                    <span *ngIf="formMX.get('numeroRMX')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 20 digitos.</span>
+                                    <span *ngIf="formMX.get('numeroRMX')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 18 digitos.</span>
                                     <span *ngIf="formMX.get('numeroRMX')?.hasError('negativo')" class="validacion"> No debe ser número negativo.</span>
                                     <app-validacion
                                     [validacion]="'required'"
@@ -89,6 +89,8 @@
                                 </label>
                                 <input title="número resolución" type="number" class="form-control" 
                                 formControlName="numeroRES">
+                                <span *ngIf="formMX.get('numeroRES')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 18 digitos.</span>
+                                <span *ngIf="formMX.get('numeroRES')?.hasError('negativo')" class="validacion"> No debe ser número negativo.</span>
                                 <app-validacion
                                     [validacion]="'required'"
                                     [texto]="'El número de la resolución vigente es requerido.'"
@@ -149,6 +151,8 @@
                                 </label>
                                 <input title="número resolución" type="number" class="form-control" 
                                 formControlName="numeroRPC">
+                                <span *ngIf="formMX.get('numeroRPC')?.hasError('maxLengthNumber')" class="validacion"> Deben ser máximo 18 digitos.</span>
+                                <span *ngIf="formMX.get('numeroRPC')?.hasError('negativo')" class="validacion"> No debe ser número negativo.</span>
                                 <app-validacion
                                         [validacion]="'required'"
                                         [texto]="'El número de la resolución vigente es requerido.'"
