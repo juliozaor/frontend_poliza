@@ -689,7 +689,7 @@
         <div class="d-flex mx-3 mb-3">
             <div class="col-2 mx-3 mb-3">
                 <label>Descargar estructura</label>
-                <button class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
+                <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
                     <samp class="fa fa-download">Descargar</samp>
                 </button>
             </div>
@@ -1371,7 +1371,7 @@
         <div class="d-flex mx-3 mb-3">
             <div class="col-2 mx-3 mb-3">
                 <label>Descargar estructura</label>
-                <button class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
+                <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
                     <samp class="fa fa-download">Descargar</samp>
                 </button>
             </div>
@@ -1406,14 +1406,14 @@
     <div class="row">
         <div class="col-6">
             <div class="text-center">
-                <button class="btn btn-primary"
+                <button class="btn btn-primary" type="button"
                 (click)="guardarPolizas()"
                 [disabled]="deshabilitado">Guardar</button>
             </div>
         </div>
         <div class="col-6">
             <div class="text-center">
-                <button class="btn btn-primary"
+                <button class="btn btn-primary" type="button"
                 (click)="finalizar()"
                 [disabled]="deshabilitado">Ir a modalidades</button>
             </div>
