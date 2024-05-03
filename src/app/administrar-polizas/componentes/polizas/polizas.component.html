@@ -1377,7 +1377,7 @@
             </div>
             <div class="col-4 mx-3 mb-3">
                 <label>Cargar el Excel</label><span *ngIf="obligatorio" class="validacion">*</span>
-                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx">
+                <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx"
                 formControlName="cargarExcel"
                 (change)="cargarArchivoXLSX($event,2)">
                 <app-validacion
