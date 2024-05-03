@@ -22,7 +22,7 @@
                         <input formControlName="numeroPolizaC"
                         ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
                         class="form-control" type="number" placeholder="Número de póliza">
-                        <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
+                        <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 18 digitos.</span>
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('cero')" class="validacion">No debe ser 0.</span>
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('negativo')" class="validacion">No debe ser número negativo.</span>
                         <app-validacion
@@ -562,7 +562,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="Número resolución"
                             formControlName="numeroResolucion">
-                            <span *ngIf="formContractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
+                            <span *ngIf="formContractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 18 digitos.</span>
                             <span *ngIf="formContractual.get('numeroResolucion')?.hasError('cero')" class="validacion">No debe ser 0.</span>
                             <span *ngIf="formContractual.get('numeroResolucion')?.hasError('negativo')" class="validacion">No debe ser número negativo.</span>
                             <app-validacion
@@ -744,7 +744,7 @@
                         <input formControlName="numeroPolizaE"
                         class="form-control" type="number" placeholder="Número de póliza"
                         (change)="[numeroPolizaELleno(),cambiarNumeroPoliza(2)]">
-                        <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
+                        <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 18 digitos.</span>
                         <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser 0.</span>
                         <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser número negativo.</span>
                         <app-validacion
@@ -1244,7 +1244,7 @@
                         <div class="col-6">
                             <input type="number" class="form-control" title="Número resolución"
                             formControlName="numeroResolucion">
-                            <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 20 digitos.</span>
+                            <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('maxLengthNumber')" class="validacion">Deben ser máximo 18 digitos.</span>
                             <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('cero')" class="validacion">No debe ser 0.</span>
                             <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('negativo')" class="validacion">No debe ser número negativo.</span>
                             <app-validacion

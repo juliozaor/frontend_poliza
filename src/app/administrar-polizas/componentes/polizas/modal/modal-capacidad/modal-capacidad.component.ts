@@ -41,21 +41,21 @@ export class ModalCapacidadComponent implements OnInit {
   ) {
     this.formMX = new FormGroup({
       // Modalidad MX
-      numeroRMX: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      numeroRMX: new FormControl(undefined, [maxLengthNumberValidator(18), negativoValidar()]),
       fechaRMX: new FormControl(undefined),
       PDFRMX: new FormControl(undefined),
     });
 
     this.formES = new FormGroup({
       //Modalidad ES
-      numeroRES: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      numeroRES: new FormControl(undefined, [maxLengthNumberValidator(18), negativoValidar()]),
       fechaRES: new FormControl(undefined),
       PDFRES: new FormControl(undefined),
     });
 
     this.formPC = new FormGroup({
       //Modalidad PC
-      numeroRPC: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      numeroRPC: new FormControl(undefined, [maxLengthNumberValidator(18), negativoValidar()]),
       fechaRPC: new FormControl(undefined),
       PDFRPC: new FormControl(undefined),
     });
