@@ -215,7 +215,7 @@ export class PolizasComponent implements OnInit {
   }
 
   guardarPolizas() {
-    console.log(this.formContractual);
+    //console.log(this.formContractual);
 
     if (this.formContractual.invalid) {//Valida formulario contarctual (Esté lleno)
       marcarFormularioComoSucio(this.formContractual)
@@ -393,6 +393,7 @@ export class PolizasComponent implements OnInit {
         })
         return;
       }
+      //Valida que los números de polizas contractual y extracontractua no sean iguales.
       if(this.formExtracontractual.controls['numeroPolizaE'].value == this.formContractual.controls['numeroPolizaC'].value){
         Swal.fire({
           icon: "error",
