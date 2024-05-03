@@ -67,7 +67,7 @@ export class PolizasComponent implements OnInit {
   ) {
     //-- Formulario Responsabilidad contractual
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]),
+      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
       aseguradorasC: new FormControl("", [Validators.required]),
       vigenciaPolizaInicioC: new FormControl(undefined, [Validators.required]),
       vigenciaPolizaFinalC: new FormControl(undefined, [Validators.required]),
@@ -103,20 +103,20 @@ export class PolizasComponent implements OnInit {
       //----- Responsabilidad -----//
       checkResponsabilidadC: new FormControl(false),
       fechaConstitucion: new FormControl(undefined),
-      numeroResolucion: new FormControl(undefined),
+      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
       fechaResolucion: new FormControl(undefined),
-      valorReserva: new FormControl(undefined),
+      valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
       fechaCorteReserva: new FormControl(undefined),
       infoComplementaria: new FormControl(undefined),
-      capas: new FormControl(undefined),
-      capa1: new FormControl(undefined),
-      capa2: new FormControl(undefined),
+      capas: new FormControl(undefined, capasValidator()),
+      capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
+      capa2: new FormControl(undefined, maxLengthNumberValidator(4)),
     })
     this.formContractual.get('checkResponsabilidadC')?.enable()
 
     //-- Formulario Responsabilidad extracontractual
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]),
+      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
       aseguradorasE: new FormControl("",),
       vigenciaPolizaInicioE: new FormControl(undefined,),
       vigenciaPolizaFinalE: new FormControl(undefined,),
@@ -149,12 +149,12 @@ export class PolizasComponent implements OnInit {
       //----- Responsabilidad -----//
       checkResponsabilidadE: new FormControl(false),
       fechaConstitucion: new FormControl(undefined,),
-      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(20)),
+      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
       fechaResolucion: new FormControl(undefined,),
       valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
       fechaCorteReserva: new FormControl(undefined,),
       infoComplementaria: new FormControl(undefined,),
-      capas: new FormControl(undefined, maxLengthNumberValidator(1)),
+      capas: new FormControl(undefined, capasValidator()),
       capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
       capa2: new FormControl(undefined, maxLengthNumberValidator(4))
     })
@@ -678,7 +678,7 @@ export class PolizasComponent implements OnInit {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         //this.formContractual.get('checkResponsabilidadC')?.disable()
         this.formContractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20), negativoValidar()])
+        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar()])
         this.formContractual.get('fechaResolucion')?.setValidators([Validators.required])
         this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
         this.formContractual.get('fechaCorteReserva')?.setValidators([Validators.required])
@@ -713,7 +713,7 @@ export class PolizasComponent implements OnInit {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
         //this.formExtracontractual.get('checkResponsabilidadE')?.disable()
         this.formExtracontractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20), negativoValidar()])
+        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar()])
         this.formExtracontractual.get('fechaResolucion')?.setValidators([Validators.required])
         this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
         this.formExtracontractual.get('fechaCorteReserva')?.setValidators([Validators.required])
@@ -751,7 +751,7 @@ export class PolizasComponent implements OnInit {
     if (this.formExtracontractual.controls['numeroPolizaE'].value) {
       this.obligatorio = true
       this.formExtracontractual.get('checkResponsabilidadE')?.enable()
-      this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
+      this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.setValidators([Validators.required]); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaFinalE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaFinalE')?.updateValueAndValidity()
