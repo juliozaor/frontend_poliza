@@ -10,15 +10,16 @@ import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../../validadores/maximo-validador';
 import { valorCeroValidar } from '../../validadores/cero-validacion';
+import { negativoValidar } from '../../validadores/negativo-verificar';
 
 @Component({
   selector: 'app-modal-capacidad',
   templateUrl: './modal-capacidad.component.html',
   styleUrls: ['./modal-capacidad.component.css']
 })
-export class ModalCapacidadComponent implements OnInit{
+export class ModalCapacidadComponent implements OnInit {
   @ViewChild('modal') modal!: ElementRef
-  @ViewChild('popup') popup!:PopupComponent
+  @ViewChild('popup') popup!: PopupComponent
   formMX: FormGroup
   formES: FormGroup
   formPC: FormGroup
@@ -37,149 +38,177 @@ export class ModalCapacidadComponent implements OnInit{
   constructor(
     private servicioModal: NgbModal,
     private servicioAdministrarPoliza: ServicioAdministrarPolizas
-  ){
+  ) {
     this.formMX = new FormGroup({
       // Modalidad MX
-      numeroRMX: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
-      fechaRMX: new FormControl(undefined, [ Validators.required ]),
-      PDFRMX: new FormControl(undefined, [ Validators.required ]),
-    })
+      numeroRMX: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      fechaRMX: new FormControl(undefined),
+      PDFRMX: new FormControl(undefined),
+    });
+
     this.formES = new FormGroup({
       //Modalidad ES
-      numeroRES: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
-      fechaRES: new FormControl(undefined, [ Validators.required ]),
-      PDFRES: new FormControl(undefined, [ Validators.required ]),
-    })
+      numeroRES: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      fechaRES: new FormControl(undefined),
+      PDFRES: new FormControl(undefined),
+    });
+
     this.formPC = new FormGroup({
       //Modalidad PC
-      numeroRPC: new FormControl(undefined, [ Validators.required, maxLengthNumberValidator(20), valorCeroValidar() ]),
-      fechaRPC: new FormControl(undefined, [ Validators.required ]),
-      PDFRPC: new FormControl(undefined, [ Validators.required ]),
-    })
+      numeroRPC: new FormControl(undefined, [maxLengthNumberValidator(20), negativoValidar()]),
+      fechaRPC: new FormControl(undefined),
+      PDFRPC: new FormControl(undefined),
+    });
+
+    // Escuchar cambios en los campos de número de cada modalidad
+    this.formMX.get('numeroRMX')?.valueChanges.subscribe((value) => {
+      this.actualizarValidaciones(this.formMX, value, 'fechaRMX', 'PDFRMX');
+    });
+
+    this.formES.get('numeroRES')?.valueChanges.subscribe((value) => {
+      this.actualizarValidaciones(this.formES, value, 'fechaRES', 'PDFRES');
+    });
+
+    this.formPC.get('numeroRPC')?.valueChanges.subscribe((value) => {
+      this.actualizarValidaciones(this.formPC, value, 'fechaRPC', 'PDFRPC');
+    });
   }
+
+  actualizarValidaciones(formulario: FormGroup, valorNumero: any, fecha: string, pdf: string) {
+    // Obtener referencia a los campos de fecha y PDF del formulario
+    const fechaControl = formulario.get(fecha);
+    const pdfControl = formulario.get(pdf);
+
+    // Si se ingresa un valor en el campo de número, hacer que fecha y PDF sean obligatorios
+    if (valorNumero) {
+      fechaControl?.setValidators([Validators.required]);
+      pdfControl?.setValidators([Validators.required]);
+    } else {
+      // Si no se ingresa un valor en el campo de número, quitar la validación de fecha y PDF
+      fechaControl?.clearValidators();
+      pdfControl?.clearValidators();
+    }
+
+    // Actualizar el estado de validación de los campos
+    fechaControl?.updateValueAndValidity();
+    pdfControl?.updateValueAndValidity();
+  }
+
   ngOnInit(): void {
     this.obtenerModalidades()
   }
 
-  public abrir(): void{
+  public abrir(): void {
     this.servicioModal.open(this.modal, {
       size: 'lg'
     })
+    //this.obtenerModalidades()
   }
 
-  obtenerModalidades(){
+  obtenerModalidades() {
     this.servicioAdministrarPoliza.obtenerModalidades().subscribe({
-      next: (modalidad: any) =>{
+      next: (modalidad: any) => {
         this.modalidades = modalidad['modalidades']
       }
     })
   }
 
-  guardarCapacidades(){
+  guardarCapacidades() {
     let capacidadJson: any = {}
     let MX!: ModalidadModel
     let ES!: ModalidadModel
     let PC!: ModalidadModel
-      if(this.formMX.controls['numeroRMX'].value){
-        MX = {
-          numero: this.formMX.controls['numeroRMX'].value,
-          vigencia: this.formMX.controls['fechaRMX'].value,
-          modalidadId: this.modalidades[0].id,
-          nombre: this.archivoPDFMX?.nombreAlmacenado,
-          nombreOriginal: this.archivoPDFMX?.nombreOriginalArchivo,
-          ruta: this.archivoPDFMX?.ruta,
-        }
+    const controlMX = this.formMX.controls
+    const controlES = this.formES.controls
+    const controlPC = this.formPC.controls
+    //////////////////// MX ///////////////////////////////
+    if (this.formMX.invalid) {//Valida formulario contarctual (Esté lleno)
+      marcarFormularioComoSucio(this.formMX)
+      Swal.fire({
+        text: "Hay errores en " + this.modalidades[0].nombre + " sin corregir",
+        icon: "error",
+        titleText: "¡No se ha realizado el envío a ST!",
+      })
+      return;
+    }else if(controlMX['numeroRMX'].value){
+      MX = {
+        numero: controlMX['numeroRMX'].value,
+        vigencia: controlMX['fechaRMX'].value,
+        modalidadId: this.modalidades[0].id,
+        nombre: this.archivoPDFMX?.nombreAlmacenado,
+        nombreOriginal: this.archivoPDFMX?.nombreOriginalArchivo,
+        ruta: this.archivoPDFMX?.ruta,
       }
-      if(this.formES.controls['numeroRES'].value){
-        ES = {
-          numero: this.formES.controls['numeroRES'].value,
-          vigencia: this.formES.controls['fechaRES'].value,
-          modalidadId: this.modalidades[1].id,
-          nombre: this.archivoPDFES?.nombreAlmacenado,
-          nombreOriginal: this.archivoPDFES?.nombreOriginalArchivo,
-          ruta: this.archivoPDFES?.ruta,
-        }
+    }
+    /////////////////// ES /////////////////////////////
+    if (this.formES.invalid) {//Valida formulario contarctual (Esté lleno)
+      marcarFormularioComoSucio(this.formES)
+      Swal.fire({
+        text: "Hay errores en " + this.modalidades[1].nombre + " sin corregir",
+        icon: "error",
+        titleText: "¡No se ha realizado el envío a ST!",
+      })
+      return;
+    }else if(controlES['numeroRES'].value){
+      ES = {
+        numero: controlES['numeroRES'].value,
+        vigencia: controlES['fechaRES'].value,
+        modalidadId: this.modalidades[1].id,
+        nombre: this.archivoPDFES?.nombreAlmacenado,
+        nombreOriginal: this.archivoPDFES?.nombreOriginalArchivo,
+        ruta: this.archivoPDFES?.ruta,
       }
-      if(this.formPC.controls['numeroRPC'].value){
-        PC = {
-          numero: this.formPC.controls['numeroRPC'].value,
-          vigencia: this.formPC.controls['fechaRPC'].value,
-          modalidadId: this.modalidades[2].id,
-          nombre: this.archivoPDFPC?.nombreAlmacenado,
-          nombreOriginal: this.archivoPDFPC?.nombreOriginalArchivo,
-          ruta: this.archivoPDFPC?.ruta,
-        }
+    }
+    //////////////////// PC //////////////////////////
+    if (this.formPC.invalid) {//Valida formulario contarctual (Esté lleno)
+      marcarFormularioComoSucio(this.formPC)
+      Swal.fire({
+        text: "Hay errores en " + this.modalidades[2].nombre + " sin corregir",
+        icon: "error",
+        titleText: "¡No se ha realizado el envío a ST!",
+      })
+      return;
+    }else if(controlPC['numeroRPC'].value){
+      PC = {
+        numero: this.formPC.controls['numeroRPC'].value,
+        vigencia: this.formPC.controls['fechaRPC'].value,
+        modalidadId: this.modalidades[2].id,
+        nombre: this.archivoPDFPC?.nombreAlmacenado,
+        nombreOriginal: this.archivoPDFPC?.nombreOriginalArchivo,
+        ruta: this.archivoPDFPC?.ruta,
       }
-      if(MX && !ES && !PC){//Solo MX existe
-        /* this.formES.reset();this.formES.markAsPristine()
-        this.formPC.reset();this.formPC.markAsPristine()
-        console.log("MX: ",MX);
-        if(this.formMX.invalid){
-          marcarFormularioComoSucio(this.formMX)
-          Swal.fire({
-            text: "Hay errores en "+this.modalidades[0].nombre+" sin corregir",
-            icon: "error",
-            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
-          })
-          return;
-        } */
-        
-        capacidadJson.capacidades = [MX]
-      }
-      else if(!MX && ES && !PC){//Solo ES existe
-       /*  this.formMX.reset();this.formMX.markAsPristine()
-        this.formPC.reset();this.formPC.markAsPristine()
-        console.log("ES: ",ES);
-        if(this.formES.invalid){
-          marcarFormularioComoSucio(this.formES)
-          Swal.fire({
-            text: "Hay errores en "+this.modalidades[1].nombre+" sin corregir",
-            icon: "error",
-            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
-          })
-          return;
-        } */
-        capacidadJson.capacidades = [ES]
-      }
-      else if(!MX && !ES && PC){//Solo PC existe
-        /* this.formES.reset();this.formES.markAsPristine()
-        this.formMX.reset();this.formMX.markAsPristine()
-        if(this.formPC.invalid){
-          marcarFormularioComoSucio(this.formPC)
-          Swal.fire({
-            text: "Hay errores en "+this.modalidades[2].nombre+" sin corregir",
-            icon: "error",
-            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
-          })
-          return;
-        } */
-        capacidadJson.capacidades = [PC]
-      }
-      else if(MX && ES && !PC){//Solo existe MX y ES
-        /* if(this.formMX.invalid && this.formES.invalid){
-          marcarFormularioComoSucio(this.formMX)
-          marcarFormularioComoSucio(this.formES)
-          Swal.fire({
-            text: "Hay errores en "+this.modalidades[0].nombre+" y "+this.modalidades[1].nombre+" sin corregir",
-            icon: "error",
-            titleText: "¡No se ha realizado el envio a la Superintendencia de Transporte!",
-          })
-          return;
-        } */
-        capacidadJson.capacidades = [MX,ES]
-      }
-      else if(MX && !ES && PC){
-        capacidadJson.capacidades = [MX,PC]
-      }
-      else if(!MX && ES && PC){
-        capacidadJson.capacidades = [ES,PC]
-      }
-      else if(MX && ES && PC){
-        capacidadJson.capacidades = [MX,ES,PC]
-      }
+    }
 
-    if(MX || ES || PC){
+    if (MX && !ES && !PC) {//Solo MX existe
+      capacidadJson.capacidades = [MX]
+    }
+    else if (!MX && ES && !PC) {//Solo ES existe
+      capacidadJson.capacidades = [ES]
+    }
+    else if (!MX && !ES && PC) {//Solo PC existe
+      capacidadJson.capacidades = [PC]
+    }
+    else if (MX && ES && !PC) {//Solo existe MX y ES
+      capacidadJson.capacidades = [MX, ES]
+    }
+    else if (MX && !ES && PC) {
+      capacidadJson.capacidades = [MX, PC]
+    }
+    else if (!MX && ES && PC) {
+      capacidadJson.capacidades = [ES, PC]
+    }
+    else if (MX && ES && PC) {
+      capacidadJson.capacidades = [MX, ES, PC]
+    }
+
+    if (MX || ES || PC) {
       console.log(this.capacidadJson);
+      Swal.fire({
+        icon: 'info',
+        allowOutsideClick: false,
+        text: 'Espere por favor...',
+      });
+      Swal.showLoading(null);
       this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
         next: (respuesta) => {
           this.formMX.reset()
@@ -189,63 +218,116 @@ export class ModalCapacidadComponent implements OnInit{
             text: respuesta.mensaje,
             icon: "success",
             confirmButtonText: "Finalizar",
-          }).then((result) =>{
-            if(result.isConfirmed){
+          }).then((result) => {
+            if (result.isConfirmed) {
               this.servicioModal.dismissAll();
             }
           })
-
+        },
+        error: (error: HttpErrorResponse) => {
+          Swal.fire({
+            text: error.error.mensaje,
+            icon: "error",
+          })
         }
       })
-    }else{
+    } else {
       Swal.fire({
-        titleText:'Debe llenar al menos una Modalidad',
+        titleText: 'Debe llenar al menos una Modalidad',
         icon: "warning",
       })
     }
   }
 
-  cargarArchivoPDf(event: any, tipoModalidad: number){
+  cargarArchivoPDf(event: any, tipoModalidad: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
+      Swal.fire({
+        icon: 'info',
+        allowOutsideClick: false,
+        text: 'Espere por favor...',
+      });
+      Swal.showLoading(null);
       this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
-        next: (respuesta) =>{
-          if(tipoModalidad == 1){
+        next: (respuesta) => {
+          if (tipoModalidad == 1) {
             this.archivoPDFMX = respuesta
-          }else if(tipoModalidad == 2){
+          } else if (tipoModalidad == 2) {
             this.archivoPDFES = respuesta
-          }else if(tipoModalidad == 3){
+          } else if (tipoModalidad == 3) {
             this.archivoPDFPC = respuesta
           }
+          Swal.close()
         },
-        error: (error: HttpErrorResponse) =>{
-          console.log('Error: ',error.error.mensaje)
+        error: (error: HttpErrorResponse) => {
+          console.log('Error: ', error.error.mensaje)
           Swal.fire({
             text: "¡Lo sentimos! No hemos podido cargar el archivo",
             icon: "warning",
           })
-          if(tipoModalidad == 1){
+          if (tipoModalidad == 1) {
             this.formMX.controls['PDFMX'].setValue('')
-          }else if(tipoModalidad == 2){
+          } else if (tipoModalidad == 2) {
             this.formES.controls['PDFES'].setValue('')
-          }else if(tipoModalidad == 3){
+          } else if (tipoModalidad == 3) {
             this.formPC.controls['PDFPC'].setValue('')
           }
-          
+
         }
       })
     }
   }
 
-  alternarDesplegarMX(){
+  alternarDesplegarMX() {
     this.desplegarMX = !this.desplegarMX
   }
-  alternarDesplegarES(){
+  alternarDesplegarES() {
     this.desplegarES = !this.desplegarES
   }
-  alternarDesplegarPC(){
+  alternarDesplegarPC() {
     this.desplegarPC = !this.desplegarPC
   }
+
+  /* resolucionLLeno(event: any, modalidad: number) {
+    if (modalidad == 1) {
+      const controlMX = this.formMX.controls
+      const resolucion = event.target.value; console.log(resolucion, this.archivoPDFMX);
+      if (resolucion) {
+        controlMX['numeroRMX'].setValidators([Validators.required, valorCeroValidar()])
+        controlMX['fechaRMX'].setValidators(Validators.required)
+        controlMX['PDFRMX'].setValidators(Validators.required)
+        this.formMX.updateValueAndValidity()
+      } else {
+        this.formMX.reset(); this.archivoPDFMX = undefined
+        //this.formMX.clearValidators()
+        this.formMX.updateValueAndValidity()
+      }
+    } else if (modalidad == 2) {
+      const controlES = this.formES.controls
+      if (controlES['numeroRES'].value) {
+        controlES['numeroRES'].setValidators([Validators.required, valorCeroValidar()])
+        controlES['fechaRES'].setValidators(Validators.required)
+        controlES['PDFRES'].setValidators(Validators.required)
+        this.formES.updateValueAndValidity()
+      } else {
+        this.formES.reset()
+        this.formES.clearValidators()
+        this.formES.updateValueAndValidity()
+      }
+    } else if (modalidad == 3) {
+      const controlPC = this.formPC.controls
+      if (controlPC['numeroRPC'].value) {
+        controlPC['numeroRPC'].setValidators([Validators.required, valorCeroValidar()])
+        controlPC['fechaRPC'].setValidators(Validators.required)
+        controlPC['PDFRPC'].setValidators(Validators.required)
+        this.formMX.updateValueAndValidity()
+      } else {
+        this.formPC.reset()
+        this.formPC.clearValidators()
+        this.formPC.updateValueAndValidity()
+      }
+    }
+  } */
 
   closeModal() {
     this.servicioModal.dismissAll();

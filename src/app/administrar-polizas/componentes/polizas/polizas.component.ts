@@ -13,6 +13,7 @@ import { ModalCapacidadComponent } from './modal/modal-capacidad/modal-capacidad
 import { maxLengthNumberValidator } from './validadores/maximo-validador';
 import { capasValidator } from './validadores/capas-validacion';
 import { valorCeroValidar } from './validadores/cero-validacion';
+import { negativoValidar } from './validadores/negativo-verificar';
 
 @Component({
   selector: 'app-polizas',
@@ -31,8 +32,10 @@ export class PolizasComponent implements OnInit {
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
-  desplegarAmparosB: boolean = true
-  desplegarAmparosA: boolean = true
+  desplegarAmparosB1: boolean = true
+  desplegarAmparosA1: boolean = true
+  desplegarAmparosB2: boolean = true
+  desplegarAmparosA2: boolean = true
   fondoResponsabilidadC: boolean = false
   fondoResponsabilidadE: boolean = false
 
@@ -64,36 +67,36 @@ export class PolizasComponent implements OnInit {
   ) {
     //-- Formulario Responsabilidad contractual
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(20), valorCeroValidar()]),
+      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]),
       aseguradorasC: new FormControl("", [Validators.required]),
       vigenciaPolizaInicioC: new FormControl(undefined, [Validators.required]),
       vigenciaPolizaFinalC: new FormControl(undefined, [Validators.required]),
       //----- Amparos basicos -----//
-      valorAseguradoAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB1: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
-      valorAseguradoAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB2: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
-      valorAseguradoAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB3: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
-      valorAseguradoAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB4: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
+      valorAseguradoAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB1: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB2: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB3: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB4: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA5: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
-      valorAseguradoAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA6: new FormControl(undefined, [ /* Validators.required,  */ maxLengthNumberValidator(3)]),
-      valorAseguradoAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA7: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
-      valorAseguradoAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA8: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3)]),
+      valorAseguradoAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA5: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA6: new FormControl(undefined, [ /* Validators.required,  */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA7: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA8: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined, [Validators.required]),
       cargarPDF: new FormControl(undefined, [Validators.required]),
@@ -113,33 +116,33 @@ export class PolizasComponent implements OnInit {
 
     //-- Formulario Responsabilidad extracontractual
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(20), valorCeroValidar()]),
+      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]),
       aseguradorasE: new FormControl("",),
       vigenciaPolizaInicioE: new FormControl(undefined,),
       vigenciaPolizaFinalE: new FormControl(undefined,),
       //----- Amparos basicos -----//
-      valorAseguradoAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB9: new FormControl(undefined, maxLengthNumberValidator(3)),
-      valorAseguradoAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB10: new FormControl(undefined, maxLengthNumberValidator(3)),
-      valorAseguradoAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAB11: new FormControl(undefined, maxLengthNumberValidator(3)),
+      valorAseguradoAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB9: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB10: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAB11: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA12: new FormControl(undefined, maxLengthNumberValidator(3)),
-      valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA13: new FormControl(undefined, maxLengthNumberValidator(3)),
-      valorAseguradoAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA14: new FormControl(undefined, maxLengthNumberValidator(3)),
-      valorAseguradoAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      limitesAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar()]),
-      deducibleAA15: new FormControl(undefined, maxLengthNumberValidator(3)),
+      valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA12: new FormControl(undefined,[ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA13: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA14: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      limitesAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      deducibleAA15: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined,),
       cargarPDF: new FormControl(undefined,),
@@ -159,7 +162,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deshabilitarFormularios()
+    //this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
 
@@ -173,6 +176,8 @@ export class PolizasComponent implements OnInit {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
+        this.formContractual.reset()
+        this.formExtracontractual.reset()
         this.abrirModalCapacidad()
       } else if (result.isDismissed) {
         Swal.close()
@@ -202,6 +207,11 @@ export class PolizasComponent implements OnInit {
         this.aseguradoras = aseguradora['aseguradoras']
       }
     })
+  }
+
+  cambiarNumeroPoliza(tipoPoliza: number){
+    if(tipoPoliza == 1){this.formContractual.controls['cargarExcel'].setValue('')}
+    if(tipoPoliza == 2){this.formExtracontractual.controls['cargarExcel'].setValue('')}
   }
 
   guardarPolizas() {
@@ -389,6 +399,10 @@ export class PolizasComponent implements OnInit {
           titleText: "¡Los números de póliza no pueden ser iguales!",
           text: "por favor, corrija los números de poliza"
         })
+        controlsC['numeroPolizaC'].setValue('')
+        controlsE['numeroPolizaE'].setValue('')
+        controlsC['cargarExcel'].setValue('')
+        controlsE['cargarExcel'].setValue('')
         return;
       }
       polizaJson.polizaExtracontractual = polizaExtracontractual
@@ -429,7 +443,12 @@ export class PolizasComponent implements OnInit {
             icon: "error",
             titleText: error.error.mensaje,
           })
-        }else {
+        }else if (error.status == 500) {
+          Swal.fire({
+            icon: "error",
+            titleText: "¡Error interno del servidor!",
+          })
+        }else{
           Swal.fire({
             text: "No se ha recibido ninguna respuesta",
             icon: "question",
@@ -452,59 +471,73 @@ export class PolizasComponent implements OnInit {
     if (tipoPoliza == 1) {
       const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
       if (numeroPliza) {
-        Swal.fire({
-          icon: 'info',
-          allowOutsideClick: false,
-          text: 'Espere por favor...',
-        });
-        Swal.showLoading(null);
-
         const archivoSeleccionado = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
-            next: (respuesta) => {
-              this.archivoCargado = respuesta.mensaje
-              Swal.close();
-              this.popup.abrirPopupExitoso(this.archivoCargado)
-            },
-            error: (error: HttpErrorResponse) => {
-              this.archivoCargado = error.error.mensaje
-              if (error.status == 415) {
+        if(archivoSeleccionado){
+          Swal.fire({
+            icon: 'info',
+            allowOutsideClick: false,
+            text: 'Espere por favor...',
+          });
+          Swal.showLoading(null);
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+              next: (respuesta) => {
+                this.archivoCargado = respuesta.mensaje
                 Swal.close();
+                //this.popup.abrirPopupExitoso(this.archivoCargado)
                 Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
+                  titleText: "¡Archivo cargado correctamente!",
+                  icon: "success"
                 })
-                this.formContractual.controls['cargarExcel'].setValue('')
-              } else if (error.status == 422) {
-                Swal.close();
-                Swal.fire({
-                  text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
-                  icon: "error",
-                  showCancelButton: true,
-                  allowOutsideClick: false,
-                  confirmButtonText: "Descargar",
-                  cancelButtonText: "Cancelar"
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
-                  }
-                })
-                this.formContractual.controls['cargarExcel'].setValue('')
-              }else{
-                Swal.close();
-                Swal.fire({
-                  text: "Hubo un error de conexión, intentelo más tarde.",
-                  icon: "error",
-                  titleText: "¡Lo sentimos!",
-                })
+              },
+              error: (error: HttpErrorResponse) => {
+                this.archivoCargado = error.error.mensaje
+                if (error.status == 415) {
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                } else if (error.status == 422) {
+                  Swal.close();
+                  Swal.fire({
+                    text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                    icon: "error",
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: "Descargar",
+                    cancelButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                    }
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                } else if(error.status == 500){
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                }
+                else{
+                  Swal.close();
+                  Swal.fire({
+                    text: "Hubo un error de conexión, intentelo más tarde.",
+                    icon: "error",
+                    titleText: "¡Lo sentimos!",
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                }
+                //            
               }
-              //            
-            }
-          })
-        }
-        reader.readAsDataURL(archivoSeleccionado);
+            })
+          }
+          reader.readAsDataURL(archivoSeleccionado);
+        }else{return}
       } else {
         Swal.fire({
           text: "No has agregado un número de poliza",
@@ -516,51 +549,65 @@ export class PolizasComponent implements OnInit {
     else if (tipoPoliza == 2) {
       const numeroPliza = this.formExtracontractual.controls['numeroPolizaE'].value
       if (numeroPliza) {
-
-        Swal.fire({
-          icon: 'info',
-          allowOutsideClick: false,
-          text: 'Espere por favor...',
-        });
-        Swal.showLoading(null);
-
         const archivoSeleccionado = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
-            next: (respuesta) => {
-              this.archivoCargado = respuesta.mensaje
-              Swal.close();
-              this.popup.abrirPopupExitoso(this.archivoCargado)
-            },
-            error: (error: HttpErrorResponse) => {
-              this.archivoCargado = error.error.mensaje
-              if (error.status == 415) {
-                Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
-              } else if (error.status == 422) {
-                Swal.fire({
-                  text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
-                  icon: "error",
-                  showCancelButton: true,
-                  allowOutsideClick: false,
-                  confirmButtonText: "Descargar",
-                  cancelButtonText: "Cancelar"
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
-                  }
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
+        if(archivoSeleccionado){
+          Swal.fire({
+            icon: 'info',
+            allowOutsideClick: false,
+            text: 'Espere por favor...',
+          });
+          Swal.showLoading(null);
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+              next: (respuesta) => {
+                this.archivoCargado = respuesta.mensaje
+                Swal.close();
+                this.popup.abrirPopupExitoso(this.archivoCargado)
+              },
+              error: (error: HttpErrorResponse) => {
+                this.archivoCargado = error.error.mensaje
+                if (error.status == 415) {
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                } else if (error.status == 422) {
+                  Swal.fire({
+                    text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                    icon: "error",
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: "Descargar",
+                    cancelButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                    }
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }else if(error.status == 500){
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }else{
+                  Swal.close();
+                  Swal.fire({
+                    text: "Hubo un error de conexión, intentelo más tarde.",
+                    icon: "error",
+                    titleText: "¡Lo sentimos!",
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }
               }
-              //Swal.close();
-            }
-          })
-        };
-        reader.readAsDataURL(archivoSeleccionado);
+            })
+          };
+          reader.readAsDataURL(archivoSeleccionado);
+        }else{return}
       } else {
         Swal.fire({
           text: "No has agregado un número de poliza",
@@ -612,11 +659,13 @@ export class PolizasComponent implements OnInit {
   alternarDesplegarRCE() {
     this.desplegarRCE = !this.desplegarRCE
   }
-  alternarDesplegarAB() {
-    this.desplegarAmparosB = !this.desplegarAmparosB
+  alternarDesplegarAB(tipoPoliza: number) {
+    if(tipoPoliza == 1){this.desplegarAmparosB1 = !this.desplegarAmparosB1}
+    if(tipoPoliza == 2){this.desplegarAmparosB2 = !this.desplegarAmparosB2}    
   }
-  alternarDesplegarAA() {
-    this.desplegarAmparosA = !this.desplegarAmparosA
+  alternarDesplegarAA(tipoPoliza: number) {
+    if(tipoPoliza == 1){this.desplegarAmparosA1 = !this.desplegarAmparosA1}
+    if(tipoPoliza == 2){this.desplegarAmparosA2 = !this.desplegarAmparosA2}
   }
   abrirModalCapacidad() {
     this.modalCapacidad.abrir()
@@ -628,14 +677,14 @@ export class PolizasComponent implements OnInit {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         //this.formContractual.get('checkResponsabilidadC')?.disable()
         this.formContractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20)])
+        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20), negativoValidar()])
         this.formContractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
+        this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
         this.formContractual.get('fechaCorteReserva')?.setValidators([Validators.required])
         this.formContractual.get('infoComplementaria')?.setValidators([Validators.required])
         this.formContractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
-        this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
+        this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
       } else {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         this.formContractual.get('checkResponsabilidadE')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
@@ -663,14 +712,14 @@ export class PolizasComponent implements OnInit {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
         //this.formExtracontractual.get('checkResponsabilidadE')?.disable()
         this.formExtracontractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20)])
+        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(20), negativoValidar()])
         this.formExtracontractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
+        this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
         this.formExtracontractual.get('fechaCorteReserva')?.setValidators([Validators.required])
         this.formExtracontractual.get('infoComplementaria')?.setValidators([Validators.required])
         this.formExtracontractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formExtracontractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
-        this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4)])
+        this.formExtracontractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
       } else {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
         //this.formExtracontractual.get('checkResponsabilidadE')?.disable()
@@ -701,7 +750,7 @@ export class PolizasComponent implements OnInit {
     if (this.formExtracontractual.controls['numeroPolizaE'].value) {
       this.obligatorio = true
       this.formExtracontractual.get('checkResponsabilidadE')?.enable()
-      this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(20), valorCeroValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
+      this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(20), valorCeroValidar(), negativoValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.setValidators([Validators.required]); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaFinalE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaFinalE')?.updateValueAndValidity()
