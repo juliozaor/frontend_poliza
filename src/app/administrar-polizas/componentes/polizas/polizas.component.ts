@@ -32,8 +32,10 @@ export class PolizasComponent implements OnInit {
 
   desplegarRCC: boolean = true
   desplegarRCE: boolean = true
-  desplegarAmparosB: boolean = true
-  desplegarAmparosA: boolean = true
+  desplegarAmparosB1: boolean = true
+  desplegarAmparosA1: boolean = true
+  desplegarAmparosB2: boolean = true
+  desplegarAmparosA2: boolean = true
   fondoResponsabilidadC: boolean = false
   fondoResponsabilidadE: boolean = false
 
@@ -469,72 +471,73 @@ export class PolizasComponent implements OnInit {
     if (tipoPoliza == 1) {
       const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
       if (numeroPliza) {
-        Swal.fire({
-          icon: 'info',
-          allowOutsideClick: false,
-          text: 'Espere por favor...',
-        });
-        Swal.showLoading(null);
-
         const archivoSeleccionado = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
-            next: (respuesta) => {
-              this.archivoCargado = respuesta.mensaje
-              Swal.close();
-              //this.popup.abrirPopupExitoso(this.archivoCargado)
-              Swal.fire({
-                titleText: "¡Archivo cargado correctamente!",
-                icon: "success"
-              })
-            },
-            error: (error: HttpErrorResponse) => {
-              this.archivoCargado = error.error.mensaje
-              if (error.status == 415) {
+        if(archivoSeleccionado){
+          Swal.fire({
+            icon: 'info',
+            allowOutsideClick: false,
+            text: 'Espere por favor...',
+          });
+          Swal.showLoading(null);
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+              next: (respuesta) => {
+                this.archivoCargado = respuesta.mensaje
                 Swal.close();
+                //this.popup.abrirPopupExitoso(this.archivoCargado)
                 Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
+                  titleText: "¡Archivo cargado correctamente!",
+                  icon: "success"
                 })
-                this.formContractual.controls['cargarExcel'].setValue('')
-              } else if (error.status == 422) {
-                Swal.close();
-                Swal.fire({
-                  text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
-                  icon: "error",
-                  showCancelButton: true,
-                  allowOutsideClick: false,
-                  confirmButtonText: "Descargar",
-                  cancelButtonText: "Cancelar"
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
-                  }
-                })
-                this.formContractual.controls['cargarExcel'].setValue('')
-              } else if(error.status == 500){
-                Swal.close();
-                Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
-                })
-                this.formContractual.controls['cargarExcel'].setValue('')
+              },
+              error: (error: HttpErrorResponse) => {
+                this.archivoCargado = error.error.mensaje
+                if (error.status == 415) {
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                } else if (error.status == 422) {
+                  Swal.close();
+                  Swal.fire({
+                    text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                    icon: "error",
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: "Descargar",
+                    cancelButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                    }
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                } else if(error.status == 500){
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                }
+                else{
+                  Swal.close();
+                  Swal.fire({
+                    text: "Hubo un error de conexión, intentelo más tarde.",
+                    icon: "error",
+                    titleText: "¡Lo sentimos!",
+                  })
+                  this.formContractual.controls['cargarExcel'].setValue('')
+                }
+                //            
               }
-              else{
-                Swal.close();
-                Swal.fire({
-                  text: "Hubo un error de conexión, intentelo más tarde.",
-                  icon: "error",
-                  titleText: "¡Lo sentimos!",
-                })
-                this.formContractual.controls['cargarExcel'].setValue('')
-              }
-              //            
-            }
-          })
-        }
-        reader.readAsDataURL(archivoSeleccionado);
+            })
+          }
+          reader.readAsDataURL(archivoSeleccionado);
+        }else{return}
       } else {
         Swal.fire({
           text: "No has agregado un número de poliza",
@@ -546,65 +549,65 @@ export class PolizasComponent implements OnInit {
     else if (tipoPoliza == 2) {
       const numeroPliza = this.formExtracontractual.controls['numeroPolizaE'].value
       if (numeroPliza) {
-
-        Swal.fire({
-          icon: 'info',
-          allowOutsideClick: false,
-          text: 'Espere por favor...',
-        });
-        Swal.showLoading(null);
-
         const archivoSeleccionado = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
-            next: (respuesta) => {
-              this.archivoCargado = respuesta.mensaje
-              Swal.close();
-              this.popup.abrirPopupExitoso(this.archivoCargado)
-            },
-            error: (error: HttpErrorResponse) => {
-              this.archivoCargado = error.error.mensaje
-              if (error.status == 415) {
-                Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
-              } else if (error.status == 422) {
-                Swal.fire({
-                  text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
-                  icon: "error",
-                  showCancelButton: true,
-                  allowOutsideClick: false,
-                  confirmButtonText: "Descargar",
-                  cancelButtonText: "Cancelar"
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
-                  }
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
-              }else if(error.status == 500){
+        if(archivoSeleccionado){
+          Swal.fire({
+            icon: 'info',
+            allowOutsideClick: false,
+            text: 'Espere por favor...',
+          });
+          Swal.showLoading(null);
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+              next: (respuesta) => {
+                this.archivoCargado = respuesta.mensaje
                 Swal.close();
-                Swal.fire({
-                  text: error.error.mensaje,
-                  icon: "error"
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
-              }else{
-                Swal.close();
-                Swal.fire({
-                  text: "Hubo un error de conexión, intentelo más tarde.",
-                  icon: "error",
-                  titleText: "¡Lo sentimos!",
-                })
-                this.formExtracontractual.controls['cargarExcel'].setValue('')
+                this.popup.abrirPopupExitoso(this.archivoCargado)
+              },
+              error: (error: HttpErrorResponse) => {
+                this.archivoCargado = error.error.mensaje
+                if (error.status == 415) {
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                } else if (error.status == 422) {
+                  Swal.fire({
+                    text: "Se han encontrado errores en el archivo, ¿Desea ver los errores?",
+                    icon: "error",
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: "Descargar",
+                    cancelButtonText: "Cancelar"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      this.servicioAdministrarPoliza.descargarArchivoXLSX(error.error.archivo, 'Errores.xlsx')
+                    }
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }else if(error.status == 500){
+                  Swal.close();
+                  Swal.fire({
+                    text: error.error.mensaje,
+                    icon: "error"
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }else{
+                  Swal.close();
+                  Swal.fire({
+                    text: "Hubo un error de conexión, intentelo más tarde.",
+                    icon: "error",
+                    titleText: "¡Lo sentimos!",
+                  })
+                  this.formExtracontractual.controls['cargarExcel'].setValue('')
+                }
               }
-            }
-          })
-        };
-        reader.readAsDataURL(archivoSeleccionado);
+            })
+          };
+          reader.readAsDataURL(archivoSeleccionado);
+        }else{return}
       } else {
         Swal.fire({
           text: "No has agregado un número de poliza",
@@ -656,11 +659,13 @@ export class PolizasComponent implements OnInit {
   alternarDesplegarRCE() {
     this.desplegarRCE = !this.desplegarRCE
   }
-  alternarDesplegarAB() {
-    this.desplegarAmparosB = !this.desplegarAmparosB
+  alternarDesplegarAB(tipoPoliza: number) {
+    if(tipoPoliza == 1){this.desplegarAmparosB1 = !this.desplegarAmparosB1}
+    if(tipoPoliza == 2){this.desplegarAmparosB2 = !this.desplegarAmparosB2}    
   }
-  alternarDesplegarAA() {
-    this.desplegarAmparosA = !this.desplegarAmparosA
+  alternarDesplegarAA(tipoPoliza: number) {
+    if(tipoPoliza == 1){this.desplegarAmparosA1 = !this.desplegarAmparosA1}
+    if(tipoPoliza == 2){this.desplegarAmparosA2 = !this.desplegarAmparosA2}
   }
   abrirModalCapacidad() {
     this.modalCapacidad.abrir()
