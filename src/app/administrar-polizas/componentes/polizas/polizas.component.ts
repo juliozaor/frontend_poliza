@@ -162,7 +162,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.deshabilitarFormularios()
+    this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
 
@@ -398,7 +398,7 @@ export class PolizasComponent implements OnInit {
         Swal.fire({
           icon: "error",
           titleText: "¡Los números de póliza no pueden ser iguales!",
-          text: "por favor, corrija los números de poliza"
+          text: "por favor, corrija los números de póliza"
         })
         controlsC['numeroPolizaC'].setValue('')
         controlsE['numeroPolizaE'].setValue('')
