@@ -103,14 +103,14 @@ export class PolizasComponent implements OnInit {
       //----- Responsabilidad -----//
       checkResponsabilidadC: new FormControl(false),
       fechaConstitucion: new FormControl(undefined),
-      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
+      numeroResolucion: new FormControl(undefined),
       fechaResolucion: new FormControl(undefined),
-      valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
+      valorReserva: new FormControl(undefined),
       fechaCorteReserva: new FormControl(undefined),
       infoComplementaria: new FormControl(undefined),
-      capas: new FormControl(undefined, capasValidator()),
-      capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
-      capa2: new FormControl(undefined, maxLengthNumberValidator(4)),
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined),
     })
     this.formContractual.get('checkResponsabilidadC')?.enable()
 
@@ -148,15 +148,15 @@ export class PolizasComponent implements OnInit {
       cargarPDF: new FormControl(undefined,),
       //----- Responsabilidad -----//
       checkResponsabilidadE: new FormControl(false),
-      fechaConstitucion: new FormControl(undefined,),
-      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
-      fechaResolucion: new FormControl(undefined,),
-      valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
-      fechaCorteReserva: new FormControl(undefined,),
-      infoComplementaria: new FormControl(undefined,),
-      capas: new FormControl(undefined, capasValidator()),
-      capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
-      capa2: new FormControl(undefined, maxLengthNumberValidator(4))
+      fechaConstitucion: new FormControl(undefined),
+      numeroResolucion: new FormControl(undefined),
+      fechaResolucion: new FormControl(undefined),
+      valorReserva: new FormControl(undefined),
+      fechaCorteReserva: new FormControl(undefined),
+      infoComplementaria: new FormControl(undefined),
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined)
     })
     this.formExtracontractual.get('checkResponsabilidadE')?.disable()
   }
