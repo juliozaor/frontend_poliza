@@ -74,6 +74,9 @@ export class InicioSesionComponent implements OnInit {
         if (error.status == 400) {
           this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message)
         }
+        if(error){
+          this.popup.abrirPopupFallido('Error al iniciar sesión','Posiblemente esté presentando dificultades de conexión')
+        }
       }
     })
   }
