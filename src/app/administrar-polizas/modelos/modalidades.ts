@@ -1,5 +1,18 @@
-export interface modalidades{
+export interface ModalidadesModel{
+    estado: boolean,
     id: number,
     nombre: string,
-    estado: boolean,
+}
+
+export interface CapacidadesModel{
+    capacidades: ModalidadModel[]
+}
+
+export interface ModalidadModel{
+    numero?: number,
+    vigencia?: string,
+    modalidadId?: number,
+    nombre?: string,
+    nombreOriginal?: string,
+    ruta?: string
 }
