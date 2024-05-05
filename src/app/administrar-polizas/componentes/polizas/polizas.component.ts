@@ -14,6 +14,7 @@ import { maxLengthNumberValidator } from './validadores/maximo-validador';
 import { capasValidator } from './validadores/capas-validacion';
 import { valorCeroValidar } from './validadores/cero-validacion';
 import { negativoValidar } from './validadores/negativo-verificar';
+import { tamanioValido } from './validadores/tamanio-archivo-validar';
 
 @Component({
   selector: 'app-polizas',
@@ -102,15 +103,16 @@ export class PolizasComponent implements OnInit {
       cargarPDF: new FormControl(undefined, [Validators.required]),
       //----- Responsabilidad -----//
       checkResponsabilidadC: new FormControl(false),
+      checkNoResponsabilidadC: new FormControl(false),
       fechaConstitucion: new FormControl(undefined),
-      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
+      numeroResolucion: new FormControl(undefined),
       fechaResolucion: new FormControl(undefined),
-      valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
+      valorReserva: new FormControl(undefined),
       fechaCorteReserva: new FormControl(undefined),
       infoComplementaria: new FormControl(undefined),
-      capas: new FormControl(undefined, capasValidator()),
-      capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
-      capa2: new FormControl(undefined, maxLengthNumberValidator(4)),
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined),
     })
     this.formContractual.get('checkResponsabilidadC')?.enable()
 
@@ -148,22 +150,73 @@ export class PolizasComponent implements OnInit {
       cargarPDF: new FormControl(undefined,),
       //----- Responsabilidad -----//
       checkResponsabilidadE: new FormControl(false),
-      fechaConstitucion: new FormControl(undefined,),
-      numeroResolucion: new FormControl(undefined, maxLengthNumberValidator(18)),
-      fechaResolucion: new FormControl(undefined,),
-      valorReserva: new FormControl(undefined, maxLengthNumberValidator(4)),
+      checkNoResponsabilidadE: new FormControl(false),
+      fechaConstitucion: new FormControl(undefined),
+      numeroResolucion: new FormControl(undefined),
+      fechaResolucion: new FormControl(undefined),
+      valorReserva: new FormControl(undefined),
       fechaCorteReserva: new FormControl(undefined,),
       infoComplementaria: new FormControl(undefined,),
-      capas: new FormControl(undefined, capasValidator()),
-      capa1: new FormControl(undefined, maxLengthNumberValidator(4)),
-      capa2: new FormControl(undefined, maxLengthNumberValidator(4))
+      capas: new FormControl(undefined),
+      capa1: new FormControl(undefined),
+      capa2: new FormControl(undefined),
     })
     this.formExtracontractual.get('checkResponsabilidadE')?.disable()
+    this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
   }
 
   ngOnInit(): void {
     //this.deshabilitarFormularios()
     this.obtenerAseguradora()
+  }
+  fechasVerificar(tipoPoliza: number){
+    const controlC = this.formContractual.controls
+    const controlE = this.formExtracontractual.controls
+
+    if(tipoPoliza == 1){
+      if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
+        if(controlC['vigenciaPolizaInicioC'].value > controlC['vigenciaPolizaFinalC'].value){
+          controlC['vigenciaPolizaInicioC'].setValue('')
+          controlC['vigenciaPolizaFinalC'].setValue('')
+          Swal.fire({
+            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            icon:"error"
+          })
+        }
+      }
+    }else if(tipoPoliza == 2){
+      if(controlE['vigenciaPolizaInicioE'].value && controlE['vigenciaPolizaFinalE'].value){
+        if(controlE['vigenciaPolizaInicioE'].value > controlE['vigenciaPolizaFinalE'].value){
+          controlE['vigenciaPolizaInicioE'].setValue('')
+          controlE['vigenciaPolizaFinalE'].setValue('')
+          Swal.fire({
+            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            icon:"error"
+          })
+        }
+      }
+    }
+  }
+
+  respuestaNoResponsabilidad( tipoPoliza: number){
+    const controlC = this.formContractual.controls
+    const controlE = this.formExtracontractual.controls
+    if(tipoPoliza == 1){
+      console.log(!controlC['checkNoResponsabilidadC'].value);
+      if(controlC['checkNoResponsabilidadC'].value){
+        controlC['checkResponsabilidadC'].disable()
+      }else{
+        controlC['checkResponsabilidadC'].enable()
+      }
+    }
+    if(tipoPoliza == 2){
+      //console.log(controlC['checkNoResponsabilidadC'].value);
+      if(controlE['checkNoResponsabilidadE'].value){
+        controlE['checkResponsabilidadE'].disable()
+      }else{
+        controlE['checkResponsabilidadE'].enable()
+      }
+    }
   }
 
   finalizar() {
@@ -216,6 +269,8 @@ export class PolizasComponent implements OnInit {
 
   guardarPolizas() {
     //console.log(this.formContractual);
+    const controlsC = this.formContractual.controls
+    const controlsE = this.formExtracontractual.controls
 
     if (this.formContractual.invalid) {//Valida formulario contarctual (Esté lleno)
       marcarFormularioComoSucio(this.formContractual)
@@ -226,9 +281,16 @@ export class PolizasComponent implements OnInit {
       })
       return;
     }
+    //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en contarctual
+    if(!controlsC['checkResponsabilidadC'].value && !controlsC['checkNoResponsabilidadC'].value){
+      Swal.fire({
+        icon: "error",
+        titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la poliza contractual!",
+      })
+      return;
+    }
 
-    const controlsC = this.formContractual.controls
-    const controlsE = this.formExtracontractual.controls
+
     const polizaContractual: PolizaContractualModel = {
       numero: controlsC['numeroPolizaC'].value,
       aseguradoraId: controlsC['aseguradorasC'].value,
@@ -383,7 +445,7 @@ export class PolizasComponent implements OnInit {
     };
 
     //Valida formulario extracontarctual sea valido (Esté lleno) si y solo si se ha escrito el numero de poliza
-    if (this.formExtracontractual.controls['numeroPolizaE'].value && this.formExtracontractual.controls['numeroPolizaE'].value != "") {
+    if (controlsE['numeroPolizaE'].value && controlsE['numeroPolizaE'].value != "") {
       if (this.formExtracontractual.invalid) {
         marcarFormularioComoSucio(this.formExtracontractual)
         Swal.fire({
@@ -394,7 +456,7 @@ export class PolizasComponent implements OnInit {
         return;
       }
       //Valida que los números de polizas contractual y extracontractua no sean iguales.
-      if(this.formExtracontractual.controls['numeroPolizaE'].value == this.formContractual.controls['numeroPolizaC'].value){
+      if(controlsE['numeroPolizaE'].value == controlsC['numeroPolizaC'].value){
         Swal.fire({
           icon: "error",
           titleText: "¡Los números de póliza no pueden ser iguales!",
@@ -406,6 +468,14 @@ export class PolizasComponent implements OnInit {
         controlsE['cargarExcel'].setValue('')
         return;
       }
+      //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en extracontarctual
+      if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
+        Swal.fire({
+          icon: "error",
+          titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la poliza extracontractual!",
+        })
+        return;
+      }
       polizaJson.polizaExtracontractual = polizaExtracontractual
     }
     Swal.fire({
@@ -414,6 +484,7 @@ export class PolizasComponent implements OnInit {
       text: 'Espere por favor...',
     });
     Swal.showLoading(null);
+    //Guarda la poliza y devuelve la respuesta correspondiente
     this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
       next: (respuesta) => {
         console.log(respuesta)
@@ -435,6 +506,8 @@ export class PolizasComponent implements OnInit {
             this.formExtracontractual.reset()
             this.fondoResponsabilidadC = false
             this.fondoResponsabilidadE = false
+            controlsC['checkResponsabilidadC'].enable();controlsC['checkNoResponsabilidadC'].enable()
+            controlsE['checkResponsabilidadE'].disable();controlsE['checkNoResponsabilidadE'].disable()
           }
         })
       },
@@ -451,7 +524,7 @@ export class PolizasComponent implements OnInit {
           })
         }else{
           Swal.fire({
-            text: "No se ha recibido ninguna respuesta",
+            text: "Problemas de comunicación con el servidor.",
             icon: "question",
             titleText: "¡Lo sentimos!",
           })
@@ -474,6 +547,15 @@ export class PolizasComponent implements OnInit {
       if (numeroPliza) {
         const archivoSeleccionado = event.target.files[0];
         if(archivoSeleccionado){
+          if(!tamanioValido(archivoSeleccionado,20)){
+            Swal.fire({
+              icon: 'error',
+              titleText: 'Excede el tamaño de archivo permitido',
+              text: 'El archivo debe pesar maximo 20MB',
+            });
+            this.formContractual.controls['cargarExcel'].setValue('')
+            return;
+          }
           Swal.fire({
             icon: 'info',
             allowOutsideClick: false,
@@ -533,7 +615,7 @@ export class PolizasComponent implements OnInit {
                   })
                   this.formContractual.controls['cargarExcel'].setValue('')
                 }
-                //            
+                //
               }
             })
           }
@@ -564,7 +646,11 @@ export class PolizasComponent implements OnInit {
               next: (respuesta) => {
                 this.archivoCargado = respuesta.mensaje
                 Swal.close();
-                this.popup.abrirPopupExitoso(this.archivoCargado)
+                Swal.fire({
+                  titleText: "¡Archivo cargado correctamente!",
+                  icon: "success"
+                })
+                //this.popup.abrirPopupExitoso(this.archivoCargado)
               },
               error: (error: HttpErrorResponse) => {
                 this.archivoCargado = error.error.mensaje
@@ -622,6 +708,15 @@ export class PolizasComponent implements OnInit {
   cargarArchivoPDf(event: any, tipoPoliza: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
+      if(!tamanioValido(archivoSeleccionado,20)){
+        Swal.fire({
+          icon: 'error',
+          titleText: 'Excede el tamaño de archivo permitido',
+          text: 'El archivo debe pesar maximo 20MB',
+        });
+        this.formContractual.controls['cargarPDF'].setValue('')
+        return;
+      }
       Swal.fire({
         icon: 'info',
         allowOutsideClick: false,
@@ -662,7 +757,7 @@ export class PolizasComponent implements OnInit {
   }
   alternarDesplegarAB(tipoPoliza: number) {
     if(tipoPoliza == 1){this.desplegarAmparosB1 = !this.desplegarAmparosB1}
-    if(tipoPoliza == 2){this.desplegarAmparosB2 = !this.desplegarAmparosB2}    
+    if(tipoPoliza == 2){this.desplegarAmparosB2 = !this.desplegarAmparosB2}
   }
   alternarDesplegarAA(tipoPoliza: number) {
     if(tipoPoliza == 1){this.desplegarAmparosA1 = !this.desplegarAmparosA1}
@@ -676,18 +771,20 @@ export class PolizasComponent implements OnInit {
     if (tipoPoliza == 1) {
       if (this.formContractual.controls['checkResponsabilidadC'].value) {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
+        this.formContractual.controls['checkNoResponsabilidadC'].disable()
         //this.formContractual.get('checkResponsabilidadC')?.disable()
         this.formContractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar()])
+        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar(), valorCeroValidar()])
         this.formContractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
         this.formContractual.get('fechaCorteReserva')?.setValidators([Validators.required])
         this.formContractual.get('infoComplementaria')?.setValidators([Validators.required])
         this.formContractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
-        this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
+        this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
+        this.formContractual.controls['checkNoResponsabilidadC'].enable()
         this.formContractual.get('checkResponsabilidadE')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
         this.formContractual.get('fechaConstitucion')?.clearValidators(); this.formContractual.get('fechaConstitucion')?.updateValueAndValidity()
         this.formContractual.get('numeroResolucion')?.clearValidators(); this.formContractual.get('numeroResolucion')?.updateValueAndValidity()
@@ -711,19 +808,21 @@ export class PolizasComponent implements OnInit {
     } else if (tipoPoliza == 2) {
       if (this.formExtracontractual.controls['checkResponsabilidadE'].value) {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
-        //this.formExtracontractual.get('checkResponsabilidadE')?.disable()
+        this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
         this.formExtracontractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar()])
+        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar(), valorCeroValidar()])
         this.formExtracontractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
         this.formExtracontractual.get('fechaCorteReserva')?.setValidators([Validators.required])
         this.formExtracontractual.get('infoComplementaria')?.setValidators([Validators.required])
         this.formExtracontractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formExtracontractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
-        this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar()])
+        this.formExtracontractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
+        this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
-        //this.formExtracontractual.get('checkResponsabilidadE')?.disable()
+        if(this.formExtracontractual.controls['numeroPolizaE'].value){
+          this.formExtracontractual.get('checkNoResponsabilidadE')?.enable()
+        }
         this.formExtracontractual.get('checkResponsabilidadE')?.setValue(false); this.formExtracontractual.get('checkResponsabilidadE')?.updateValueAndValidity()
         this.formExtracontractual.get('fechaConstitucion')?.clearValidators(); this.formExtracontractual.get('fechaConstitucion')?.updateValueAndValidity()
         this.formExtracontractual.get('numeroResolucion')?.clearValidators(); this.formExtracontractual.get('numeroResolucion')?.updateValueAndValidity()
@@ -750,7 +849,7 @@ export class PolizasComponent implements OnInit {
   numeroPolizaELleno() {
     if (this.formExtracontractual.controls['numeroPolizaE'].value) {
       this.obligatorio = true
-      this.formExtracontractual.get('checkResponsabilidadE')?.enable()
+      this.formExtracontractual.get('checkResponsabilidadE')?.enable();this.formExtracontractual.get('checkNoResponsabilidadE')?.enable()
       this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.setValidators([Validators.required]); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
@@ -783,8 +882,7 @@ export class PolizasComponent implements OnInit {
       this.formExtracontractual.get('cargarPDF')?.setValidators([Validators.required]); this.formExtracontractual.get('cargarPDF')?.updateValueAndValidity()
     } else {
       this.obligatorio = false
-      this.formExtracontractual.get('checkResponsabilidadE')?.disable()
-
+      this.formExtracontractual.get('checkResponsabilidadE')?.disable();this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
       this.formExtracontractual.get('numeroPolizaE')?.clearValidators(); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.clearValidators(); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.clearValidators(); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
@@ -817,6 +915,7 @@ export class PolizasComponent implements OnInit {
       this.formExtracontractual.get('cargarPDF')?.clearValidators(); this.formExtracontractual.get('cargarPDF')?.updateValueAndValidity()
 
       this.formExtracontractual.controls['checkResponsabilidadE'].setValue(false); this.formExtracontractual.get('checkResponsabilidadE')?.updateValueAndValidity()
+      this.formExtracontractual.controls['checkNoResponsabilidadE'].setValue(false); this.formExtracontractual.get('checkNoResponsabilidadE')?.updateValueAndValidity()
       this.DesplegarFondoResponsabilidad(2)
     }
   }
