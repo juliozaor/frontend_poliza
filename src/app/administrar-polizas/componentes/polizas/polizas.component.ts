@@ -169,6 +169,34 @@ export class PolizasComponent implements OnInit {
     //this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
+  fechasVerificar(tipoPoliza: number){
+    const controlC = this.formContractual.controls
+    const controlE = this.formExtracontractual.controls
+
+    if(tipoPoliza == 1){
+      if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
+        if(controlC['vigenciaPolizaInicioC'].value > controlC['vigenciaPolizaFinalC'].value){
+          controlC['vigenciaPolizaInicioC'].setValue('')
+          controlC['vigenciaPolizaFinalC'].setValue('')
+          Swal.fire({
+            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            icon:"error"
+          })
+        }
+      }
+    }else if(tipoPoliza == 2){
+      if(controlE['vigenciaPolizaInicioE'].value && controlE['vigenciaPolizaFinalE'].value){
+        if(controlE['vigenciaPolizaInicioE'].value > controlE['vigenciaPolizaFinalE'].value){
+          controlE['vigenciaPolizaInicioE'].setValue('')
+          controlE['vigenciaPolizaFinalE'].setValue('')
+          Swal.fire({
+            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            icon:"error"
+          })
+        }
+      }
+    }
+  }
 
   respuestaNoResponsabilidad( tipoPoliza: number){
     const controlC = this.formContractual.controls

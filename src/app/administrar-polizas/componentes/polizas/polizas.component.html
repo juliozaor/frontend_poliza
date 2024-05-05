@@ -60,7 +60,8 @@
               class="validacion">*</span>
           </div>
           <div class="col-5">
-            <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial">
+            <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial"
+            (change)="fechasVerificar(1)">
             <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
               [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
           </div>
@@ -70,7 +71,8 @@
             <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span><span class="validacion">*</span>
           </div>
           <div class="col-5">
-            <input formControlName="vigenciaPolizaFinalC" class="form-control" type="date" placeholder="Fecha final">
+            <input formControlName="vigenciaPolizaFinalC" class="form-control" type="date" placeholder="Fecha final"
+            (change)="fechasVerificar(1)">
             <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
               [control]="this.formContractual.controls['vigenciaPolizaFinalC']" />
           </div>
@@ -742,7 +744,8 @@
             <span *ngIf="obligatorio" class="validacion">*</span>
           </div>
           <div class="col-5">
-            <input formControlName="vigenciaPolizaInicioE" class="form-control" type="date" placeholder="Fecha inicial">
+            <input formControlName="vigenciaPolizaInicioE" class="form-control" type="date" placeholder="Fecha inicial"
+            (change)="fechasVerificar(2)">
             <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
               [control]="this.formExtracontractual.controls['vigenciaPolizaInicioE']" />
           </div>
@@ -753,7 +756,8 @@
             <span *ngIf="obligatorio" class="validacion">*</span>
           </div>
           <div class="col-5">
-            <input formControlName="vigenciaPolizaFinalE" class="form-control" type="date" placeholder="Fecha final">
+            <input formControlName="vigenciaPolizaFinalE" class="form-control" type="date" placeholder="Fecha final"
+            (change)="fechasVerificar(2)">
             <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
               [control]="this.formExtracontractual.controls['vigenciaPolizaFinalE']" />
           </div>
