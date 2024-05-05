@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../../validadores/maximo-validador';
 import { valorCeroValidar } from '../../validadores/cero-validacion';
 import { negativoValidar } from '../../validadores/negativo-verificar';
+import { tamanioValido } from '../../validadores/tamanio-archivo-validar';
 
 @Component({
   selector: 'app-modal-capacidad',
@@ -100,7 +101,8 @@ export class ModalCapacidadComponent implements OnInit {
 
   public abrir(): void {
     this.servicioModal.open(this.modal, {
-      size: 'lg'
+
+      windowClass: 'custom-modal-size'
     })
     //this.obtenerModalidades()
   }
@@ -242,6 +244,21 @@ export class ModalCapacidadComponent implements OnInit {
   cargarArchivoPDf(event: any, tipoModalidad: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
+      if(!tamanioValido(archivoSeleccionado,5)){
+        Swal.fire({
+          icon: 'error',
+          titleText: 'Excede el tamaño de archivo permitido',
+          text: 'El archivo debe pesar maximo 5MB',
+        });
+        if (tipoModalidad == 1) {
+          this.formMX.controls['PDFRMX'].setValue('')
+        } else if (tipoModalidad == 2) {
+          this.formES.controls['PDFRES'].setValue('')
+        } else if (tipoModalidad == 3) {
+          this.formPC.controls['PDFRPC'].setValue('')
+        }
+        return;
+      }
       Swal.fire({
         icon: 'info',
         allowOutsideClick: false,
