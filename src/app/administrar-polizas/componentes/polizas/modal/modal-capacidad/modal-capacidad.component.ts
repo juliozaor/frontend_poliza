@@ -12,6 +12,7 @@ import { maxLengthNumberValidator } from '../../validadores/maximo-validador';
 import { valorCeroValidar } from '../../validadores/cero-validacion';
 import { negativoValidar } from '../../validadores/negativo-verificar';
 import { tamanioValido } from '../../validadores/tamanio-archivo-validar';
+import { fechaValida } from '../../validadores/fecha-validador';
 
 @Component({
   selector: 'app-modal-capacidad',
@@ -113,6 +114,23 @@ export class ModalCapacidadComponent implements OnInit {
         this.modalidades = modalidad['modalidades']
       }
     })
+  }
+
+  fechaValida(event: any, tipoModalidad: number){
+    if(fechaValida(event)){
+      Swal.fire({
+        titleText:"La fecha ingresada no puede ser superior o igual a la fecha actual",
+        icon: "error"
+      })
+      console.log(event.target.name);
+      if(tipoModalidad == 1){
+        this.formMX.controls[event.target.name].setValue('')
+      }else if(tipoModalidad == 2){
+        this.formES.controls[event.target.name].setValue('')
+      }else if(tipoModalidad == 3){
+        this.formPC.controls[event.target.name].setValue('')
+      }
+    }
   }
 
   guardarCapacidades() {

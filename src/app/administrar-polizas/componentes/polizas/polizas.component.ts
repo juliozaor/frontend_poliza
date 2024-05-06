@@ -15,6 +15,7 @@ import { capasValidator } from './validadores/capas-validacion';
 import { valorCeroValidar } from './validadores/cero-validacion';
 import { negativoValidar } from './validadores/negativo-verificar';
 import { tamanioValido } from './validadores/tamanio-archivo-validar';
+import { fechaValida } from './validadores/fecha-validador';
 
 @Component({
   selector: 'app-polizas',
@@ -194,6 +195,21 @@ export class PolizasComponent implements OnInit {
             icon:"error"
           })
         }
+      }
+    }
+  }
+
+  fechaValida(event: any, tipoPoliza: number){
+    if(fechaValida(event)){
+      Swal.fire({
+        titleText:"La fecha ingresada no puede ser superior o igual a la fecha actual",
+        icon: "error"
+      })
+      console.log(event.target.name);
+      if(tipoPoliza == 1){
+        this.formContractual.controls[event.target.name].setValue('')
+      }else if(tipoPoliza == 2){
+        this.formExtracontractual.controls[event.target.name].setValue('')
       }
     }
   }
@@ -477,7 +493,7 @@ export class PolizasComponent implements OnInit {
       if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
         Swal.fire({
           icon: "error",
-          titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la pÓliza EXTRACONTRACTUAL!",
+          titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la póliza EXTRACONTRACTUAL!",
         })
         return;
       }
@@ -552,7 +568,7 @@ export class PolizasComponent implements OnInit {
       if (numeroPliza) {
         const archivoSeleccionado = event.target.files[0];
         if(archivoSeleccionado){
-          if(!tamanioValido(archivoSeleccionado,20)){
+          if(tamanioValido(archivoSeleccionado,20)){
             Swal.fire({
               icon: 'error',
               titleText: 'Excede el tamaño de archivo permitido',
@@ -788,9 +804,8 @@ export class PolizasComponent implements OnInit {
         this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
         this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
-        console.log(this.formContractual.controls['checkResponsabilidadC'].value,this.fondoResponsabilidadC);
-
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
+        console.log(this.formContractual.controls['checkResponsabilidadC'].value,this.fondoResponsabilidadC);
         this.formContractual.controls['checkNoResponsabilidadC'].enable()
         this.formContractual.get('checkResponsabilidadC')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
         this.formContractual.get('fechaConstitucion')?.clearValidators(); this.formContractual.get('fechaConstitucion')?.updateValueAndValidity()
