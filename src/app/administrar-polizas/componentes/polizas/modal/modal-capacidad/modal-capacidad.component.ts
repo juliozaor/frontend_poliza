@@ -262,11 +262,11 @@ export class ModalCapacidadComponent implements OnInit {
   cargarArchivoPDf(event: any, tipoModalidad: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
-      if(!tamanioValido(archivoSeleccionado,5)){
+      if(tamanioValido(archivoSeleccionado,5)){
         Swal.fire({
           icon: 'error',
           titleText: 'Excede el tamaño de archivo permitido',
-          text: 'El archivo debe pesar maximo 5MB',
+          text: 'El archivo debe pesar máximo 5MB',
         });
         if (tipoModalidad == 1) {
           this.formMX.controls['PDFRMX'].setValue('')
