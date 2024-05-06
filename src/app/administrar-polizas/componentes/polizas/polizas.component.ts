@@ -167,7 +167,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.deshabilitarFormularios()
+    this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
   fechasVerificar(tipoPoliza: number){
@@ -572,7 +572,7 @@ export class PolizasComponent implements OnInit {
             Swal.fire({
               icon: 'error',
               titleText: 'Excede el tamaño de archivo permitido',
-              text: 'El archivo debe pesar maximo 20MB',
+              text: 'El archivo debe pesar máximo 20MB',
             });
             this.formContractual.controls['cargarExcel'].setValue('')
             return;
@@ -729,11 +729,11 @@ export class PolizasComponent implements OnInit {
   cargarArchivoPDf(event: any, tipoPoliza: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
-      if(!tamanioValido(archivoSeleccionado,20)){
+      if(tamanioValido(archivoSeleccionado,20)){
         Swal.fire({
           icon: 'error',
           titleText: 'Excede el tamaño de archivo permitido',
-          text: 'El archivo debe pesar maximo 20MB',
+          text: 'El archivo debe pesar máximo 20MB',
         });
         this.formContractual.controls['cargarPDF'].setValue('')
         return;
