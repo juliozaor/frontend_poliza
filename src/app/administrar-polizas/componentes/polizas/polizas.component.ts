@@ -259,9 +259,9 @@ export class PolizasComponent implements OnInit {
 
   deshabilitarFormularios() {
     this.servicioAdministrarPoliza.obtenerEstadoVigilado().subscribe({
-      next: (deshabilitado: boolean) => {
-        if (deshabilitado) {
-          this.deshabilitado = deshabilitado
+      next: (deshabilitado: any) => {
+        if (deshabilitado.enviado) {
+          this.deshabilitado = deshabilitado.enviado
           this.formContractual.disable()
           this.formExtracontractual.disable()
           Swal.fire({
