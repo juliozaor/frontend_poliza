@@ -540,7 +540,8 @@
               <span class="fs-14px">Fecha Constitución Fondo</span><span class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion">
+              <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion"
+              (change)="fechaValida($event,1)" name="fechaConstitucion">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de constitución es requerida.'"
                 [control]="this.formContractual.controls['fechaConstitucion']" />
             </div>
@@ -568,7 +569,8 @@
                 class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion">
+              <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion"
+              (change)="fechaValida($event,1)" name="fechaResolucion">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de resolución es requerida.'"
                 [control]="this.formContractual.controls['fechaResolucion']" />
             </div>
@@ -597,7 +599,8 @@
               </span><span class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva">
+              <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva"
+              (change)="fechaValida($event,1)" name="fechaCorteReserva">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de corte de reserva es requerida.'"
                 [control]="this.formContractual.controls['fechaCorteReserva']" />
             </div>
@@ -1196,7 +1199,8 @@
               <span class="fs-14px">Fecha Constitución Fondo</span><span class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion">
+              <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion"
+              (change)="fechaValida($event,2)" name="fechaConstitucion">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de constitución es requerida.'"
                 [control]="this.formExtracontractual.controls['fechaConstitucion']" />
             </div>
@@ -1224,7 +1228,8 @@
                 class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion">
+              <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion"
+              (change)="fechaValida($event,2)" name="fechaResolucion">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de resolución es requerida.'"
                 [control]="this.formExtracontractual.controls['fechaResolucion']" />
             </div>
@@ -1253,7 +1258,8 @@
               </span><span class="validacion">*</span>
             </div>
             <div class="col-6">
-              <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva">
+              <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva"
+              (change)="fechaValida($event,2)" name="fechaCorteReserva">
               <app-validacion [validacion]="'required'" [texto]="'La fecha de corte de reserva es requerida.'"
                 [control]="this.formExtracontractual.controls['fechaCorteReserva']" />
             </div>

@@ -1,9 +1,9 @@
-import { AbstractControl, ValidatorFn } from "@angular/forms";
 
 export function tamanioValido(archivo: File, tamanioMaximoMb: number): boolean{
-  if(tamanioMaximoMb){
-    return tamanioMaximoMb * 1000000 >= archivo.size ? true : false
-  }else{
+  const tm  = tamanioMaximoMb * 1000000
+   if(archivo.size > tm){
     return true
+  }else{
+    return false
   }
 }

@@ -46,7 +46,8 @@
                                     <label for="fechaResolucionVigente" class="fw-semibold">
                                         Fecha de la resolución vigente
                                     </label>
-                                    <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX">
+                                    <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX"
+                                    (change)="fechaValida($event, 1)" name="fechaRMX">
                                     <app-validacion
                                     [validacion]="'required'"
                                     [texto]="'La fecha de la resolución vigente es requerida.'"
@@ -108,7 +109,8 @@
                                 <label for="fechaResolucionVigente" class="fw-semibold">
                                     Fecha de la resolución vigente
                                 </label>
-                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES">
+                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES"
+                                (change)="fechaValida($event, 2)" name="fechaRES">
                                 <app-validacion
                                     [validacion]="'required'"
                                     [texto]="'La fecha de la resolución vigente es requerida.'"
@@ -170,7 +172,8 @@
                                 <label for="fechaResolucionVigente" class="fw-semibold">
                                     Fecha de la resolución vigente
                                 </label>
-                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC">
+                                <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC"
+                                (change)="fechaValida($event, 3)" name="fechaRPC">
                                 <app-validacion
                                         [validacion]="'required'"
                                         [texto]="'La fecha de la resolución vigente es requerida.'"
