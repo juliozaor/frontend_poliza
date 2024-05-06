@@ -175,22 +175,22 @@ export class PolizasComponent implements OnInit {
 
     if(tipoPoliza == 1){
       if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
-        if(controlC['vigenciaPolizaInicioC'].value > controlC['vigenciaPolizaFinalC'].value){
+        if(controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value){
           controlC['vigenciaPolizaInicioC'].setValue('')
           controlC['vigenciaPolizaFinalC'].setValue('')
           Swal.fire({
-            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            titleText:"El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
             icon:"error"
           })
         }
       }
     }else if(tipoPoliza == 2){
       if(controlE['vigenciaPolizaInicioE'].value && controlE['vigenciaPolizaFinalE'].value){
-        if(controlE['vigenciaPolizaInicioE'].value > controlE['vigenciaPolizaFinalE'].value){
+        if(controlE['vigenciaPolizaInicioE'].value >= controlE['vigenciaPolizaFinalE'].value){
           controlE['vigenciaPolizaInicioE'].setValue('')
           controlE['vigenciaPolizaFinalE'].setValue('')
           Swal.fire({
-            titleText:"El inicio de la vigencia no puede ser una fecha porterior al final de la vigencia.",
+            titleText:"El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
             icon:"error"
           })
         }
@@ -202,19 +202,22 @@ export class PolizasComponent implements OnInit {
     const controlC = this.formContractual.controls
     const controlE = this.formExtracontractual.controls
     if(tipoPoliza == 1){
-      console.log(!controlC['checkNoResponsabilidadC'].value);
       if(controlC['checkNoResponsabilidadC'].value){
         controlC['checkResponsabilidadC'].disable()
+        controlC['checkResponsabilidadC'].setValue(false)
       }else{
         controlC['checkResponsabilidadC'].enable()
+        controlC['checkResponsabilidadC'].setValue(false)
       }
     }
     if(tipoPoliza == 2){
       //console.log(controlC['checkNoResponsabilidadC'].value);
       if(controlE['checkNoResponsabilidadE'].value){
         controlE['checkResponsabilidadE'].disable()
+        controlE['checkResponsabilidadE'].setValue(false)
       }else{
         controlE['checkResponsabilidadE'].enable()
+        controlE['checkResponsabilidadE'].setValue(false)
       }
     }
   }
@@ -285,7 +288,7 @@ export class PolizasComponent implements OnInit {
     if(!controlsC['checkResponsabilidadC'].value && !controlsC['checkNoResponsabilidadC'].value){
       Swal.fire({
         icon: "error",
-        titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la poliza contractual!",
+        titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la póliza CONTRACTUAL!",
       })
       return;
     }
@@ -345,7 +348,8 @@ export class PolizasComponent implements OnInit {
           limite: controlsC['limitesAA8'].value,
           deducible: controlsC['deducibleAA8'].value,
         }
-      ]
+      ],
+      tieneResponsabilidad: this.fondoResponsabilidadC
     }
     const responsabilidadC: ResponsabilidadModel = {
       fechaConstitucion: controlsC['fechaConstitucion'].value,
@@ -411,7 +415,8 @@ export class PolizasComponent implements OnInit {
           limite: controlsE['limitesAA15'].value,
           deducible: controlsE['deducibleAA15'].value,
         },
-      ]
+      ],
+      tieneResponsabilidad: this.fondoResponsabilidadE
     }
     const responsabilidadE: ResponsabilidadModel = {
       fechaConstitucion: controlsE['fechaConstitucion'].value,
@@ -472,7 +477,7 @@ export class PolizasComponent implements OnInit {
       if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
         Swal.fire({
           icon: "error",
-          titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la poliza extracontractual!",
+          titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la pÓliza EXTRACONTRACTUAL!",
         })
         return;
       }
@@ -769,7 +774,7 @@ export class PolizasComponent implements OnInit {
 
   DesplegarFondoResponsabilidad(tipoPoliza: number) {
     if (tipoPoliza == 1) {
-      if (this.formContractual.controls['checkResponsabilidadC'].value) {
+      if (this.formContractual.controls['checkResponsabilidadC'].value) {console.log(this.formContractual.controls['checkResponsabilidadC'].value);
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         this.formContractual.controls['checkNoResponsabilidadC'].disable()
         //this.formContractual.get('checkResponsabilidadC')?.disable()
@@ -783,9 +788,11 @@ export class PolizasComponent implements OnInit {
         this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
         this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
+        console.log(this.formContractual.controls['checkResponsabilidadC'].value,this.fondoResponsabilidadC);
+
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         this.formContractual.controls['checkNoResponsabilidadC'].enable()
-        this.formContractual.get('checkResponsabilidadE')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
+        this.formContractual.get('checkResponsabilidadC')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
         this.formContractual.get('fechaConstitucion')?.clearValidators(); this.formContractual.get('fechaConstitucion')?.updateValueAndValidity()
         this.formContractual.get('numeroResolucion')?.clearValidators(); this.formContractual.get('numeroResolucion')?.updateValueAndValidity()
         this.formContractual.get('fechaResolucion')?.clearValidators(); this.formContractual.get('fechaResolucion')?.updateValueAndValidity()

@@ -7,6 +7,7 @@ export interface GuardarPoliza{
         amparos:AmparosModel[]
         responsabilidad?: ResponsabilidadModel
         caratula?: CaratulaModel
+        tieneResponsabilidad: boolean
     }
     polizaExtracontractual:{
         numero: string
@@ -16,6 +17,7 @@ export interface GuardarPoliza{
         amparos:AmparosModel[]
         responsabilidad?: ResponsabilidadModel
         caratula?: CaratulaModel
+        tieneResponsabilidad: boolean
     }
 }
 
@@ -32,6 +34,7 @@ export interface PolizaContractualModel{
         amparos:AmparosModel[]
         responsabilidad?: ResponsabilidadModel
         caratula?: CaratulaModel
+        tieneResponsabilidad: boolean
 }
 
 export interface PolizaExtracontractualModel{
@@ -42,6 +45,7 @@ export interface PolizaExtracontractualModel{
         amparos:AmparosModel[]
         responsabilidad?: ResponsabilidadModel
         caratula?: CaratulaModel
+        tieneResponsabilidad: boolean
 }
 
 export interface AmparosModel{
