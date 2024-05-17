@@ -43,7 +43,7 @@ const routes: Routes = [
         component: PaginaResponderSoporteComponent
       },
       {
-        path: 'soportes',
+        path: 'soportes/:estado',
         component: PaginaSoportesComponent
       },
       {
