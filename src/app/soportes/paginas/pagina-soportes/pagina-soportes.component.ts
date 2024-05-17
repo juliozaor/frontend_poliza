@@ -26,9 +26,24 @@ export class PaginaSoportesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe({
+    /* this.activatedRoute.queryParams.subscribe({
       next: (query)=>{
-        this.problemasAcceso = query['acceso'] === 'true' ? true : false 
+        this.problemasAcceso = query['a'] === 'true'? true : false 
+        console.log({problemasAcceso:this.problemasAcceso});
+        
+        this.paginador.inicializar(undefined, undefined, {
+          problemaAcceso: this.problemasAcceso,
+          fechaCreacion: 'asc',
+          estado: 1
+        })
+      }
+    }) */
+    this.activatedRoute.params.subscribe({
+      next: (parametros) =>{
+        const estado = String(parametros['estado'])
+        this.problemasAcceso = estado === 'true'? true : false 
+        console.log({problemasAcceso:this.problemasAcceso});
+        
         this.paginador.inicializar(undefined, undefined, {
           problemaAcceso: this.problemasAcceso,
           fechaCreacion: 'asc',
