@@ -42,7 +42,6 @@ export class PaginaSoportesComponent implements OnInit {
       next: (parametros) =>{
         const estado = String(parametros['estado'])
         this.problemasAcceso = estado === 'true'? true : false 
-        console.log({problemasAcceso:this.problemasAcceso});
         
         this.paginador.inicializar(undefined, undefined, {
           problemaAcceso: this.problemasAcceso,
@@ -56,7 +55,7 @@ export class PaginaSoportesComponent implements OnInit {
   //Acciones
   irAResponderSoporte(soporte: Soporte){
     this.servicioSoportes.guardarEnLocalStorage(soporte)
-    this.router.navigate(['/administrar', 'responder-soporte', soporte.id])
+    this.router.navigate(['/administrar', 'responder-soporte', soporte.id, this.problemasAcceso])
   }
 
   construirFormulario(){
