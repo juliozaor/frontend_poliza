@@ -39,7 +39,7 @@ const routes: Routes = [
         component: PaginaSoporteComponent
       },
       {
-        path: 'responder-soporte/:idSoporte',
+        path: 'responder-soporte/:idSoporte/:estado',
         component: PaginaResponderSoporteComponent
       },
       {
