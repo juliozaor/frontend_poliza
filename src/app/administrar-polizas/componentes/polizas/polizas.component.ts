@@ -167,7 +167,7 @@ export class PolizasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.deshabilitarFormularios()
+    this.deshabilitarFormularios()
     this.obtenerAseguradora()
   }
   fechasVerificar(tipoPoliza: number){
@@ -477,7 +477,7 @@ export class PolizasComponent implements OnInit {
         return;
       }
       //Valida que los números de polizas contractual y extracontractua no sean iguales.
-      if(controlsE['numeroPolizaE'].value == controlsC['numeroPolizaC'].value){
+      /* if(controlsE['numeroPolizaE'].value == controlsC['numeroPolizaC'].value){
         Swal.fire({
           icon: "error",
           titleText: "¡Los números de póliza no pueden ser iguales!",
@@ -488,7 +488,7 @@ export class PolizasComponent implements OnInit {
         controlsC['cargarExcel'].setValue('')
         controlsE['cargarExcel'].setValue('')
         return;
-      }
+      } */
       //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en extracontarctual
       if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
         Swal.fire({
