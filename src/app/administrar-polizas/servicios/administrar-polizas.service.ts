@@ -99,14 +99,15 @@ export class ServicioAdministrarPolizas extends Autenticable{
       return new Blob([workbookArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     }
 
-    cargarArchivoXLSX(archivo: File, numeroPoliza: string){
+    cargarArchivoXLSX(archivo: File, numeroPoliza: string, tipoPoliza: any){
       const endpoint = `/api/v1/vehiculos/importar`
       const formData = new FormData()
       formData.append('archivo', archivo)
       formData.append('poliza', numeroPoliza)
+      formData.append('tipo', tipoPoliza.toString())
       return this.http.post<any>(
-        `${this.host}${endpoint}`, 
-        formData, 
+        `${this.host}${endpoint}`,
+        formData,
         { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
       )
     }
@@ -116,32 +117,32 @@ export class ServicioAdministrarPolizas extends Autenticable{
       const formData = new FormData()
       formData.append('archivo', archivoPDF)
       return this.http.post<ArchivoGuardado>(
-        `${this.host}${endpoint}`, 
-        formData, 
+        `${this.host}${endpoint}`,
+        formData,
         { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
       )
     }
 
     vehiculos(pagina: number, limite: number, filtros?:FiltrosVehiculos, vigiladoId?:string) {
       let endpoint = `/api/v1/poliza/vehiculos?pagina=${pagina}&limite=${limite}`;
-      
+
       if(filtros){
-       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;      
+       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;
       }
       if (vigiladoId) {
         endpoint+=`&vigiladoId=${vigiladoId}`;
       }
-      
+
       return this.http.get(`${this.host}${endpoint}`,{ headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } })
- 
+
     }
 
     exportar(pagina: number, limite: number, filtros?:FiltrosVehiculos, vigiladoId?:string) {
       let endpoint = `/api/v1/exportar/vehiculos?pagina=${pagina}&limite=${limite}`;
       console.log(filtros);
-      
+
       if(filtros){
-       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;      
+       if(filtros.termino) endpoint+=`&termino=${filtros.termino}`;
       }
       if (vigiladoId) {
         endpoint+=`&vigiladoId=${vigiladoId}`;
@@ -151,9 +152,9 @@ export class ServicioAdministrarPolizas extends Autenticable{
 
 // Abrir la URL en otra ventana
 window.open(url, '_blank');
-      
+
       /* this.http.get(`${this.host}${endpoint}`,{ headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }) */
- 
+
     }
-    
+
 }

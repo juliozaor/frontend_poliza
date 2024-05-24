@@ -585,7 +585,7 @@ export class PolizasComponent implements OnInit {
           Swal.showLoading(null);
           const reader = new FileReader();
           reader.onload = () => {
-            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza, tipoPoliza).subscribe({
               next: (respuesta) => {
                 this.archivoCargado = respuesta.mensaje
                 Swal.close();
@@ -663,7 +663,7 @@ export class PolizasComponent implements OnInit {
           Swal.showLoading(null);
           const reader = new FileReader();
           reader.onload = () => {
-            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza, tipoPoliza).subscribe({
               next: (respuesta) => {
                 this.archivoCargado = respuesta.mensaje
                 Swal.close();
