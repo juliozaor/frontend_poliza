@@ -74,30 +74,30 @@ export class PolizasComponent implements OnInit {
       vigenciaPolizaInicioC: new FormControl(undefined, [Validators.required]),
       vigenciaPolizaFinalC: new FormControl(undefined, [Validators.required]),
       //----- Amparos basicos -----//
-      valorAseguradoAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB1: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB2: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(),  */negativoValidar()]),
       deducibleAB3: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(),  */negativoValidar()]),
+      limitesAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB4: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA5: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA6: new FormControl(undefined, [ /* Validators.required,  */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA7: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA8: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined, [Validators.required]),
@@ -124,27 +124,27 @@ export class PolizasComponent implements OnInit {
       vigenciaPolizaInicioE: new FormControl(undefined,),
       vigenciaPolizaFinalE: new FormControl(undefined,),
       //----- Amparos basicos -----//
-      valorAseguradoAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB9: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB9: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB9: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB9: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB10: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB10: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB10: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB10: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAB11: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAB11: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAB11: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAB11: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
       //----- Amparos adicionales -----//
-      valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA12: new FormControl(undefined,[ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA13: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA14: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA14: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA14: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA14: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
-      limitesAA15: new FormControl(undefined, [maxLengthNumberValidator(3), valorCeroValidar(), negativoValidar()]),
+      valorAseguradoAA15: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
+      limitesAA15: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA15: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined,),
@@ -477,7 +477,7 @@ export class PolizasComponent implements OnInit {
         return;
       }
       //Valida que los números de polizas contractual y extracontractua no sean iguales.
-      if(controlsE['numeroPolizaE'].value == controlsC['numeroPolizaC'].value){
+      /* if(controlsE['numeroPolizaE'].value == controlsC['numeroPolizaC'].value){
         Swal.fire({
           icon: "error",
           titleText: "¡Los números de póliza no pueden ser iguales!",
@@ -488,7 +488,7 @@ export class PolizasComponent implements OnInit {
         controlsC['cargarExcel'].setValue('')
         controlsE['cargarExcel'].setValue('')
         return;
-      }
+      } */
       //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en extracontarctual
       if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
         Swal.fire({
@@ -585,7 +585,7 @@ export class PolizasComponent implements OnInit {
           Swal.showLoading(null);
           const reader = new FileReader();
           reader.onload = () => {
-            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza, tipoPoliza).subscribe({
               next: (respuesta) => {
                 this.archivoCargado = respuesta.mensaje
                 Swal.close();
@@ -663,7 +663,7 @@ export class PolizasComponent implements OnInit {
           Swal.showLoading(null);
           const reader = new FileReader();
           reader.onload = () => {
-            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza).subscribe({
+            this.servicioAdministrarPoliza.cargarArchivoXLSX(archivoSeleccionado, numeroPliza, tipoPoliza).subscribe({
               next: (respuesta) => {
                 this.archivoCargado = respuesta.mensaje
                 Swal.close();
