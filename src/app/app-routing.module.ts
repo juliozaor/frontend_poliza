@@ -13,6 +13,7 @@ import { AdministrarPolizasComponent } from './administrar-polizas/administrar-p
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
 import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
 import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
+import { InicioVigia2Component } from './autenticacion/componentes/inicio-vigia2/inicio-vigia2.component';
 
 
 
@@ -57,8 +58,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'inicio-sesion',
-    component: InicioSesionComponent
+    path: 'inicio-vigia2',
+    component: InicioVigia2Component
   },
   {
     path: 'actualizar-contrasena',
@@ -71,7 +72,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'inicio-sesion'
+    redirectTo: 'inicio-vigia2'
   }
 ];
 
