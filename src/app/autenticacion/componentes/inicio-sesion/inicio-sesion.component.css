@@ -45,6 +45,9 @@ a,a:hover{
   height: 50px;
 }
 
+.logo-supertransporte {
+  height: 100px;
+}
 
 .input-error{
   border-color: red;
