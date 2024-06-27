@@ -4,6 +4,7 @@ import { ServicioLocalStorage } from '../../servicios/local-storage.service';
 import { Usuario } from 'src/app/autenticacion/modelos/IniciarSesionRespuesta';
 import { AutenticacionService } from 'src/app/autenticacion/servicios/autenticacion.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -38,9 +39,10 @@ export class MenuComponent implements OnInit {
 
   public cerrarSesion(){
     this.servicioAutenticacion.cerrarSesion()
-    if(window.open('','SISI/PÓLIZA')){
+    window.location.href = environment.urlVigia2+'/administrar/administrar-aplicativos'
+    /* if(window.open('','SISI/PÓLIZA')){
       window.close();
-    }
+    } */
     /* this.router.navigateByUrl('/inicio-sesion') */
   }
   imprimirRuta(submodulo: Submodulo){
