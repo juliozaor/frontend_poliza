@@ -13,6 +13,8 @@ import { PolizasComponent } from './componentes/polizas/polizas.component';
 import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.component';
 import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capacidad/modal-capacidad.component';
 import { TemplatesModule } from '../templates/templates.module';
+import { PolizasContractualesComponent } from './componentes/polizas/polizas-contractuales/polizas-contractuales.component';
+import { PolizasExtracontractualesComponent } from './componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +23,8 @@ import { TemplatesModule } from '../templates/templates.module';
         PolizasComponent,
         VehiculosComponent,
         ModalCapacidadComponent,
+        PolizasContractualesComponent,
+        PolizasExtracontractualesComponent,
     ],
     imports: [
         CommonModule,
