@@ -12,6 +12,8 @@ import { AutenticacionModule } from '../autenticacion/autenticacion.module';
 import { PolizasComponent } from './componentes/polizas/polizas.component';
 import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.component';
 import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capacidad/modal-capacidad.component';
+import { TemplatesModule } from '../templates/templates.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capac
         ReactiveFormsModule,
         FormsModule,
         AutenticacionModule,
+        TemplatesModule,
+        NgxPaginationModule,
     ]
 })
 export class AdministrarPolizasModule{ }
