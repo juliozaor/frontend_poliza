@@ -164,21 +164,23 @@ export class ServicioAdministrarPolizas extends Autenticable {
   listarPolizas(pagina?: any, limite?: any, filtros?: FiltrarPolizas) {
     let endpoint = `/api/v1/poliza/listar_polizas?pagina=${pagina}&limite=${limite}`
 
-
     for (const filtro in filtros) {
       const valor = filtros[filtro as keyof FiltrarPolizas];
       if(valor != undefined){
         endpoint+= `&${filtro}=${valor}`
       }
     }
-    /* if (filtros) {
-      if (filtros.poliza) endpoint += `&poliza=${filtros.poliza}`
-      if (filtros.tipoPoliza) endpoint += `&tipoPoliza=${filtros.tipoPoliza}`
-      if (filtros.fechaInicio) endpoint += `&fechaInicio=${filtros.fechaInicio}`
-      if (filtros.fechaFin) endpoint += `&fechaFin=${filtros.fechaFin}`
-    } */
 
     return this.http.get<Paginable<any>>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
+  visualizarPoliza(poliza:any, tipoPoliza: any){
+    let endpoint = `/api/v1/poliza?poliza=${poliza}&tipoPoliza=${tipoPoliza}`
+
+    return this.http.get<any>(
       `${this.host}${endpoint}`,
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )

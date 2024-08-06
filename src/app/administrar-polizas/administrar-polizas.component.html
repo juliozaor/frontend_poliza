@@ -43,8 +43,14 @@
           </select>
         </fieldset>
         <fieldset>
-          <button type="button" class="boton primario relleno" (click)="cambiarFiltros()">
-            Buscar
+          <button type="button" class="boton primario relleno" (click)="cambiarFiltros()">Buscar</button>
+        </fieldset>
+        <fieldset class="d-flex align-items-end me-2">
+          <button type="button" class="boton primario delineado" (click)="limpiarFiltros()">Limpiar filtros</button>
+        </fieldset>
+        <fieldset class="d-flex align-items-end me-2">
+          <button type="button" class="boton btn btn-success d-flex" (click)="crearPolizas()">
+            <i class="bi bi-plus-circle me-2"></i> Crear póliza
           </button>
         </fieldset>
       </div>
@@ -63,8 +69,7 @@
           </tr>
         </thead>
         <tbody class="fs-14px">
-          <tr
-            *ngFor="let poliza of polizas; let i = index">
+          <tr *ngFor="let poliza of polizas; let i = index">
             <td>
               <img class="cursor-pointer" src="assets/img/buscar-documento.png" alt="buscar-encuesta" draggable="false"
                 (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">
@@ -82,19 +87,15 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-end">
-        <ngb-pagination
-        [collectionSize]="this.paginador.totalRegistros ?? 0"
-        [page]="this.paginador.pagina"
-        [pageSize]="paginador.limite"
-        [directionLinks]="true"
-        [maxSize]="5"
-        (pageChange)="this.paginador.cambiarPagina($event)">
-            <ng-template ngbPaginationFirst>Prim.</ng-template>
-            <ng-template ngbPaginationLast>Ult.</ng-template>
-            <ng-template ngbPaginationPrevious>Ant.</ng-template>
-            <ng-template ngbPaginationNext>Sig.</ng-template>
+        <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
+          [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
+          (pageChange)="this.paginador.cambiarPagina($event)">
+          <ng-template ngbPaginationFirst>Prim.</ng-template>
+          <ng-template ngbPaginationLast>Ult.</ng-template>
+          <ng-template ngbPaginationPrevious>Ant.</ng-template>
+          <ng-template ngbPaginationNext>Sig.</ng-template>
         </ngb-pagination>
-    </div>
+      </div>
     </div>
   </div>
 </div>
