@@ -13,6 +13,9 @@ import { AdministrarPolizasComponent } from './administrar-polizas/administrar-p
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
 import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
 import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
+import { PolizasContractualesComponent } from './administrar-polizas/componentes/polizas/polizas-contractuales/polizas-contractuales.component';
+import { PolizasExtracontractualesComponent } from './administrar-polizas/componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
+import { PolizasComponent } from './administrar-polizas/componentes/polizas/polizas.component';
 
 
 
@@ -33,6 +36,18 @@ const routes: Routes = [
       {
         path: 'administrar-poliza',
         component: AdministrarPolizasComponent
+      },
+      {
+        path: 'administrar-poliza/crear-poliza',
+        component: PolizasComponent
+      },
+      {
+        path: 'administrar-poliza/polizas-contractuales',
+        component: PolizasContractualesComponent
+      },
+      {
+        path: 'administrar-poliza/polizas-extracontractuales',
+        component: PolizasExtracontractualesComponent
       },
       {
         path: 'soporte',

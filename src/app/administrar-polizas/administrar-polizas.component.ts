@@ -6,7 +6,7 @@ import { Paginador } from '../administrador/modelos/compartido/Paginador';
 import { Observable } from 'rxjs';
 import { Paginacion } from '../compartido/modelos/Paginacion';
 import { FiltrarPolizas } from './modelos/FiltrosPoliza';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-administrar-polizas',
@@ -23,11 +23,13 @@ export class AdministrarPolizasComponent implements OnInit{
 
   formulario: FormGroup
   paginador: Paginador<FiltrarPolizas>
-  page: number = 1; // Página inicial
-  itemsPerPage: number = 10; // Items por página
+  termino: string = ""
 
   constructor(
-    private servicioAdministrarPoliza: ServicioAdministrarPolizas, private servicioAut: AutenticacionService, private activatedRoute: ActivatedRoute
+    private servicioAdministrarPoliza: ServicioAdministrarPolizas,
+    private servicioAut: AutenticacionService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
   ){
     this.localStorageUsuario = servicioAut.llaveUsuarioLocalStorage
     this.formulario = this.construirFormulario()
@@ -46,8 +48,6 @@ export class AdministrarPolizasComponent implements OnInit{
         })
       }
     })
-    //console.log(this.usuario)
-    //this.obtenerModalidades()
   }
 
   construirFormulario(){
@@ -64,6 +64,11 @@ export class AdministrarPolizasComponent implements OnInit{
       fechaInicio: '',
       fechaFin: ''
     })
+  }
+
+  limpiarFiltros(){
+    this.termino = ""
+    this.paginador.filtrar({ poliza: '', tipoPoliza: '', fechaInicio:'', fechaFin:'' })
   }
 
   obtenerPolizas = (pagina: number, limite: number, filtros?: FiltrarPolizas) => {
@@ -87,7 +92,22 @@ export class AdministrarPolizasComponent implements OnInit{
     })
   }
 
-  visualizarPoliza(numero:any, tipo:any){
+  crearPolizas(){
+    const ruta = '/administrar-poliza/crear-poliza'
+    this.router.navigateByUrl(`/administrar${ruta}`)
+  }
 
+  visualizarPoliza(numero:any, tipoPoliza:any){
+    let idTipo; let ruta:string
+    if(tipoPoliza === 'RESPONSABILIDAD CIVIL CONTRACTUAL')idTipo = 1, ruta = '/administrar-poliza/polizas-contractuales'
+    if(tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL')idTipo = 2, ruta = '/administrar-poliza/polizas-extracontractuales'
+    //console.log(numero, idTipo)
+    this.servicioAdministrarPoliza.visualizarPoliza(numero,idTipo).subscribe({
+      next: (poliza:any) => {
+        //console.log(poliza)
+        localStorage.setItem('poliza',JSON.stringify(poliza))
+        this.router.navigateByUrl(`/administrar${ruta}`)
+      }
+    })
   }
 }
