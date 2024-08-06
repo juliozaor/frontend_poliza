@@ -64,7 +64,7 @@
         </thead>
         <tbody class="fs-14px">
           <tr
-            *ngFor="let poliza of polizas | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let i = index">
+            *ngFor="let poliza of polizas; let i = index">
             <td>
               <img class="cursor-pointer" src="assets/img/buscar-documento.png" alt="buscar-encuesta" draggable="false"
                 (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">
