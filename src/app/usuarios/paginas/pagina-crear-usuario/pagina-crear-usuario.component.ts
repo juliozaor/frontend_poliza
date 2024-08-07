@@ -26,10 +26,11 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   termino: string = ""
   rol: string = ""
   roles: Rol[] = []
-  cargo: string = ""
   formulario: FormGroup
+
+  /* cargo: string = ""
   departamentos: Departamento[] = []
-  municipios: Ciudad[] = []
+  municipios: Ciudad[] = [] */
 
   constructor(
     private servicio: ServicioUsuarios
@@ -40,7 +41,7 @@ export class PaginaCrearUsuarioComponent implements OnInit{
       apellido: new FormControl(undefined),
       /* cargo: new FormControl("", [ Validators.required ]), */
       identificacion: new FormControl(undefined, [ Validators.required ]),
-      fechaNacimiento: new FormControl(undefined, [ Validators.required ]),
+      fechaNacimiento: new FormControl(undefined),
       correo: new FormControl(undefined, [ Validators.required, Validators.email ]),
       telefono: new FormControl(undefined),
       rol: new FormControl("", [ Validators.required ]),
@@ -50,7 +51,7 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.paginador.inicializar(1, 30)
+    this.paginador.inicializar(1, 5)
     this.obtenerRoles()
     /* this.obtenerDepartamentos()
     this.formulario.controls['departamento'].valueChanges.subscribe({
@@ -81,9 +82,8 @@ export class PaginaCrearUsuarioComponent implements OnInit{
   }
 
   crear(){
-    
     if(this.formulario.invalid){
-      console.log("aqui llega")
+      //console.log("aqui llega")
       marcarFormularioComoSucio(this.formulario)
       return;
     }

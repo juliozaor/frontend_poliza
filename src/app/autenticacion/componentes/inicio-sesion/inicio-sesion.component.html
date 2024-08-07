@@ -3,11 +3,11 @@
   <div class="card contenedor-inicio-sesion">
     <div class="card-body">
       <div class="logos d-flex w-100 px-2 justify-content-between">
-        <div class="logo-ministerio">
+        <!-- <div class="logo-ministerio">
           <img draggable="false" src="assets/img/cabecera/potencia-de-la-vida.jpg" alt="ministerio-de-transporte">
-        </div>
-        <div class="logo-supertransporte col-3 ms-auto">
-          <img draggable="false" class="img-fluid" src="assets/img/cabecera/supertransporte.png" alt="ministerio-de-transporte">
+        </div> -->
+        <div class="col-12 ms-auto text-center">
+          <img draggable="false" class="img-fluid logo-supertransporte" src="assets/img/cabecera/supertransporte.png" alt="ministerio-de-transporte">
         </div>
       </div>
       <div>
@@ -43,7 +43,7 @@
             </ngx-recaptcha2>
             <app-validacion
             [texto]="'Debe marcar la casilla'"
-            [validacion]="'required'" 
+            [validacion]="'required'"
             [control]="this.formulario.controls['captcha']"/>
           </div>
         </fieldset>
@@ -57,28 +57,28 @@
       <span class="texto-primario fw-semibold fs-14px texto-azul-004884 cursor-pointer" (click)="this.abrirModalRecuperacion()">
         Olvidé mi contraseña
       </span>
-      <!-- <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer">
-        <a href="https://www.youtube.com/watch?v=VIxrVI72obA" target="_blank">
+      <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer">
+        <a href="https://www.youtube.com/watch?v=4zJH7N8OgV4" target="_blank">
           Video tutorial de recuperación de contraseña
-        </a>    
+        </a>
       </span>
       <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer">
-        <a href="assets/documentos/Manual_PECCIT.pdf" target="_blank">
+        <a href="assets/documentos/manual_polizas.pdf" target="_blank">
           Manual de usuario
-        </a> 
+        </a>
       </span>
       <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer">
         <a href="assets/documentos/PREGUNTAS_FRECUENTES_PECCIT.pdf" target="_blank">
           Preguntas frecuentes
-        </a>         
-      </span> -->
-      <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer" [routerLink]="['/soporte']">     
+        </a>
+      </span>
+      <span class="fw-semibold fs-14px texto-azul-004884 cursor-pointer" [routerLink]="['/soporte']">
         Problemas de acceso
       </span>
       <p class="fs-14px mt-3">
-        La información aquí contenida es solicitada por esta Autoridad 
-        con fines de vigilancia, inspección y control propios de sus funciones. 
-        Podrá consultar la Política Institucional de Seguridad y Privacidad de 
+        La información aquí contenida es solicitada por esta Autoridad
+        con fines de vigilancia, inspección y control propios de sus funciones.
+        Podrá consultar la Política Institucional de Seguridad y Privacidad de
         la información en el siguiente enlace
         <a class="fw-semibold fs-14px texto-azul-004884 cursor-pointer" href="assets/documentos/TIC-PO-001-V2-Seguridad-y-Privacidad-de-la-Informacion.pdf" target="_blank">
           ver política

@@ -33,13 +33,9 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3">
                 <fieldset>
-                    <label>Fecha de nacimiento <span class="validacion">*</span></label>
+                    <label>Fecha de nacimiento </label>
                     <input formControlName="fechaNacimiento" type="date" class="form-control" placeholder="Ingresa la fecha de nacimiento">
-                    <app-validacion
-                    [validacion]="'required'"
-                    [texto]="'La fecha de nacimiento es requerida.'"
-                    [control]="this.formulario.controls['fechaNacimiento']"
-                    />
+                    
                 </fieldset>
             </div>
         </div>

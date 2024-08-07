@@ -17,13 +17,18 @@ export class AutenticacionService {
   public readonly llaveUsuarioLocalStorage = 'Usuario'
   public readonly llaveRolesLocalStorage = 'rol'
   public readonly poliza = 'poliza'
-
+  userToken: string = '';
 
   constructor(private clientHttp:HttpClient) {
     this.urlBackend = environment.urlBackend
     this.headers = new HttpHeaders({
       "Content-Type": "application/json",
     })
+  }
+
+  public inicioVigia2(token:string){
+    const endpoint = '/api/v1/autenticacion/inicio-vigia'
+    return this.clientHttp.post<any>(`${this.urlBackend}${endpoint}`, {token: token})
   }
 
   public iniciarSesion(documento:string, clave:string):Observable<IniciarSesionRespuesta>{
@@ -61,4 +66,15 @@ export class AutenticacionService {
     peticion.adjunto ? formData.append('adjunto', peticion.adjunto) : undefined;
     return this.clientHttp.post<Soporte>(`${this.urlBackend}${endpoint}`, formData)
   }
+
+  leerToken() {
+    if (localStorage.getItem('token')) {
+      this.userToken = localStorage.getItem('jwt')!;
+    } else {
+      this.userToken = '';
+    }
+
+    return this.userToken;
+  }
+
 }

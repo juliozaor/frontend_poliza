@@ -7,7 +7,7 @@
                 <button class="boton primario relleno" (click)="responderSoporte()" [disabled]="respondido">Guardar</button>
             </div>
             <div class="">
-                <button class="boton primario delineado ms-auto" [routerLink]="['/administrar', 'soportes']">Volver</button>
+                <button class="boton primario delineado ms-auto" (click)="volver()">Volver</button>
             </div>
         </div>
         <div class="row mx-0 fondo-gris-1 mb-2">

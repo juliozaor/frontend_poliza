@@ -11,6 +11,9 @@ import { PaginaResponderSoporteComponent } from './soportes/paginas/pagina-respo
 import { SoporteAccesoComponent } from './autenticacion/componentes/soporte-acceso/soporte-acceso.component';
 import { AdministrarPolizasComponent } from './administrar-polizas/administrar-polizas.component';
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
+import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
+import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
+import { InicioVigia2Component } from './autenticacion/componentes/inicio-vigia2/inicio-vigia2.component';
 
 
 
@@ -21,7 +24,7 @@ const routes: Routes = [
     canActivate: [AutenticacionGuard],
     children: [
       {
-        path: 'inicio',
+        path: 'informacion-general',
         component: PaginaInformacionGeneralVigiladoComponent
       },
       {
@@ -37,18 +40,26 @@ const routes: Routes = [
         component: PaginaSoporteComponent
       },
       {
-        path: 'responder-soporte/:idSoporte',
+        path: 'responder-soporte/:idSoporte/:estado',
         component: PaginaResponderSoporteComponent
       },
       {
-        path: 'soportes',
+        path: 'soportes/:estado',
         component: PaginaSoportesComponent
+      },
+      {
+        path: 'vehiculos',
+        component: VehiculosComponent
+      },
+      {
+        path: 'aseguradoras',
+        component: AseguradoraComponent
       }
     ]
   },
   {
-    path: 'inicio-sesion',
-    component: InicioSesionComponent
+    path: 'inicio-vigia2',
+    component: InicioVigia2Component
   },
   {
     path: 'actualizar-contrasena',
@@ -61,7 +72,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'inicio-sesion'
+    redirectTo: 'inicio-vigia2'
   }
 ];
 

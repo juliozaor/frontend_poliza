@@ -37,9 +37,16 @@ export class InicioSesionComponent implements OnInit {
       this.marcarFormularioComoSucio()
       return;
     }
+    Swal.fire({
+      icon: 'info',
+      allowOutsideClick: false,
+      text: 'Espere por favor...',
+    });
+    Swal.showLoading(null);
     this.servicioAutenticacion.iniciarSesion(this.formulario.controls['usuario'].value.toString(),this.formulario.controls['clave'].value,
     ).subscribe({
       next: (respuesta: IniciarSesionRespuesta) => {
+        Swal.close()
         this.servicioAutenticacion.guardarInformacionInicioSesion(respuesta.token,respuesta.rol,respuesta.usuario)
         if (respuesta.claveTemporal === true) {
           this.enrutador.navigateByUrl('/actualizar-contrasena')
@@ -66,6 +73,9 @@ export class InicioSesionComponent implements OnInit {
         }
         if (error.status == 400) {
           this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message)
+        }
+        if(error.status == null){
+          this.popup.abrirPopupFallido('Error al iniciar sesión','Posiblemente esté presentando dificultades de conexión')
         }
       }
     })

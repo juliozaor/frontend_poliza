@@ -4,7 +4,7 @@ import { SoportesService } from '../../servicios/soportes.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { Soporte } from '../../modelos/Soporte';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServicioArchivos } from 'src/app/archivos/servicios/archivos.service';
 
 @Component({
@@ -17,8 +17,9 @@ export class PaginaResponderSoporteComponent implements OnInit{
   formulario: FormGroup
   soporte?: Soporte
   respondido: boolean = false
+  estado:string = 'false'
 
-  constructor(private servicioSoporte: SoportesService, private servicioArchivos: ServicioArchivos, private activeRoute: ActivatedRoute){
+  constructor(private servicioSoporte: SoportesService, private servicioArchivos: ServicioArchivos, private activeRoute: ActivatedRoute, private router:Router){
     this.formulario = new FormGroup({
       respuesta: new FormControl<string | undefined>( {
         value: undefined,
@@ -32,6 +33,8 @@ export class PaginaResponderSoporteComponent implements OnInit{
     this.activeRoute.params.subscribe({
       next: (parametros) =>{
         const idSoporte = Number(parametros['idSoporte'])
+        this.estado = String(parametros['estado'])
+        
         let soporte = this.servicioSoporte.obtenerDeLocalSotrage()
         if(soporte && soporte.id === idSoporte){
           this.soporte = soporte
@@ -87,5 +90,9 @@ export class PaginaResponderSoporteComponent implements OnInit{
       return;
     }
     this.servicioArchivos.descargarArchivo(this.soporte.identificadorDocumentoRespuesta!, this.soporte.ruta!, this.soporte.documentoRespuesta)
+  }
+
+  volver(){
+    this.router.navigate([`/administrar/soportes/${ this.estado }`])
   }
 }
