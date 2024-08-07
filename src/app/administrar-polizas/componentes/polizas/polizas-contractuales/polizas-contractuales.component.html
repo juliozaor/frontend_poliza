@@ -27,7 +27,7 @@
                   <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
                 </div>
                 <div class="col-6">
-                  <input formControlName="numeroPolizaC" ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
+                  <input formControlName="numeroPolizaC" maxLengt="4"
                     class="form-control" type="number" placeholder="Número de póliza">
                   <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser
                     máximo 18 digitos.</span>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-5">
                   <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial"
-                  (change)="fechasVerificar(1)">
+                  >
                   <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
                     [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
                 </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col-5">
                   <input formControlName="vigenciaPolizaFinalC" class="form-control" type="date" placeholder="Fecha final"
-                  (change)="fechasVerificar(1)">
+                  >
                   <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
                     [control]="this.formContractual.controls['vigenciaPolizaFinalC']" />
                 </div>
@@ -519,11 +519,11 @@
             <div class="row">
               <div class="col-1 mx-3 texto">
                 <input type="checkbox" title="Si" formControlName="checkResponsabilidadC"
-                  (change)="DesplegarFondoResponsabilidad(1)">SI
+                  (change)="DesplegarFondoResponsabilidad()">SI
               </div>
               <div class="col-1 mx-3 texto">
                 <input type="checkbox" title="No" formControlName="checkNoResponsabilidadC"
-                  (change)="respuestaNoResponsabilidad(1)">NO
+                  >NO
               </div>
             </div>
           </div>
@@ -542,7 +542,7 @@
                   </div>
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion"
-                    (change)="fechaValida($event,1)" name="fechaConstitucion">
+                      name="fechaConstitucion">
                     <app-validacion [validacion]="'required'" [texto]="'La fecha de constitución es requerida.'"
                       [control]="this.formContractual.controls['fechaConstitucion']" />
                   </div>
@@ -571,7 +571,7 @@
                   </div>
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion"
-                    (change)="fechaValida($event,1)" name="fechaResolucion">
+                      name="fechaResolucion">
                     <app-validacion [validacion]="'required'" [texto]="'La fecha de resolución es requerida.'"
                       [control]="this.formContractual.controls['fechaResolucion']" />
                   </div>
@@ -601,7 +601,7 @@
                   </div>
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva"
-                    (change)="fechaValida($event,1)" name="fechaCorteReserva">
+                      name="fechaCorteReserva">
                     <app-validacion [validacion]="'required'" [texto]="'La fecha de corte de reserva es requerida.'"
                       [control]="this.formContractual.controls['fechaCorteReserva']" />
                   </div>
