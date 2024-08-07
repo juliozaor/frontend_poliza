@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { ArchivoGuardado } from 'src/app/archivos/modelos/ArchivoGuardado';
+import { Component} from '@angular/core';
 import { Aseguradoras } from 'src/app/administrar-polizas/modelos/aseguradoras';
 import { amparos } from 'src/app/administrar-polizas/modelos/amparos';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -7,13 +6,7 @@ import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicio
 import { valorCeroValidar } from '../validadores/cero-validacion';
 import { maxLengthNumberValidator } from '../validadores/maximo-validador';
 import { negativoValidar } from '../validadores/negativo-verificar';
-import Swal from 'sweetalert2';
-import { fechaValida } from '../validadores/fecha-validador';
-import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
-import { CaratulaModel, PolizaContractualModel, ResponsabilidadModel } from 'src/app/administrar-polizas/modelos/guardarPoliza';
 import { capasValidator } from '../validadores/capas-validacion';
-import { HttpErrorResponse } from '@angular/common/http';
-import { tamanioValido } from '../validadores/tamanio-archivo-validar';
 
 @Component({
   selector: 'app-polizas-contractuales',
@@ -23,18 +16,14 @@ import { tamanioValido } from '../validadores/tamanio-archivo-validar';
 export class PolizasContractualesComponent {
 
   base64String!: string
-  obligatorio: boolean = false
-  deshabilitado: boolean = false
 
   desplegarRCC: boolean = true
-  desplegarRCE: boolean = true
   desplegarAmparosB1: boolean = true
   desplegarAmparosA1: boolean = true
   desplegarAmparosB2: boolean = true
   desplegarAmparosA2: boolean = true
   fondoResponsabilidadC: boolean = false
-  fondoResponsabilidadE: boolean = false
-
+  polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
   amparosBasicosC: amparos[] = [
@@ -108,70 +97,20 @@ export class PolizasContractualesComponent {
       capa2: new FormControl(undefined),
     })
     this.formContractual.get('checkResponsabilidadC')?.enable()
+    this.formContractual.disable()
+
   }
 
   ngOnInit(): void {
-    this.deshabilitarFormularios()
-    this.obtenerAseguradora()
-  }
-  fechasVerificar(tipoPoliza: number) {
-    const controlC = this.formContractual.controls
+    this.obtenerAseguradora();
+    this.llenarFormulario();
 
-    if (tipoPoliza == 1) {
-      if (controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value) {
-        if (controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value) {
-          controlC['vigenciaPolizaInicioC'].setValue('')
-          controlC['vigenciaPolizaFinalC'].setValue('')
-          Swal.fire({
-            titleText: "El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
-            icon: "error"
-          })
-        }
-      }
-    } 
   }
 
-  fechaValida(event: any, tipoPoliza: number) {
-    if (fechaValida(event)) {
-      Swal.fire({
-        titleText: "La fecha ingresada no puede ser superior o igual a la fecha actual",
-        icon: "error"
-      })
-      console.log(event.target.name);
-      if (tipoPoliza == 1) {
-        this.formContractual.controls[event.target.name].setValue('')
-      }
-    }
+  formatearFecha(fechaString: string): string {
+    return new Date(fechaString).toISOString().split('T')[0];
   }
-
-  respuestaNoResponsabilidad(tipoPoliza: number) {
-    const controlC = this.formContractual.controls
-    if (tipoPoliza == 1) {
-      if (controlC['checkNoResponsabilidadC'].value) {
-        controlC['checkResponsabilidadC'].disable()
-        controlC['checkResponsabilidadC'].setValue(false)
-      } else {
-        controlC['checkResponsabilidadC'].enable()
-        controlC['checkResponsabilidadC'].setValue(false)
-      }
-    }
-  }
-
-  deshabilitarFormularios() {
-    this.servicioAdministrarPoliza.obtenerEstadoVigilado().subscribe({
-      next: (deshabilitado: any) => {
-        if (deshabilitado.enviado) {
-          this.deshabilitado = deshabilitado.enviado
-          this.formContractual.disable()
-          Swal.fire({
-            titleText: "¡Usted ya envió a la Superintendencia de Transporte",
-            icon: "info"
-          })
-        }
-      }
-    })
-  }
-
+  
   obtenerAseguradora() {
     this.servicioAdministrarPoliza.obtenerAseguradora().subscribe({
       next: (aseguradora: any) => {
@@ -180,27 +119,69 @@ export class PolizasContractualesComponent {
     })
   }
 
-  cambiarNumeroPoliza(tipoPoliza: number) {
-    if (tipoPoliza == 1) { this.formContractual.controls['cargarExcel'].reset() }
+  llenarFormulario() {
+    if (this.polizaLocalStorage) {
+      const poliza = JSON.parse(this.polizaLocalStorage);
+      const controlC = this.formContractual.controls;
+    //-- Responsabilidad contractual
+        controlC['numeroPolizaC'].setValue(poliza.numero);
+        controlC['aseguradorasC'].setValue(poliza.aseguradoraId);
+        controlC['vigenciaPolizaInicioC'].setValue(this.formatearFecha(poliza.inicioVigencia));
+        controlC['vigenciaPolizaFinalC'].setValue(this.formatearFecha(poliza.finVigencia));
+      //----- Amparos basicos -----//
+        controlC['valorAseguradoAB1'].setValue(poliza.amparos[0].valorAsegurado);
+        controlC['limitesAB1'].setValue(poliza.amparos[0].limite);
+        controlC['deducibleAB1'].setValue(poliza.amparos[0].deducible);
+        controlC['valorAseguradoAB2'].setValue(poliza.amparos[1].valorAsegurado);
+        controlC['limitesAB2'].setValue(poliza.amparos[1].limite);
+        controlC['deducibleAB2'].setValue(poliza.amparos[1].deducible);
+        controlC['valorAseguradoAB3'].setValue(poliza.amparos[2].valorAsegurado);
+        controlC['limitesAB3'].setValue(poliza.amparos[2].limite);
+        controlC['deducibleAB3'].setValue(poliza.amparos[2].deducible);
+        controlC['valorAseguradoAB4'].setValue(poliza.amparos[3].valorAsegurado);
+        controlC['limitesAB4'].setValue(poliza.amparos[3].limite);
+        controlC['deducibleAB4'].setValue(poliza.amparos[3].deducible);
+        //----- Amparos adicionales -----//
+        controlC['valorAseguradoAA5'].setValue(poliza.amparos[4].valorAsegurado);
+        controlC['limitesAA5'].setValue(poliza.amparos[4].limite);
+        controlC['deducibleAA5'].setValue(poliza.amparos[4].deducible);
+        controlC['valorAseguradoAA6'].setValue(poliza.amparos[5].valorAsegurado);
+        controlC['limitesAA6'].setValue(poliza.amparos[5].limite);
+        controlC['deducibleAA6'].setValue(poliza.amparos[5].deducible);
+        controlC['valorAseguradoAA7'].setValue(poliza.amparos[6].valorAsegurado);
+        controlC['limitesAA7'].setValue(poliza.amparos[6].limite);
+        controlC['deducibleAA7'].setValue(poliza.amparos[6].deducible);
+        controlC['valorAseguradoAA8'].setValue(poliza.amparos[7].valorAsegurado);
+        controlC['limitesAA8'].setValue(poliza.amparos[7].limite);
+        controlC['deducibleAA8'].setValue(poliza.amparos[7].deducible);
+      //----- Responsabilidad -----//
+      if (poliza.responsabilidad == true) {
+        // controlC['checkResponsabilidadC'].enable();
+        controlC['checkResponsabilidadC'].setValue(poliza.responsabilidad);
+        controlC['checkNoResponsabilidadC'].setValue(false);
+        this.DesplegarFondoResponsabilidad();
+
+        controlC['fechaConstitucion'].setValue(this.formatearFecha(poliza.responsabilidades.fechaConstitucion));
+        controlC['numeroResolucion'].setValue(poliza.responsabilidades.resolucion);
+        controlC['fechaResolucion'].setValue(this.formatearFecha(poliza.responsabilidades.fechaResolucion));
+        controlC['valorReserva'].setValue(poliza.responsabilidades.valorReserva);
+        controlC['fechaCorteReserva'].setValue(this.formatearFecha(poliza.responsabilidades.fechaReserva));
+        controlC['infoComplementaria'].setValue(poliza.responsabilidades.informacion);
+        controlC['capas'].setValue(poliza.responsabilidades.operacion);
+        controlC['capa1'].setValue(poliza.responsabilidades.valorCumplimiento_uno);
+        controlC['capa2'].setValue(poliza.responsabilidades.valorCumplimiento_dos);
+      } else {
+        controlC['checkResponsabilidadC'].setValue(false);
+        // controlC['checkNoResponsabilidadC'].enable();
+        controlC['checkNoResponsabilidadC'].setValue(true);
+      }
+
+    } else {
+      console.error('polizaLocalStorage es null o undefined.');
+    }
   }
 
-  alternarDesplegarRCC() {
-    this.desplegarRCC = !this.desplegarRCC
-  }
-  alternarDesplegarRCE() {
-    this.desplegarRCE = !this.desplegarRCE
-  }
-  alternarDesplegarAB(tipoPoliza: number) {
-    if (tipoPoliza == 1) { this.desplegarAmparosB1 = !this.desplegarAmparosB1 }
-    if (tipoPoliza == 2) { this.desplegarAmparosB2 = !this.desplegarAmparosB2 }
-  }
-  alternarDesplegarAA(tipoPoliza: number) {
-    if (tipoPoliza == 1) { this.desplegarAmparosA1 = !this.desplegarAmparosA1 }
-    if (tipoPoliza == 2) { this.desplegarAmparosA2 = !this.desplegarAmparosA2 }
-  }
-
-  DesplegarFondoResponsabilidad(tipoPoliza: number) {
-    if (tipoPoliza == 1) {
+  DesplegarFondoResponsabilidad() {
       if (this.formContractual.controls['checkResponsabilidadC'].value) {
         console.log(this.formContractual.controls['checkResponsabilidadC'].value);
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
@@ -238,7 +219,6 @@ export class PolizasContractualesComponent {
         this.formContractual.get('capas')?.reset()
         this.formContractual.get('capa1')?.reset()
         this.formContractual.get('capa2')?.reset()
-      }
     } 
   }
 }
