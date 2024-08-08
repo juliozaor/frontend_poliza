@@ -1,12 +1,8 @@
 import { Component} from '@angular/core';
 import { Aseguradoras } from 'src/app/administrar-polizas/modelos/aseguradoras';
 import { amparos } from 'src/app/administrar-polizas/modelos/amparos';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup} from '@angular/forms';
 import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicios/administrar-polizas.service';
-import { valorCeroValidar } from '../validadores/cero-validacion';
-import { maxLengthNumberValidator } from '../validadores/maximo-validador';
-import { negativoValidar } from '../validadores/negativo-verificar';
-import { capasValidator } from '../validadores/capas-validacion';
 
 @Component({
   selector: 'app-polizas-contractuales',
@@ -50,39 +46,39 @@ export class PolizasContractualesComponent {
   ) {
     //-- Formulario Responsabilidad contractual
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
-      aseguradorasC: new FormControl("", [Validators.required]),
-      vigenciaPolizaInicioC: new FormControl(undefined, [Validators.required]),
-      vigenciaPolizaFinalC: new FormControl(undefined, [Validators.required]),
+      numeroPolizaC: new FormControl(undefined),
+      aseguradorasC: new FormControl(""),
+      vigenciaPolizaInicioC: new FormControl(undefined),
+      vigenciaPolizaFinalC: new FormControl(undefined),
       //----- Amparos basicos -----//
-      valorAseguradoAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB1: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB1: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB2: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB2: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB3: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(),  */negativoValidar()]),
-      deducibleAB3: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(),  */negativoValidar()]),
-      limitesAB4: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB4: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB1: new FormControl(undefined),
+      limitesAB1: new FormControl(undefined),
+      deducibleAB1: new FormControl(undefined),
+      valorAseguradoAB2: new FormControl(undefined),
+      limitesAB2: new FormControl(undefined),
+      deducibleAB2: new FormControl(undefined),
+      valorAseguradoAB3: new FormControl(undefined),
+      limitesAB3: new FormControl(undefined),
+      deducibleAB3: new FormControl(undefined),
+      valorAseguradoAB4: new FormControl(undefined),
+      limitesAB4: new FormControl(undefined),
+      deducibleAB4: new FormControl(undefined),
       //----- Amparos adicionales -----//
-      valorAseguradoAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA5: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA5: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA6: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA6: new FormControl(undefined, [ /* Validators.required,  */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA7: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA7: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA8: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA8: new FormControl(undefined, [ /* Validators.required, */ maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA5: new FormControl(undefined),
+      limitesAA5: new FormControl(undefined),
+      deducibleAA5: new FormControl(undefined),
+      valorAseguradoAA6: new FormControl(undefined),
+      limitesAA6: new FormControl(undefined),
+      deducibleAA6: new FormControl(undefined),
+      valorAseguradoAA7: new FormControl(undefined),
+      limitesAA7: new FormControl(undefined),
+      deducibleAA7: new FormControl(undefined),
+      valorAseguradoAA8: new FormControl(undefined),
+      limitesAA8: new FormControl(undefined),
+      deducibleAA8: new FormControl(undefined),
       //----- Cargue de archivos -----//
-      cargarExcel: new FormControl(undefined, [Validators.required]),
-      cargarPDF: new FormControl(undefined, [Validators.required]),
+      cargarExcel: new FormControl(undefined),
+      cargarPDF: new FormControl(undefined),
       //----- Responsabilidad -----//
       checkResponsabilidadC: new FormControl(false),
       checkNoResponsabilidadC: new FormControl(false),
@@ -96,9 +92,7 @@ export class PolizasContractualesComponent {
       capa1: new FormControl(undefined),
       capa2: new FormControl(undefined),
     })
-    this.formContractual.get('checkResponsabilidadC')?.enable()
     this.formContractual.disable()
-
   }
 
   ngOnInit(): void {
@@ -187,15 +181,15 @@ export class PolizasContractualesComponent {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         this.formContractual.controls['checkNoResponsabilidadC'].disable()
         //this.formContractual.get('checkResponsabilidadC')?.disable()
-        this.formContractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formContractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar(), valorCeroValidar()])
-        this.formContractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formContractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
-        this.formContractual.get('fechaCorteReserva')?.setValidators([Validators.required])
-        this.formContractual.get('infoComplementaria')?.setValidators([Validators.required])
-        this.formContractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formContractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
-        this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
+        this.formContractual.get('fechaConstitucion')
+        this.formContractual.get('numeroResolucion')
+        this.formContractual.get('fechaResolucion')
+        this.formContractual.get('valorReserva')
+        this.formContractual.get('fechaCorteReserva')
+        this.formContractual.get('infoComplementaria')
+        this.formContractual.get('capas')
+        this.formContractual.get('capa1')
+        this.formContractual.get('capa2')
       } else {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         console.log(this.formContractual.controls['checkResponsabilidadC'].value, this.fondoResponsabilidadC);
