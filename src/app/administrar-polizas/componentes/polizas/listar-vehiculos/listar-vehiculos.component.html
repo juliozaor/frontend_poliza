@@ -14,10 +14,14 @@
       </thead>
       <tbody class="fs-14px">
         <tr *ngFor="let vehiculo of vehiculos; let i = index">
-          <td></td>
-          <td></td>
-          <td><button type="button" class="boton boton-eliminar"><i class="bi bi-trash-fill"></i></button></td>
-          <td><input type="checkbox" name="select" id=""></td>
+          <td>{{vehiculo.placa}}</td>
+          <td class="text-center">{{vehiculo.pasajeros}}</td>
+          <td class="text-center">
+            <button type="button" class="boton boton-eliminar">
+              <i class="bi bi-x-circle-fill" style="color: red;"></i>
+            </button>
+          </td>
+          <td class="text-center"><input type="checkbox" name="select" id=""></td>
         </tr>
         <tr *ngIf="vehiculos.length < 1">
           <td colspan="5" class="text-center">
