@@ -1,9 +1,5 @@
 import { Component} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { maxLengthNumberValidator } from '../validadores/maximo-validador';
-import { valorCeroValidar } from '../validadores/cero-validacion';
-import { negativoValidar } from '../validadores/negativo-verificar';
-import { capasValidator } from '../validadores/capas-validacion';
+import { FormControl, FormGroup} from '@angular/forms';
 import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicios/administrar-polizas.service';
 import { amparos } from 'src/app/administrar-polizas/modelos/amparos';
 import { Aseguradoras } from 'src/app/administrar-polizas/modelos/aseguradoras';
@@ -28,6 +24,9 @@ export class PolizasExtracontractualesComponent {
   polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
+  numeroPoliza:any
+  tipoPoliza:any = 2
+
   amparosBasicosC: amparos[] = [
     { nombre: 'Muerte Accidental', id: '1' },
     { nombre: 'Incapacidad Temporal', id: '2' },
@@ -51,35 +50,35 @@ export class PolizasExtracontractualesComponent {
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
   ) {
-    
+
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
-      aseguradorasE: new FormControl("",),
-      vigenciaPolizaInicioE: new FormControl(undefined,),
-      vigenciaPolizaFinalE: new FormControl(undefined,),
+      numeroPolizaE: new FormControl(undefined),
+      aseguradorasE: new FormControl(""),
+      vigenciaPolizaInicioE: new FormControl(undefined),
+      vigenciaPolizaFinalE: new FormControl(undefined),
       //----- Amparos basicos -----//
-      valorAseguradoAB9: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB9: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB9: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB10: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB10: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB10: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAB11: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAB11: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAB11: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAB9: new FormControl(undefined),
+      limitesAB9: new FormControl(undefined),
+      deducibleAB9: new FormControl(undefined),
+      valorAseguradoAB10: new FormControl(undefined),
+      limitesAB10: new FormControl(undefined),
+      deducibleAB10: new FormControl(undefined),
+      valorAseguradoAB11: new FormControl(undefined),
+      limitesAB11: new FormControl(undefined),
+      deducibleAB11: new FormControl(undefined),
       //----- Amparos adicionales -----//
-      valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA12: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA13: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA14: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA14: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA14: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
-      valorAseguradoAA15: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      limitesAA15: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA15: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
+      valorAseguradoAA12: new FormControl(undefined),
+      limitesAA12: new FormControl(undefined),
+      deducibleAA12: new FormControl(undefined),
+      valorAseguradoAA13: new FormControl(undefined),
+      limitesAA13: new FormControl(undefined),
+      deducibleAA13: new FormControl(undefined),
+      valorAseguradoAA14: new FormControl(undefined),
+      limitesAA14: new FormControl(undefined),
+      deducibleAA14: new FormControl(undefined),
+      valorAseguradoAA15: new FormControl(undefined),
+      limitesAA15: new FormControl(undefined),
+      deducibleAA15: new FormControl(undefined),
       //----- Cargue de archivos -----//
       cargarExcel: new FormControl(undefined,),
       cargarPDF: new FormControl(undefined,),
@@ -121,6 +120,7 @@ export class PolizasExtracontractualesComponent {
     if (this.polizaLocalStorage) {
       const poliza = JSON.parse(this.polizaLocalStorage);
       const controlC = this.formExtracontractual.controls;
+      this.numeroPoliza = poliza.numero
     //-- Responsabilidad contractual
         controlC['numeroPolizaE'].setValue(poliza.numero);
         controlC['aseguradorasE'].setValue(poliza.aseguradoraId);
@@ -182,15 +182,15 @@ export class PolizasExtracontractualesComponent {
       if (this.formExtracontractual.controls['checkResponsabilidadE'].value) {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
         this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
-        this.formExtracontractual.get('fechaConstitucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('numeroResolucion')?.setValidators([Validators.required, maxLengthNumberValidator(18), negativoValidar(), valorCeroValidar()])
-        this.formExtracontractual.get('fechaResolucion')?.setValidators([Validators.required])
-        this.formExtracontractual.get('valorReserva')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
-        this.formExtracontractual.get('fechaCorteReserva')?.setValidators([Validators.required])
-        this.formExtracontractual.get('infoComplementaria')?.setValidators([Validators.required])
-        this.formExtracontractual.get('capas')?.setValidators([Validators.required, capasValidator()])
-        this.formExtracontractual.get('capa1')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
-        this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
+        this.formExtracontractual.get('fechaConstitucion')
+        this.formExtracontractual.get('numeroResolucion')
+        this.formExtracontractual.get('fechaResolucion')
+        this.formExtracontractual.get('valorReserva')
+        this.formExtracontractual.get('fechaCorteReserva')
+        this.formExtracontractual.get('infoComplementaria')
+        this.formExtracontractual.get('capas')
+        this.formExtracontractual.get('capa1')
+        this.formExtracontractual.get('capa2')
       } else {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
         if (this.formExtracontractual.controls['numeroPolizaE'].value) {

@@ -9,10 +9,6 @@
         <hr class="hr">
         <div class="clasificacion d-flex w-100">
           <div>
-            <!-- <span>
-                      <img alt="" *ngIf="desplegarRCE" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                      <img alt="" *ngIf="!desplegarRCE" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                  </span> -->
             <span class="fs-14px fw-semibold texto-azul-004884">
               INFORMACIÓN SOBRE PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL EXTRACONTRACTUAL:
             </span>
@@ -25,25 +21,15 @@
               <div class="row mx-0 mb-3">
                 <div class="col-6 justify-content-start">
                   <span class="fs-14px">Número de póliza</span>
-                  <span *ngIf="obligatorio" class="validacion">*</span>
                 </div>
                 <div class="col-6">
                   <input formControlName="numeroPolizaE" class="form-control" type="number" placeholder="Número de póliza"
                     >
-                  <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')"
-                    class="validacion">Deben ser máximo 18 digitos.</span>
-                  <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser
-                    0.</span>
-                  <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser
-                    número negativo.</span>
-                  <app-validacion [validacion]="'required'" [texto]="'El número de la poliza es requerido.'"
-                    [control]="this.formExtracontractual.controls['numeroPolizaE']" />
                 </div>
               </div>
               <div class="row mx-0 mb-3">
                 <div class="col-6 justify-content-center">
                   <span class="fs-14px">Seleccione Entidad Aseguradora</span>
-                  <span *ngIf="obligatorio" class="validacion">*</span>
                 </div>
                 <div class="col-6 justify-content-start">
                   <select formControlName="aseguradorasE" class="form-select" title="Lista de aseguradoras">
@@ -52,8 +38,6 @@
                       {{aseguradora.nombre}}
                     </option>
                   </select>
-                  <app-validacion [validacion]="'required'" [texto]="'La aseguradora es requerida.'"
-                    [control]="this.formExtracontractual.controls['aseguradorasE']" />
                 </div>
               </div>
             </div>
@@ -61,25 +45,19 @@
               <div class="row mx-0 mb-3">
                 <div class="col-7 justify-content-start">
                   <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
-                  <span *ngIf="obligatorio" class="validacion">*</span>
                 </div>
                 <div class="col-5">
                   <input formControlName="vigenciaPolizaInicioE" class="form-control" type="date" placeholder="Fecha inicial"
                     >
-                  <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
-                    [control]="this.formExtracontractual.controls['vigenciaPolizaInicioE']" />
                 </div>
               </div>
               <div class="row mx-0 mb-3">
                 <div class="col-7 justify-content-center">
                   <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
-                  <span *ngIf="obligatorio" class="validacion">*</span>
                 </div>
                 <div class="col-5">
                   <input formControlName="vigenciaPolizaFinalE" class="form-control" type="date" placeholder="Fecha final"
                     >
-                  <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
-                    [control]="this.formExtracontractual.controls['vigenciaPolizaFinalE']" />
                 </div>
               </div>
             </div>
@@ -88,10 +66,6 @@
           <!-- 'AMPAROS BÁSICOS' -->
           <div class="clasificacion d-flex w-100">
             <div class="mx-3">
-              <!-- <span>
-                          <img alt="" *ngIf="desplegarAmparosB2" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                          <img alt="" *ngIf="!desplegarAmparosB2" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                      </span> -->
               <span class="fs-14px fw-semibold texto-azul-004884">
                 AMPAROS BÁSICOS:
               </span>
@@ -111,11 +85,11 @@
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
-                    <span *ngIf="obligatorio" class="validacion">*</span>
+
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
-                    <span *ngIf="obligatorio" class="validacion">*</span>
+
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
@@ -132,36 +106,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAB9" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB9')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB9')?.hasError('cero')" class="validacion">No debe
-                        ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB9')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAB9']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAB9" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAB9')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB9')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB9')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAB9']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAB9" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAB9')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB9')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB9')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAB9']" />
                     </div>
                   </li>
                 </ul>
@@ -176,36 +126,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAB10" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB10')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB10')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB10')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAB10']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAB10" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAB10')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB10')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB10')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAB10']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAB10" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAB10')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB10')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB10')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAB10']" />
                     </div>
                   </li>
                 </ul>
@@ -220,36 +146,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAB11" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB11')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB11')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAB11')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAB11']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAB11" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAB11')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB11')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAB11')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAB11']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAB11" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAB11')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB11')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAB11')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAB11']" />
                     </div>
                   </li>
                 </ul>
@@ -260,10 +162,6 @@
           <!-- 'AMPAROS ADICIONALES' -->
           <div class="clasificacion d-flex w-100">
             <div class="mx-3">
-              <!-- <span>
-                          <img alt="" *ngIf="desplegarAmparosA2" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                          <img alt="" *ngIf="!desplegarAmparosA2" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                      </span> -->
               <span class="fs-14px fw-semibold texto-azul-004884">
                 AMPAROS ADICIONALES:
               </span>
@@ -283,11 +181,9 @@
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
-                    <span *ngIf="obligatorio" class="validacion">*</span>
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
-                    <span *ngIf="obligatorio" class="validacion">*</span>
                   </div>
                   <div class="col-2 justify-content-start">
                     <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
@@ -304,36 +200,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAA12" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA12')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA12')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA12')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAA12']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAA12" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAA12')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA12')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA12')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAA12']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAA12" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAA12')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA12')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA12')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAA12']" />
                     </div>
                   </li>
                 </ul>
@@ -348,36 +220,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAA13" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA13')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA13')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA13')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAA13']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAA13" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAA13')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA13')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA13')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAA13']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAA13" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAA13')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA13')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA13')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAA13']" />
                     </div>
                   </li>
                 </ul>
@@ -392,36 +240,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAA14" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA14')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA14')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA14')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAA14']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAA14" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAA14')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA14')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA14')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAA14']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAA14" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAA14')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA14')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA14')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAA14']" />
                     </div>
                   </li>
                 </ul>
@@ -436,36 +260,12 @@
                     <div class="col-2 justify-content-start">
                       <input formControlName="valorAseguradoAA15" class="form-control" type="number"
                         placeholder="Valor Asegurado">
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA15')?.hasError('maxLengthNumber')"
-                        class="validacion"> Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA15')?.hasError('cero')" class="validacion">No
-                        debe ser 0.</span>
-                      <span *ngIf="formExtracontractual.get('valorAseguradoAA15')?.hasError('negativo')" class="validacion">No
-                        debe ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El valor asegurado es requerido.'"
-                        [control]="this.formExtracontractual.controls['valorAseguradoAA15']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="limitesAA15" class="form-control" type="number" placeholder="Límites">
-                      <span *ngIf="formExtracontractual.get('limitesAA15')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA15')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('limitesAA15')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El limite es requerido.'"
-                        [control]="this.formExtracontractual.controls['limitesAA15']" />
                     </div>
                     <div class="col-2 justify-content-start">
                       <input formControlName="deducibleAA15" class="form-control" type="number" placeholder="Deducible">
-                      <span *ngIf="formExtracontractual.get('deducibleAA15')?.hasError('maxLengthNumber')" class="validacion">
-                        Deben ser máximo 3 digitos.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA15')?.hasError('cero')" class="validacion">No debe ser
-                        0.</span>
-                      <span *ngIf="formExtracontractual.get('deducibleAA15')?.hasError('negativo')" class="validacion">No debe
-                        ser número negativo.</span>
-                      <app-validacion [validacion]="'required'" [texto]="'El deducible es requerido.'"
-                        [control]="this.formExtracontractual.controls['deducibleAA15']" />
                     </div>
                   </li>
                 </ul>
@@ -500,13 +300,11 @@
               <div class="encabezado col-12">
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
-                    <span class="fs-14px">Fecha Constitución Fondo</span><span class="validacion">*</span>
+                    <span class="fs-14px">Fecha Constitución Fondo</span>
                   </div>
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha constitución" formControlName="fechaConstitucion"
                       name="fechaConstitucion">
-                    <app-validacion [validacion]="'required'" [texto]="'La fecha de constitución es requerida.'"
-                      [control]="this.formExtracontractual.controls['fechaConstitucion']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
@@ -516,14 +314,6 @@
                   </div>
                   <div class="col-6">
                     <input type="number" class="form-control" title="Número resolución" formControlName="numeroResolucion">
-                    <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('maxLengthNumber')"
-                      class="validacion">Deben ser máximo 18 digitos.</span>
-                    <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('cero')" class="validacion">No debe
-                      ser 0.</span>
-                    <span *ngIf="formExtracontractual.get('numeroResolucion')?.hasError('negativo')" class="validacion">No
-                      debe ser número negativo.</span>
-                    <app-validacion [validacion]="'required'" [texto]="'El número de resolución es requerido.'"
-                      [control]="this.formExtracontractual.controls['numeroResolucion']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
@@ -534,91 +324,59 @@
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha Resolución" formControlName="fechaResolucion"
                       name="fechaResolucion">
-                    <app-validacion [validacion]="'required'" [texto]="'La fecha de resolución es requerida.'"
-                      [control]="this.formExtracontractual.controls['fechaResolucion']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
                     <span class="fs-14px">Valor Reservas Técnicas del Fondo para cubrir las responsabilidades
-                      (SMMLV)</span><span class="validacion">*</span>
+                      (SMMLV)</span>
                   </div>
                   <div class="col-6">
                     <input type="number" class="form-control" title="valor reservas" formControlName="valorReserva">
-                    <span *ngIf="formExtracontractual.get('valorReserva')?.hasError('maxLengthNumber')"
-                      class="validacion">Deben ser máximo 4 digitos.</span>
-                    <span *ngIf="formExtracontractual.get('valorReserva')?.hasError('cero')" class="validacion">No debe ser
-                      0.</span>
-                    <span *ngIf="formExtracontractual.get('valorReserva')?.hasError('negativo')" class="validacion">No debe
-                      ser número negativo.</span>
-                    <app-validacion [validacion]="'required'" [texto]="'El valor de la reserva es requerido.'"
-                      [control]="this.formExtracontractual.controls['valorReserva']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
                     <span class="fs-14px">
                       Fecha de corte reservas técnicas del fondo para cubrir las responsabilidades/fecha de corte reservas
-                    </span><span class="validacion">*</span>
+                    </span>
                   </div>
                   <div class="col-6">
                     <input type="date" class="form-control" title="Fecha corte reservas" formControlName="fechaCorteReserva"
                       name="fechaCorteReserva">
-                    <app-validacion [validacion]="'required'" [texto]="'La fecha de corte de reserva es requerida.'"
-                      [control]="this.formExtracontractual.controls['fechaCorteReserva']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
-                    <span class="fs-14px">Otra información complementaria del Fondo</span><span class="validacion">*</span>
+                    <span class="fs-14px">Otra información complementaria del Fondo</span>
                   </div>
                   <div class="col-6">
                     <input type="text" class="form-control" title="información complementaria"
                       formControlName="infoComplementaria">
-                    <app-validacion [validacion]="'required'" [texto]="'La información complementaria es requerida.'"
-                      [control]="this.formExtracontractual.controls['infoComplementaria']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
-                    <span class="fs-14px">¿El fondo opera en primera o segunda capa?</span><span class="validacion">*</span>
+                    <span class="fs-14px">¿El fondo opera en primera o segunda capa?</span>
                   </div>
                   <div class="col-6">
                     <input type="number" class="form-control" title="¿primera o segunda?" formControlName="capas">
-                    <span *ngIf="formExtracontractual.get('capas')?.hasError('capas')" class="validacion">Debe digitar 1 o
-                      2.</span>
-                    <app-validacion [validacion]="'required'" [texto]="'La respuesta es requerida.'"
-                      [control]="this.formExtracontractual.controls['capas']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
-                    <span class="fs-14px">Valor del cubrimiento 1 capa (SMMLV)</span><span class="validacion">*</span>
+                    <span class="fs-14px">Valor del cubrimiento 1 capa (SMMLV)</span>
                   </div>
                   <div class="col-6">
                     <input type="number" class="form-control" title="primera capa" formControlName="capa1">
-                    <span *ngIf="formExtracontractual.get('capa1')?.hasError('maxLengthNumber')" class="validacion">Deben ser
-                      máximo 4 digitos.</span>
-                    <span *ngIf="formExtracontractual.get('capa1')?.hasError('cero')" class="validacion">No debe ser 0.</span>
-                    <span *ngIf="formExtracontractual.get('capa1')?.hasError('negativo')" class="validacion">No debe ser
-                      número negativo.</span>
-                    <app-validacion [validacion]="'required'" [texto]="'El valor de la capa 1 es requerido.'"
-                      [control]="this.formExtracontractual.controls['capa1']" />
                   </div>
                 </div>
                 <div class="row mx-0 mb-3">
                   <div class="col-6">
-                    <span class="fs-14px">Valor del cubrimiento 2 capa (SMMLV)</span><span class="validacion">*</span>
+                    <span class="fs-14px">Valor del cubrimiento 2 capa (SMMLV)</span>
                   </div>
                   <div class="col-6">
                     <input type="number" class="form-control" title="segunda capa" formControlName="capa2">
-                    <span *ngIf="formExtracontractual.get('capa2')?.hasError('maxLengthNumber')" class="validacion">Deben ser
-                      máximo 4 digitos.</span>
-                    <span *ngIf="formExtracontractual.get('capa2')?.hasError('cero')" class="validacion">No debe ser 0.</span>
-                    <span *ngIf="formExtracontractual.get('capa2')?.hasError('negativo')" class="validacion">No debe ser
-                      número negativo.</span>
-                    <app-validacion [validacion]="'required'" [texto]="'El valor de la capa 2 es requerido.'"
-                      [control]="this.formExtracontractual.controls['capa2']" />
                   </div>
                 </div>
               </div>
@@ -627,4 +385,5 @@
           <hr class="hr">
         </div>
       </form>
+      <app-listar-vehiculos [numeroPoliza]="numeroPoliza" [tipoPoliza]="tipoPoliza"></app-listar-vehiculos>
 </div>

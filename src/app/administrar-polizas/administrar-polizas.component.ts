@@ -75,7 +75,7 @@ export class AdministrarPolizasComponent implements OnInit{
     return new Observable<Paginacion>((suscriptor:any) => {
       this.servicioAdministrarPoliza.listarPolizas(pagina, limite, filtros).subscribe({
         next: (polizas: any) => {
-          console.log(polizas)
+          //console.log(polizas)
           this.polizas = polizas.polizas
           suscriptor.next(polizas.paginacion)
         }
