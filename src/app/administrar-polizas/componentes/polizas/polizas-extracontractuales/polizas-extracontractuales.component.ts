@@ -24,6 +24,9 @@ export class PolizasExtracontractualesComponent {
   polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
+  numeroPoliza:any
+  tipoPoliza:any = 2
+
   amparosBasicosC: amparos[] = [
     { nombre: 'Muerte Accidental', id: '1' },
     { nombre: 'Incapacidad Temporal', id: '2' },
@@ -47,7 +50,7 @@ export class PolizasExtracontractualesComponent {
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
   ) {
-    
+
     this.formExtracontractual = new FormGroup({
       numeroPolizaE: new FormControl(undefined),
       aseguradorasE: new FormControl(""),
@@ -117,6 +120,7 @@ export class PolizasExtracontractualesComponent {
     if (this.polizaLocalStorage) {
       const poliza = JSON.parse(this.polizaLocalStorage);
       const controlC = this.formExtracontractual.controls;
+      this.numeroPoliza = poliza.numero
     //-- Responsabilidad contractual
         controlC['numeroPolizaE'].setValue(poliza.numero);
         controlC['aseguradorasE'].setValue(poliza.aseguradoraId);

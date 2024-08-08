@@ -12,6 +12,7 @@ import { GuardarPoliza, PolizaJsonModel } from "../modelos/guardarPoliza";
 import { CapacidadesModel } from "../modelos/modalidades";
 import { FiltrarPolizas } from "../modelos/FiltrosPoliza";
 import { Paginable } from "src/app/administrador/modelos/compartido/Paginable";
+import { VehiculoModel } from "../modelos/vehiculosModel";
 
 @Injectable({
   providedIn: 'root'
@@ -181,6 +182,22 @@ export class ServicioAdministrarPolizas extends Autenticable {
     let endpoint = `/api/v1/poliza?poliza=${poliza}&tipoPoliza=${tipoPoliza}`
 
     return this.http.get<any>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
+  listarVehiculos(pagina?: any, limite?: any, filtros?: FiltrosVehiculos) {
+    let endpoint = `/api/v1/poliza/listar_vehiculos?pagina=${pagina}&limite=${limite}`
+
+    for (const filtro in filtros) {
+      const valor = filtros[filtro as keyof FiltrosVehiculos];
+      if(valor != undefined){
+        endpoint+= `&${filtro}=${valor}`
+      }
+    }
+
+    return this.http.get<Paginable<any>>(
       `${this.host}${endpoint}`,
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )

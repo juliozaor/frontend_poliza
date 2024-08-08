@@ -1,0 +1,40 @@
+<!-- <p>Número de póliza: {{numeroPoliza}}</p>
+<p>Tipo de póliza: {{tipoPoliza}}</p> -->
+<h3 class="texto-primario fw-semibold mb-4">Actualización de vehiculos</h3>
+<div class="d-flex">
+  <div class="table-responsive custom-scroll">
+    <table class="table table-bordered tabla-primaria">
+      <thead>
+        <tr class="fs-14px">
+          <th class="">PLACA</th>
+          <th class="">CANTIDAD DE PASAJEROS</th>
+          <th>ELIMINAR</th>
+          <th>SELECCIONAR</th>
+        </tr>
+      </thead>
+      <tbody class="fs-14px">
+        <tr *ngFor="let vehiculo of vehiculos; let i = index">
+          <td></td>
+          <td></td>
+          <td><button type="button" class="boton boton-eliminar"><i class="bi bi-trash-fill"></i></button></td>
+          <td><input type="checkbox" name="select" id=""></td>
+        </tr>
+        <tr *ngIf="vehiculos.length < 1">
+          <td colspan="5" class="text-center">
+            <span class="fw-semibold">No se encontraron vehiculos.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+      <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
+        [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
+        (pageChange)="this.paginador.cambiarPagina($event)">
+        <ng-template ngbPaginationFirst>Prim.</ng-template>
+        <ng-template ngbPaginationLast>Ult.</ng-template>
+        <ng-template ngbPaginationPrevious>Ant.</ng-template>
+        <ng-template ngbPaginationNext>Sig.</ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capac
 import { TemplatesModule } from '../templates/templates.module';
 import { PolizasContractualesComponent } from './componentes/polizas/polizas-contractuales/polizas-contractuales.component';
 import { PolizasExtracontractualesComponent } from './componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
+import { ListarVehiculosComponent } from './componentes/polizas/listar-vehiculos/listar-vehiculos.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { PolizasExtracontractualesComponent } from './componentes/polizas/poliza
         ModalCapacidadComponent,
         PolizasContractualesComponent,
         PolizasExtracontractualesComponent,
+        ListarVehiculosComponent,
     ],
     imports: [
         CommonModule,

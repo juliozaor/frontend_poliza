@@ -22,6 +22,9 @@ export class PolizasContractualesComponent {
   polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
+  numeroPoliza:any
+  tipoPoliza:any = 1
+
   amparosBasicosC: amparos[] = [
     { nombre: 'Muerte Accidental', id: '1' },
     { nombre: 'Incapacidad Temporal', id: '2' },
@@ -104,7 +107,7 @@ export class PolizasContractualesComponent {
   formatearFecha(fechaString: string): string {
     return new Date(fechaString).toISOString().split('T')[0];
   }
-  
+
   obtenerAseguradora() {
     this.servicioAdministrarPoliza.obtenerAseguradora().subscribe({
       next: (aseguradora: any) => {
@@ -117,6 +120,7 @@ export class PolizasContractualesComponent {
     if (this.polizaLocalStorage) {
       const poliza = JSON.parse(this.polizaLocalStorage);
       const controlC = this.formContractual.controls;
+      this.numeroPoliza = poliza.numero
     //-- Responsabilidad contractual
         controlC['numeroPolizaC'].setValue(poliza.numero);
         controlC['aseguradorasC'].setValue(poliza.aseguradoraId);
@@ -213,6 +217,6 @@ export class PolizasContractualesComponent {
         this.formContractual.get('capas')?.reset()
         this.formContractual.get('capa1')?.reset()
         this.formContractual.get('capa2')?.reset()
-    } 
+    }
   }
 }
