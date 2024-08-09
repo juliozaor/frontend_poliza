@@ -16,6 +16,8 @@ import { TemplatesModule } from '../templates/templates.module';
 import { PolizasContractualesComponent } from './componentes/polizas/polizas-contractuales/polizas-contractuales.component';
 import { PolizasExtracontractualesComponent } from './componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
 import { ListarVehiculosComponent } from './componentes/polizas/listar-vehiculos/listar-vehiculos.component';
+import { GestionarPolizasComponent } from './componentes/gestionar-polizas/gestionar-polizas.component';
+import { GestionarPlacasaComponent } from './componentes/gestionar-placasa/gestionar-placasa.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +29,8 @@ import { ListarVehiculosComponent } from './componentes/polizas/listar-vehiculos
         PolizasContractualesComponent,
         PolizasExtracontractualesComponent,
         ListarVehiculosComponent,
+        GestionarPolizasComponent,
+        GestionarPlacasaComponent,
     ],
     imports: [
         CommonModule,

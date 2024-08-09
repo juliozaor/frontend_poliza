@@ -66,6 +66,10 @@ export class AdministrarPolizasComponent implements OnInit{
     })
   }
 
+  setTermino(termino: string){
+    this.termino = termino
+  }
+
   limpiarFiltros(){
     this.termino = ""
     this.paginador.filtrar({ poliza: '', tipoPoliza: '', fechaInicio:'', fechaFin:'' })
