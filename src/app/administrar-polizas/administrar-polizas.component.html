@@ -32,7 +32,8 @@
       <div class="d-flex align-items-end flex-gap-10">
         <fieldset>
           <label>N° de Póliza ...</label>
-          <app-input-busqueda formControlName="termino"></app-input-busqueda>
+          <app-input-busqueda formControlName="termino" [ngModel]="termino"
+          (ngModelChange)="setTermino($event)"></app-input-busqueda>
         </fieldset>
         <fieldset>
           <label>Tipo de Póliza</label>

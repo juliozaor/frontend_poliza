@@ -16,6 +16,8 @@ import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.com
 import { PolizasContractualesComponent } from './administrar-polizas/componentes/polizas/polizas-contractuales/polizas-contractuales.component';
 import { PolizasExtracontractualesComponent } from './administrar-polizas/componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
 import { PolizasComponent } from './administrar-polizas/componentes/polizas/polizas.component';
+import { GestionarPlacasaComponent } from './administrar-polizas/componentes/gestionar-placasa/gestionar-placasa.component';
+import { GestionarPolizasComponent } from './administrar-polizas/componentes/gestionar-polizas/gestionar-polizas.component';
 
 
 
@@ -35,11 +37,19 @@ const routes: Routes = [
       },
       {
         path: 'administrar-poliza',
-        component: AdministrarPolizasComponent
+        component: PolizasComponent
       },
       {
-        path: 'administrar-poliza/crear-poliza',
+        path: 'crear-polizas',
         component: PolizasComponent
+      },
+      {
+        path: 'gestionar-polizas',
+        component: GestionarPolizasComponent
+      },
+      {
+        path: 'gestionar-placas',
+        component: GestionarPlacasaComponent
       },
       {
         path: 'administrar-poliza/polizas-contractuales',
