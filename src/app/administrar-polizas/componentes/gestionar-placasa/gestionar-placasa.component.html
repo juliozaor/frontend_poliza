@@ -1,69 +1,271 @@
-<div class="mt-4 px-sm-3 px-md-4 px-lg-5">
-  <div class="contenedor-tabla">
-    <h4 class="modal-title-tables" id="tableDescBasic">Tabla Básica</h4>
-    <table class="table table-general table-basic" aria-describedby="tableDescBasic">
-      <thead class="encabezado-tabla">
-        <tr>
-          <th scope="col">
-            <!-- <input type="checkbox" name="" id="check-basico"> -->
-            <label class="checkout-tabla" for="check-basico">
-              Seleccionar filas
-            </label>
-          </th>
-          <th scope="col">
-            Nombre
-          </th>
-          <th scope="col">
-            ID
-          </th>
-          <th scope="col">
-            Descripción
-          </th>
-        </tr>
-      </thead>
-      <tbody class="contenido-tablas">
-        <tr>
-          <td>
-            <input type="checkbox" name="" id="item-1">
-            <label class="checkout-tabla" for="item-1">
-              Seleccionar fila 1
-            </label>
-          </td>
-          <td>
-            Módulo 1
-          </td>
-          <td class="contenido-numerico">
-            4598
-          </td>
-          <td>
-            Descripción del módulo y su función Descripción del módulo y su función Descripción del módulo y su función
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" name="" id="item-2">
-            <label class="checkout-tabla" for="item-2">
-              Seleccionar fila 2
-            </label>
-          </td>
-          <td>
-            Módulo 1
-          </td>
-          <td class="contenido-numerico">
-            4598
-          </td>
-          <td>
-            Descripción del módulo y su función Descripción del módulo y su función Descripción del módulo y su función
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="mt-3 px-sm-3 px-md-4 px-lg-5">
+  <h1 class="h1-tipografia-govco texto-primario">Gestionar placas</h1>
+  <div class="d-flex align-items-center">
+    <div class="entradas-de-texto-govco">
+      <label for="numeroPlaca">Digite el número de la placa a consultar</label>
+      <input type="text" id="numeroPlaca" placeholder="Digite la placa." [(ngModel)]="placa">
+    </div>
+    <button type="button" class="btn-govco fill-btn-govco" (click)="consultarPoliza(placa)"
+      style="width: 165px; height: 42px; margin-left: 1rem;">
+      Consultar
+    </button>
   </div>
-  <div class="pagination-container-govco">
-    <nav class="nav-pagination-govco" aria-label="paginador de ejemplo">
-      <div class="pagination-govco" id="paginationExample" total="20" initialpage="5">
-        <ul id="lista-paginador"></ul>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="table-responsive" style="width:940px; height: 900px;">
+        <table class="table tabla-primaria" aria-describedby="tableDescBasic">
+          <thead class="encabezado-tabla">
+            <tr>
+              <th scope="col" colspan="2">
+                <h4 class="h4-tipografia-govco texto-primario">POLIZA CONTRACTUAl ( ACTUAL )</h4>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="contenido-tablas">
+            <tr>
+              <td class="fw-semibold">placa</td>
+              <td>{{placa}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Póliza</td>
+              <td>{{polizas.contractual?.poliza}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Estado de Póliza</td>
+              <td>{{polizas.contractual?.estadoPoliza}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Fecha de cargue</td>
+              <td>{{polizas.contractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Vigencia - Fecha inicio</td>
+              <td>{{polizas.contractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Vigencia - Fecha fin</td>
+              <td>{{polizas.contractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Aseguradora</td>
+              <td>{{polizas.contractual?.aseguradora}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Estado vinculación placa</td>
+              <td>
+                <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.contractual?.existe">
+                  <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaCont" [(ngModel)]="vinculadaCont" [disabled]="desVinculadaCont">
+                  <label for="opt3" *ngIf="vinculadaCont">Vinculada</label>
+                  <label for="opt3" *ngIf="!vinculadaCont">Desvinculada</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Observación</td>
+              <td>
+                <div class="entradas-de-texto-govco" style="margin-right: 1rem;" *ngIf="polizas.contractual?.existe">
+                  <input type="text" id="input-basico-id" [(ngModel)]="observacionCont" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <h4 class="h4-tipografia-govco">
+                  {{polizas.contractual?.mensaje}}
+                </h4>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-center">
+                <fieldset>
+                  <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(1,polizas.contractual?.id,observacionCont!)"
+                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaCont">
+                    Guardar
+                  </button>
+                </fieldset>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </nav>
+    </div>
+    <div class="col-md-6">
+      <div class="table-responsive custom-scroll" style="width:940px; height: 900px;">
+        <table class="table tabla-primaria">
+          <thead class="encabezado-tabla">
+            <tr>
+              <th scope="col" colspan="2">
+                <h4 class="h4-tipografia-govco texto-primario">POLIZA EXTRACONTRACTUAl ( ACTUAL )</h4>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="contenido-tablas">
+            <tr>
+              <td class="fw-semibold">placa</td>
+              <td>{{placa}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Póliza</td>
+              <td>{{polizas.extraContractual?.poliza}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Estado de Póliza</td>
+              <td>{{polizas.extraContractual?.estadoPoliza}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Fecha de cargue</td>
+              <td>{{polizas.extraContractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Vigencia - Fecha inicio</td>
+              <td>{{polizas.extraContractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Vigencia - Fecha fin</td>
+              <td>{{polizas.extraContractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Aseguradora</td>
+              <td>{{polizas.extraContractual?.aseguradora}}</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Estado vinculación placa</td>
+              <td>
+                <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.extraContractual?.existe">
+                  <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaExtraCont" [disabled]="desVinculadaExtraCont">
+                  <label for="opt3" *ngIf="vinculadaExtraCont">Vinculada</label>
+                  <label for="opt3" *ngIf="!vinculadaExtraCont">Desvinculada</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Observación</td>
+              <td>
+                <div class="entradas-de-texto-govco" style="margin-right: 1rem;"
+                  *ngIf="polizas.extraContractual?.existe">
+                  <input type="text" id="input-basico-id" [(ngModel)]="observacionExtraCont" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <h4 class="h4-tipografia-govco">
+                  {{polizas.extraContractual?.mensaje}}
+                </h4>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-center">
+                <fieldset>
+                  <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(2,polizas.extraContractual?.id,observacionExtraCont!)"
+                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaExtraCont">
+                    Guardar
+                  </button>
+                </fieldset>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+  <!--  ////////////// TABLA DE NOVEDADES ///////////////  -->
+  <div class="d-flex">
+    <div class="table-responsive custom-scroll" style="width:1140px;">
+      <table class="table tabla-primaria">
+        <thead class="encabezado-tabla">
+          <tr>
+            <th colspan="7">
+              <h3 class="h3-tipografia-govco texto-primario text-center">NOVEDADES</h3>
+            </th>
+          </tr>
+          <tr class="fs-14px">
+            <th></th>
+            <th class="">TIPO DE PÓLIZA</th>
+            <th class="">N° DE PÓLIZA</th>
+            <th class="">PLACA</th>
+            <th class="">FECHA DE ACTUALIZACIÓN</th>
+            <th class="">ESTADO</th>
+            <th>OBSERVACIÓN</th>
+          </tr>
+        </thead>
+        <tbody class="contenido-tablas">
+          <tr *ngFor="let novedad of novedadesPaginadas">
+            <td></td>
+            <td *ngIf="novedad.tipoPoliza">
+              <p *ngIf="novedad.tipoPoliza == 1">CONTRACTUAL</p>
+              <p *ngIf="novedad.tipoPoliza != 1 && novedad.tipoPoliza == 2">EXTRACONTRACTUAL</p>
+            </td>
+            <td>{{novedad.poliza}}</td>
+            <td>{{novedad.placa}}</td>
+            <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
+            <td>{{novedad.estado}}</td>
+            <td>{{novedad.observacion}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
+          [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite" [directionLinks]="true"
+          [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
+          <ng-template ngbPaginationFirst>Prim.</ng-template>
+          <ng-template ngbPaginationLast>Ult.</ng-template>
+          <ng-template ngbPaginationPrevious>Ant.</ng-template>
+          <ng-template ngbPaginationNext>Sig.</ng-template>
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+  <!--  ////////////// TABLA DE HISTORIAL ///////////////  -->
+  <div class="d-flex">
+    <div class="table-responsive custom-scroll">
+      <table class="table tabla-primaria">
+        <thead class="encabezado-tabla">
+          <tr>
+            <th colspan="10">
+              <h3 class="h3-tipografia-govco texto-primario text-center">HISTORIAL DE POLIZAS</h3>
+            </th>
+          </tr>
+          <tr class="fs-14px">
+            <th></th>
+            <th class="">TIPO DE PÓLIZA</th>
+            <th class="">N° DE PÓLIZA</th>
+            <th class="">PLACA</th>
+            <th class="">ESTADO</th>
+            <th class="">FECHA DE CARGUE</th>
+            <th>VIGENCIA - FECHA DE INICIO</th>
+            <th>VIGENCIA - FECHA FINAL</th>
+            <th>ASEGURADORA</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="contenido-tablas">
+          <tr *ngFor="let historial of historialPaginado">
+            <td></td>
+            <td>{{historial.tipoPoliza}}</td>
+            <td>{{historial.poliza}}</td>
+            <td>{{historial.placa}}</td>
+            <td>{{historial.estadoPoliza}}</td>
+            <td>{{historial.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+            <td>{{historial.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+            <td>{{historial.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+            <td>{{historial.aseguradora}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <ngb-pagination [collectionSize]="this.paginadorHistorial.totalRegistros"
+          [page]="this.paginadorHistorial.pagina" [pageSize]="paginadorHistorial.limite" [directionLinks]="true"
+          [maxSize]="5" (pageChange)="cambiarPaginaHistorial($event)">
+          <ng-template ngbPaginationFirst>Prim.</ng-template>
+          <ng-template ngbPaginationLast>Ult.</ng-template>
+          <ng-template ngbPaginationPrevious>Ant.</ng-template>
+          <ng-template ngbPaginationNext>Sig.</ng-template>
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+  <app-alertas-gov [alert]="'info'" [text]="'¡Vinculación guardada con éxito!'"></app-alertas-gov>
 </div>
+<app-popup #popup></app-popup>

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Aseguradoras } from 'src/app/administrar-polizas/modelos/aseguradoras';
 import { amparos } from 'src/app/administrar-polizas/modelos/amparos';
 import { FormControl, FormGroup} from '@angular/forms';
@@ -10,6 +10,7 @@ import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicio
   styleUrls: ['./polizas-contractuales.component.css']
 })
 export class PolizasContractualesComponent {
+  @Input() poliza: any;
 
   base64String!: string
 
@@ -19,7 +20,6 @@ export class PolizasContractualesComponent {
   desplegarAmparosB2: boolean = true
   desplegarAmparosA2: boolean = true
   fondoResponsabilidadC: boolean = false
-  polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
   numeroPoliza:any
@@ -101,7 +101,6 @@ export class PolizasContractualesComponent {
   ngOnInit(): void {
     this.obtenerAseguradora();
     this.llenarFormulario();
-
   }
 
   formatearFecha(fechaString: string): string {
@@ -117,8 +116,8 @@ export class PolizasContractualesComponent {
   }
 
   llenarFormulario() {
-    if (this.polizaLocalStorage) {
-      const poliza = JSON.parse(this.polizaLocalStorage);
+    if (this.poliza) {
+      const poliza = this.poliza;
       const controlC = this.formContractual.controls;
       this.numeroPoliza = poliza.numero
     //-- Responsabilidad contractual
@@ -175,7 +174,7 @@ export class PolizasContractualesComponent {
       }
 
     } else {
-      console.error('polizaLocalStorage es null o undefined.');
+      console.error('poliza es null o undefined.');
     }
   }
 

@@ -27,3 +27,14 @@ export interface Novedades {
   estado?: string
   observacion?: string
 }
+
+export interface Historial {
+  aseguradora?: string
+  estadoPoliza?: string
+  fechaCargue?: string
+  fechaFin?: string
+  fechaInicio?: string
+  placa?: string
+  poliza?: string
+  tipoPoliza?: string
+}

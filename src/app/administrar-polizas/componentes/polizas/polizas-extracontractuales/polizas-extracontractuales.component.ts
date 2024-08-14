@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { FormControl, FormGroup} from '@angular/forms';
 import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicios/administrar-polizas.service';
 import { amparos } from 'src/app/administrar-polizas/modelos/amparos';
@@ -11,7 +11,8 @@ import { Aseguradoras } from 'src/app/administrar-polizas/modelos/aseguradoras';
   styleUrls: ['./polizas-extracontractuales.component.css']
 })
 export class PolizasExtracontractualesComponent {
-
+  @Input() poliza: any;
+  
   base64String!: string
   obligatorio: boolean = false
 
@@ -21,7 +22,6 @@ export class PolizasExtracontractualesComponent {
   desplegarAmparosB2: boolean = true
   desplegarAmparosA2: boolean = true
   fondoResponsabilidadE: boolean = false
-  polizaLocalStorage = localStorage.getItem('poliza');
   aseguradoras: Aseguradoras[] = []
 
   numeroPoliza:any
@@ -117,8 +117,8 @@ export class PolizasExtracontractualesComponent {
   }
 
   llenarFormulario() {
-    if (this.polizaLocalStorage) {
-      const poliza = JSON.parse(this.polizaLocalStorage);
+    if (this.poliza) {
+      const poliza = this.poliza;
       const controlC = this.formExtracontractual.controls;
       this.numeroPoliza = poliza.numero
     //-- Responsabilidad contractual

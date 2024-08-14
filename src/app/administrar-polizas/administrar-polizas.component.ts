@@ -90,7 +90,6 @@ export class AdministrarPolizasComponent implements OnInit{
   listarPolizas(){
     this.servicioAdministrarPoliza.listarPolizas().subscribe({
       next: (polizas: any) => {
-        console.log(polizas)
         this.polizas = polizas.polizas
       }
     })
