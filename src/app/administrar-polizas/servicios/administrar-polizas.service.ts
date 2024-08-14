@@ -245,6 +245,7 @@ export class ServicioAdministrarPolizas extends Autenticable {
     let endpoint = `/api/v1/poliza/desvincular-placa?id=${id}&motivo=${motivo}`
     return this.http.patch<any>(
       `${this.host}${endpoint}`,
+      '',
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )
   }

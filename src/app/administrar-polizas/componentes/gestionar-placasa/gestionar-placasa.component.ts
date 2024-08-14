@@ -1,84 +1,97 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Historial, Novedades, PolizaPlaca } from '../../modelos/PolizaPlaca';
+import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
+import { Paginador } from 'src/app/administrador/modelos/compartido/Paginador';
 
 @Component({
   selector: 'app-gestionar-placasa',
   templateUrl: './gestionar-placasa.component.html',
   styleUrls: ['./gestionar-placasa.component.css']
 })
-export class GestionarPlacasaComponent {
-  /* divData:any
-  totalPages:any
-  initialActive:any
+export class GestionarPlacasaComponent implements OnInit{
+  polizas: PolizaPlaca = {}
+  placa:string = ''
+  novedades: Array<Novedades> = []
+  historial: Array<Historial> = []
 
-  constructor(){
-    this.divData = document.getElementById("paginationExample");
-    this.totalPages = this.divData!.getAttribute("total");
-    this.initialActive = Number(this.divData!.getAttribute("initialpage"));
-    document.getElementById("lista-paginador")!.innerHTML = this.dibujarElementos(this.totalPages, this.initialActive);
+  vinculadaCont?: boolean = true; desVinculadaCont: boolean = true
+  vinculadaExtraCont?: boolean = true; desVinculadaExtraCont: boolean = true
+  observacionCont?: string
+  observacionExtraCont?: string
+
+  novedadesPaginadas: Array<Novedades> = []
+  paginadorNovedades: {totalRegistros:number,pagina:number,limite:number}
+
+  historialPaginado: Array<Historial> = []
+  paginadorHistorial: {totalRegistros:number,pagina:number,limite:number}
+
+  constructor(private servicioAdministrarPoliza: ServicioAdministrarPolizas){
+    this.paginadorNovedades = {totalRegistros:0, pagina:1, limite:5}
+    this.paginadorHistorial = {totalRegistros:0, pagina:1, limite:5}
   }
 
-dibujarElementos(pages:any, page:any){
-  let liTag = "";
-  let active;
-  let beforePages = page - 1;
-  let afterPages = page + 1;
+  ngOnInit(): void {}
 
-  if (page > 1) {
-    liTag += `<li class="page-item-govco prev-page-govco no"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, (${page}-1))"><span class="prev-page-icon-govco"></span><span class="prev-page-text-govco">Anterior</span></a></li>`;
-  } else if (page == 1) {
-    liTag += `<li class="page-item-govco prev-page-govco disabled-govco"><a href="javascript:void(0)"><span class="prev-page-icon-govco"></span><span class="prev-page-text-govco">Anterior</span></a></li>`;
+  consultarPoliza(placa:string){
+    this.servicioAdministrarPoliza.obtenerPolizaPlaca(placa).subscribe({
+      next: (polizas: any) => {
+        console.log(polizas)
+        this.polizas = polizas
+        this.desVinculadaCont = !this.polizas.contractual?.vinculada
+        this.desVinculadaExtraCont = !this.polizas.extraContractual?.vinculada
+
+        this.novedades = polizas.novedades
+        this.paginadorNovedades.totalRegistros = polizas.novedades.length
+        this.actualizarNovedadesPaginadas(); // Actualizar la tabla con los datos paginados
+
+        this.historial = polizas.historial
+        this.paginadorHistorial.totalRegistros = polizas.historial.length
+        this.actualizarHistorialPaginado();
+
+        this.vinculadaCont = this.polizas.contractual?.vinculada
+        this.observacionCont = this.polizas.contractual?.observacion
+        this.vinculadaExtraCont = this.polizas.extraContractual?.vinculada
+        this.observacionExtraCont = this.polizas.extraContractual?.observacion
+      }
+    })
+  }
+  desvincular(tipoPoliza:number,id:any, motivo:string){
+    if(tipoPoliza === 1) this.desVinculadaCont = true
+    if(tipoPoliza === 2) this.desVinculadaExtraCont = true
+
+    this.servicioAdministrarPoliza.vinculacionPlaca(id,motivo).subscribe({
+      next: (respuesta: any) => {
+        console.log(respuesta)
+      }
+    })
+    //this.openAlert()
   }
 
-  if (pages < 6) {
-    for (let p = 1; p <= pages; p++) {
-      active = page == p ? "active-govco" : "no";
-      liTag += `<li class="page-item-govco number-govco ${active}"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, ${p})">${p}</a></li>`;
-    }
-  } else {
-    if (page > 2) {
-      liTag += `<li class="page-item-govco number-govco"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, 1)">1</a></li>`;
-      if (page > 3) {
-        liTag += `<li class="page-item-govco dots-govco"><a>...</a></li>`;
-      }
-    }
-
-    if (page === 1) {
-      afterPages += 2;
-    } else if (page === 2) {
-      afterPages += 1;
-    }
-
-    if (page === pages) {
-      beforePages -= 2;
-    } else if (page === pages - 1) {
-      beforePages -= 1;
-    }
-
-    for (let p = beforePages; p <= afterPages; p++) {
-      if (p === 0) {
-        p += 1;
-      }
-      if (p > pages) {
-        continue;
-      }
-      active = page == p ? "active-govco" : "no";
-      liTag += `<li class="page-item-govco number-govco ${active}"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, ${p})">${p}</a></li>`;
-    }
-
-    if (page < pages - 1) {
-      if (page < pages - 2) {
-        liTag += `<li class="page-item-govco dots-govco"><a>...</a></li>`;
-      }
-      liTag += `<li class="page-item-govco number-govco no"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, ${pages})">${pages}</a></li>`;
-    }
+  openAlert() {
+    document.getElementById('closealertcontainer')!.style.display = 'flex';
+    document.getElementById('closealert')!.style.cssText = 'position: fixed; bottom: 23px; width: 100%; z-index: 2; display: flex;';
   }
 
-  if (page < pages) {
-    liTag += `<li class="page-item-govco next-page-govco"><a href="javascript:void(0)" onclick="dibujarElementos(${pages}, (${page}+1))"><span class="next-page-icon-govco"></span><span class="next-page-text-govco">Siguiente</span></a></li>`;
-  } else if (page == pages) {
-    liTag += `<li class="page-item-govco next-page-govco disabled-govco"><a href="javascript:void(0)"><span class="next-page-icon-govco"></span><span class="next-page-text-govco">Siguiente</span></a></li>`;
+  actualizarNovedadesPaginadas() {
+    const startIndex = (this.paginadorNovedades.pagina - 1) * this.paginadorNovedades.limite;
+    const endIndex = startIndex + this.paginadorNovedades.limite;
+    this.novedadesPaginadas = this.novedades.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
   }
-  document.getElementById("lista-paginador")!.innerHTML = liTag;
-  return liTag;
-}*/
+  // Cambia de página cuando se detecta un cambio
+  cambiarPaginaNovedades(pagina: number) {
+    this.paginadorNovedades.pagina = pagina;
+    this.actualizarNovedadesPaginadas()  // Carga los datos para la nueva página
+  }
+
+  actualizarHistorialPaginado() {
+    const startIndex = (this.paginadorHistorial.pagina - 1) * this.paginadorHistorial.limite;
+    const endIndex = startIndex + this.paginadorHistorial.limite;
+    this.historialPaginado = this.historial.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
+  }
+  // Cambia de página cuando se detecta un cambio
+  cambiarPaginaHistorial(pagina: number) {
+    this.paginadorHistorial.pagina = pagina;
+    this.actualizarHistorialPaginado()  // Carga los datos para la nueva página
+  }
+
 }
