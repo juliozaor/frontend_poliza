@@ -203,4 +203,21 @@ export class ServicioAdministrarPolizas extends Autenticable {
     )
   }
 
+  //SERVICIOS GESTIONAR PLACAS
+  obtenerPolizaPlaca(placa:string){
+    let endpoint = `/api/v1/poliza/gestionar-placa?placa=${placa}`
+    return this.http.get<any>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
+  vinculacionPlaca(id:number,motivo:string){
+    let endpoint = `/api/v1/poliza/desvincular-placa?id=${id}&motivo=${motivo}`
+    return this.http.patch<any>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
 }

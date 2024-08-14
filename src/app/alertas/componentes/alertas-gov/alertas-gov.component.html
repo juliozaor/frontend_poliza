@@ -1,0 +1,26 @@
+<div *ngIf="alert == 'exito'" class="container-alerta-interactivo" id="closealertcontainer" (click)="closeAlert()" style="display: none">
+  <div class="container-alerta-govco" id="closealert">
+    <div class="alert alerta-govco alerta-success-govco asuccess" role="alert">
+      <span class="alerta-icon-govco alerta-icon-success-govco asuccess"></span>
+      <p class="alerta-content-text">{{text}}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="alert == 'error'" class="container-alerta-interactivo" id="closealertcontainer" (click)="closeAlert()" style="display: none">
+  <div class="container-alerta-govco" id="closealert">
+    <div class="alert alerta-govco alerta-error-govco aerror" role="alert">
+      <span class="alerta-icon-govco alerta-icon-error-govco aerror"></span>
+      <p class="alerta-content-text">{{text}}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="alert == 'info'" class="container-alerta-interactivo" id="closealertcontainer" (click)="closeAlert()" style="display: none">
+  <div class="container-alerta-govco" id="closealert">
+    <div class="alert alerta-govco anotificacion" role="alert">
+      <span class="alerta-icon-govco alerta-icon-notificacion-govco anotificacion"></span>
+      <p class="alerta-content-text">{{text}}</p>
+    </div>
+  </div>
+</div>
