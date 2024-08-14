@@ -1,0 +1,200 @@
+.checkout-tabla {
+  display: none!important;
+}
+
+.contenedor-tabla {
+  width: 1088px;
+  margin: 0 auto;
+}
+
+.encabezado-tabla {
+  background: #004884;
+  width: 100%;
+}
+
+/* estilos generales de la tabla */
+.table-general {
+  border: 2px solid #E6EFFD !important;
+  opacity: 1;
+  font-family: 'Works sans', sans-serif;
+  width: 100% !important;
+}
+
+.table-general thead th {
+  padding-top: 14px;
+  padding-left: 15px;
+  padding-right: 0px;
+}
+
+.table-general thead th:nth-child(1) {
+  padding-left: 20px;
+}
+
+.table-general thead tr:nth-child(1) {
+  width: 1088px !important;
+  border-style: none !important;
+}
+
+.table-general thead th:nth-child(1) {
+  width: 5%;
+}
+
+.table-general thead th:nth-child(2) {
+  width: 30%;
+}
+
+.table-general thead th:nth-child(3) {
+  width: 15%;
+}
+
+.table-general thead th:nth-child(4) {
+  width: 50%;
+}
+
+.table-general tbody td {
+  padding-left: 15px;
+  padding-right: 0px;
+}
+
+.table-general tbody td:nth-child(1) {
+  padding-left: 20px;
+  padding-right: 0px;
+}
+
+.table-general tbody td:nth-child(3){
+  text-align: right;
+}
+
+.table-general thead tr th {
+  vertical-align: top !important;
+  background: #E6EFFD;
+  color: #004884;
+  text-align: left !important;
+  height: 71px !important;
+  font-family: 'Works sans', sans-serif !important;
+  letter-spacing: 0px;
+  font-size: 16px;
+  border-bottom: none;
+}
+
+.table-general tbody {
+  overflow-y: auto;
+  width: 100%;
+  max-height: 394px;
+}
+
+/* estilos del scroll */
+.table-general tbody::-webkit-scrollbar {
+  width: 8px;
+  background: #E6EFFD;
+  border-radius: 12px;
+  opacity: 1;
+}
+
+.table-general tbody::-webkit-scrollbar-thumb {
+  background: #004884;
+  border-radius: 12px;
+  box-shadow: 0px 3px 6px #00000029;
+  opacity: 1;
+  height: 21px;
+}
+
+/* estilos del checkbox */
+.table-general input[type="checkbox"]+label {
+  color: #4B4B4B;
+  font-size: 1rem;
+}
+
+.table-general input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #ffffff;
+  margin: 0;
+  font: inherit;
+  color: #004884;
+  height: 20px;
+  width: 20px;
+  border: 3px solid #004884;
+  transform: translateY(-0.075em);
+  border-radius: 0.25rem;
+  display: inline-grid;
+  place-content: center;
+  float: left;
+  margin-right: 0.5em;
+  margin-top: 0.25em;
+  position: relative !important;
+  opacity: 1 !important;
+}
+
+.table-general input[type="checkbox"]:checked::after {
+  content: "";
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  width: 7px;
+  height: 13px;
+  border: solid #ffffff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.table-general input[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  pointer-events: auto!important;
+}
+
+.table-general input[type="checkbox"]:checked {
+  background-color: #004884;
+}
+
+.table-general input[type="checkbox"]:focus-visible {
+  outline: max(0.125rem, 0.15em) solid #000000;
+  outline-offset: max(0.125rem, 0.15em);
+}
+
+.table-general input[type="checkbox"]:disabled {
+  border: 0.188rem solid #737373;
+}
+
+.table-general input[type="checkbox"]:checked:disabled {
+  background-color: #737373;
+}
+
+.table-general input[type="checkbox"]:disabled+label {
+  color: #737373;
+}
+
+/* estilos del tbody */
+.contenido-tablas {
+  color: #4b4b4b;
+  font-family: "Work sans", sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+
+.contenido-tablas td {
+  height: 65px;
+  vertical-align: middle !important;
+}
+
+/* estilo para foundation*/
+.table-general tbody tr:nth-child(even) {
+  border-color: inherit!important;
+}
+
+/* estilo en foundation*/
+.table-general:not(.table-acentuada) tbody tr:nth-child(even) {
+  background-color: transparent!important;
+}
+
+.table-general input[type=checkbox]+label {
+  margin: 0!important;
+}
+
+
+.pointer{
+  cursor: pointer;
+}

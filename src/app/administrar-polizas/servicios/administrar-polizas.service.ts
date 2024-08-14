@@ -13,6 +13,7 @@ import { CapacidadesModel } from "../modelos/modalidades";
 import { FiltrarPolizas } from "../modelos/FiltrosPoliza";
 import { Paginable } from "src/app/administrador/modelos/compartido/Paginable";
 import { VehiculoModel } from "../modelos/vehiculosModel";
+import { vincularVehiculoPolizaModel } from "../modelos/vincularVehiculosPoliza";
 
 @Injectable({
   providedIn: 'root'
@@ -202,6 +203,34 @@ export class ServicioAdministrarPolizas extends Autenticable {
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )
   }
+
+  //SERVICIOS GESTIONAR POLIZAS
+
+  consultarInteroperabilidad(tipoPoliza:number, poliza: string){
+    let endpoint = `/api/v1/poliza/interoperabilidad?poliza=${poliza}&&tipoPoliza=${tipoPoliza}`
+    return this.http.get<any>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
+  consultarNovedadesPoliza(tipoPoliza?:number, poliza?: string){
+    let endpoint = `/api/v1/poliza/novedades_poliza?poliza=${poliza}&&tipoPoliza=${tipoPoliza}`
+    return this.http.get<any>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
+  agregarVehiculosPoliza(vincularVehiculosJson: vincularVehiculoPolizaModel) {
+    let endpoint = `/api/v1/poliza/agregar_vehiculos`
+    return this.http.post<any>(
+      `${this.host}${endpoint}`,
+      vincularVehiculosJson,
+      { headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+
 
   //SERVICIOS GESTIONAR PLACAS
   obtenerPolizaPlaca(placa:string){
