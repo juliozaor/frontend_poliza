@@ -17,7 +17,7 @@
           <thead class="encabezado-tabla">
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="h4-tipografia-govco texto-primario">POLIZA CONTRACTUAl ( ACTUAL )</h4>
+                <h4 class="h4-tipografia-govco texto-primario" >POLIZA CONTRACTUAl ( ACTUAL )</h4>
               </th>
             </tr>
           </thead>
@@ -64,7 +64,7 @@
               <td class="fw-semibold">Observación</td>
               <td>
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;" *ngIf="polizas.contractual?.existe">
-                  <input type="text" id="input-basico-id" [(ngModel)]="observacionCont" />
+                  <input type="text" id="input-basico-id" [(ngModel)]="observacionCont" [disabled]="desVinculadaCont"/>
                 </div>
               </td>
             </tr>
@@ -143,7 +143,7 @@
               <td>
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;"
                   *ngIf="polizas.extraContractual?.existe">
-                  <input type="text" id="input-basico-id" [(ngModel)]="observacionExtraCont" />
+                  <input type="text" id="input-basico-id" [(ngModel)]="observacionExtraCont" [disabled]="desVinculadaExtraCont"/>
                 </div>
               </td>
             </tr>
