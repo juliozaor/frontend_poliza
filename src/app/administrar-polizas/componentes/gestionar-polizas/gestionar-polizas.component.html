@@ -65,33 +65,41 @@
                     <th colspan="3" style="text-align: center;">VINCULAR VEHICULO</th>
                 </tr>
                 <tr>
-                    <th scope="col">SELECCIONAR VEHICULOS</th>
+                    <th scope="col"></th>
                     <th scope="col">PLACA</th>
-                    <th scope="col">CANTIDAD DE PASAJERO</th>
+                    <th scope="col">CANTIDAD DE PASAJEROS</th>
                 </tr>
             </thead>
-            <!-- <tbody class="contenido-tablas">
-                <tr *ngFor="let poliza of polizas; let i = index">
-                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.tipoPoliza}}</td>
-                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.poliza}}</td>
-                    <td>{{poliza.estadoPoliza}}</td>
-                    <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.aseguradora}}</td>
-                    <td>{{poliza.cantidadVehiculos}}</td>
+            <tbody class="contenido-tablas" [formGroup]="formPasajeros">
+                <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
+                    <td class="checkbox-seleccion-govco">
+                        <input id="opt1" type="checkbox" (click)="habilitarVinculacionVehiculo($event, i)"/>
+                    </td>
+                    <td>{{placa}}</td>
+                    <td class="entradas-de-texto-govco">
+                        <input type="number" id="input-basico-id" placeholder="" formControlName="pasajeros"/>
+                        <span *ngIf="formPasajeros.get('pasajeros')?.hasError('cero')" class="validacion">No debe ser
+                            0.</span>
+                          <span *ngIf="formPasajeros.get('pasajeros')?.hasError('negativo')" class="validacion">No debe ser
+                            número negativo.</span>
+                          <app-validacion [validacion]="'required'" [texto]="'El número de pasajeros es requerido.'"
+                            [control]="this.formPasajeros.controls['pasajeros']" />
+                    </td>
                 </tr>
-            </tbody> -->
+            </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
-                [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
-                (pageChange)="this.paginador.cambiarPagina($event)">
+            <ngb-pagination [collectionSize]="this.paginadorInteroperabilidad.totalRegistros" [page]="this.paginadorInteroperabilidad.pagina"
+                [pageSize]="paginadorInteroperabilidad.limite" [directionLinks]="true" [maxSize]="5"
+                (pageChange)="cambiarPaginaInteroperabilidad($event)">
                 <ng-template ngbPaginationFirst>Prim.</ng-template>
                 <ng-template ngbPaginationLast>Ult.</ng-template>
                 <ng-template ngbPaginationPrevious>Ant.</ng-template>
                 <ng-template ngbPaginationNext>Sig.</ng-template>
             </ngb-pagination>
+        </div>
+        <div class="mt-2 mb-2">
+            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;">Vincular</button>
         </div>
         </div>
     </div>
@@ -102,6 +110,9 @@
         <table class="table table-general" aria-describedby="table-basic">
             <thead class="encabezado-tabla">
                 <tr>
+                    <th colspan="6" style="text-align: center !important;">NOVEDADES  PÓLIZAS</th>
+                </tr>
+                <tr>
                     <th scope="col">TIPO DE PÓLIZA</th>
                     <th scope="col">N° DE PÓLIZA</th>
                     <th scope="col">PLACA</th>
@@ -111,7 +122,7 @@
                 </tr>
             </thead>
             <tbody class="contenido-tablas">
-                <tr *ngFor="let novedad of novedadesPoliza; let i = index">
+                <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
                     <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
                     <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
                     <td>{{novedad.poliza}}</td>
@@ -123,9 +134,9 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-end">
-            <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
-                [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
-                (pageChange)="this.paginador.cambiarPagina($event)">
+            <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros" [page]="this.paginadorNovedades.pagina"
+                [pageSize]="paginadorNovedades.limite" [directionLinks]="true" [maxSize]="5"
+                (pageChange)="cambiarPaginaNovedades($event)">
                 <ng-template ngbPaginationFirst>Prim.</ng-template>
                 <ng-template ngbPaginationLast>Ult.</ng-template>
                 <ng-template ngbPaginationPrevious>Ant.</ng-template>
