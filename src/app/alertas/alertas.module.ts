@@ -9,6 +9,7 @@ import { NotificacionComponent } from './componentes/notificacion/notificacion.c
 import { ModalComponent } from './componentes/modal/modal.component';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertasGovComponent } from './componentes/alertas-gov/alertas-gov.component';
+import { AlertasModalGovComponent } from './componentes/alertas-modal-gov/alertas-modal-gov.component';
 
 
 
@@ -21,6 +22,7 @@ import { AlertasGovComponent } from './componentes/alertas-gov/alertas-gov.compo
     NotificacionComponent,
     ModalComponent,
     AlertasGovComponent,
+    AlertasModalGovComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { AlertasGovComponent } from './componentes/alertas-gov/alertas-gov.compo
     ValidacionComponent,
     LoadingComponent,
     ModalComponent,
-    AlertasGovComponent
+    AlertasGovComponent,
+    AlertasModalGovComponent
   ]
 })
 export class AlertasModule { }
