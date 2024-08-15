@@ -222,7 +222,7 @@ export class ServicioAdministrarPolizas extends Autenticable {
     )
   }
 
-  agregarVehiculosPoliza(vincularVehiculosJson: vincularVehiculoPolizaModel) {
+  agregarVehiculosPoliza(vincularVehiculosJson: any) {
     let endpoint = `/api/v1/poliza/agregar_vehiculos`
     return this.http.post<any>(
       `${this.host}${endpoint}`,

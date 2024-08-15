@@ -7,6 +7,6 @@
   cursor: pointer;
 }
 
-.pointer:active{
+.pointer:hover{
   background-color: #FFAB001A !important;
 }

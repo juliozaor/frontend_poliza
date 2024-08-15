@@ -73,11 +73,11 @@
             <tbody class="contenido-tablas">
                 <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
                     <td class="checkbox-seleccion-govco">
-                        <input [id]="placa+'check'" type="checkbox" (click)="habilitarVinculacionVehiculo($event,placa, i)"/>
+                        <input [id]="placa+'check'" type="checkbox" (click)="habilitarVinculacionVehiculo($event,placa)"/>
                     </td>
                     <td>{{placa}}</td>
                     <td class="entradas-de-texto-govco">
-                        <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="" disabled/>
+                        <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="" (change)="agregarPasajeros($event,placa)" disabled/>
                         <!-- <span *ngIf="formPasajeros.get('pasajeros')?.hasError('cero')" class="validacion">No debe ser
                             0.</span>
                           <span *ngIf="formPasajeros.get('pasajeros')?.hasError('negativo')" class="validacion">No debe ser
@@ -99,7 +99,7 @@
             </ngb-pagination>
         </div>
         <div class="mt-2 mb-2">
-            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;">Vincular</button>
+            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;" (click)="agregarVehiculosPoliza()">Vincular</button>
         </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
 <!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
 <div class="d-flex mb-3">
     <div class="table custom-scroll">
-        <table class="table table-general" aria-describedby="table-basic">
+        <table class="table tabla-primaria" aria-describedby="table-basic">
             <thead class="encabezado-tabla">
                 <tr>
                     <th colspan="6" style="text-align: center !important;">NOVEDADES  PÓLIZAS</th>
@@ -145,4 +145,5 @@
         </div>
     </div>
 </div>
+<app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
 </div>
