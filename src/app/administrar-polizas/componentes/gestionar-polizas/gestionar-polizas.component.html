@@ -70,20 +70,20 @@
                     <th scope="col">CANTIDAD DE PASAJEROS</th>
                 </tr>
             </thead>
-            <tbody class="contenido-tablas" [formGroup]="formPasajeros">
+            <tbody class="contenido-tablas">
                 <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
                     <td class="checkbox-seleccion-govco">
-                        <input id="opt1" type="checkbox" (click)="habilitarVinculacionVehiculo($event, i)"/>
+                        <input [id]="placa+'check'" type="checkbox" (click)="habilitarVinculacionVehiculo($event,placa, i)"/>
                     </td>
                     <td>{{placa}}</td>
                     <td class="entradas-de-texto-govco">
-                        <input type="number" id="input-basico-id" placeholder="" formControlName="pasajeros"/>
-                        <span *ngIf="formPasajeros.get('pasajeros')?.hasError('cero')" class="validacion">No debe ser
+                        <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="" disabled/>
+                        <!-- <span *ngIf="formPasajeros.get('pasajeros')?.hasError('cero')" class="validacion">No debe ser
                             0.</span>
                           <span *ngIf="formPasajeros.get('pasajeros')?.hasError('negativo')" class="validacion">No debe ser
                             número negativo.</span>
                           <app-validacion [validacion]="'required'" [texto]="'El número de pasajeros es requerido.'"
-                            [control]="this.formPasajeros.controls['pasajeros']" />
+                            [control]="this.formPasajeros.controls['pasajeros']" /> -->
                     </td>
                 </tr>
             </tbody>
@@ -118,7 +118,7 @@
                     <th scope="col">PLACA</th>
                     <th scope="col">FECHA ACTUALIZACIÓN</th>
                     <th scope="col">ESTADO</th>
-                    <th scope="col">OBSERVACIÓN</th>            
+                    <th scope="col">OBSERVACIÓN</th>
                 </tr>
             </thead>
             <tbody class="contenido-tablas">
