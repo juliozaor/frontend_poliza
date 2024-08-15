@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./alertas-gov.component.css']
 })
 export class AlertasGovComponent {
-  @Input() alert?:string
+  @Input() alert?: 'exito' | 'info' | 'error' | string
   @Input() text?:string
   closeAlert() {
     document.getElementById('closealertcontainer')!.style.display = 'none';

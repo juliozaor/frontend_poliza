@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Historial, Novedades, PolizaPlaca } from '../../modelos/PolizaPlaca';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
 import { Paginador } from 'src/app/administrador/modelos/compartido/Paginador';
+import { AlertasModalGovComponent } from 'src/app/alertas/componentes/alertas-modal-gov/alertas-modal-gov.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestionar-placasa',
   templateUrl: './gestionar-placasa.component.html',
   styleUrls: ['./gestionar-placasa.component.css']
 })
-export class GestionarPlacasaComponent implements OnInit{
+export class GestionarPlacasaComponent implements OnInit {
   polizas: PolizaPlaca = {}
-  placa:string = ''
+  placa: string = ''
   novedades: Array<Novedades> = []
   historial: Array<Historial> = []
 
@@ -20,19 +22,21 @@ export class GestionarPlacasaComponent implements OnInit{
   observacionExtraCont?: string
 
   novedadesPaginadas: Array<Novedades> = []
-  paginadorNovedades: {totalRegistros:number,pagina:number,limite:number}
+  paginadorNovedades: { totalRegistros: number, pagina: number, limite: number }
 
   historialPaginado: Array<Historial> = []
-  paginadorHistorial: {totalRegistros:number,pagina:number,limite:number}
+  paginadorHistorial: { totalRegistros: number, pagina: number, limite: number }
 
-  constructor(private servicioAdministrarPoliza: ServicioAdministrarPolizas){
-    this.paginadorNovedades = {totalRegistros:0, pagina:1, limite:5}
-    this.paginadorHistorial = {totalRegistros:0, pagina:1, limite:5}
+  textoAlert: string = ''; alert: string = ''
+
+  constructor(private servicioAdministrarPoliza: ServicioAdministrarPolizas) {
+    this.paginadorNovedades = { totalRegistros: 0, pagina: 1, limite: 5 }
+    this.paginadorHistorial = { totalRegistros: 0, pagina: 1, limite: 5 }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  consultarPoliza(placa:string){
+  consultarPoliza(placa: string) {
     this.servicioAdministrarPoliza.obtenerPolizaPlaca(placa).subscribe({
       next: (polizas: any) => {
         console.log(polizas)
@@ -55,19 +59,24 @@ export class GestionarPlacasaComponent implements OnInit{
       }
     })
   }
-  desvincular(tipoPoliza:number,id:any, motivo:string){
-    if(tipoPoliza === 1) this.desVinculadaCont = true
-    if(tipoPoliza === 2) this.desVinculadaExtraCont = true
+  desvincular(tipoPoliza: number, id: any, motivo: string) {
+    if (tipoPoliza === 1) this.desVinculadaCont = true
+    if (tipoPoliza === 2) this.desVinculadaExtraCont = true
 
-    this.servicioAdministrarPoliza.vinculacionPlaca(id,motivo).subscribe({
+    this.servicioAdministrarPoliza.vinculacionPlaca(id, motivo).subscribe({
       next: (respuesta: any) => {
         console.log(respuesta)
+        if (respuesta) this.openAlert(respuesta.mensaje,'exito')
+        this.consultarPoliza(this.placa)
       }
     })
-    //this.openAlert()
+    //
   }
 
-  openAlert() {
+
+  openAlert(texto:string,alerta:string) {
+    this.alert = alerta
+    this.textoAlert = texto
     document.getElementById('closealertcontainer')!.style.display = 'flex';
     document.getElementById('closealert')!.style.cssText = 'position: fixed; bottom: 23px; width: 100%; z-index: 2; display: flex;';
   }
