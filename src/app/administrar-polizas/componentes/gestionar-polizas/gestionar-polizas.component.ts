@@ -25,12 +25,13 @@ export class GestionarPolizasComponent implements OnInit {
   placasInteroperabilidad: Array<string> = []
   placasInteroperabilidadPaginacion: Array<string> = []
 
+  textoAlert: string = ''; alert: string = ''
+  
   tipoPoliza: number = 0;
   numeroPoliza: any;
   verPoliza: boolean = false;
   poliza: any;
-  placas: [] = [];
-  habilitarVinculacion: Boolean = false;
+  vehiculos: {placa?: string, pasajeros?: number} [] = [];
 
   formPasajeros: FormGroup;
 
@@ -126,21 +127,37 @@ export class GestionarPolizasComponent implements OnInit {
         this.paginadorInteroperabilidad.totalRegistros = this.placasInteroperabilidad.length;
         console.log(this.paginadorInteroperabilidad);
         this.actualizarInteroperabilidadPaginadas()
-        //this.myInputRef.nativeElement.disabled = true;
       }
     })
   }
 
-  habilitarVinculacionVehiculo(event: Event, placa: string, index: number) {
+  habilitarVinculacionVehiculo(event: Event, placa: string) {
     const checkbox = event.currentTarget as HTMLInputElement
     if (checkbox.checked == true) {
-      console.log(placa)
+      this.vehiculos.push({
+        placa: placa
+      })
       document.getElementById(placa + 'input')!.removeAttribute('disabled');
-    } else {
-      console.log(placa)
-      document.getElementById(placa + 'input')!.setAttribute('disabled', 'true');
 
+    } else {
+      this.vehiculos = this.vehiculos.filter(vehiculo => vehiculo.placa !== placa);
+      document.getElementById(placa + 'input')!.setAttribute('disabled', 'true');
+      const input = document.getElementById(placa + 'input')! as HTMLInputElement;
+      input.value = '';
     }
+    console.log(this.vehiculos);
+  }
+
+  agregarPasajeros(pasajeros: Event, placa: string) {
+    const pasajero = pasajeros.target as HTMLInputElement
+    if (!pasajero) {
+      console.log("no se ingreso pasajero"); 
+      return;
+    }
+    const index = this.vehiculos.findIndex(item => item.placa === placa)
+    if (index > -1) {
+      this.vehiculos[index].pasajeros = parseInt(pasajero.value)
+    }    
   }
 
   agregarVehiculosPoliza() {
@@ -148,9 +165,26 @@ export class GestionarPolizasComponent implements OnInit {
       marcarFormularioComoSucio(this.formPasajeros);
       return;
     }
-    const vincularVehiculoPoliza = {
-
+    const vehiculos = {
+      poliza: this.numeroPoliza,
+      tipoPoliza: this.tipoPoliza,
+      vehiculos: this.vehiculos
     }
+      let tipoPoliza = ''
+    if (vehiculos.tipoPoliza === 1) {
+      tipoPoliza = 'RESPONSABILIDAD CIVIL CONTRACTUAL'
+    } 
+    if (vehiculos.tipoPoliza === 2) {
+      tipoPoliza = 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL'
+    }
+    
+    this.servicioAdministrarPoliza.agregarVehiculosPoliza(vehiculos).subscribe({
+      next: (respuesta: any) => {
+        console.log(respuesta);
+        this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
+        this.openAlert(respuesta.mensaje, "exito")
+      }
+    })
   }
 
   actualizarInteroperabilidadPaginadas() {
@@ -173,6 +207,13 @@ export class GestionarPolizasComponent implements OnInit {
   cambiarPaginaNovedades(pagina: number) {
     this.paginadorNovedades.pagina = pagina;
     this.actualizarNovedadesPaginadas()  // Carga los datos para la nueva página
+  }
+
+  openAlert(texto:string,alerta:string) {
+    this.alert = alerta
+    this.textoAlert = texto
+    document.getElementById('closealertcontainer')!.style.display = 'flex';
+    document.getElementById('closealert')!.style.cssText = 'position: fixed; bottom: 23px; width: 100%; z-index: 2; display: flex;';
   }
 
 }
