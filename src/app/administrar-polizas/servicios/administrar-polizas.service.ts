@@ -206,7 +206,7 @@ export class ServicioAdministrarPolizas extends Autenticable {
 
   //SERVICIOS GESTIONAR POLIZAS
 
-  consultarInteroperabilidad(tipoPoliza:number, poliza: string){
+  consultarInteroperabilidad(tipoPoliza:any, poliza: any){
     let endpoint = `/api/v1/poliza/interoperabilidad?poliza=${poliza}&&tipoPoliza=${tipoPoliza}`
     return this.http.get<any>(
       `${this.host}${endpoint}`,
@@ -214,7 +214,7 @@ export class ServicioAdministrarPolizas extends Autenticable {
     )
   }
 
-  consultarNovedadesPoliza(tipoPoliza?:number, poliza?: string){
+  consultarNovedadesPoliza(tipoPoliza:any, poliza: any){
     let endpoint = `/api/v1/poliza/novedades_poliza?poliza=${poliza}&&tipoPoliza=${tipoPoliza}`
     return this.http.get<any>(
       `${this.host}${endpoint}`,
