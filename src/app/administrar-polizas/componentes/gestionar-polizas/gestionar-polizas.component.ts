@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -26,7 +27,9 @@ export class GestionarPolizasComponent implements OnInit {
   placasInteroperabilidadPaginacion: Array<string> = []
 
   textoAlert: string = ''; alert: string = ''
-  
+  checkHabilitado: boolean = false;
+  esValido: boolean = false;
+
   tipoPoliza: number = 0;
   numeroPoliza: any;
   verPoliza: boolean = false;
@@ -36,6 +39,7 @@ export class GestionarPolizasComponent implements OnInit {
   formPasajeros: FormGroup;
 
   paginador: Paginador<FiltrarPolizas>
+  errores: { [key: string]: string | undefined } = {};
 
   paginadorNovedades = {
     totalRegistros: 0,
@@ -98,6 +102,7 @@ export class GestionarPolizasComponent implements OnInit {
       next: (poliza: any) => {
         this.poliza = poliza
         this.verPoliza = true;
+        this.actualizarEstadoBoton();
         this.visualizarNovedadesPolizas(numero, tipoPoliza);
         this.obtenerInteroperabilidad(numero, tipoPoliza);
       }
@@ -125,7 +130,6 @@ export class GestionarPolizasComponent implements OnInit {
       next: (placas: any) => {
         this.placasInteroperabilidad = placas.placasDisponibles;
         this.paginadorInteroperabilidad.totalRegistros = this.placasInteroperabilidad.length;
-        console.log(this.paginadorInteroperabilidad);
         this.actualizarInteroperabilidadPaginadas()
       }
     })
@@ -138,15 +142,21 @@ export class GestionarPolizasComponent implements OnInit {
         placa: placa
       })
       document.getElementById(placa + 'input')!.removeAttribute('disabled');
-
+      this.checkHabilitado = true
     } else {
       this.vehiculos = this.vehiculos.filter(vehiculo => vehiculo.placa !== placa);
       document.getElementById(placa + 'input')!.setAttribute('disabled', 'true');
       const input = document.getElementById(placa + 'input')! as HTMLInputElement;
       input.value = '';
+      this.checkHabilitado = false
+      this.errores[input.id] = undefined;
+      this.actualizarEstadoBoton();
     }
-    console.log(this.vehiculos);
   }
+
+  actualizarEstadoBoton() {
+    this.esValido = Object.values(this.errores).every(error => error === undefined);
+}
 
   agregarPasajeros(pasajeros: Event, placa: string) {
     const pasajero = pasajeros.target as HTMLInputElement
@@ -154,6 +164,17 @@ export class GestionarPolizasComponent implements OnInit {
       console.log("no se ingreso pasajero"); 
       return;
     }
+    const valor = pasajero.value;
+    const cantidadPasajeros = parseInt(valor);
+
+    if (valor === '') {
+      this.errores[pasajero.id] = 'requerido';
+    } else if (isNaN(cantidadPasajeros) || cantidadPasajeros <= 0) {
+      this.errores[pasajero.id] = cantidadPasajeros === 0 ? 'cero' : 'negativo';
+    } else {
+      this.errores[pasajero.id] = undefined;
+    }
+    this.actualizarEstadoBoton();
     const index = this.vehiculos.findIndex(item => item.placa === placa)
     if (index > -1) {
       this.vehiculos[index].pasajeros = parseInt(pasajero.value)
@@ -178,11 +199,24 @@ export class GestionarPolizasComponent implements OnInit {
       tipoPoliza = 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL'
     }
     
-    this.servicioAdministrarPoliza.agregarVehiculosPoliza(vehiculos).subscribe({
-      next: (respuesta: any) => {
-        console.log(respuesta);
-        this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
-        this.openAlert(respuesta.mensaje, "exito")
+    Swal.fire({
+      titleText: "¿Señor usuario está seguro de agregar las placas seleccionadas?",
+      confirmButtonText: "Aceptar",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.servicioAdministrarPoliza.agregarVehiculosPoliza(vehiculos).subscribe({
+          next: (respuesta: any) => {
+            this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
+            this.openAlert(respuesta.mensaje, "exito")
+            this.vehiculos = []
+            this.inicializarPaginador();
+          }
+        })
+      } else if (result.isDismissed) {
+        Swal.close()
       }
     })
   }
