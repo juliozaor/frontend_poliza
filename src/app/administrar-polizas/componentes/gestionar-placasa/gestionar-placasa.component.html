@@ -17,7 +17,7 @@
           <thead class="encabezado-tabla">
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="h4-tipografia-govco texto-primario" >POLIZA CONTRACTUAl ( ACTUAL )</h4>
+                <h4 class="h4-tipografia-govco texto-primario" >PÓLIZA CONTRACTUAl ( ACTUAL )</h4>
               </th>
             </tr>
           </thead>
@@ -95,7 +95,7 @@
           <thead class="encabezado-tabla">
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="h4-tipografia-govco texto-primario">POLIZA EXTRACONTRACTUAl ( ACTUAL )</h4>
+                <h4 class="h4-tipografia-govco texto-primario">PÓLIZA EXTRACONTRACTUAl ( ACTUAL )</h4>
               </th>
             </tr>
           </thead>
@@ -132,7 +132,8 @@
               <td class="fw-semibold">Estado vinculación placa</td>
               <td>
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.extraContractual?.existe">
-                  <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaExtraCont" [disabled]="desVinculadaExtraCont">
+                  <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaExtraCont" [disabled]="desVinculadaExtraCont"
+                  [(ngModel)]="vinculadaExtraCont">
                   <label for="opt3" *ngIf="vinculadaExtraCont">Vinculada</label>
                   <label for="opt3" *ngIf="!vinculadaExtraCont">Desvinculada</label>
                 </div>
