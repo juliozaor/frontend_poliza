@@ -78,12 +78,9 @@
                     <td>{{placa}}</td>
                     <td class="entradas-de-texto-govco">
                         <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="" (change)="agregarPasajeros($event,placa)" disabled/>
-                        <!-- <span *ngIf="formPasajeros.get('pasajeros')?.hasError('cero')" class="validacion">No debe ser
-                            0.</span>
-                          <span *ngIf="formPasajeros.get('pasajeros')?.hasError('negativo')" class="validacion">No debe ser
-                            número negativo.</span>
-                          <app-validacion [validacion]="'required'" [texto]="'El número de pasajeros es requerido.'"
-                            [control]="this.formPasajeros.controls['pasajeros']" /> -->
+                        <span *ngIf="errores[placa+'input'] === 'cero' && checkHabilitado == true" class="validacion">No debe ser 0.</span>
+                        <span *ngIf="errores[placa+'input'] === 'negativo' && checkHabilitado == true" class="validacion">No debe ser número negativo.</span>
+                        <span *ngIf="errores[placa+'input'] === 'requerido' && checkHabilitado == true" class="validacion">La cantidad de pasajeros es requerida.</span>
                     </td>
                 </tr>
             </tbody>
@@ -99,7 +96,7 @@
             </ngb-pagination>
         </div>
         <div class="mt-2 mb-2">
-            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;" (click)="agregarVehiculosPoliza()">Vincular</button>
+            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;" (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
         </div>
         </div>
     </div>
@@ -146,4 +143,5 @@
     </div>
 </div>
 <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
+<app-popup #popup />
 </div>
