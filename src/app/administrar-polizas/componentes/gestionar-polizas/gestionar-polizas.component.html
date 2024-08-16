@@ -1,44 +1,54 @@
 <div class="mt-4 px-sm-3 px-md-4 px-lg-5">
     <h1 class="h1-tipografia-govco texto-primario">Gestionar Pólizas</h1>
-<!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
-    <table class="table table-general" aria-describedby="table-basic">
-        <thead class="encabezado-tabla">
-            <tr>
-                <th scope="col">TIPO DE PÓLIZA</th>
-                <th scope="col">N° DE PÓLIZA</th>
-                <th scope="col">ESTADO PÓLIZA</th>
-                <th scope="col">FECHA CARGUE</th>
-                <th scope="col">VIGENCIA - FECHA INICIO</th>
-                <th scope="col">VIGENCIA - FECHA FIN</th>
-                <th scope="col">ASEGURADORA</th>
-                <th scope="col">CANTIDAD DE VEHICULOS</th>
-            </tr>
-        </thead>
-        <tbody class="contenido-tablas">
-            <tr *ngFor="let poliza of polizas; let i = index">
-                <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.tipoPoliza}}
-                </td>
-                <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.poliza}}</td>
-                <td>{{poliza.estadoPoliza}}</td>
-                <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
-                <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
-                <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
-                <td>{{poliza.aseguradora}}</td>
-                <td>{{poliza.cantidadVehiculos}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
-            [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
-            (pageChange)="this.paginador.cambiarPagina($event)">
-            <ng-template ngbPaginationFirst>Prim.</ng-template>
-            <ng-template ngbPaginationLast>Ult.</ng-template>
-            <ng-template ngbPaginationPrevious>Ant.</ng-template>
-            <ng-template ngbPaginationNext>Sig.</ng-template>
-        </ngb-pagination>
+    <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
+    <div>
+        <table class="table tabla-primaria" aria-describedby="table-basic">
+            <thead class="encabezado-tabla">
+                <tr>
+                    <th scope="col">TIPO DE PÓLIZA</th>
+                    <th scope="col">N° DE PÓLIZA</th>
+                    <th scope="col">ESTADO PÓLIZA</th>
+                    <th scope="col">FECHA CARGUE</th>
+                    <th scope="col">VIGENCIA - FECHA INICIO</th>
+                    <th scope="col">VIGENCIA - FECHA FIN</th>
+                    <th scope="col">ASEGURADORA</th>
+                    <th scope="col">CANTIDAD DE VEHÍCULOS</th>
+                </tr>
+            </thead>
+            <tbody class="contenido-tablas">
+                <tr *ngFor="let poliza of polizas; let i = index">
+                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">
+                        {{poliza.tipoPoliza}}
+                    </td>
+                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.poliza}}
+                    </td>
+                    <td>{{poliza.estadoPoliza}}</td>
+                    <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+                    <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+                    <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+                    <td>{{poliza.aseguradora}}</td>
+                    <td class="center">{{poliza.cantidadVehiculos}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="d-block mb-3">
+                    <label class="fw-bold" id="totalVehiculos">TOTAL DE VEHÍCULOS:</label>
+                    <span style="margin-left:5px;"></span>
+                </div>
+            </div>
+            <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
+                [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
+                (pageChange)="this.paginador.cambiarPagina($event)">
+                <ng-template ngbPaginationFirst>Prim.</ng-template>
+                <ng-template ngbPaginationLast>Ult.</ng-template>
+                <ng-template ngbPaginationPrevious>Ant.</ng-template>
+                <ng-template ngbPaginationNext>Sig.</ng-template>
+            </ngb-pagination>
+        </div>
     </div>
-<!--///////////////////////////// Tabla para ver la poliza seleccionada ///////////////////////////////////////////////////// -->
+    <!--///////////////////////////// Tabla para ver la poliza seleccionada ///////////////////////////////////////////////////// -->
     <div class="d-block mb-3">
         <table class="table table-response" aria-describedby="tableDescResponsive">
             <tbody>
@@ -49,99 +59,105 @@
             </tbody>
         </table>
     </div>
-<!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
+    <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
     <div class="mt-4 mb-3">
         <app-polizas-contractuales *ngIf="poliza && tipoPoliza==1 && verPoliza==true"
             [poliza]="poliza"></app-polizas-contractuales>
         <app-polizas-extracontractuales *ngIf="poliza && tipoPoliza==2 && verPoliza==true"
             [poliza]="poliza"></app-polizas-extracontractuales>
     </div>
-<!--///////////////////////////// Seccion para vincular vehiculos ///////////////////////////////////////////////////// -->
+    <!--///////////////////////////// Seccion para vincular vehiculos ///////////////////////////////////////////////////// -->
     <div class="d-flex mb-3">
         <div class="table-responsive custom-scroll">
             <table class="table table-adaptative">
-            <thead class="encabezado-tabla">
-                <tr>
-                    <th colspan="3" style="text-align: center;">VINCULAR VEHICULO</th>
-                </tr>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">PLACA</th>
-                    <th scope="col">CANTIDAD DE PASAJEROS</th>
-                </tr>
-            </thead>
-            <tbody class="contenido-tablas">
-                <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
-                    <td class="checkbox-seleccion-govco">
-                        <input [id]="placa+'check'" type="checkbox" (click)="habilitarVinculacionVehiculo($event,placa)"/>
-                    </td>
-                    <td>{{placa}}</td>
-                    <td class="entradas-de-texto-govco">
-                        <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="" (change)="agregarPasajeros($event,placa)" disabled/>
-                        <span *ngIf="errores[placa+'input'] === 'cero' && checkHabilitado == true" class="validacion">No debe ser 0.</span>
-                        <span *ngIf="errores[placa+'input'] === 'negativo' && checkHabilitado == true" class="validacion">No debe ser número negativo.</span>
-                        <span *ngIf="errores[placa+'input'] === 'requerido' && checkHabilitado == true" class="validacion">La cantidad de pasajeros es requerida.</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-end">
-            <ngb-pagination [collectionSize]="this.paginadorInteroperabilidad.totalRegistros" [page]="this.paginadorInteroperabilidad.pagina"
-                [pageSize]="paginadorInteroperabilidad.limite" [directionLinks]="true" [maxSize]="5"
-                (pageChange)="cambiarPaginaInteroperabilidad($event)">
-                <ng-template ngbPaginationFirst>Prim.</ng-template>
-                <ng-template ngbPaginationLast>Ult.</ng-template>
-                <ng-template ngbPaginationPrevious>Ant.</ng-template>
-                <ng-template ngbPaginationNext>Sig.</ng-template>
-            </ngb-pagination>
-        </div>
-        <div class="mt-2 mb-2">
-            <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;" (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
-        </div>
+                <thead class="encabezado-tabla">
+                    <tr>
+                        <th colspan="3" style="text-align: center;">VINCULAR VEHÍCULO</th>
+                    </tr>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">PLACA</th>
+                        <th scope="col">CANTIDAD DE PASAJEROS</th>
+                    </tr>
+                </thead>
+                <tbody class="contenido-tablas">
+                    <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
+                        <td class="checkbox-seleccion-govco">
+                            <input [id]="placa+'check'" type="checkbox"
+                                (click)="habilitarVinculacionVehiculo($event,placa)" />
+                        </td>
+                        <td>{{placa}}</td>
+                        <td class="entradas-de-texto-govco">
+                            <input type="number" [id]="placa+'input'" name="pasajeros" placeholder=""
+                                (change)="agregarPasajeros($event,placa)" disabled />
+                            <span *ngIf="errores[placa+'input'] === 'cero' && checkHabilitado == true"
+                                class="validacion">No debe ser 0.</span>
+                            <span *ngIf="errores[placa+'input'] === 'negativo' && checkHabilitado == true"
+                                class="validacion">No debe ser número negativo.</span>
+                            <span *ngIf="errores[placa+'input'] === 'requerido' && checkHabilitado == true"
+                                class="validacion">La cantidad de pasajeros es requerida.</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <ngb-pagination [collectionSize]="this.paginadorInteroperabilidad.totalRegistros"
+                    [page]="this.paginadorInteroperabilidad.pagina" [pageSize]="paginadorInteroperabilidad.limite"
+                    [directionLinks]="true" [maxSize]="5" (pageChange)="cambiarPaginaInteroperabilidad($event)">
+                    <ng-template ngbPaginationFirst>Prim.</ng-template>
+                    <ng-template ngbPaginationLast>Ult.</ng-template>
+                    <ng-template ngbPaginationPrevious>Ant.</ng-template>
+                    <ng-template ngbPaginationNext>Sig.</ng-template>
+                </ngb-pagination>
+            </div>
+            <div class="mt-2 mb-2">
+                <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
+                    (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
+            </div>
         </div>
     </div>
 
-<!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
-<div class="d-flex mb-3">
-    <div class="table custom-scroll">
-        <table class="table tabla-primaria" aria-describedby="table-basic">
-            <thead class="encabezado-tabla">
-                <tr>
-                    <th colspan="6" style="text-align: center !important;">NOVEDADES  PÓLIZAS</th>
-                </tr>
-                <tr>
-                    <th scope="col">TIPO DE PÓLIZA</th>
-                    <th scope="col">N° DE PÓLIZA</th>
-                    <th scope="col">PLACA</th>
-                    <th scope="col">FECHA ACTUALIZACIÓN</th>
-                    <th scope="col">ESTADO</th>
-                    <th scope="col">OBSERVACIÓN</th>
-                </tr>
-            </thead>
-            <tbody class="contenido-tablas">
-                <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
-                    <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
-                    <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
-                    <td>{{novedad.poliza}}</td>
-                    <td>{{novedad.placa}}</td>
-                    <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{novedad.estado}}</td>
-                    <td>{{novedad.observacion}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-end">
-            <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros" [page]="this.paginadorNovedades.pagina"
-                [pageSize]="paginadorNovedades.limite" [directionLinks]="true" [maxSize]="5"
-                (pageChange)="cambiarPaginaNovedades($event)">
-                <ng-template ngbPaginationFirst>Prim.</ng-template>
-                <ng-template ngbPaginationLast>Ult.</ng-template>
-                <ng-template ngbPaginationPrevious>Ant.</ng-template>
-                <ng-template ngbPaginationNext>Sig.</ng-template>
-            </ngb-pagination>
+    <!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
+    <div class="d-flex mb-3">
+        <div class="table custom-scroll">
+            <table class="table tabla-primaria" aria-describedby="table-basic">
+                <thead class="encabezado-tabla">
+                    <tr>
+                        <th colspan="6" style="text-align: center !important;">NOVEDADES PÓLIZAS</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">TIPO DE PÓLIZA</th>
+                        <th scope="col">N° DE PÓLIZA</th>
+                        <th scope="col">PLACA</th>
+                        <th scope="col">FECHA ACTUALIZACIÓN</th>
+                        <th scope="col">ESTADO</th>
+                        <th scope="col">OBSERVACIÓN</th>
+                    </tr>
+                </thead>
+                <tbody class="contenido-tablas">
+                    <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
+                        <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
+                        <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
+                        <td>{{novedad.poliza}}</td>
+                        <td>{{novedad.placa}}</td>
+                        <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
+                        <td>{{novedad.estado}}</td>
+                        <td>{{novedad.observacion}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
+                    [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite"
+                    [directionLinks]="true" [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
+                    <ng-template ngbPaginationFirst>Prim.</ng-template>
+                    <ng-template ngbPaginationLast>Ult.</ng-template>
+                    <ng-template ngbPaginationPrevious>Ant.</ng-template>
+                    <ng-template ngbPaginationNext>Sig.</ng-template>
+                </ngb-pagination>
+            </div>
         </div>
     </div>
-</div>
-<app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
-<app-popup #popup />
+    <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
+    <app-popup #popup />
 </div>

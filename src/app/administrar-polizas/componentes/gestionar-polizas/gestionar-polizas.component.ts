@@ -34,7 +34,7 @@ export class GestionarPolizasComponent implements OnInit {
   numeroPoliza: any;
   verPoliza: boolean = false;
   poliza: any;
-  vehiculos: {placa?: string, pasajeros?: number} [] = [];
+  vehiculos: { placa?: string, pasajeros?: number }[] = [];
 
   formPasajeros: FormGroup;
 
@@ -156,12 +156,12 @@ export class GestionarPolizasComponent implements OnInit {
 
   actualizarEstadoBoton() {
     this.esValido = Object.values(this.errores).every(error => error === undefined);
-}
+  }
 
   agregarPasajeros(pasajeros: Event, placa: string) {
     const pasajero = pasajeros.target as HTMLInputElement
     if (!pasajero) {
-      console.log("no se ingreso pasajero"); 
+      console.log("no se ingreso pasajero");
       return;
     }
     const valor = pasajero.value;
@@ -178,27 +178,45 @@ export class GestionarPolizasComponent implements OnInit {
     const index = this.vehiculos.findIndex(item => item.placa === placa)
     if (index > -1) {
       this.vehiculos[index].pasajeros = parseInt(pasajero.value)
-    }    
+    }
   }
 
   agregarVehiculosPoliza() {
-    if (this.formPasajeros.invalid) {
-      marcarFormularioComoSucio(this.formPasajeros);
+    if (!this.vehiculos || this.vehiculos.length == 0) {
+      Swal.fire({
+        titleText: "La cantidad de pasajeros es requerida",
+        confirmButtonText: "Aceptar",
+        icon: "error",
+        showCancelButton: false,
+      })
       return;
     }
+
+    for (const vehiculo of this.vehiculos) {
+      if (vehiculo.pasajeros === undefined || vehiculo.pasajeros === null || vehiculo.pasajeros <= 0) {
+        Swal.fire({
+          titleText: "Cada vehículo debe tener una cantidad válida de pasajeros",
+          confirmButtonText: "Aceptar",
+          icon: "error",
+          showCancelButton: false,
+        });
+        return;
+      }
+    }
+
     const vehiculos = {
       poliza: this.numeroPoliza,
       tipoPoliza: this.tipoPoliza,
       vehiculos: this.vehiculos
     }
-      let tipoPoliza = ''
+    let tipoPoliza = ''
     if (vehiculos.tipoPoliza === 1) {
       tipoPoliza = 'RESPONSABILIDAD CIVIL CONTRACTUAL'
-    } 
+    }
     if (vehiculos.tipoPoliza === 2) {
       tipoPoliza = 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL'
     }
-    
+
     Swal.fire({
       titleText: "¿Señor usuario está seguro de agregar las placas seleccionadas?",
       confirmButtonText: "Aceptar",
@@ -243,7 +261,7 @@ export class GestionarPolizasComponent implements OnInit {
     this.actualizarNovedadesPaginadas()  // Carga los datos para la nueva página
   }
 
-  openAlert(texto:string,alerta:string) {
+  openAlert(texto: string, alerta: string) {
     this.alert = alerta
     this.textoAlert = texto
     document.getElementById('closealertcontainer')!.style.display = 'flex';
