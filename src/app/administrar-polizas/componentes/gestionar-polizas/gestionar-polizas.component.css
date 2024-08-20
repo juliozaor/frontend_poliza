@@ -1,12 +1,20 @@
-.checkbox-seleccion-govco{
+.checkbox-seleccion-govco {
   display: flex;
   align-items: center;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.pointer:hover{
+.pointer:hover {
   background-color: #FFAB001A !important;
+}
+
+#totalVehiculos {
+  color: #004884;
+}
+
+.center {
+  text-align: center;
 }

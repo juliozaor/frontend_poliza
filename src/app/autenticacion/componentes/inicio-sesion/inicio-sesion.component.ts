@@ -67,16 +67,24 @@ export class InicioSesionComponent implements OnInit {
       },
 
       error: (error: HttpErrorResponse) => {
-        if (error.status == 423) {
-          this.abrirModalRecuperacion()
-          this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message)
+        if (error.status === 423) {
+          this.abrirModalRecuperacion();
+          this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message);
+        } else if (error.status === 400) {
+          this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message);
+        } else if (error.status === 0 || error.status === null) {
+          // Manejo de errores de red o sin conexión
+          this.popup.abrirPopupFallido('Error al iniciar sesión', 'Posiblemente esté presentando dificultades de conexión');
+        } else if (error.status >= 500 && error.status < 600) {
+          // Manejo de errores del servidor
+          this.popup.abrirPopupFallido('Error al iniciar sesión', 'Hubo un problema en el servidor. Por favor, inténtelo más tarde.');
+        } else {
+          // Manejo de cualquier otro error no especificado
+          this.popup.abrirPopupFallido('Error al iniciar sesión', 'Ocurrió un error inesperado. Por favor, inténtelo nuevamente.');
         }
-        if (error.status == 400) {
-          this.popup.abrirPopupFallido('Error al iniciar sesión', error.error.message)
-        }
-        if(error.status == null){
-          this.popup.abrirPopupFallido('Error al iniciar sesión','Posiblemente esté presentando dificultades de conexión')
-        }
+
+        // Registro del error para fines de depuración
+        console.error('Error al iniciar sesión:', error);
       }
     })
   }

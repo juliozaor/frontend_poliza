@@ -63,18 +63,29 @@ export class GestionarPlacasaComponent implements OnInit {
     if (tipoPoliza === 1) this.desVinculadaCont = true
     if (tipoPoliza === 2) this.desVinculadaExtraCont = true
 
-    this.servicioAdministrarPoliza.vinculacionPlaca(id, motivo).subscribe({
-      next: (respuesta: any) => {
-        console.log(respuesta)
-        if (respuesta) this.openAlert(respuesta.mensaje,'exito')
-        this.consultarPoliza(this.placa)
+    Swal.fire({
+      titleText: "¿Está seguro de que desea desvincular la placa de la póliza seleccionada?",
+      confirmButtonText: "Aceptar",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.servicioAdministrarPoliza.vinculacionPlaca(id, motivo).subscribe({
+          next: (respuesta: any) => {
+            console.log(respuesta)
+            if (respuesta) this.openAlert(respuesta.mensaje, 'exito')
+            this.consultarPoliza(this.placa)
+          }
+        })
+      }else if (result.isDismissed) {
+        Swal.close()
       }
     })
-    //
   }
 
 
-  openAlert(texto:string,alerta:string) {
+  openAlert(texto: string, alerta: string) {
     this.alert = alerta
     this.textoAlert = texto
     document.getElementById('closealertcontainer')!.style.display = 'flex';
