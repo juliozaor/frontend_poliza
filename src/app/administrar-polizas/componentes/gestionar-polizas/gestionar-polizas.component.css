@@ -18,3 +18,20 @@
 .center {
   text-align: center;
 }
+
+#cabezera-tabla{
+  height: 100px;
+}
+
+.tabla-primaria{
+  border: 2px solid #E6EFFD !important;
+}
+
+.tabla-primaria th{
+  border: 2px solid #E6EFFD !important;
+}
+
+.tabla-primaria tr{
+  border: 1px solid #E6EFFD !important;
+}
+
