@@ -3,7 +3,7 @@
     <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
     <div>
         <table class="table tabla-primaria" aria-describedby="table-basic">
-            <thead class="encabezado-tabla">
+            <thead class="encabezado-tabla" id="cabezera-tabla">
                 <tr>
                     <th scope="col">TIPO DE PÓLIZA</th>
                     <th scope="col">N° DE PÓLIZA</th>
@@ -35,7 +35,7 @@
             <div>
                 <div class="d-block mb-3">
                     <label class="fw-bold" id="totalVehiculos">TOTAL DE VEHÍCULOS:</label>
-                    <span style="margin-left:5px;"></span>
+                    <span style="margin-left:5px;">{{totalVehiculos}}</span>
                 </div>
             </div>
             <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
@@ -74,12 +74,24 @@
                     <tr>
                         <th colspan="3" style="text-align: center;">VINCULAR VEHÍCULO</th>
                     </tr>
-                    <tr>
+                    <tr style="text-align: center;">
                         <th scope="col"></th>
                         <th scope="col">PLACA</th>
                         <th scope="col">CANTIDAD DE PASAJEROS</th>
                     </tr>
                 </thead>
+                <!-- <tbody class="contenido-tablas">
+                    <tr>
+                        <td class="entradas-de-texto-govco">
+                            <input type="text" name="placa" [disabled]="!esValido" placeholder="Ej: CKV341"
+                            disabled />
+                        </td>
+                        <td class="entradas-de-texto-govco">
+                            <input type="number" name="pasajero"  [disabled]="!esValido" placeholder="Ej: 10 "
+                            disabled />
+                        </td>
+                    </tr>
+                </tbody> -->
                 <tbody class="contenido-tablas">
                     <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
                         <td class="checkbox-seleccion-govco">
@@ -88,7 +100,7 @@
                         </td>
                         <td>{{placa}}</td>
                         <td class="entradas-de-texto-govco">
-                            <input type="number" [id]="placa+'input'" name="pasajeros" placeholder=""
+                            <input type="number" [id]="placa+'input'" name="pasajeros" placeholder="Ej: 10"
                                 (change)="agregarPasajeros($event,placa)" disabled />
                             <span *ngIf="errores[placa+'input'] === 'cero' && checkHabilitado == true"
                                 class="validacion">No debe ser 0.</span>
@@ -110,6 +122,12 @@
                     <ng-template ngbPaginationNext>Sig.</ng-template>
                 </ngb-pagination>
             </div>
+            <!-- <div class="d-flex justify-content-between ">
+                <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
+                (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
+                <button type="button" class="btn-govco outline-btn-govco" style="width: 186px; height: 42px;"
+                    [disabled]="!esValido">Agregar vehículo <i class="bi bi-plus-circle"></i></button>
+            </div> -->
             <div class="mt-2 mb-2">
                 <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
                     (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
@@ -134,7 +152,7 @@
                         <th scope="col">OBSERVACIÓN</th>
                     </tr>
                 </thead>
-                <tbody class="contenido-tablas">
+                <tbody id="tabla-primaria-border" class="contenido-tablas">
                     <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
                         <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
                         <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>

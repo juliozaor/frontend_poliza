@@ -60,9 +60,6 @@ export class GestionarPlacasaComponent implements OnInit {
     })
   }
   desvincular(tipoPoliza: number, id: any, motivo: string) {
-    if (tipoPoliza === 1) this.desVinculadaCont = true
-    if (tipoPoliza === 2) this.desVinculadaExtraCont = true
-
     Swal.fire({
       titleText: "¿Está seguro de que desea desvincular la placa de la póliza seleccionada?",
       confirmButtonText: "Aceptar",
@@ -71,6 +68,8 @@ export class GestionarPlacasaComponent implements OnInit {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
+        if (tipoPoliza === 1) this.desVinculadaCont = true
+        if (tipoPoliza === 2) this.desVinculadaExtraCont = true
         this.servicioAdministrarPoliza.vinculacionPlaca(id, motivo).subscribe({
           next: (respuesta: any) => {
             console.log(respuesta)
@@ -78,7 +77,7 @@ export class GestionarPlacasaComponent implements OnInit {
             this.consultarPoliza(this.placa)
           }
         })
-      }else if (result.isDismissed) {
+      } else if (result.isDismissed) {
         Swal.close()
       }
     })

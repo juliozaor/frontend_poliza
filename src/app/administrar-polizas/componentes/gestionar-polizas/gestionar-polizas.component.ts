@@ -26,6 +26,7 @@ export class GestionarPolizasComponent implements OnInit {
   placasInteroperabilidad: Array<string> = []
   placasInteroperabilidadPaginacion: Array<string> = []
 
+  totalVehiculos: number = 0;
   textoAlert: string = ''; alert: string = ''
   checkHabilitado: boolean = false;
   esValido: boolean = false;
@@ -73,6 +74,7 @@ export class GestionarPolizasComponent implements OnInit {
       this.servicioAdministrarPoliza.listarPolizas(pagina, limite, filtros).subscribe({
         next: (polizas: any) => {
           this.polizas = polizas.polizas
+          this.totalVehiculos = polizas.totalVehiculos;
           suscriptor.next(polizas.paginacion)
         }
       })
@@ -255,6 +257,7 @@ export class GestionarPolizasComponent implements OnInit {
     const endIndex = startIndex + this.paginadorNovedades.limite;
     this.novedadesPolizaPaginacion = this.novedadesPoliza.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
   }
+  
   // Cambia de página cuando se detecta un cambio
   cambiarPaginaNovedades(pagina: number) {
     this.paginadorNovedades.pagina = pagina;
