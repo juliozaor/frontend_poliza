@@ -6,11 +6,12 @@ import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 import { Observable } from 'rxjs';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import Swal from 'sweetalert2';
+import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -36,8 +37,10 @@ export class GestionarPolizasComponent implements OnInit {
   verPoliza: boolean = false;
   poliza: any;
   vehiculos: { placa?: string, pasajeros?: number }[] = [];
+  placa?: String;
 
   formPasajeros: FormGroup;
+  vehiculosForm: FormGroup;
 
   paginador: Paginador<FiltrarPolizas>
   errores: { [key: string]: string | undefined } = {};
@@ -57,16 +60,42 @@ export class GestionarPolizasComponent implements OnInit {
   constructor(private servicioAut: AutenticacionService,
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
-    private router: Router,) {
+    private router: Router, private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
     this.formPasajeros = new FormGroup({
       pasajeros: new FormControl(undefined, [Validators.required, valorCeroValidar(), negativoValidar()]),
     })
+    this.vehiculosForm = this.fb.group({
+      formularioVehiculos: this.fb.array([])
+    });
+    this.agregarVehiculo();
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
     this.formPasajeros.controls['pasajeros'].disable();
+  }
+
+  get formularioVehiculos(): FormArray {
+    return this.vehiculosForm.controls["formularioVehiculos"] as FormArray;
+  }
+
+  crearFormularioVehiculos(): FormGroup {
+    return this.fb.group({
+      placa: ["", [Validators.required, maxLengthNumberValidator(6)]],
+      pasajeros: [undefined, [Validators.required, maxLengthNumberValidator(7), valorCeroValidar(), negativoValidar()]]
+    })
+  }
+
+  agregarVehiculo() {
+    this.formularioVehiculos.push(this.crearFormularioVehiculos());
+  }
+
+  eliminarInputsVehiculos(vehiculoIndex: number) {
+    this.formularioVehiculos.removeAt(vehiculoIndex);
+    if (vehiculoIndex > -1) {
+      this.vehiculos.splice(vehiculoIndex, 1)
+    }
   }
 
   obtenerPolizas = (pagina: number, limite: number, filtros?: FiltrarPolizas) => {
@@ -160,33 +189,95 @@ export class GestionarPolizasComponent implements OnInit {
     this.esValido = Object.values(this.errores).every(error => error === undefined);
   }
 
-  agregarPasajeros(pasajeros: Event, placa: string) {
-    const pasajero = pasajeros.target as HTMLInputElement
-    if (!pasajero) {
-      console.log("no se ingreso pasajero");
-      return;
-    }
-    const valor = pasajero.value;
-    const cantidadPasajeros = parseInt(valor);
 
-    if (valor === '') {
-      this.errores[pasajero.id] = 'requerido';
-    } else if (isNaN(cantidadPasajeros) || cantidadPasajeros <= 0) {
-      this.errores[pasajero.id] = cantidadPasajeros === 0 ? 'cero' : 'negativo';
-    } else {
-      this.errores[pasajero.id] = undefined;
+  agregarPasajeros(tipo: number, index: number) {
+
+    if (tipo === 1) {
+      const placa = document.getElementById('placa' + index) as HTMLInputElement
+      const valorPlaca = placa.value
+      if (!valorPlaca || valorPlaca == '') {
+        this.vehiculos.splice(index, 1)
+
+        const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
+
+        if (inputPasajeros) {
+          inputPasajeros.value = '';
+          inputPasajeros.setAttribute('disabled', 'true');
+        }
+        return console.log("debe ingresar la placa");
+
+      }
+
+      const placaExistente = this.vehiculos.find(vehiculo => vehiculo.placa === valorPlaca);
+
+      if (placaExistente) {
+        return Swal.fire({
+          titleText: "Señor usuario, ya usted registro esta placa",
+          confirmButtonText: "Aceptar",
+          icon: "error",
+          showCancelButton: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const inputPasajeros = document.getElementById('placa' + index) as HTMLInputElement;
+            inputPasajeros.value = '';
+          } else if (result.isDismissed) {
+            Swal.close()
+          }
+        });
+      }
+
+      const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
+      if (inputPasajeros) {
+        inputPasajeros.removeAttribute('disabled');
+      }
+
+      this.placa = valorPlaca;
+      this.vehiculos.push({
+        placa: valorPlaca
+      });
+    }
+
+    if (tipo === 2) {
+      const pasajero = document.getElementById('pasajeros' + index) as HTMLInputElement
+      const indexPasajero = this.vehiculos.findIndex(item => item.placa === this.placa)
+      if (indexPasajero > -1) {
+        this.vehiculos[indexPasajero].pasajeros = parseInt(pasajero.value)
+      }
     }
     this.actualizarEstadoBoton();
-    const index = this.vehiculos.findIndex(item => item.placa === placa)
-    if (index > -1) {
-      this.vehiculos[index].pasajeros = parseInt(pasajero.value)
-    }
+    console.log(this.vehiculos);
   }
 
+
+  // agregarPasajeros(pasajeros: Event, placa: string) {
+  //   const pasajero = pasajeros.target as HTMLInputElement
+  //   if (!pasajero) {
+  //     console.log("no se ingreso pasajero");
+  //     return;
+  //   }
+  //   const valor = pasajero.value;
+  //   const cantidadPasajeros = parseInt(valor);
+
+  //   if (valor === '') {
+  //     this.errores[pasajero.id] = 'requerido';
+  //   } else if (isNaN(cantidadPasajeros) || cantidadPasajeros <= 0) {
+  //     this.errores[pasajero.id] = cantidadPasajeros === 0 ? 'cero' : 'negativo';
+  //   } else {
+  //     this.errores[pasajero.id] = undefined;
+  //   }
+  //   this.actualizarEstadoBoton();
+  //   const index = this.vehiculos.findIndex(item => item.placa === placa)
+  //   if (index > -1) {
+  //     this.vehiculos[index].pasajeros = parseInt(pasajero.value)
+  //   }
+  // }
+
   agregarVehiculosPoliza() {
+    console.log(this.vehiculos);
+
     if (!this.vehiculos || this.vehiculos.length == 0) {
       Swal.fire({
-        titleText: "La cantidad de pasajeros es requerida",
+        titleText: "La placas son requeridas",
         confirmButtonText: "Aceptar",
         icon: "error",
         showCancelButton: false,
@@ -203,6 +294,13 @@ export class GestionarPolizasComponent implements OnInit {
           showCancelButton: false,
         });
         return;
+      } else if (vehiculo.placa === undefined || vehiculo.placa === null || vehiculo.placa === '') {
+        Swal.fire({
+          titleText: "Cada vehículo debe tener una placa válida",
+          confirmButtonText: "Aceptar",
+          icon: "error",
+          showCancelButton: false,
+        });
       }
     }
 
@@ -220,7 +318,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     Swal.fire({
-      titleText: "¿Señor usuario está seguro de agregar las placas seleccionadas?",
+      titleText: "¿Señor usuario, está seguro de agregar las placas seleccionadas?",
       confirmButtonText: "Aceptar",
       icon: "warning",
       showCancelButton: true,
@@ -231,7 +329,8 @@ export class GestionarPolizasComponent implements OnInit {
           next: (respuesta: any) => {
             this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
             this.openAlert(respuesta.mensaje, "exito")
-            this.vehiculos = []
+            this.vehiculos = [];
+            this.formularioVehiculos.clear();
             this.inicializarPaginador();
           }
         })
@@ -257,7 +356,7 @@ export class GestionarPolizasComponent implements OnInit {
     const endIndex = startIndex + this.paginadorNovedades.limite;
     this.novedadesPolizaPaginacion = this.novedadesPoliza.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
   }
-  
+
   // Cambia de página cuando se detecta un cambio
   cambiarPaginaNovedades(pagina: number) {
     this.paginadorNovedades.pagina = pagina;

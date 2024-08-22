@@ -35,3 +35,10 @@
   border: 1px solid #E6EFFD !important;
 }
 
+#eliminarInputsVehiculos {
+margin-top:10px;
+} 
+
+.table-adaptative{
+  width:500px;
+}
