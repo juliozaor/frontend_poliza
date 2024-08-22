@@ -18,7 +18,7 @@ import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validado
 })
 export class GestionarPolizasComponent implements OnInit {
   @ViewChild('pasajeros') myInputRef!: ElementRef;
-  
+
   polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = []
   novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
   novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
@@ -89,7 +89,7 @@ export class GestionarPolizasComponent implements OnInit {
 
   agregarVehiculoform() {
     this.formularioVehiculos.push(this.crearFormularioVehiculos());
-    console.log(this.crearFormularioVehiculos())
+    //console.log(this.crearFormularioVehiculos())
   }
 
   eliminarInputsVehiculos(vehiculoIndex: number) {
@@ -197,7 +197,7 @@ export class GestionarPolizasComponent implements OnInit {
     const valor = event.target as HTMLInputElement;
     const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
     const inputPlaca = document.getElementById('placa' + index) as HTMLInputElement;
-    console.log(inputPasajeros, index);
+    //console.log(inputPasajeros, index);
 
 
     if (tipo === 1) {//Si es el Input placa
@@ -205,7 +205,7 @@ export class GestionarPolizasComponent implements OnInit {
       if (!valorPlaca || valorPlaca == '') {//Si la placa NO existe
         this.vehiculos.splice(index, 1)//Elimina el registro
 
-        console.log(inputPasajeros);
+        //console.log(inputPasajeros);
 
         if (inputPasajeros) {
           inputPasajeros.value = '';//Vacia Input pasajeros
@@ -221,7 +221,7 @@ export class GestionarPolizasComponent implements OnInit {
 
         if (placaExistente) {//Verifica placa existente dentro del array
           return Swal.fire({
-            titleText: "Placa ya registrada",
+            titleText: "¡Placa ya registrada!",
             confirmButtonText: "Aceptar",
             icon: "error",
             showCancelButton: false,
@@ -255,7 +255,7 @@ export class GestionarPolizasComponent implements OnInit {
       }
     }
     this.actualizarEstadoBoton();
-    console.log(this.vehiculos);
+    //console.log(this.vehiculos);
   }
 
 
@@ -286,7 +286,7 @@ export class GestionarPolizasComponent implements OnInit {
 
     if (!this.vehiculos || this.vehiculos.length == 0) {
       Swal.fire({
-        titleText: "La placas son requeridas",
+        titleText: "¡Debe agregar al menos un vehículo!",
         confirmButtonText: "Aceptar",
         icon: "error",
         showCancelButton: false,
@@ -337,7 +337,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     Swal.fire({
-      titleText: "¿Señor usuario, está seguro de agregar las placas seleccionadas?",
+      titleText: "¿Está seguro de vincular los vehículos ingresados?",
       confirmButtonText: "Aceptar",
       icon: "warning",
       showCancelButton: true,
