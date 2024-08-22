@@ -72,20 +72,19 @@
     <div class="table-responsive custom-scroll">
       <table class="table table-adaptative">
         <thead class="encabezado-tabla">
-          <tr>
-            <th colspan="3" style="text-align: center;">VINCULAR VEHÍCULO</th>
+          <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
+            <th colspan="3">VINCULAR VEHÍCULO</th>
           </tr>
-          <tr style="text-align: center;">
+          <tr class="w-100" style="display: flex; justify-content: space-around;">
             <th scope="col">PLACA</th>
             <th scope="col">CANTIDAD DE PASAJEROS</th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody *ngIf="formularioVehiculos.controls.length !== 0 && estadoPoliza" class="contenido-tablas" [formGroup]="vehiculosForm">
           <tr *ngFor="let form of formularioVehiculos.controls; let i = index" [formGroupName]="i">
             <td class="entradas-de-texto-govco">
               <input type="text" [id]="'placa' + i" formControlName="placa" [disabled]="!esValido"
-                placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" />
+                placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" maxlength="6"/>
             </td>
             <td class="entradas-de-texto-govco">
               <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 "
@@ -97,9 +96,9 @@
             </button>
           </tr>
         </tbody>
-        <tbody *ngIf="formularioVehiculos.controls.length === 0" class="contenido-tablas" [formGroup]="vehiculosForm">
+        <tbody *ngIf="formularioVehiculos.controls.length === 0 && estadoPoliza" class="contenido-tablas" [formGroup]="vehiculosForm" id="arregloVehiculosVacio">
           <tr>
-            <td colspan="2" style="text-align: center;">
+            <td colspan="2">
               <h5 style="color: black;">Agregué un vehículo</h5>
             </td>
           </tr>

@@ -1,15 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Paginador } from 'src/app/administrador/modelos/compartido/Paginador';
-import { AutenticacionService } from 'src/app/autenticacion/servicios/autenticacion.service';
 import { FiltrarPolizas } from '../../modelos/FiltrosPoliza';
 import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 import { Observable } from 'rxjs';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute} from '@angular/router';
+import { FormArray, FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
-import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 
@@ -20,7 +18,7 @@ import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validado
 })
 export class GestionarPolizasComponent implements OnInit {
   @ViewChild('pasajeros') myInputRef!: ElementRef;
-
+  
   polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = []
   novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
   novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
@@ -58,10 +56,10 @@ export class GestionarPolizasComponent implements OnInit {
     limite: 5,
   };
 
-  constructor(private servicioAut: AutenticacionService,
+  constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
-    private router: Router, private fb: FormBuilder) {
+    private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
     /* this.formPasajeros = new FormGroup({
       pasajeros: new FormControl(undefined, [Validators.required, valorCeroValidar(), negativoValidar()]),
