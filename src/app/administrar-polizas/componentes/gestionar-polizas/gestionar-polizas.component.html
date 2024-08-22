@@ -72,13 +72,12 @@
     <div class="table-responsive custom-scroll">
       <table class="table table-adaptative">
         <thead class="encabezado-tabla">
-          <tr>
+          <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
             <th colspan="3">VINCULAR VEHÍCULO</th>
           </tr>
-          <tr>
+          <tr class="w-100" style="display: flex; justify-content: space-around;">
             <th scope="col">PLACA</th>
             <th scope="col">CANTIDAD DE PASAJEROS</th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody *ngIf="formularioVehiculos.controls.length !== 0 && estadoPoliza" class="contenido-tablas" [formGroup]="vehiculosForm">
