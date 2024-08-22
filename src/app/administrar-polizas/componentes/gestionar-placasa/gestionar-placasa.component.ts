@@ -16,8 +16,9 @@ export class GestionarPlacasaComponent implements OnInit {
   novedades: Array<Novedades> = []
   historial: Array<Historial> = []
 
-  vinculadaCont?: boolean = true; desVinculadaCont: boolean = true
+  vinculadaCont?: boolean = true; desVinculadaCont: boolean = true;
   vinculadaExtraCont?: boolean = true; desVinculadaExtraCont: boolean = true
+  estadoPolizaCont?: boolean;estadoPolizaExtraCont?: boolean;
   observacionCont?: string
   observacionExtraCont?: string
 
@@ -39,10 +40,16 @@ export class GestionarPlacasaComponent implements OnInit {
   consultarPoliza(placa: string) {
     this.servicioAdministrarPoliza.obtenerPolizaPlaca(placa).subscribe({
       next: (polizas: any) => {
-        console.log(polizas)
+        //console.log(polizas)
         this.polizas = polizas
+
         this.desVinculadaCont = !this.polizas.contractual?.vinculada
+        if('ACTIVA' === this.polizas.contractual?.estadoPoliza) this.estadoPolizaCont = true
+        if('INACTIVA' === this.polizas.contractual?.estadoPoliza) this.estadoPolizaCont = false
+
         this.desVinculadaExtraCont = !this.polizas.extraContractual?.vinculada
+        if('ACTIVA' === this.polizas.extraContractual?.estadoPoliza) this.estadoPolizaExtraCont = true
+        if('INACTIVA' === this.polizas.extraContractual?.estadoPoliza) this.estadoPolizaExtraCont = false
 
         this.novedades = polizas.novedades
         this.paginadorNovedades.totalRegistros = polizas.novedades.length
