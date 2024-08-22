@@ -6,11 +6,12 @@ import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 import { Observable } from 'rxjs';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import Swal from 'sweetalert2';
+import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -35,9 +36,12 @@ export class GestionarPolizasComponent implements OnInit {
   numeroPoliza: any;
   verPoliza: boolean = false;
   poliza: any;
-  vehiculos: { placa?: string, pasajeros?: number }[] = [];
+  vehiculos: { placa?: string, pasajeros?: number, index?: number }[] = [];
+  placa?: String;
+  estadoPoliza?:boolean
 
-  formPasajeros: FormGroup;
+  /* formPasajeros: FormGroup; */
+  vehiculosForm: FormGroup;
 
   paginador: Paginador<FiltrarPolizas>
   errores: { [key: string]: string | undefined } = {};
@@ -57,16 +61,44 @@ export class GestionarPolizasComponent implements OnInit {
   constructor(private servicioAut: AutenticacionService,
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
-    private router: Router,) {
+    private router: Router, private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
-    this.formPasajeros = new FormGroup({
+    /* this.formPasajeros = new FormGroup({
       pasajeros: new FormControl(undefined, [Validators.required, valorCeroValidar(), negativoValidar()]),
-    })
+    }) */
+    this.vehiculosForm = this.fb.group({
+      formularioVehiculos: this.fb.array([])
+    });
+    this.agregarVehiculoform();
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
-    this.formPasajeros.controls['pasajeros'].disable();
+    const placa = document.getElementById('placa0') as HTMLInputElement
+    placa.setAttribute('disbled','true')
+  }
+
+  get formularioVehiculos(): FormArray {
+    return this.vehiculosForm.get("formularioVehiculos") as FormArray;
+  }
+
+  crearFormularioVehiculos(): FormGroup {
+    return this.fb.group({
+      placa: ["", [Validators.required, maxLengthNumberValidator(6)]],
+      pasajeros: [undefined, [Validators.required, maxLengthNumberValidator(7), valorCeroValidar(), negativoValidar()]]
+    })
+  }
+
+  agregarVehiculoform() {
+    this.formularioVehiculos.push(this.crearFormularioVehiculos());
+    console.log(this.crearFormularioVehiculos())
+  }
+
+  eliminarInputsVehiculos(vehiculoIndex: number) {
+    this.formularioVehiculos.removeAt(vehiculoIndex);
+    if (vehiculoIndex > -1) {
+      this.vehiculos.splice(vehiculoIndex, 1)
+    }
   }
 
   obtenerPolizas = (pagina: number, limite: number, filtros?: FiltrarPolizas) => {
@@ -94,10 +126,12 @@ export class GestionarPolizasComponent implements OnInit {
     })
   }
 
-  visualizarPoliza(numero: any, tipoPoliza: any) {
+  visualizarPoliza(numero: any, tipoPoliza: any, estadoPoliza?:any) {
     let idTipo;
     this.numeroPoliza = numero;
     this.verPoliza = false;
+    if('ACTIVA' === estadoPoliza){this.estadoPoliza = true}
+    else if('INACTIVA' === estadoPoliza){this.estadoPoliza = false}
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL CONTRACTUAL') idTipo = 1, this.tipoPoliza = 1
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL') idTipo = 2, this.tipoPoliza = 2
     this.servicioAdministrarPoliza.visualizarPoliza(numero, idTipo).subscribe({
@@ -160,39 +194,108 @@ export class GestionarPolizasComponent implements OnInit {
     this.esValido = Object.values(this.errores).every(error => error === undefined);
   }
 
-  agregarPasajeros(pasajeros: Event, placa: string) {
-    const pasajero = pasajeros.target as HTMLInputElement
-    if (!pasajero) {
-      console.log("no se ingreso pasajero");
-      return;
-    }
-    const valor = pasajero.value;
-    const cantidadPasajeros = parseInt(valor);
 
-    if (valor === '') {
-      this.errores[pasajero.id] = 'requerido';
-    } else if (isNaN(cantidadPasajeros) || cantidadPasajeros <= 0) {
-      this.errores[pasajero.id] = cantidadPasajeros === 0 ? 'cero' : 'negativo';
-    } else {
-      this.errores[pasajero.id] = undefined;
+  agregarVehiculo(event: Event, tipo: number, index: number) {
+    const valor = event.target as HTMLInputElement;
+    const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
+    const inputPlaca = document.getElementById('placa' + index) as HTMLInputElement;
+    console.log(inputPasajeros, index);
+
+
+    if (tipo === 1) {//Si es el Input placa
+      const valorPlaca = valor.value
+      if (!valorPlaca || valorPlaca == '') {//Si la placa NO existe
+        this.vehiculos.splice(index, 1)//Elimina el registro
+
+        console.log(inputPasajeros);
+
+        if (inputPasajeros) {
+          inputPasajeros.value = '';//Vacia Input pasajeros
+          inputPasajeros.setAttribute('disabled', 'true');//Bloquea el input pasajeros
+        }
+        return console.log("debe ingresar la placa");
+
+      }else{//Si la placa existe
+        const placaExistente = this.vehiculos.find(vehiculo => vehiculo.placa === valorPlaca);
+        if (inputPasajeros) {
+          inputPasajeros.removeAttribute('disabled');//Habilita input pasajeros
+        }
+
+        if (placaExistente) {//Verifica placa existente dentro del array
+          return Swal.fire({
+            titleText: "Placa ya registrada",
+            confirmButtonText: "Aceptar",
+            icon: "error",
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              inputPlaca.value = '';//Vacia input placa
+            } else if (result.isDismissed) {
+              Swal.close()
+            }
+          });
+        }else{//Valida que la plana no existe dentro del array
+          const indexExistente = this.vehiculos.find(vehiculo => vehiculo.index === index);
+          if (indexExistente) {//Si se usa un input ya usado, actualiza la placa.
+            this.vehiculos[index].placa = valorPlaca;
+          } else {//Si es input nuevo, agrga placa en nuevo registro.
+            this.placa = valorPlaca;
+            this.vehiculos.push({
+              placa: valorPlaca,
+              index: index
+            });
+          }
+        }
+      }
+    }
+
+    if (tipo === 2) {//Si es el Input placa
+      const pasajero = valor.value
+      const indexPasajero = this.vehiculos.findIndex(item => item.placa === this.placa)
+      if (indexPasajero > -1) {
+        this.vehiculos[indexPasajero].pasajeros = parseInt(pasajero)
+      }
     }
     this.actualizarEstadoBoton();
-    const index = this.vehiculos.findIndex(item => item.placa === placa)
-    if (index > -1) {
-      this.vehiculos[index].pasajeros = parseInt(pasajero.value)
-    }
+    console.log(this.vehiculos);
   }
 
+
+  // agregarPasajeros(pasajeros: Event, placa: string) {
+  //   const pasajero = pasajeros.target as HTMLInputElement
+  //   if (!pasajero) {
+  //     console.log("no se ingreso pasajero");
+  //     return;
+  //   }
+  //   const valor = pasajero.value;
+  //   const cantidadPasajeros = parseInt(valor);
+
+  //   if (valor === '') {
+  //     this.errores[pasajero.id] = 'requerido';
+  //   } else if (isNaN(cantidadPasajeros) || cantidadPasajeros <= 0) {
+  //     this.errores[pasajero.id] = cantidadPasajeros === 0 ? 'cero' : 'negativo';
+  //   } else {
+  //     this.errores[pasajero.id] = undefined;
+  //   }
+  //   this.actualizarEstadoBoton();
+  //   const index = this.vehiculos.findIndex(item => item.placa === placa)
+  //   if (index > -1) {
+  //     this.vehiculos[index].pasajeros = parseInt(pasajero.value)
+  //   }
+  // }
+
   agregarVehiculosPoliza() {
+
     if (!this.vehiculos || this.vehiculos.length == 0) {
       Swal.fire({
-        titleText: "La cantidad de pasajeros es requerida",
+        titleText: "La placas son requeridas",
         confirmButtonText: "Aceptar",
         icon: "error",
         showCancelButton: false,
       })
       return;
     }
+    let vehiculosIndex: { placa?: string, pasajeros?: number}[] = [];
 
     for (const vehiculo of this.vehiculos) {
       if (vehiculo.pasajeros === undefined || vehiculo.pasajeros === null || vehiculo.pasajeros <= 0) {
@@ -203,13 +306,29 @@ export class GestionarPolizasComponent implements OnInit {
           showCancelButton: false,
         });
         return;
+      } else if (vehiculo.placa === undefined || vehiculo.placa === null || vehiculo.placa === '') {
+        Swal.fire({
+          titleText: "Cada vehículo debe tener una placa válida",
+          confirmButtonText: "Aceptar",
+          icon: "error",
+          showCancelButton: false,
+        });
       }
     }
+
+    for (let i = 0; i < this.vehiculos.length; i++){
+      vehiculosIndex.push({
+        placa: this.vehiculos[i].placa,
+        pasajeros: this.vehiculos[i].pasajeros
+      })
+    }
+
+    console.log(vehiculosIndex);
 
     const vehiculos = {
       poliza: this.numeroPoliza,
       tipoPoliza: this.tipoPoliza,
-      vehiculos: this.vehiculos
+      vehiculos: vehiculosIndex
     }
     let tipoPoliza = ''
     if (vehiculos.tipoPoliza === 1) {
@@ -220,7 +339,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     Swal.fire({
-      titleText: "¿Señor usuario está seguro de agregar las placas seleccionadas?",
+      titleText: "¿Señor usuario, está seguro de agregar las placas seleccionadas?",
       confirmButtonText: "Aceptar",
       icon: "warning",
       showCancelButton: true,
@@ -231,7 +350,8 @@ export class GestionarPolizasComponent implements OnInit {
           next: (respuesta: any) => {
             this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
             this.openAlert(respuesta.mensaje, "exito")
-            this.vehiculos = []
+            this.vehiculos = [];
+            this.formularioVehiculos.clear();
             this.inicializarPaginador();
           }
         })
@@ -257,7 +377,7 @@ export class GestionarPolizasComponent implements OnInit {
     const endIndex = startIndex + this.paginadorNovedades.limite;
     this.novedadesPolizaPaginacion = this.novedadesPoliza.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
   }
-  
+
   // Cambia de página cuando se detecta un cambio
   cambiarPaginaNovedades(pagina: number) {
     this.paginadorNovedades.pagina = pagina;
