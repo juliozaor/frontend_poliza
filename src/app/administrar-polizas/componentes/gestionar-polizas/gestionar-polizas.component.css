@@ -19,9 +19,9 @@
   text-align: center;
 }
 
-/* #cabezera-tabla{
+#cabezera-tabla{
   height: 100px;
-} */
+}
 
 .tabla-primaria{
   border: 2px solid #E6EFFD !important;
@@ -53,6 +53,7 @@ margin-top:10px;
   position: sticky;
   z-index: 1;
   top: 0;
+  table-layout: fixed;
 }
 
 .table-adaptative tbody {
@@ -65,4 +66,21 @@ margin-top:10px;
   display: table; /* Asegura que las filas se comporten como tablas */
   /*width: 100%;  Asegura que las filas se expandan al 100% */
   table-layout: fixed; /* Asegura que el ancho de las celdas se mantenga consistente */
+}
+
+#arregloVehiculosVacio{
+  display: flex;
+  justify-content: center;
+}
+
+#arregloVehiculosVacio tr{
+  border: 1px solid white !important;
+}
+
+.table-adaptative th{
+  border: 2px solid #E6EFFD !important;
+}
+
+.table-responsive{
+  min-width: 360px !important;
 }
