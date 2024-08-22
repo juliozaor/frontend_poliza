@@ -311,6 +311,7 @@ export class GestionarPolizasComponent implements OnInit {
           icon: "error",
           showCancelButton: false,
         });
+        return;
       }
     }
 
