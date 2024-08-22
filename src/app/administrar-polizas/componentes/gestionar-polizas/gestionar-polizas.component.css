@@ -19,9 +19,9 @@
   text-align: center;
 }
 
-#cabezera-tabla{
+/* #cabezera-tabla{
   height: 100px;
-}
+} */
 
 .tabla-primaria{
   border: 2px solid #E6EFFD !important;
@@ -37,8 +37,32 @@
 
 #eliminarInputsVehiculos {
 margin-top:10px;
-} 
+}
 
 .table-adaptative{
-  width:500px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-adaptative th, .table-adaptative td {
+  padding: 8px;
+  text-align: left;
+}
+
+.table-adaptative thead{
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
+.table-adaptative tbody {
+  display: block; /* Hace que el tbody se comporte como un bloque */
+  max-height: 300px; /* Máxima altura para el tbody antes de activar el scroll */
+  overflow-y: auto; /* Activa el scroll vertical */
+}
+
+.table-adaptative tr{
+  display: table; /* Asegura que las filas se comporten como tablas */
+  /*width: 100%;  Asegura que las filas se expandan al 100% */
+  table-layout: fixed; /* Asegura que el ancho de las celdas se mantenga consistente */
 }

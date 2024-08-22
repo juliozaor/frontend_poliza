@@ -38,8 +38,9 @@ export class GestionarPolizasComponent implements OnInit {
   poliza: any;
   vehiculos: { placa?: string, pasajeros?: number, index?: number }[] = [];
   placa?: String;
+  estadoPoliza?:boolean
 
-  formPasajeros: FormGroup;
+  /* formPasajeros: FormGroup; */
   vehiculosForm: FormGroup;
 
   paginador: Paginador<FiltrarPolizas>
@@ -62,9 +63,9 @@ export class GestionarPolizasComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router, private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
-    this.formPasajeros = new FormGroup({
+    /* this.formPasajeros = new FormGroup({
       pasajeros: new FormControl(undefined, [Validators.required, valorCeroValidar(), negativoValidar()]),
-    })
+    }) */
     this.vehiculosForm = this.fb.group({
       formularioVehiculos: this.fb.array([])
     });
@@ -73,11 +74,12 @@ export class GestionarPolizasComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarPaginador();
-    this.formPasajeros.controls['pasajeros'].disable();
+    const placa = document.getElementById('placa0') as HTMLInputElement
+    placa.setAttribute('disbled','true')
   }
 
   get formularioVehiculos(): FormArray {
-    return this.vehiculosForm.controls["formularioVehiculos"] as FormArray;
+    return this.vehiculosForm.get("formularioVehiculos") as FormArray;
   }
 
   crearFormularioVehiculos(): FormGroup {
@@ -89,6 +91,7 @@ export class GestionarPolizasComponent implements OnInit {
 
   agregarVehiculoform() {
     this.formularioVehiculos.push(this.crearFormularioVehiculos());
+    console.log(this.crearFormularioVehiculos())
   }
 
   eliminarInputsVehiculos(vehiculoIndex: number) {
@@ -123,10 +126,12 @@ export class GestionarPolizasComponent implements OnInit {
     })
   }
 
-  visualizarPoliza(numero: any, tipoPoliza: any) {
+  visualizarPoliza(numero: any, tipoPoliza: any, estadoPoliza?:any) {
     let idTipo;
     this.numeroPoliza = numero;
     this.verPoliza = false;
+    if('ACTIVA' === estadoPoliza){this.estadoPoliza = true}
+    else if('INACTIVA' === estadoPoliza){this.estadoPoliza = false}
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL CONTRACTUAL') idTipo = 1, this.tipoPoliza = 1
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL') idTipo = 2, this.tipoPoliza = 2
     this.servicioAdministrarPoliza.visualizarPoliza(numero, idTipo).subscribe({
@@ -192,59 +197,59 @@ export class GestionarPolizasComponent implements OnInit {
 
   agregarVehiculo(event: Event, tipo: number, index: number) {
     const valor = event.target as HTMLInputElement;
+    const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
+    const inputPlaca = document.getElementById('placa' + index) as HTMLInputElement;
+    console.log(inputPasajeros, index);
 
-    if (tipo === 1) {
+
+    if (tipo === 1) {//Si es el Input placa
       const valorPlaca = valor.value
-      if (!valorPlaca || valorPlaca == '') {
-        this.vehiculos.splice(index, 1)
+      if (!valorPlaca || valorPlaca == '') {//Si la placa NO existe
+        this.vehiculos.splice(index, 1)//Elimina el registro
 
-        const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
         console.log(inputPasajeros);
-        
+
         if (inputPasajeros) {
-          inputPasajeros.value = '';
-          inputPasajeros.setAttribute('disabled', 'true');
+          inputPasajeros.value = '';//Vacia Input pasajeros
+          inputPasajeros.setAttribute('disabled', 'true');//Bloquea el input pasajeros
         }
         return console.log("debe ingresar la placa");
 
-      }
+      }else{//Si la placa existe
+        const placaExistente = this.vehiculos.find(vehiculo => vehiculo.placa === valorPlaca);
+        if (inputPasajeros) {
+          inputPasajeros.removeAttribute('disabled');//Habilita input pasajeros
+        }
 
-      const placaExistente = this.vehiculos.find(vehiculo => vehiculo.placa === valorPlaca);
-
-      if (placaExistente) {
-        return Swal.fire({
-          titleText: "Señor usuario, ya usted registro esta placa",
-          confirmButtonText: "Aceptar",
-          icon: "error",
-          showCancelButton: false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            const inputPasajeros = document.getElementById('placa' + index) as HTMLInputElement;
-            inputPasajeros.value = '';
-          } else if (result.isDismissed) {
-            Swal.close()
+        if (placaExistente) {//Verifica placa existente dentro del array
+          return Swal.fire({
+            titleText: "Placa ya registrada",
+            confirmButtonText: "Aceptar",
+            icon: "error",
+            showCancelButton: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              inputPlaca.value = '';//Vacia input placa
+            } else if (result.isDismissed) {
+              Swal.close()
+            }
+          });
+        }else{//Valida que la plana no existe dentro del array
+          const indexExistente = this.vehiculos.find(vehiculo => vehiculo.index === index);
+          if (indexExistente) {//Si se usa un input ya usado, actualiza la placa.
+            this.vehiculos[index].placa = valorPlaca;
+          } else {//Si es input nuevo, agrga placa en nuevo registro.
+            this.placa = valorPlaca;
+            this.vehiculos.push({
+              placa: valorPlaca,
+              index: index
+            });
           }
-        });
-      }
-
-      const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
-      if (inputPasajeros) {
-        inputPasajeros.removeAttribute('disabled');
-      }
-
-      const indexExistente = this.vehiculos.find(vehiculo => vehiculo.index === index);
-      if (indexExistente) {
-        this.vehiculos[index].placa = valorPlaca;
-      } else {
-        this.placa = valorPlaca;
-        this.vehiculos.push({
-          placa: valorPlaca,
-          index: index
-        });
+        }
       }
     }
 
-    if (tipo === 2) {
+    if (tipo === 2) {//Si es el Input placa
       const pasajero = valor.value
       const indexPasajero = this.vehiculos.findIndex(item => item.placa === this.placa)
       if (indexPasajero > -1) {
@@ -319,7 +324,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     console.log(vehiculosIndex);
-    
+
     const vehiculos = {
       poliza: this.numeroPoliza,
       tipoPoliza: this.tipoPoliza,

@@ -1,104 +1,110 @@
 <div class="mt-4 px-sm-3 px-md-4 px-lg-5">
-    <h1 class="h1-tipografia-govco texto-primario">Gestionar Pólizas</h1>
-    <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
-    <div>
-        <table class="table tabla-primaria" aria-describedby="table-basic">
-            <thead class="encabezado-tabla" id="cabezera-tabla">
-                <tr>
-                    <th scope="col">TIPO DE PÓLIZA</th>
-                    <th scope="col">N° DE PÓLIZA</th>
-                    <th scope="col">ESTADO PÓLIZA</th>
-                    <th scope="col">FECHA CARGUE</th>
-                    <th scope="col">VIGENCIA - FECHA INICIO</th>
-                    <th scope="col">VIGENCIA - FECHA FIN</th>
-                    <th scope="col">ASEGURADORA</th>
-                    <th scope="col">CANTIDAD DE VEHÍCULOS</th>
-                </tr>
-            </thead>
-            <tbody class="contenido-tablas">
-                <tr *ngFor="let poliza of polizas; let i = index">
-                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">
-                        {{poliza.tipoPoliza}}
-                    </td>
-                    <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza)">{{poliza.poliza}}
-                    </td>
-                    <td>{{poliza.estadoPoliza}}</td>
-                    <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
-                    <td>{{poliza.aseguradora}}</td>
-                    <td class="center">{{poliza.cantidadVehiculos}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-between">
-            <div>
-                <div class="d-block mb-3">
-                    <label class="fw-bold" id="totalVehiculos">TOTAL DE VEHÍCULOS:</label>
-                    <span style="margin-left:5px;">{{totalVehiculos}}</span>
-                </div>
-            </div>
-            <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
-                [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
-                (pageChange)="this.paginador.cambiarPagina($event)">
-                <ng-template ngbPaginationFirst>Prim.</ng-template>
-                <ng-template ngbPaginationLast>Ult.</ng-template>
-                <ng-template ngbPaginationPrevious>Ant.</ng-template>
-                <ng-template ngbPaginationNext>Sig.</ng-template>
-            </ngb-pagination>
+  <h1 class="h1-tipografia-govco texto-primario">Gestionar Pólizas</h1>
+  <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
+  <div>
+    <table class="table tabla-primaria" aria-describedby="table-basic">
+      <thead class="encabezado-tabla" id="cabezera-tabla">
+        <tr>
+          <th scope="col">TIPO DE PÓLIZA</th>
+          <th scope="col">N° DE PÓLIZA</th>
+          <th scope="col">ESTADO PÓLIZA</th>
+          <th scope="col">FECHA CARGUE</th>
+          <th scope="col">VIGENCIA - FECHA INICIO</th>
+          <th scope="col">VIGENCIA - FECHA FIN</th>
+          <th scope="col">ASEGURADORA</th>
+          <th scope="col">CANTIDAD DE VEHÍCULOS</th>
+        </tr>
+      </thead>
+      <tbody class="contenido-tablas">
+        <tr *ngFor="let poliza of polizas; let i = index">
+          <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
+            {{poliza.tipoPoliza}}
+          </td>
+          <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
+            {{poliza.poliza}}
+          </td>
+          <td>{{poliza.estadoPoliza}}</td>
+          <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+          <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+          <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+          <td>{{poliza.aseguradora}}</td>
+          <td class="center">{{poliza.cantidadVehiculos}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="d-block mb-3">
+          <label class="fw-bold" id="totalVehiculos">TOTAL DE VEHÍCULOS:</label>
+          <span style="margin-left:5px;">{{totalVehiculos}}</span>
         </div>
+      </div>
+      <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
+        [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
+        (pageChange)="this.paginador.cambiarPagina($event)">
+        <ng-template ngbPaginationFirst>Prim.</ng-template>
+        <ng-template ngbPaginationLast>Ult.</ng-template>
+        <ng-template ngbPaginationPrevious>Ant.</ng-template>
+        <ng-template ngbPaginationNext>Sig.</ng-template>
+      </ngb-pagination>
     </div>
-    <!--///////////////////////////// Tabla para ver la poliza seleccionada ///////////////////////////////////////////////////// -->
-    <div class="d-block mb-3">
-        <table class="table table-response" aria-describedby="tableDescResponsive">
-            <tbody>
-                <tr>
-                    <th scope="col">PÓLIZA</th>
-                    <td>{{numeroPoliza}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
-    <div class="mt-4 mb-3">
-        <app-polizas-contractuales *ngIf="poliza && tipoPoliza==1 && verPoliza==true"
-            [poliza]="poliza"></app-polizas-contractuales>
-        <app-polizas-extracontractuales *ngIf="poliza && tipoPoliza==2 && verPoliza==true"
-            [poliza]="poliza"></app-polizas-extracontractuales>
-    </div>
-    <!--///////////////////////////// Seccion para vincular vehiculos ///////////////////////////////////////////////////// -->
-    <div class="d-flex mb-3">
-        <div class="table-responsive custom-scroll">
-                <table class="table table-adaptative">
-                    <thead class="encabezado-tabla">
-                        <tr>
-                            <th colspan="3" style="text-align: center;">VINCULAR VEHÍCULO</th>
-                        </tr>
-                        <tr style="text-align: center;">
-                            <th scope="col">PLACA</th>
-                            <th scope="col">CANTIDAD DE PASAJEROS</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                        <tbody class="contenido-tablas" [formGroup]="vehiculosForm" >
-                            <tr *ngFor="let form of formularioVehiculos.controls; let i = index" [formGroupName]="i" >
-                                <td class="entradas-de-texto-govco">
-                                    <input type="text" [id]="'placa' + i" name="placa" [disabled]="!esValido" placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" />
-                                </td>
-                                <td class="entradas-de-texto-govco">
-                                    <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 " (change)="agregarVehiculo($event, 2, i)" disabled/>
-                                </td>
-                                <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco" (click)="eliminarInputsVehiculos(i)" [disabled]="!esValido">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </tr>
-                            <tr *ngIf="formularioVehiculos.controls.length === 0">
-                                <td colspan="2" style="text-align: center;">
-                                    <h5  style="color: black;">Agregué un vehículo</h5>
-                                </td>
-                            </tr>
-                        </tbody>
-                    <!-- <tbody class="contenido-tablas">
+  </div>
+  <!--///////////////////////////// Tabla para ver la poliza seleccionada ///////////////////////////////////////////////////// -->
+  <div class="d-block mb-3">
+    <table class="table table-response" aria-describedby="tableDescResponsive">
+      <tbody>
+        <tr>
+          <th scope="col">PÓLIZA</th>
+          <td>{{numeroPoliza}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
+  <div class="mt-4 mb-3">
+    <app-polizas-contractuales *ngIf="poliza && tipoPoliza==1 && verPoliza==true"
+      [poliza]="poliza"></app-polizas-contractuales>
+    <app-polizas-extracontractuales *ngIf="poliza && tipoPoliza==2 && verPoliza==true"
+      [poliza]="poliza"></app-polizas-extracontractuales>
+  </div>
+  <!--///////////////////////////// Seccion para vincular vehiculos ///////////////////////////////////////////////////// -->
+  <div class="d-flex mb-3">
+    <div class="table-responsive custom-scroll">
+      <table class="table table-adaptative">
+        <thead class="encabezado-tabla">
+          <tr>
+            <th colspan="3" style="text-align: center;">VINCULAR VEHÍCULO</th>
+          </tr>
+          <tr style="text-align: center;">
+            <th scope="col">PLACA</th>
+            <th scope="col">CANTIDAD DE PASAJEROS</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="formularioVehiculos.controls.length !== 0 && estadoPoliza" class="contenido-tablas" [formGroup]="vehiculosForm">
+          <tr *ngFor="let form of formularioVehiculos.controls; let i = index" [formGroupName]="i">
+            <td class="entradas-de-texto-govco">
+              <input type="text" [id]="'placa' + i" formControlName="placa" [disabled]="!esValido"
+                placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" />
+            </td>
+            <td class="entradas-de-texto-govco">
+              <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 "
+                (change)="agregarVehiculo($event, 2, i)" disabled />
+            </td>
+            <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco"
+              (click)="eliminarInputsVehiculos(i)" [disabled]="!esValido || !estadoPoliza">
+              <i class="bi bi-trash"></i>
+            </button>
+          </tr>
+        </tbody>
+        <tbody *ngIf="formularioVehiculos.controls.length === 0" class="contenido-tablas" [formGroup]="vehiculosForm">
+          <tr>
+            <td colspan="2" style="text-align: center;">
+              <h5 style="color: black;">Agregué un vehículo</h5>
+            </td>
+          </tr>
+        </tbody>
+        <!-- <tbody class="contenido-tablas">
                         <tr *ngFor="let placa of placasInteroperabilidadPaginacion; let i = index">
                             <td class="checkbox-seleccion-govco">
                                 <input [id]="placa+'check'" type="checkbox"
@@ -117,8 +123,8 @@
                             </td>
                         </tr>
                     </tbody> -->
-                </table>
-            <!-- <div class="d-flex justify-content-end">
+      </table>
+      <!-- <div class="d-flex justify-content-end">
                 <ngb-pagination [collectionSize]="this.paginadorInteroperabilidad.totalRegistros"
                     [page]="this.paginadorInteroperabilidad.pagina" [pageSize]="paginadorInteroperabilidad.limite"
                     [directionLinks]="true" [maxSize]="5" (pageChange)="cambiarPaginaInteroperabilidad($event)">
@@ -128,61 +134,61 @@
                     <ng-template ngbPaginationNext>Sig.</ng-template>
                 </ngb-pagination>
             </div> -->
-            <div class="d-flex justify-content-between ">
-                <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
-                    (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
-                <button type="button" class="btn-govco outline-btn-govco" style="width: 186px; height: 42px;"
-                    (click)="agregarVehiculoform()" [disabled]="!esValido">Agregar vehículo <i
-                        class="bi bi-plus-circle"></i></button>
-            </div>
-            <!-- <div class="mt-2 mb-2">
+      <div class="d-flex justify-content-between ">
+        <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
+          (click)="agregarVehiculosPoliza()" [disabled]="!esValido || !estadoPoliza">Vincular</button>
+        <button type="button" class="btn-govco outline-btn-govco" style="width: 186px; height: 42px;"
+          (click)="agregarVehiculoform()" [disabled]="!esValido || !estadoPoliza">Agregar vehículo <i
+            class="bi bi-plus-circle"></i></button>
+      </div>
+      <!-- <div class="mt-2 mb-2">
                 <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
                     (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
             </div> -->
-        </div>
     </div>
+  </div>
 
-    <!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
-    <div class="d-flex mb-3">
-        <div class="table custom-scroll">
-            <table class="table tabla-primaria" aria-describedby="table-basic">
-                <thead class="encabezado-tabla">
-                    <tr>
-                        <th colspan="6" style="text-align: center !important;">NOVEDADES PÓLIZAS</th>
-                    </tr>
-                    <tr>
-                        <th scope="col">TIPO DE PÓLIZA</th>
-                        <th scope="col">N° DE PÓLIZA</th>
-                        <th scope="col">PLACA</th>
-                        <th scope="col">FECHA ACTUALIZACIÓN</th>
-                        <th scope="col">ESTADO</th>
-                        <th scope="col">OBSERVACIÓN</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-primaria-border" class="contenido-tablas">
-                    <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
-                        <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
-                        <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
-                        <td>{{novedad.poliza}}</td>
-                        <td>{{novedad.placa}}</td>
-                        <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
-                        <td>{{novedad.estado}}</td>
-                        <td>{{novedad.observacion}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-end">
-                <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
-                    [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite"
-                    [directionLinks]="true" [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
-                    <ng-template ngbPaginationFirst>Prim.</ng-template>
-                    <ng-template ngbPaginationLast>Ult.</ng-template>
-                    <ng-template ngbPaginationPrevious>Ant.</ng-template>
-                    <ng-template ngbPaginationNext>Sig.</ng-template>
-                </ngb-pagination>
-            </div>
-        </div>
+  <!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
+  <div class="d-flex mb-3">
+    <div class="table custom-scroll">
+      <table class="table tabla-primaria" aria-describedby="table-basic">
+        <thead class="encabezado-tabla">
+          <tr>
+            <th colspan="6" style="text-align: center !important;">NOVEDADES PÓLIZAS</th>
+          </tr>
+          <tr>
+            <th scope="col">TIPO DE PÓLIZA</th>
+            <th scope="col">N° DE PÓLIZA</th>
+            <th scope="col">PLACA</th>
+            <th scope="col">FECHA ACTUALIZACIÓN</th>
+            <th scope="col">ESTADO</th>
+            <th scope="col">OBSERVACIÓN</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-primaria-border" class="contenido-tablas">
+          <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
+            <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
+            <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
+            <td>{{novedad.poliza}}</td>
+            <td>{{novedad.placa}}</td>
+            <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
+            <td>{{novedad.estado}}</td>
+            <td>{{novedad.observacion}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
+          [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite" [directionLinks]="true"
+          [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
+          <ng-template ngbPaginationFirst>Prim.</ng-template>
+          <ng-template ngbPaginationLast>Ult.</ng-template>
+          <ng-template ngbPaginationPrevious>Ant.</ng-template>
+          <ng-template ngbPaginationNext>Sig.</ng-template>
+        </ngb-pagination>
+      </div>
     </div>
-    <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
-    <app-popup #popup />
+  </div>
+  <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
+  <app-popup #popup />
 </div>
