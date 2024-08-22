@@ -84,7 +84,7 @@
           <tr *ngFor="let form of formularioVehiculos.controls; let i = index" [formGroupName]="i">
             <td class="entradas-de-texto-govco">
               <input type="text" [id]="'placa' + i" formControlName="placa" [disabled]="!esValido"
-                placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)"/>
+                placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" maxlength="6"/>
             </td>
             <td class="entradas-de-texto-govco">
               <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 "
@@ -96,7 +96,7 @@
             </button>
           </tr>
         </tbody>
-        <tbody *ngIf="formularioVehiculos.controls.length === 0" class="contenido-tablas" [formGroup]="vehiculosForm" id="arregloVehiculosVacio">
+        <tbody *ngIf="formularioVehiculos.controls.length === 0 && estadoPoliza" class="contenido-tablas" [formGroup]="vehiculosForm" id="arregloVehiculosVacio">
           <tr>
             <td colspan="2">
               <h5 style="color: black;">Agregué un vehículo</h5>
