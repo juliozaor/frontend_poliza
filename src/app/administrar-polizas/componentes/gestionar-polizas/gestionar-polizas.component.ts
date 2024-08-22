@@ -36,7 +36,7 @@ export class GestionarPolizasComponent implements OnInit {
   numeroPoliza: any;
   verPoliza: boolean = false;
   poliza: any;
-  vehiculos: { placa?: string, pasajeros?: number }[] = [];
+  vehiculos: { placa?: string, pasajeros?: number, index?: number }[] = [];
   placa?: String;
 
   formPasajeros: FormGroup;
@@ -68,7 +68,7 @@ export class GestionarPolizasComponent implements OnInit {
     this.vehiculosForm = this.fb.group({
       formularioVehiculos: this.fb.array([])
     });
-    this.agregarVehiculo();
+    this.agregarVehiculoform();
   }
 
   ngOnInit(): void {
@@ -87,7 +87,7 @@ export class GestionarPolizasComponent implements OnInit {
     })
   }
 
-  agregarVehiculo() {
+  agregarVehiculoform() {
     this.formularioVehiculos.push(this.crearFormularioVehiculos());
   }
 
@@ -190,16 +190,17 @@ export class GestionarPolizasComponent implements OnInit {
   }
 
 
-  agregarPasajeros(tipo: number, index: number) {
+  agregarVehiculo(event: Event, tipo: number, index: number) {
+    const valor = event.target as HTMLInputElement;
 
     if (tipo === 1) {
-      const placa = document.getElementById('placa' + index) as HTMLInputElement
-      const valorPlaca = placa.value
+      const valorPlaca = valor.value
       if (!valorPlaca || valorPlaca == '') {
         this.vehiculos.splice(index, 1)
 
         const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
-
+        console.log(inputPasajeros);
+        
         if (inputPasajeros) {
           inputPasajeros.value = '';
           inputPasajeros.setAttribute('disabled', 'true');
@@ -231,17 +232,23 @@ export class GestionarPolizasComponent implements OnInit {
         inputPasajeros.removeAttribute('disabled');
       }
 
-      this.placa = valorPlaca;
-      this.vehiculos.push({
-        placa: valorPlaca
-      });
+      const indexExistente = this.vehiculos.find(vehiculo => vehiculo.index === index);
+      if (indexExistente) {
+        this.vehiculos[index].placa = valorPlaca;
+      } else {
+        this.placa = valorPlaca;
+        this.vehiculos.push({
+          placa: valorPlaca,
+          index: index
+        });
+      }
     }
 
     if (tipo === 2) {
-      const pasajero = document.getElementById('pasajeros' + index) as HTMLInputElement
+      const pasajero = valor.value
       const indexPasajero = this.vehiculos.findIndex(item => item.placa === this.placa)
       if (indexPasajero > -1) {
-        this.vehiculos[indexPasajero].pasajeros = parseInt(pasajero.value)
+        this.vehiculos[indexPasajero].pasajeros = parseInt(pasajero)
       }
     }
     this.actualizarEstadoBoton();
@@ -273,7 +280,6 @@ export class GestionarPolizasComponent implements OnInit {
   // }
 
   agregarVehiculosPoliza() {
-    console.log(this.vehiculos);
 
     if (!this.vehiculos || this.vehiculos.length == 0) {
       Swal.fire({
@@ -284,6 +290,7 @@ export class GestionarPolizasComponent implements OnInit {
       })
       return;
     }
+    let vehiculosIndex: { placa?: string, pasajeros?: number}[] = [];
 
     for (const vehiculo of this.vehiculos) {
       if (vehiculo.pasajeros === undefined || vehiculo.pasajeros === null || vehiculo.pasajeros <= 0) {
@@ -304,10 +311,19 @@ export class GestionarPolizasComponent implements OnInit {
       }
     }
 
+    for (let i = 0; i < this.vehiculos.length; i++){
+      vehiculosIndex.push({
+        placa: this.vehiculos[i].placa,
+        pasajeros: this.vehiculos[i].pasajeros
+      })
+    }
+
+    console.log(vehiculosIndex);
+    
     const vehiculos = {
       poliza: this.numeroPoliza,
       tipoPoliza: this.tipoPoliza,
-      vehiculos: this.vehiculos
+      vehiculos: vehiculosIndex
     }
     let tipoPoliza = ''
     if (vehiculos.tipoPoliza === 1) {

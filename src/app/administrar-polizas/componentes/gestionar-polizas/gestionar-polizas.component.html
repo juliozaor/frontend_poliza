@@ -83,10 +83,10 @@
                         <tbody class="contenido-tablas" [formGroup]="vehiculosForm" >
                             <tr *ngFor="let form of formularioVehiculos.controls; let i = index" [formGroupName]="i" >
                                 <td class="entradas-de-texto-govco">
-                                    <input type="text" [id]="'placa' + i" name="placa" [disabled]="!esValido" placeholder="Ej: CKV341" (change)="agregarPasajeros(1, i)" />
+                                    <input type="text" [id]="'placa' + i" name="placa" [disabled]="!esValido" placeholder="Ej: CKV341" (change)="agregarVehiculo($event, 1, i)" />
                                 </td>
                                 <td class="entradas-de-texto-govco">
-                                    <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 " (change)="agregarPasajeros(2, i)" disabled/>
+                                    <input type="number" [id]="'pasajeros' + i" name="pasajeros" placeholder="Ej: 10 " (change)="agregarVehiculo($event, 2, i)" disabled/>
                                 </td>
                                 <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco" (click)="eliminarInputsVehiculos(i)" [disabled]="!esValido">
                                     <i class="bi bi-trash"></i>
@@ -132,7 +132,7 @@
                 <button type="button" class="btn-govco fill-btn-govco" style="width: 165px; height: 42px;"
                     (click)="agregarVehiculosPoliza()" [disabled]="!esValido">Vincular</button>
                 <button type="button" class="btn-govco outline-btn-govco" style="width: 186px; height: 42px;"
-                    (click)="agregarVehiculo()" [disabled]="!esValido">Agregar vehículo <i
+                    (click)="agregarVehiculoform()" [disabled]="!esValido">Agregar vehículo <i
                         class="bi bi-plus-circle"></i></button>
             </div>
             <!-- <div class="mt-2 mb-2">
