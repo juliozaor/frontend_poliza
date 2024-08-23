@@ -26,6 +26,9 @@ export class GestionarPolizasComponent implements OnInit {
   placasInteroperabilidadPaginacion: Array<string> = []
 
   totalVehiculos: number = 0;
+  totalVehiculosContractuales: number = 0;
+  totalVehiculosExtracontractuales: number = 0;
+  
   textoAlert: string = ''; alert: string = ''
   checkHabilitado: boolean = false;
   esValido: boolean = false;
@@ -73,7 +76,7 @@ export class GestionarPolizasComponent implements OnInit {
   ngOnInit(): void {
     this.inicializarPaginador();
     const placa = document.getElementById('placa0') as HTMLInputElement
-    placa.setAttribute('disbled','true')
+    placa.setAttribute('disbled', 'true')
   }
 
   get formularioVehiculos(): FormArray {
@@ -103,8 +106,10 @@ export class GestionarPolizasComponent implements OnInit {
     return new Observable<Paginacion>((suscriptor: any) => {
       this.servicioAdministrarPoliza.listarPolizas(pagina, limite, filtros).subscribe({
         next: (polizas: any) => {
-          this.polizas = polizas.polizas
+          this.polizas = polizas.polizas          
           this.totalVehiculos = polizas.totalVehiculos;
+          this.totalVehiculosContractuales = polizas.totalVehiculosContractual;
+          this.totalVehiculosExtracontractuales = polizas.totalVehiculosExtraContractual;
           suscriptor.next(polizas.paginacion)
         }
       })

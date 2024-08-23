@@ -23,6 +23,10 @@
   height: 100px;
 }
 
+#cabezera-cantidad-vehiculos{
+  text-align: center;
+}
+
 .tabla-primaria{
   border: 2px solid #E6EFFD !important;
 }
