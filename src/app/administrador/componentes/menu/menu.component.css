@@ -42,8 +42,11 @@
     display: block;
 }
 .submodulo{
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #3366CC;
     cursor: pointer;
+}
+.submodulo:hover{
+  text-decoration: underline;
 }
 .nombre-submodulo{
     display: block;
