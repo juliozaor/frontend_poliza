@@ -4,5 +4,7 @@ export interface VehiculoModel{
     tipo?:string;
     numero_poliza?:string;
     placa?:string;
-    pasajeros?:number;
+    pasajeros?: number;
+    vinculada?:boolean;
+    observacion?:string;
   }
