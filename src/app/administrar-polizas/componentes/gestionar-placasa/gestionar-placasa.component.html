@@ -55,7 +55,7 @@
               <td>
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.contractual?.existe">
                   <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaCont" [(ngModel)]="vinculadaCont"
-                  [disabled]="desVinculadaCont || !estadoPolizaCont!">
+                  [disabled]="desVinculadaCont || !estadoPolizaCont!" (change)="estadoVinculacion(1)">
                   <label for="opt3" *ngIf="vinculadaCont">Vinculada</label>
                   <label for="opt3" *ngIf="!vinculadaCont">Desvinculada</label>
                 </div>
@@ -81,7 +81,7 @@
               <td colspan="2" class="text-center">
                 <fieldset>
                   <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(1,polizas.contractual?.id,observacionCont!)"
-                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaCont || !estadoPolizaCont!">
+                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaCont || !estadoPolizaCont! || estadoVinCont">
                     Guardar
                   </button>
                 </fieldset>
@@ -136,7 +136,7 @@
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.extraContractual?.existe">
                   <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaExtraCont"
                   [disabled]="desVinculadaExtraCont || !estadoPolizaExtraCont!"
-                  [(ngModel)]="vinculadaExtraCont">
+                  [(ngModel)]="vinculadaExtraCont" (change)="estadoVinculacion(2)">
                   <label for="opt3" *ngIf="vinculadaExtraCont">Vinculada</label>
                   <label for="opt3" *ngIf="!vinculadaExtraCont">Desvinculada</label>
                 </div>
@@ -163,7 +163,7 @@
               <td colspan="2" class="text-center">
                 <fieldset>
                   <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(2,polizas.extraContractual?.id,observacionExtraCont!)"
-                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaExtraCont || !estadoPolizaExtraCont!">
+                    style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaExtraCont || !estadoPolizaExtraCont! || estadoVinExtraCont">
                     Guardar
                   </button>
                 </fieldset>
