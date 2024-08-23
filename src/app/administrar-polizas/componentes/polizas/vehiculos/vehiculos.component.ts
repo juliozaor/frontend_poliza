@@ -17,6 +17,7 @@ export class VehiculosComponent {
   private readonly limiteInicial = 10
   paginador: Paginador<FiltrosVehiculos>
   vehiculos: VehiculoModel[] = []
+  estado?: string;
   id: string = ""
 
   termino: string = ""
@@ -38,7 +39,7 @@ export class VehiculosComponent {
     return new Observable<Paginacion>( sub => {
       this.servicio.vehiculos(pagina, limite, filtros).subscribe({
         next: ( respuesta:any )=>{                  
-          this.vehiculos = respuesta.placas          
+          this.vehiculos = respuesta.placas
           sub.next(respuesta.paginacion)
         }
       })
