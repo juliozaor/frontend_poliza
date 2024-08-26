@@ -28,7 +28,7 @@ export class GestionarPolizasComponent implements OnInit {
   totalVehiculos: number = 0;
   totalVehiculosContractuales: number = 0;
   totalVehiculosExtracontractuales: number = 0;
-  
+
   textoAlert: string = ''; alert: string = ''
   checkHabilitado: boolean = false;
   esValido: boolean = false;
@@ -42,7 +42,7 @@ export class GestionarPolizasComponent implements OnInit {
   estadoPoliza?:boolean
 
   /* formPasajeros: FormGroup; */
-  vehiculosForm: FormGroup;
+  vehiculos2: { placa: string; pasajeros?: number; placaValida: boolean }[] = [];
 
   paginador: Paginador<FiltrarPolizas>
   errores: { [key: string]: string | undefined } = {};
@@ -64,41 +64,26 @@ export class GestionarPolizasComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
-    /* this.formPasajeros = new FormGroup({
-      pasajeros: new FormControl(undefined, [Validators.required, valorCeroValidar(), negativoValidar()]),
-    }) */
-    this.vehiculosForm = this.fb.group({
-      formularioVehiculos: this.fb.array([])
-    });
-    this.agregarVehiculoform();
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
-    const placa = document.getElementById('placa0') as HTMLInputElement
-    placa.setAttribute('disbled', 'true')
   }
 
-  get formularioVehiculos(): FormArray {
-    return this.vehiculosForm.get("formularioVehiculos") as FormArray;
+  agregarVehiculoForm(): void {
+    this.vehiculos2.push({ placa: '', pasajeros: undefined, placaValida: false });
   }
 
-  crearFormularioVehiculos(): FormGroup {
-    return this.fb.group({
-      placa: ["", [Validators.required, maxLengthNumberValidator(6)]],
-      pasajeros: [undefined, [Validators.required, maxLengthNumberValidator(7), valorCeroValidar(), negativoValidar()]]
-    })
+  eliminarVehiculo(index: number): void {
+    this.vehiculos2.splice(index, 1);
   }
 
-  agregarVehiculoform() {
-    this.formularioVehiculos.push(this.crearFormularioVehiculos());
-    //console.log(this.crearFormularioVehiculos())
-  }
-
-  eliminarInputsVehiculos(vehiculoIndex: number) {
-    this.formularioVehiculos.removeAt(vehiculoIndex);
-    if (vehiculoIndex > -1) {
-      this.vehiculos.splice(vehiculoIndex, 1)
+  validarPlaca(placa: string, index: number): void {
+    if (this.vehiculos2.some((vehiculo, i) => i !== index && vehiculo.placa === placa)) {
+      alert('Placa ya registrada');
+      this.vehiculos2[index].placa = '';  // Vaciar el campo si la placa ya existe
+    } else {
+      this.vehiculos2[index].placaValida = !!placa;  // Habilitar el input de pasajeros si la placa es válida
     }
   }
 
@@ -106,7 +91,7 @@ export class GestionarPolizasComponent implements OnInit {
     return new Observable<Paginacion>((suscriptor: any) => {
       this.servicioAdministrarPoliza.listarPolizas(pagina, limite, filtros).subscribe({
         next: (polizas: any) => {
-          this.polizas = polizas.polizas          
+          this.polizas = polizas.polizas
           this.totalVehiculos = polizas.totalVehiculos;
           this.totalVehiculosContractuales = polizas.totalVehiculosContractual;
           this.totalVehiculosExtracontractuales = polizas.totalVehiculosExtraContractual;
@@ -146,6 +131,7 @@ export class GestionarPolizasComponent implements OnInit {
         this.obtenerInteroperabilidad(numero, tipoPoliza);
       }
     })
+      this.actualizarEstadoBoton();
   }
 
   visualizarNovedadesPolizas(numero: any, tipoPoliza: any) {
@@ -193,76 +179,10 @@ export class GestionarPolizasComponent implements OnInit {
     }
   }
 
-  actualizarEstadoBoton() {
+  // Método para validar el estado del botón
+  actualizarEstadoBoton(): void {
     this.esValido = Object.values(this.errores).every(error => error === undefined);
   }
-
-
-  agregarVehiculo(event: Event, tipo: number, index: number) {
-    const valor = event.target as HTMLInputElement;
-    const inputPasajeros = document.getElementById('pasajeros' + index) as HTMLInputElement;
-    const inputPlaca = document.getElementById('placa' + index) as HTMLInputElement;
-    //console.log(inputPasajeros, index);
-
-
-    if (tipo === 1) {//Si es el Input placa
-      const valorPlaca = valor.value
-      if (!valorPlaca || valorPlaca == '') {//Si la placa NO existe
-        this.vehiculos.splice(index, 1)//Elimina el registro
-
-        //console.log(inputPasajeros);
-
-        if (inputPasajeros) {
-          inputPasajeros.value = '';//Vacia Input pasajeros
-          inputPasajeros.setAttribute('disabled', 'true');//Bloquea el input pasajeros
-        }
-        return console.log("debe ingresar la placa");
-
-      }else{//Si la placa existe
-        const placaExistente = this.vehiculos.find(vehiculo => vehiculo.placa === valorPlaca);
-        if (inputPasajeros) {
-          inputPasajeros.removeAttribute('disabled');//Habilita input pasajeros
-        }
-
-        if (placaExistente) {//Verifica placa existente dentro del array
-          return Swal.fire({
-            titleText: "¡Placa ya registrada!",
-            confirmButtonText: "Aceptar",
-            icon: "error",
-            showCancelButton: false,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              inputPlaca.value = '';//Vacia input placa
-            } else if (result.isDismissed) {
-              Swal.close()
-            }
-          });
-        }else{//Valida que la plana no existe dentro del array
-          const indexExistente = this.vehiculos.find(vehiculo => vehiculo.index === index);
-          if (indexExistente) {//Si se usa un input ya usado, actualiza la placa.
-            this.vehiculos[index].placa = valorPlaca;
-          } else {//Si es input nuevo, agrga placa en nuevo registro.
-            this.placa = valorPlaca;
-            this.vehiculos.push({
-              placa: valorPlaca,
-              index: index
-            });
-          }
-        }
-      }
-    }
-
-    if (tipo === 2) {//Si es el Input placa
-      const pasajero = valor.value
-      const indexPasajero = this.vehiculos.findIndex(item => item.placa === this.placa)
-      if (indexPasajero > -1) {
-        this.vehiculos[indexPasajero].pasajeros = parseInt(pasajero)
-      }
-    }
-    this.actualizarEstadoBoton();
-    //console.log(this.vehiculos);
-  }
-
 
   // agregarPasajeros(pasajeros: Event, placa: string) {
   //   const pasajero = pasajeros.target as HTMLInputElement
@@ -287,43 +207,33 @@ export class GestionarPolizasComponent implements OnInit {
   //   }
   // }
 
-  agregarVehiculosPoliza() {
+  agregarVehiculosPoliza(): void {
 
-    if (!this.vehiculos || this.vehiculos.length == 0) {
+    if (this.vehiculos2.length === 0) {
       Swal.fire({
         titleText: "¡Debe agregar al menos un vehículo!",
         confirmButtonText: "Aceptar",
         icon: "error",
-        showCancelButton: false,
-      })
+      });
       return;
     }
-    let vehiculosIndex: { placa?: string, pasajeros?: number}[] = [];
 
-    for (const vehiculo of this.vehiculos) {
-      if (vehiculo.pasajeros === undefined || vehiculo.pasajeros === null || vehiculo.pasajeros <= 0) {
+    for (const vehiculo of this.vehiculos2) {
+      if (!vehiculo.pasajeros || !vehiculo.placa) {
         Swal.fire({
-          titleText: "Cada vehículo debe tener una cantidad válida de pasajeros",
+          titleText: "Cada vehículo debe tener una placa válida y cantidad de pasajeros",
           confirmButtonText: "Aceptar",
           icon: "error",
-          showCancelButton: false,
-        });
-        return;
-      } else if (vehiculo.placa === undefined || vehiculo.placa === null || vehiculo.placa === '') {
-        Swal.fire({
-          titleText: "Cada vehículo debe tener una placa válida",
-          confirmButtonText: "Aceptar",
-          icon: "error",
-          showCancelButton: false,
         });
         return;
       }
     }
 
-    for (let i = 0; i < this.vehiculos.length; i++){
+    let vehiculosIndex: { placa?: string, pasajeros?: number}[] = [];
+    for (let i = 0; i < this.vehiculos2.length; i++){
       vehiculosIndex.push({
-        placa: this.vehiculos[i].placa,
-        pasajeros: this.vehiculos[i].pasajeros
+        placa: this.vehiculos2[i].placa,
+        pasajeros: this.vehiculos2[i].pasajeros
       })
     }
 
@@ -354,8 +264,7 @@ export class GestionarPolizasComponent implements OnInit {
           next: (respuesta: any) => {
             this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
             this.openAlert(respuesta.mensaje, "exito")
-            this.vehiculos = [];
-            this.formularioVehiculos.clear();
+            this.vehiculos2 = [];
             this.inicializarPaginador();
           }
         })
