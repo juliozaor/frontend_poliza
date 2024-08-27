@@ -103,7 +103,7 @@
               </td>
               <td class="entradas-de-texto-govco">
                 <input type="number" name="pasajeros{{i}}" [(ngModel)]="vehiculo.pasajeros" placeholder="Ej: 10"
-                       [disabled]="!vehiculo.placaValida" required/>
+                       [disabled]="!vehiculo.placaValida"  (input)="limitarDigitos($event, 2)" required/>
               </td>
               <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco" (click)="eliminarVehiculo(i)"><i class="bi bi-trash"></i></button>
             </tr>
