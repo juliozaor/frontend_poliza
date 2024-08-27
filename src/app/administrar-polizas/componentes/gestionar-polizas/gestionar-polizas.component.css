@@ -1,0 +1,85 @@
+.checkbox-seleccion-govco {
+  display: flex;
+  align-items: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  background-color: #FFAB001A !important;
+}
+
+#totalVehiculos {
+  color: #004884;
+}
+
+.center {
+  text-align: center;
+}
+
+#cabezera-tabla{
+  height: 100px;
+}
+
+#cabezera-cantidad-vehiculos{
+  text-align: center;
+}
+
+.tabla-primaria{
+  border: 2px solid #E6EFFD !important;
+}
+
+.tabla-primaria th{
+  border: 2px solid #E6EFFD !important;
+}
+
+.tabla-primaria tr{
+  border: 1px solid #E6EFFD !important;
+}
+
+#eliminarInputsVehiculos {
+margin-top:10px;
+}
+
+.scroll-formulario{
+  display:block; 
+  max-height: 450px; 
+  overflow-y: auto;
+}
+
+.table-adaptative tr {
+  padding: 8px;
+  text-align: left;
+}
+
+.table-adaptative thead{
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  table-layout: fixed;
+}
+
+.table-adaptative tr{
+  display: table; /* Asegura que las filas se comporten como tablas */
+  /*width: 100%;  Asegura que las filas se expandan al 100% */
+  table-layout: fixed; /* Asegura que el ancho de las celdas se mantenga consistente */
+}
+
+#arregloVehiculosVacio{
+  display: flex;
+  justify-content: center;
+}
+
+#arregloVehiculosVacio tr{
+  border: 1px solid white !important;
+}
+
+.table-adaptative th{
+  border: 2px solid #E6EFFD !important;
+}
+
+.table-responsive{
+  min-width: 360px !important;
+}
