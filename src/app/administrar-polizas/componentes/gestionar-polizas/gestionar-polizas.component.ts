@@ -91,6 +91,13 @@ export class GestionarPolizasComponent implements OnInit {
     }
   }
 
+  limitarDigitos(event: any, maxDigits: number) {
+    const input = event.target;
+    if (input.value.length > maxDigits) {
+      input.value = input.value.slice(0, maxDigits);
+    }
+  }
+
   obtenerPolizas = (pagina: number, limite: number, filtros?: FiltrarPolizas) => {
     return new Observable<Paginacion>((suscriptor: any) => {
       this.servicioAdministrarPoliza.listarPolizas(pagina, limite, filtros).subscribe({
