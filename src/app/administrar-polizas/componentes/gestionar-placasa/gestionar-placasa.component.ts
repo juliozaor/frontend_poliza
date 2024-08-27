@@ -16,6 +16,10 @@ export class GestionarPlacasaComponent implements OnInit {
   novedades: Array<Novedades> = []
   historial: Array<Historial> = []
 
+  tipoPoliza: number = 0;
+  poliza: any;
+  verPoliza: boolean = false;
+
   vinculadaCont?: boolean = true; desVinculadaCont: boolean = true;
   vinculadaExtraCont?: boolean = true; desVinculadaExtraCont: boolean = true
   estadoPolizaCont?: boolean;estadoPolizaExtraCont?: boolean;
@@ -41,7 +45,7 @@ export class GestionarPlacasaComponent implements OnInit {
   consultarPoliza(placa: string) {
     this.servicioAdministrarPoliza.obtenerPolizaPlaca(placa).subscribe({
       next: (polizas: any) => {
-        //console.log(polizas)
+        // console.log(polizas)
         this.polizas = polizas
 
         this.desVinculadaCont = !this.polizas.contractual?.vinculada
@@ -99,6 +103,21 @@ export class GestionarPlacasaComponent implements OnInit {
       })
     }
 
+  }
+
+  obtenerPoliza(numero: any, tipoPoliza: any) {
+    console.log(numero,tipoPoliza);    
+    let idTipo;
+    this.verPoliza = false;
+    if (tipoPoliza === 'RESPONSABILIDAD CIVIL CONTRACTUAL') idTipo = 1, this.tipoPoliza = 1
+    if (tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL') idTipo = 2, this.tipoPoliza = 2
+    this.servicioAdministrarPoliza.visualizarPoliza(numero, idTipo).subscribe({
+      next: (poliza: any) => {
+        this.poliza = poliza
+        this.verPoliza = true;
+        console.log(this.poliza);        
+      }
+    })
   }
 
   estadoVinculacion(tipo:number){

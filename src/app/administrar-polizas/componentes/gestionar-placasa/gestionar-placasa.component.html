@@ -245,7 +245,7 @@
           </tr>
         </thead>
         <tbody class="contenido-tablas">
-          <tr *ngFor="let historial of historialPaginado">
+          <tr *ngFor="let historial of historialPaginado" class="pointer" (click)="obtenerPoliza(historial.poliza, historial.tipoPoliza)">
             <td></td>
             <td>{{historial.tipoPoliza}}</td>
             <td>{{historial.poliza}}</td>
@@ -270,6 +270,13 @@
         </ngb-pagination>
       </div>
     </div>
+  </div>
+  <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
+  <div class="mt-4 mb-3">
+    <app-polizas-contractuales *ngIf="poliza && tipoPoliza==1 && verPoliza==true"
+      [poliza]="poliza"></app-polizas-contractuales>
+    <app-polizas-extracontractuales *ngIf="poliza && tipoPoliza==2 && verPoliza==true"
+      [poliza]="poliza"></app-polizas-extracontractuales>
   </div>
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
 </div>

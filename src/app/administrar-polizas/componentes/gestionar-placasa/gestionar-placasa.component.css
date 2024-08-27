@@ -10,3 +10,11 @@
   border: 2px solid #E6EFFD !important;
   border-color: #E6EFFD;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  background-color: #FFAB001A !important;
+}
