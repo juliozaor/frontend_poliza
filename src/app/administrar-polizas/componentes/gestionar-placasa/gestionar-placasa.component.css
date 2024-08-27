@@ -1,0 +1,12 @@
+/* .table-adaptativo tbody td:nth-child(3){
+  text-align: left;
+} */
+
+.encabezado-tabla{
+  border-color: #E6EFFD;
+}
+
+.tabla-primaria{
+  border: 2px solid #E6EFFD !important;
+  border-color: #E6EFFD;
+}

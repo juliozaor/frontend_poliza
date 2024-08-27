@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Paginador } from 'src/app/administrador/modelos/compartido/Paginador';
 import { FiltrosVehiculos } from 'src/app/administrar-polizas/modelos/FiltrosVehiculos';
@@ -7,48 +7,43 @@ import { ServicioAdministrarPolizas } from 'src/app/administrar-polizas/servicio
 import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 
 @Component({
-  selector: 'app-vehiculos',
-  templateUrl: './vehiculos.component.html',
-  styleUrls: ['./vehiculos.component.css']
+  selector: 'app-listar-vehiculos',
+  templateUrl: './listar-vehiculos.component.html',
+  styleUrls: ['./listar-vehiculos.component.css']
 })
-export class VehiculosComponent {
-
+export class ListarVehiculosComponent {
   private readonly paginaInicial = 1;
-  private readonly limiteInicial = 10
+  private readonly limiteInicial = 5
   paginador: Paginador<FiltrosVehiculos>
   vehiculos: VehiculoModel[] = []
-  estado?: string;
-  id: string = ""
 
-  termino: string = ""
+  @Input() numeroPoliza:any
+  @Input() tipoPoliza:any
+
+  termino:string = ''
 
   constructor(
     private servicio: ServicioAdministrarPolizas,
-  ){ 
-    const Usuario = JSON.parse(localStorage.getItem('Usuario')!)
-    this.id = Usuario.id
-   
-    this.paginador = new Paginador<FiltrosVehiculos>(this.obtenerVehiculos)    
+  ){
+    this.paginador = new Paginador<FiltrosVehiculos>(this.obtenerVehiculos)
   }
 
   ngOnInit(): void {
-    this.paginador.inicializar(this.paginaInicial, this.limiteInicial, {})
-    
+    this.paginador.inicializar(this.paginaInicial, this.limiteInicial, {
+      poliza: this.numeroPoliza,
+      tipoPoliza: this.tipoPoliza
+    })
+
   }
   obtenerVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
     return new Observable<Paginacion>( sub => {
-      this.servicio.vehiculos(pagina, limite, filtros).subscribe({
-        next: ( respuesta:any )=>{                  
-          this.vehiculos = respuesta.placas
+      this.servicio.listarVehiculos(pagina, limite, filtros).subscribe({
+        next: ( respuesta:any )=>{
+          this.vehiculos = respuesta.vehiculos; console.log(this.vehiculos)
           sub.next(respuesta.paginacion)
         }
       })
     })
-  }
-
-  exportarVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
-    
-    this.servicio.exportar(pagina, limite, { termino: this.termino })
   }
 
   actualizarFiltros(){
@@ -63,5 +58,4 @@ export class VehiculosComponent {
   setTermino(termino: string){
     this.termino = termino
   }
-
 }
