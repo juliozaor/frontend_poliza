@@ -83,29 +83,35 @@
   <!--///////////////////////////// Seccion para vincular vehiculos ///////////////////////////////////////////////////// -->
   <div class="d-flex mb-3">
     <div class="table-responsive custom-scroll">
-      <form #vehiculosForm="ngForm">
+      <form #vehiculosForm="ngForm" class="scroll-formulario">
         <table class="table table-adaptative">
           <thead class="encabezado-tabla">
             <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
-              <th colspan="3">VINCULAR VEHÍCULO</th>
+              <th colspan="2">VINCULAR VEHÍCULO</th>
+              <th><button type="button" class="btn-govco fill-btn-govco" [disabled]="!esValido || !estadoPoliza" (click)="limpiarFormulario()">Limpiar</button></th>
             </tr>
             <tr class="w-100" style="display: flex; justify-content: space-around;">
               <th scope="col">PLACA</th>
               <th scope="col">CANTIDAD DE PASAJEROS</th>
             </tr>
           </thead>
-          <tbody *ngFor="let vehiculo of vehiculos2; let i = index">
+          <tbody *ngFor="let vehiculo of vehiculos2; let i = index" class="contenido-tablas">
             <tr>
-              <td>
+              <td class="entradas-de-texto-govco">
                 <input type="text" name="placa{{i}}" [(ngModel)]="vehiculo.placa" placeholder="Ej: CKV341"
                        (change)="validarPlaca(vehiculo.placa, i)" maxlength="6" required/>
               </td>
-              <td>
+              <td class="entradas-de-texto-govco">
                 <input type="number" name="pasajeros{{i}}" [(ngModel)]="vehiculo.pasajeros" placeholder="Ej: 10"
                        [disabled]="!vehiculo.placaValida" required/>
               </td>
-              <td>
-                <button type="button" (click)="eliminarVehiculo(i)">Eliminar</button>
+              <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco" (click)="eliminarVehiculo(i)"><i class="bi bi-trash"></i></button>
+            </tr>
+          </tbody>
+          <tbody *ngIf="vehiculos2.length === 0 && estadoPoliza" class="contenido-tablas" id="arregloVehiculosVacio">
+            <tr>
+              <td colspan="2">
+                <h5 style="color: black;">Agregué un vehículo</h5>
               </td>
             </tr>
           </tbody>

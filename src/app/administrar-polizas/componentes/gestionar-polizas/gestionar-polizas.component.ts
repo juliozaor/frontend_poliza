@@ -41,7 +41,6 @@ export class GestionarPolizasComponent implements OnInit {
   placa?: String;
   estadoPoliza?:boolean
 
-  /* formPasajeros: FormGroup; */
   vehiculos2: { placa: string; pasajeros?: number; placaValida: boolean }[] = [];
 
   paginador: Paginador<FiltrarPolizas>
@@ -80,8 +79,13 @@ export class GestionarPolizasComponent implements OnInit {
 
   validarPlaca(placa: string, index: number): void {
     if (this.vehiculos2.some((vehiculo, i) => i !== index && vehiculo.placa === placa)) {
-      alert('Placa ya registrada');
+      Swal.fire({
+        titleText: "¡Placa ya registrada!",
+        confirmButtonText: "Aceptar",
+        icon: "warning",
+      });
       this.vehiculos2[index].placa = '';  // Vaciar el campo si la placa ya existe
+      return;
     } else {
       this.vehiculos2[index].placaValida = !!placa;  // Habilitar el input de pasajeros si la placa es válida
     }
@@ -219,7 +223,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     for (const vehiculo of this.vehiculos2) {
-      if (!vehiculo.pasajeros || !vehiculo.placa) {
+      if (!vehiculo.pasajeros || !vehiculo.placa || vehiculo.pasajeros<=0) {
         Swal.fire({
           titleText: "Cada vehículo debe tener una placa válida y cantidad de pasajeros",
           confirmButtonText: "Aceptar",
@@ -263,8 +267,12 @@ export class GestionarPolizasComponent implements OnInit {
         this.servicioAdministrarPoliza.agregarVehiculosPoliza(vehiculos).subscribe({
           next: (respuesta: any) => {
             this.visualizarPoliza(parseInt(vehiculos.poliza), tipoPoliza)
-            this.openAlert(respuesta.mensaje, "exito")
-            this.vehiculos2 = [];
+            if (respuesta.estado === 200) {
+              this.openAlert(respuesta.mensaje, "exito")
+            } else if (respuesta.estado === 201) {
+              this.openAlert(respuesta.mensaje, "error")
+            }
+            this.limpiarFormulario()
             this.inicializarPaginador();
           }
         })
@@ -302,6 +310,10 @@ export class GestionarPolizasComponent implements OnInit {
     this.textoAlert = texto
     document.getElementById('closealertcontainer')!.style.display = 'flex';
     document.getElementById('closealert')!.style.cssText = 'position: fixed; bottom: 23px; width: 100%; z-index: 2; display: flex;';
+  }
+
+  limpiarFormulario() {
+    this.vehiculos2 = [];
   }
 
 }

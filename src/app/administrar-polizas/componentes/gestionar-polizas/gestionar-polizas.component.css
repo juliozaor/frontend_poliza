@@ -43,12 +43,13 @@
 margin-top:10px;
 }
 
-.table-adaptative{
-  width: 100%;
-  border-collapse: collapse;
+.scroll-formulario{
+  display:block; 
+  max-height: 450px; 
+  overflow-y: auto;
 }
 
-.table-adaptative th, .table-adaptative td {
+.table-adaptative tr {
   padding: 8px;
   text-align: left;
 }
@@ -58,12 +59,6 @@ margin-top:10px;
   z-index: 1;
   top: 0;
   table-layout: fixed;
-}
-
-.table-adaptative tbody {
-  display: block; /* Hace que el tbody se comporte como un bloque */
-  max-height: 300px; /* Máxima altura para el tbody antes de activar el scroll */
-  overflow-y: auto; /* Activa el scroll vertical */
 }
 
 .table-adaptative tr{
