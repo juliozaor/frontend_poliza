@@ -5,11 +5,8 @@ import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 import { Observable } from 'rxjs';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
 import { ActivatedRoute} from '@angular/router';
-import { FormArray, FormBuilder,FormGroup, Validators } from '@angular/forms';
-import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
-import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
-import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
+
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -19,11 +16,14 @@ import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validado
 export class GestionarPolizasComponent implements OnInit {
   @ViewChild('pasajeros') myInputRef!: ElementRef;
 
-  polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = []
-  novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
-  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
-  placasInteroperabilidad: Array<string> = []
-  placasInteroperabilidadPaginacion: Array<string> = []
+  polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = [];
+  novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = [];
+  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = [];
+  placasInteroperabilidad: Array<string> = [];
+  placasInteroperabilidadPaginacion: Array<string> = [];
+
+  terminoPoliza: string = "";
+  terminoNovedades: string = "";
 
   totalVehiculos: number = 0;
   totalVehiculosContractuales: number = 0;
@@ -60,8 +60,7 @@ export class GestionarPolizasComponent implements OnInit {
 
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
-    private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder) {
+    private activatedRoute: ActivatedRoute) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
   }
 
@@ -86,7 +85,16 @@ export class GestionarPolizasComponent implements OnInit {
       });
       this.vehiculos2[index].placa = '';  // Vaciar el campo si la placa ya existe
       return;
-    } else {
+    } else if (this.vehiculos2[index].placa.length !== 6) {
+      Swal.fire({
+        titleText: "¡Ingrese una placa valida!",
+        confirmButtonText: "Aceptar",
+        icon: "warning",
+      });
+      this.vehiculos2[index].placa = '';  // Vaciar el campo si la placa ya existe
+      return;
+    }
+    else {
       this.vehiculos2[index].placaValida = !!placa;  // Habilitar el input de pasajeros si la placa es válida
     }
   }
@@ -135,6 +143,7 @@ export class GestionarPolizasComponent implements OnInit {
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL') idTipo = 2, this.tipoPoliza = 2
     this.servicioAdministrarPoliza.visualizarPoliza(numero, idTipo).subscribe({
       next: (poliza: any) => {
+        console.log(poliza);        
         this.poliza = poliza
         this.verPoliza = true;
         this.actualizarEstadoBoton();
@@ -301,9 +310,19 @@ export class GestionarPolizasComponent implements OnInit {
   }
 
   actualizarNovedadesPaginadas() {
-    const startIndex = (this.paginadorNovedades.pagina - 1) * this.paginadorNovedades.limite;
-    const endIndex = startIndex + this.paginadorNovedades.limite;
-    this.novedadesPolizaPaginacion = this.novedadesPoliza.slice(startIndex, endIndex); // Obtener solo las novedades para la página actual
+  // Filtrar las novedades basadas en el término de búsqueda
+  let novedadesFiltradas = this.novedadesPoliza;
+  if (this.terminoNovedades) {
+    novedadesFiltradas = novedadesFiltradas.filter(poliza =>
+      poliza.placa.toLowerCase().includes(this.terminoNovedades.toLowerCase())
+    );
+    }
+
+  const startIndex = (this.paginadorNovedades.pagina - 1) * this.paginadorNovedades.limite;
+  const endIndex = startIndex + this.paginadorNovedades.limite;
+  this.novedadesPolizaPaginacion = novedadesFiltradas.slice(startIndex, endIndex);
+
+  this.paginadorNovedades.totalRegistros = novedadesFiltradas.length;   // Actualizar el total de registros después del filtrado
   }
 
   // Cambia de página cuando se detecta un cambio
@@ -321,6 +340,34 @@ export class GestionarPolizasComponent implements OnInit {
 
   limpiarFormulario() {
     this.vehiculos2 = [];
+  }
+
+  actualizarFiltrosPoliza(){
+    this.paginador.filtrar({ poliza: this.terminoPoliza })
+  }
+
+  limpiarFiltrosPoliza(){
+    this.terminoPoliza = ""
+    this.paginador.filtrar({ poliza: this.terminoPoliza })
+  }
+
+  actualizarFiltrosNovedades() {
+    this.paginadorNovedades.pagina = 1;
+    this.actualizarNovedadesPaginadas();
+  }
+
+  limpiarFiltrosNovedades(){
+    this.terminoNovedades = ''; // Limpiar el término de búsqueda
+    this.paginadorNovedades.pagina = 1; // Resetear la página a 1
+    this.actualizarNovedadesPaginadas();
+  }
+
+  setTerminoNovedades(termino: string) {
+    this.terminoNovedades = termino.toLocaleLowerCase();
+  }
+
+  setTerminoPoliza(termino: string){
+    this.terminoPoliza = termino
   }
 
 }
