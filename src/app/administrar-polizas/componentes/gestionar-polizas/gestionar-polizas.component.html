@@ -19,14 +19,14 @@
     <table class="table tabla-primaria" aria-describedby="table-basic">
       <thead class="encabezado-tabla" id="cabezera-tabla">
         <tr>
-          <th scope="col">TIPO DE PÓLIZA</th>
-          <th scope="col">N° DE PÓLIZA</th>
-          <th scope="col">ESTADO PÓLIZA</th>
-          <th scope="col">FECHA CARGUE</th>
-          <th scope="col">VIGENCIA - FECHA INICIO</th>
-          <th scope="col">VIGENCIA - FECHA FIN</th>
-          <th scope="col">ASEGURADORA</th>
-          <th scope="col">CANTIDAD DE VEHÍCULOS</th>
+          <th scope="col" class="texto">TIPO DE PÓLIZA</th>
+          <th scope="col" class="texto">N° DE PÓLIZA</th>
+          <th scope="col" class="texto">ESTADO PÓLIZA</th>
+          <th scope="col" class="texto">FECHA CARGUE</th>
+          <th scope="col" class="texto">VIGENCIA - FECHA INICIO</th>
+          <th scope="col" class="texto">VIGENCIA - FECHA FIN</th>
+          <th scope="col" class="texto">ASEGURADORA</th>
+          <th scope="col" class="texto">CANTIDAD DE VEHÍCULOS</th>
         </tr>
       </thead>
       <tbody class="contenido-tablas">
@@ -62,9 +62,9 @@
       <table class="table tabla-primaria" aria-describedby="table-basic">
         <thead class="encabezado-tabla" id="cabezera-cantidad-vehiculos">
           <tr>
-            <th scope="col">TOTAL DE VEHÍCULOS ACTIVOS</th>
-            <th scope="col">TOTAL DE PÓLIZAS CONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
-            <th scope="col">TOTAL DE PÓLIZAS EXTRACONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
+            <th scope="col" class="texto">TOTAL DE VEHÍCULOS ACTIVOS</th>
+            <th scope="col" class="texto">TOTAL DE PÓLIZAS CONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
+            <th scope="col" class="texto">TOTAL DE PÓLIZAS EXTRACONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
@@ -81,7 +81,7 @@
     <table class="table table-response" aria-describedby="tableDescResponsive">
       <tbody>
         <tr>
-          <th scope="col">PÓLIZA</th>
+          <th scope="col" class="texto">PÓLIZA</th>
           <td>{{numeroPoliza}}</td>
         </tr>
       </tbody>
@@ -101,12 +101,12 @@
         <table class="table table-adaptative">
           <thead class="encabezado-tabla">
             <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
-              <th colspan="2">VINCULAR VEHÍCULOS</th>
+              <th colspan="2" class="texto">VINCULAR VEHÍCULOS</th>
               <th><button type="button" class="btn-govco fill-btn-govco" [disabled]="!esValido || !estadoPoliza" (click)="limpiarFormulario()">Limpiar</button></th>
             </tr>
             <tr class="w-100" style="display: flex; justify-content: space-around;">
-              <th scope="col">PLACA</th>
-              <th scope="col">CANTIDAD DE PASAJEROS</th>
+              <th scope="col" class="texto">PLACA</th>
+              <th scope="col" class="texto">CANTIDAD DE PASAJEROS</th>
             </tr>
           </thead>
           <tbody *ngFor="let vehiculo of vehiculos2; let i = index" class="contenido-tablas">
@@ -196,15 +196,15 @@
       <table class="table tabla-primaria" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
           <tr>
-            <th colspan="6" style="text-align: center !important;">NOVEDADES PÓLIZAS</th>
+            <th colspan="6" style="text-align: center !important;" class="texto">NOVEDADES PÓLIZAS</th>
           </tr>
           <tr>
-            <th scope="col">TIPO DE PÓLIZA</th>
-            <th scope="col">N° DE PÓLIZA</th>
-            <th scope="col">PLACA</th>
-            <th scope="col">FECHA ACTUALIZACIÓN</th>
-            <th scope="col">ESTADO</th>
-            <th scope="col">OBSERVACIÓN</th>
+            <th scope="col" class="texto">TIPO DE PÓLIZA</th>
+            <th scope="col" class="texto">N° DE PÓLIZA</th>
+            <th scope="col" class="texto">PLACA</th>
+            <th scope="col" class="texto">FECHA ACTUALIZACIÓN</th>
+            <th scope="col" class="texto">ESTADO</th>
+            <th scope="col" class="texto">OBSERVACIÓN</th>
           </tr>
         </thead>
         <tbody id="tabla-primaria-border" class="contenido-tablas">

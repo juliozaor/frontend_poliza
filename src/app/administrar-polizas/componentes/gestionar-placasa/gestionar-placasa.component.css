@@ -1,6 +1,11 @@
-/* .table-adaptativo tbody td:nth-child(3){
-  text-align: left;
-} */
+*{
+  font-family: 'Montserrat';
+  }
+  
+  .texto{
+    font-size: 15px;
+    font-weight:600;
+  }
 
 .encabezado-tabla{
   border-color: #E6EFFD;

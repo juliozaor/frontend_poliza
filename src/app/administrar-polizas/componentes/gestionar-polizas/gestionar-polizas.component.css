@@ -1,3 +1,12 @@
+*{
+font-family: 'Montserrat';
+}
+
+.texto{
+  font-size: 15px;
+  font-weight:600;
+}
+
 .checkbox-seleccion-govco {
   display: flex;
   align-items: center;
