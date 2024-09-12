@@ -4,13 +4,15 @@
 
 export const environment = {
   production: false,
-  urlBackend: 'http://172.16.3.104:3001',
+  urlBackend: 'http://127.0.0.1:3001',
   urlBackendVigia: 'http://172.16.3.104:3334',
   urlBackendArchivos: 'http://172.16.3.104:3001',
   tokenBackendArchivos: 'd4a32a3b-def6-4cc2-8f77-904a67360b53',
-  llaveCaptcha: '6Ldw7FwmAAAAAJZyFVhvohzUI7mEK4wRPEqpGU9g'
+  llaveCaptcha: '6Ldw7FwmAAAAAJZyFVhvohzUI7mEK4wRPEqpGU9g',
+  urlVigia2: 'http://172.16.2.104/vigia'
 };
-
+//http://127.0.0.1:3001/ 
+//http://172.16.3.104:3001
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

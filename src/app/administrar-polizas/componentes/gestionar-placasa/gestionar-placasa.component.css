@@ -1,0 +1,25 @@
+*{
+  font-family: 'Montserrat';
+  }
+  
+  .texto{
+    font-size: 15px;
+    font-weight:600;
+  }
+
+.encabezado-tabla{
+  border-color: #E6EFFD;
+}
+
+.tabla-primaria{
+  border: 2px solid #E6EFFD !important;
+  border-color: #E6EFFD;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  background-color: #FFAB001A !important;
+}

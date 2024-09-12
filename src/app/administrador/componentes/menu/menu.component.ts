@@ -4,6 +4,7 @@ import { ServicioLocalStorage } from '../../servicios/local-storage.service';
 import { Usuario } from 'src/app/autenticacion/modelos/IniciarSesionRespuesta';
 import { AutenticacionService } from 'src/app/autenticacion/servicios/autenticacion.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -15,12 +16,12 @@ export class MenuComponent implements OnInit {
   usuario?: Usuario | null;
   isCollapsed = false;
   desplegado = true
-  
+
   constructor(
-    private servicioLocalStorage: ServicioLocalStorage, 
+    private servicioLocalStorage: ServicioLocalStorage,
     private servicioAutenticacion: AutenticacionService,
     private router: Router
-  ) { 
+  ) {
   }
 
   ngOnInit(): void {
@@ -38,7 +39,11 @@ export class MenuComponent implements OnInit {
 
   public cerrarSesion(){
     this.servicioAutenticacion.cerrarSesion()
-    this.router.navigateByUrl('/inicio-sesion')
+    window.location.href = environment.urlVigia2+'/administrar/administrar-aplicativos'
+    /* if(window.open('','SISI/PÓLIZA')){
+      window.close();
+    } */
+    /* this.router.navigateByUrl('/inicio-sesion') */
   }
   imprimirRuta(submodulo: Submodulo){
     console.log(`/administrar${submodulo.ruta}`)

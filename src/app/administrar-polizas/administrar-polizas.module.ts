@@ -12,6 +12,12 @@ import { AutenticacionModule } from '../autenticacion/autenticacion.module';
 import { PolizasComponent } from './componentes/polizas/polizas.component';
 import { VehiculosComponent } from './componentes/polizas/vehiculos/vehiculos.component';
 import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capacidad/modal-capacidad.component';
+import { TemplatesModule } from '../templates/templates.module';
+import { PolizasContractualesComponent } from './componentes/polizas/polizas-contractuales/polizas-contractuales.component';
+import { PolizasExtracontractualesComponent } from './componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
+import { ListarVehiculosComponent } from './componentes/polizas/listar-vehiculos/listar-vehiculos.component';
+import { GestionarPolizasComponent } from './componentes/gestionar-polizas/gestionar-polizas.component';
+import { GestionarPlacasaComponent } from './componentes/gestionar-placasa/gestionar-placasa.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +26,11 @@ import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capac
         PolizasComponent,
         VehiculosComponent,
         ModalCapacidadComponent,
+        PolizasContractualesComponent,
+        PolizasExtracontractualesComponent,
+        ListarVehiculosComponent,
+        GestionarPolizasComponent,
+        GestionarPlacasaComponent,
     ],
     imports: [
         CommonModule,
@@ -30,6 +41,7 @@ import { ModalCapacidadComponent } from './componentes/polizas/modal/modal-capac
         ReactiveFormsModule,
         FormsModule,
         AutenticacionModule,
+        TemplatesModule,
     ]
 })
 export class AdministrarPolizasModule{ }

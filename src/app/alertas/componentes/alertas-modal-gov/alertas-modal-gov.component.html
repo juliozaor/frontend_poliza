@@ -1,0 +1,28 @@
+<!-- Alerta Modal Confirmación-->
+<div class="container-modal-govco" [id]="'modal_'+alerta" style="display: none">
+  <div class="modal-container-govco" [id]="alerta" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false" aria-labelledby="exampleModalConfirmacion" aria-hidden="true" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-govco">
+      <div class="modal-content modal-content-govco">
+        <div class="modal-header modal-header-govco modal-header-alerts-govco">
+          <button type="button" disabled class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body modal-body-govco center-elements-govco">
+          <div class="modal-icon">
+            <span *ngIf="icono === 'confirmacion'" class="modal-icon-govco modal-confirmation-icon"></span>
+            <span *ngIf="icono === 'exito'" class="modal-icon-govco modal-success-icon"></span>
+            <span *ngIf="icono === 'error'" class="modal-icon-govco modal-error-icon"></span>
+            <span *ngIf="icono === 'peligro'" class="modal-icon-govco modal-warning-icon"></span>
+          </div>
+          <h3 *ngIf="titulo" class="modal-title-govco confirmation-govco">{{titulo}}</h3>
+          <p *ngIf="texto" class="modal-text-govco modal-text-center-govco">{{texto}}</p>
+        </div>
+        <div class="modal-footer-govco modal-footer-alerts-govco">
+          <div class="modal-buttons-govco">
+            <button type="button" class="btn btn-primary btn-modal-govco">Botón</button>
+            <button type="button" class="btn btn-primary btn-modal-govco btn-contorno">Botón</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

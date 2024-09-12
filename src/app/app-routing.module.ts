@@ -13,6 +13,12 @@ import { AdministrarPolizasComponent } from './administrar-polizas/administrar-p
 import { PaginaCrearUsuarioComponent } from './usuarios/paginas/pagina-crear-usuario/pagina-crear-usuario.component';
 import { VehiculosComponent } from './administrar-polizas/componentes/polizas/vehiculos/vehiculos.component';
 import { AseguradoraComponent } from './aseguradoras/aseguradora/aseguradora.component';
+import { PolizasContractualesComponent } from './administrar-polizas/componentes/polizas/polizas-contractuales/polizas-contractuales.component';
+import { PolizasExtracontractualesComponent } from './administrar-polizas/componentes/polizas/polizas-extracontractuales/polizas-extracontractuales.component';
+import { PolizasComponent } from './administrar-polizas/componentes/polizas/polizas.component';
+import { GestionarPlacasaComponent } from './administrar-polizas/componentes/gestionar-placasa/gestionar-placasa.component';
+import { GestionarPolizasComponent } from './administrar-polizas/componentes/gestionar-polizas/gestionar-polizas.component';
+import { InicioVigia2Component } from './autenticacion/componentes/inicio-vigia2/inicio-vigia2.component';
 
 
 
@@ -32,7 +38,27 @@ const routes: Routes = [
       },
       {
         path: 'administrar-poliza',
-        component: AdministrarPolizasComponent
+        component: PolizasComponent
+      },
+      {
+        path: 'crear-polizas',
+        component: PolizasComponent
+      },
+      {
+        path: 'gestionar-polizas',
+        component: GestionarPolizasComponent
+      },
+      {
+        path: 'gestionar-placas',
+        component: GestionarPlacasaComponent
+      },
+      {
+        path: 'administrar-poliza/polizas-contractuales',
+        component: PolizasContractualesComponent
+      },
+      {
+        path: 'administrar-poliza/polizas-extracontractuales',
+        component: PolizasExtracontractualesComponent
       },
       {
         path: 'soporte',
@@ -57,8 +83,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'inicio-sesion',
-    component: InicioSesionComponent
+    path: 'inicio-vigia2',
+    component: InicioVigia2Component
   },
   {
     path: 'actualizar-contrasena',
@@ -71,7 +97,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'inicio-sesion'
+    redirectTo: 'inicio-vigia2'
   }
 ];
 
