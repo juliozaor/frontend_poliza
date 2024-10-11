@@ -360,3 +360,31 @@ h1,h2{
 .hipervinculo:hover{
   color: var(--azul-oscuro);
 }
+
+/** CSS PAOLO **/
+.borderP
+{
+  border: 2px solid #E6EFFD !important;
+}
+
+.encabezado-PModalidad {
+  background-color: #E6EFFD !important;
+  color: #004884; 
+  margin-left: 0px;
+  margin-right: auto;
+  vertical-align: middle;
+}
+
+.aligPModalidad
+{
+  margin: 5px;
+}
+.alingFilaP
+{
+  margin: 0px;
+}
+
+.msjCkpModalidadP
+{
+  font-size: x-small;
+}

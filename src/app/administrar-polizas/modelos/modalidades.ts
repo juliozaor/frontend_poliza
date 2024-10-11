@@ -16,3 +16,11 @@ export interface ModalidadModel{
     nombreOriginal?: string,
     ruta?: string
 }
+
+/**interface Paolo */
+export interface ModalidadesPModel{
+    estado?: boolean,
+    id?: number,
+    nombre?: string,
+}
+
