@@ -9,7 +9,7 @@ import { ServicioArchivos } from "src/app/archivos/servicios/archivos.service";
 import { ArchivoGuardado } from "src/app/archivos/modelos/ArchivoGuardado";
 import { FiltrosVehiculos } from "../modelos/FiltrosVehiculos";
 import { GuardarPoliza, PolizaJsonModel } from "../modelos/guardarPoliza";
-import { CapacidadesModel } from "../modelos/modalidades";
+import { CapacidadesModel, ModalidadesPModel } from "../modelos/modalidades";
 import { FiltrarPolizas } from "../modelos/FiltrosPoliza";
 import { Paginable } from "src/app/administrador/modelos/compartido/Paginable";
 import { VehiculoModel } from "../modelos/vehiculosModel";
@@ -249,5 +249,17 @@ export class ServicioAdministrarPolizas extends Autenticable {
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )
   }
+
+
+  /***GESTIONAR MODALIDADES PAOLO */
+  gestionarModalidadP(){
+    let endpoint = `/api/v1/poliza/modalidadpoliza`
+    return  this.http.get<ModalidadesPModel>(
+      `${this.host}${endpoint}`,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
+  /**fin de paolo */
+
 
 }
