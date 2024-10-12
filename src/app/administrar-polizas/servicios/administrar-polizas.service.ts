@@ -254,7 +254,7 @@ export class ServicioAdministrarPolizas extends Autenticable {
   /***GESTIONAR MODALIDADES PAOLO */
   gestionarModalidadP(){
     let endpoint = `/api/v1/poliza/modalidadpoliza`
-    return  this.http.get<ModalidadesPModel>(
+    return  this.http.get<ModalidadesPModel[]>(
       `${this.host}${endpoint}`,
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )
