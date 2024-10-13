@@ -168,11 +168,7 @@ export class PolizasComponent implements OnInit {
   }
   /**codigo de paolo */
   ///arreglo de las modalidades, debe venir desde una ruta del servidor
-  public modalidadesP: Array<ModalidadesPModel> = [
-    {nombre: 'descr 1', id: 1},
-    {nombre: "descr 2", id: 2},
-    {nombre: "descr 3", id: 3}
-  ];
+  public modalidadesP: Array<ModalidadesPModel> = [];
   AgregarModalidadP :Array<ModalidadesPModel>=[]; /**la que se tiene en cuenta las seleccionadas */
   onCheckChange(event :any) /**función seleccionar o desmarcar check */
   {
