@@ -168,6 +168,7 @@ export class PolizasComponent implements OnInit {
   }
   /**codigo de paolo */
   ///arreglo de las modalidades, debe venir desde una ruta del servidor
+  isMsjmodalidad:boolean=true;
   public modalidadesP: Array<ModalidadesPModel> = [];
   AgregarModalidadP :Array<ModalidadesPModel>=[]; /**la que se tiene en cuenta las seleccionadas */
   onCheckChange(event :any) /**función seleccionar o desmarcar check */
@@ -180,29 +181,36 @@ export class PolizasComponent implements OnInit {
           nombre:event.target.name 
         }/** agraga la seleccion */
       ); 
+      this.isMsjmodalidad=false
       //console.log(this.AgregarModalidadP)    
     }else{
-    
+      
       this.AgregarModalidadP=this.AgregarModalidadP.filter(modalidad => modalidad.id != event.target.value);/**elimina y actualiza la seleecion */
+      if(this.AgregarModalidadP.length == 0)
+      {
+        this.isMsjmodalidad=true
+      }
       //console.log(this.AgregarModalidadP)      
     }
     
   }
   /**fin del codigo de paolo */ 
-
+  ListarModalidadesP()
+  {
+    this.servicioAdministrarPoliza.gestionarModalidadP().subscribe({
+      next: (respuesta) => {
+        this.modalidadesP = respuesta;
+        
+      } 
+    }) ;
+  } 
 
   ngOnInit(): void {
     this.deshabilitarFormularios()
     this.obtenerAseguradora()
+    this.ListarModalidadesP()
     /**codigo paolo */
-    this.servicioAdministrarPoliza.gestionarModalidadP().subscribe({
-      next: (respuesta) => {
-        //console.log(respuesta)
-        this.modalidadesP = respuesta;
-        //this.modalidadesP= this.modalidadesP.filter(0=0).
-        //console.log(this.modalidadesP)
-      } 
-    }) ;
+    
     /**fin de Paolo */
   }
   
@@ -555,13 +563,15 @@ export class PolizasComponent implements OnInit {
     Swal.showLoading(null);
     //Guarda la poliza y devuelve la respuesta correspondiente
     /****paolo */
-    console.log(polizaJson);
+    //console.log(polizaJson);
     /*****fin paolo */
     this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
       next: (respuesta) => {
-        console.log(respuesta)
+        //console.log(respuesta)
         this.formContractual.reset()
         this.formExtracontractual.reset()
+        this.AgregarModalidadP=[]//paolo
+        this.ListarModalidadesP()//paolo
         Swal.fire({
           titleText: respuesta.mensaje,
           text: "Estimado usuario si desea cargar otra póliza por favor de clic en el botón cargar nuevo o si no de clic en enviar",
