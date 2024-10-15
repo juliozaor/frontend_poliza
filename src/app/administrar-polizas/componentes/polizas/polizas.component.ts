@@ -176,48 +176,48 @@ export class PolizasComponent implements OnInit {
 
     if(event.target.checked){
       this.AgregarModalidadP.push(
-        { 
+        {
           id:event.target.value,
-          nombre:event.target.name 
+          nombre:event.target.name
         }/** agraga la seleccion */
-      ); 
+      );
       this.isMsjmodalidad=false
-      //console.log(this.AgregarModalidadP)    
+      //console.log(this.AgregarModalidadP)
     }else{
-      
+
       this.AgregarModalidadP=this.AgregarModalidadP.filter(modalidad => modalidad.id != event.target.value);/**elimina y actualiza la seleecion */
       if(this.AgregarModalidadP.length == 0)
       {
         this.isMsjmodalidad=true
       }
-      //console.log(this.AgregarModalidadP)      
+      //console.log(this.AgregarModalidadP)
     }
-    
+
   }
-  /**fin del codigo de paolo */ 
+  /**fin del codigo de paolo */
   ListarModalidadesP()
   {
     this.servicioAdministrarPoliza.gestionarModalidadP().subscribe({
       next: (respuesta) => {
         this.modalidadesP = respuesta;
-        
-      } 
+
+      }
     }) ;
-  } 
+  }
 
   ngOnInit(): void {
     this.deshabilitarFormularios()
     this.obtenerAseguradora()
     this.ListarModalidadesP()
     /**codigo paolo */
-    
+
     /**fin de Paolo */
   }
-  
+
   fechasVerificar(tipoPoliza: number){
     const controlC = this.formContractual.controls
     const controlE = this.formExtracontractual.controls
-   
+
     if(tipoPoliza == 1){
       if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
         if(controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value){
@@ -336,7 +336,7 @@ export class PolizasComponent implements OnInit {
     const controlsE = this.formExtracontractual.controls
 
     /*****CODIGO PARA VALIDAR LAS MODALIDADES PAOLO*/
-    if(this.AgregarModalidadP.length == 0)/**que exista al meno una selección */
+    if(this.AgregarModalidadP.length == 0)/**que exista al menos una selección */
     {
       Swal.fire({
         /*text: "Debe seleccionar por lo menos una  modalidad",*/
