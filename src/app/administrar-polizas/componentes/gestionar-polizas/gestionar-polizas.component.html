@@ -73,6 +73,37 @@
       </tbody>
     </table>
   </div>
+   <!-----INICIO DE LAS MODALIDADES PAOLO-->
+   <div class="row">
+    <div class="col py-2 ">
+        <div class="borderP mt-1 tabla-informacionP w-100 table-responsiveP">
+            <div class="row encabezado-PModalidad borderP">
+              <div class="col-12 d-flex ">
+                <h2 class="fs-14px fw-semibold texto-azul-004884 aligPModalidad">DATOS DE MODALIDAD</h2>
+              </div>
+            </div>
+            <div class="row py-2 alingFilaP">
+              
+              <div *ngFor="let modalidad of modalidadesP; let i=index" class="col-md-2">
+                
+                <div class="col form-check">
+                  
+                    <input class="form-check-input aligPModalidad"  type="checkbox" checked disabled [value]="modalidad.obj_modalidad.modpol_id" >
+                    <label>
+                        {{modalidad.obj_modalidad.modpol_nombre}}
+                    </label>
+                </div>
+              </div>
+            
+            </div>
+            
+        </div>
+    </div>
+</div>
+  <!----FIN DE LAS MODALIDADES PAOLO-->
+  
+ 
+
   <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
   <div class="mt-4 mb-3">
     <app-polizas-contractuales *ngIf="poliza && tipoPoliza==1 && verPoliza==true"
