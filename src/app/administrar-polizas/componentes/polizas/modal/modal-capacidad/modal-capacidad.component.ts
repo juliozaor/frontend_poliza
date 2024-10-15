@@ -221,44 +221,41 @@ export class ModalCapacidadComponent implements OnInit {
       capacidadJson.capacidades = [MX, ES, PC]
     }
 
-    Swal.fire({
-      icon: 'info',
-      allowOutsideClick: false,
-      text: 'Espere por favor...',
-    });
-    Swal.showLoading(null);
-    this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
-      next: (respuesta) => {
-        this.formMX.reset()
-        this.formES.reset()
-        this.formPC.reset()
-        Swal.fire({
-          text: respuesta.mensaje,
-          icon: "success",
-          confirmButtonText: "Finalizar",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.servicioModal.dismissAll();
-          }
-        })
-      },
-      error: (error: HttpErrorResponse) => {
-        Swal.fire({
-          text: error.error.message,
-          icon: "error",
-        })
-      }
-    })
-
     if (MX || ES || PC) {
-      //console.log(this.capacidadJson);
-
+      console.log(this.capacidadJson);
+      Swal.fire({
+        icon: 'info',
+        allowOutsideClick: false,
+        text: 'Espere por favor...',
+      });
+      Swal.showLoading(null);
+      this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
+        next: (respuesta) => {
+          this.formMX.reset()
+          this.formES.reset()
+          this.formPC.reset()
+          Swal.fire({
+            text: respuesta.mensaje,
+            icon: "success",
+            confirmButtonText: "Finalizar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.servicioModal.dismissAll();
+            }
+          })
+        },
+        error: (error: HttpErrorResponse) => {
+          Swal.fire({
+            text: error.error.mensaje,
+            icon: "error",
+          })
+        }
+      })
     } else {
-      this.closeModal()
-      /* Swal.fire({
+      Swal.fire({
         titleText: 'Debe llenar al menos una Modalidad',
         icon: "warning",
-      }) */
+      })
     }
   }
 
@@ -368,9 +365,9 @@ export class ModalCapacidadComponent implements OnInit {
   } */
 
   closeModal() {
+    this.servicioModal.dismissAll();
     this.formMX.reset()
     this.formES.reset()
     this.formPC.reset()
-    this.servicioModal.dismissAll();
   }
 }
