@@ -10,6 +10,7 @@ import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
+import { ModalidadesPModel } from 'src/src/app/administrar-polizas/modelos/modalidades';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -140,6 +141,8 @@ export class GestionarPolizasComponent implements OnInit {
         this.actualizarEstadoBoton();
         this.visualizarNovedadesPolizas(numero, tipoPoliza);
         this.obtenerInteroperabilidad(numero, tipoPoliza);
+        this.modalidadesP=poliza.modalidades
+        //console.log(poliza.modalidades)
       }
     })
       this.actualizarEstadoBoton();
@@ -170,7 +173,9 @@ export class GestionarPolizasComponent implements OnInit {
       }
     })
   }
-
+  /*******PAOLO********************************************************** */
+  public modalidadesP: any;
+  /******************FIN DOCIGO DE PAOLO**********************************/
   habilitarVinculacionVehiculo(event: Event, placa: string) {
     const checkbox = event.currentTarget as HTMLInputElement
     if (checkbox.checked == true) {

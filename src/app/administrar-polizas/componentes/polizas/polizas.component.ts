@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Aseguradoras } from '../../modelos/aseguradoras';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
 import { marcarFormularioComoSucio } from 'src/app/administrador/utilidades/Utilidades';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,6 +16,7 @@ import { valorCeroValidar } from './validadores/cero-validacion';
 import { negativoValidar } from './validadores/negativo-verificar';
 import { tamanioValido } from './validadores/tamanio-archivo-validar';
 import { fechaValida } from './validadores/fecha-validador';
+import { ModalidadesPModel } from '../../modelos/modalidades';
 
 @Component({
   selector: 'app-polizas',
@@ -165,15 +166,58 @@ export class PolizasComponent implements OnInit {
     this.formExtracontractual.get('checkResponsabilidadE')?.disable()
     this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
   }
+  /**codigo de paolo */
+  ///arreglo de las modalidades, debe venir desde una ruta del servidor
+  isMsjmodalidad:boolean=true;
+  public modalidadesP: Array<ModalidadesPModel> = [];
+  AgregarModalidadP :Array<ModalidadesPModel>=[]; /**la que se tiene en cuenta las seleccionadas */
+  onCheckChange(event :any) /**función seleccionar o desmarcar check */
+  {
+
+    if(event.target.checked){
+      this.AgregarModalidadP.push(
+        { 
+          id:event.target.value,
+          nombre:event.target.name 
+        }/** agraga la seleccion */
+      ); 
+      this.isMsjmodalidad=false
+      //console.log(this.AgregarModalidadP)    
+    }else{
+      
+      this.AgregarModalidadP=this.AgregarModalidadP.filter(modalidad => modalidad.id != event.target.value);/**elimina y actualiza la seleecion */
+      if(this.AgregarModalidadP.length == 0)
+      {
+        this.isMsjmodalidad=true
+      }
+      //console.log(this.AgregarModalidadP)      
+    }
+    
+  }
+  /**fin del codigo de paolo */ 
+  ListarModalidadesP()
+  {
+    this.servicioAdministrarPoliza.gestionarModalidadP().subscribe({
+      next: (respuesta) => {
+        this.modalidadesP = respuesta;
+        
+      } 
+    }) ;
+  } 
 
   ngOnInit(): void {
     this.deshabilitarFormularios()
     this.obtenerAseguradora()
+    this.ListarModalidadesP()
+    /**codigo paolo */
+    
+    /**fin de Paolo */
   }
+  
   fechasVerificar(tipoPoliza: number){
     const controlC = this.formContractual.controls
     const controlE = this.formExtracontractual.controls
-
+   
     if(tipoPoliza == 1){
       if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
         if(controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value){
@@ -291,6 +335,17 @@ export class PolizasComponent implements OnInit {
     const controlsC = this.formContractual.controls
     const controlsE = this.formExtracontractual.controls
 
+    /*****CODIGO PARA VALIDAR LAS MODALIDADES PAOLO*/
+    if(this.AgregarModalidadP.length == 0)/**que exista al meno una selección */
+    {
+      Swal.fire({
+        /*text: "Debe seleccionar por lo menos una  modalidad",*/
+        icon: "error",
+        titleText: "Debe seleccionar por lo menos una  modalidad",
+      })
+      return;
+    }
+    /***FIN DE VALIDAR LAS MODALIDADES  */
     if (this.formContractual.invalid) {//Valida formulario contarctual (Esté lleno)
       marcarFormularioComoSucio(this.formContractual)
       Swal.fire({
@@ -463,6 +518,7 @@ export class PolizasComponent implements OnInit {
 
     const polizaJson: any = {
       polizaContractual: polizaContractual,
+      modalidadesPJson: this.AgregarModalidadP /**agrega las modalidades paolo*/
     };
 
     //Valida formulario extracontarctual sea valido (Esté lleno) si y solo si se ha escrito el numero de poliza
@@ -506,11 +562,16 @@ export class PolizasComponent implements OnInit {
     });
     Swal.showLoading(null);
     //Guarda la poliza y devuelve la respuesta correspondiente
+    /****paolo */
+    //console.log(polizaJson);
+    /*****fin paolo */
     this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
       next: (respuesta) => {
-        console.log(respuesta)
+        //console.log(respuesta)
         this.formContractual.reset()
         this.formExtracontractual.reset()
+        this.AgregarModalidadP=[]//paolo
+        this.ListarModalidadesP()//paolo
         Swal.fire({
           titleText: respuesta.mensaje,
           text: "Estimado usuario si desea cargar otra póliza por favor de clic en el botón cargar nuevo o si no de clic en enviar",
