@@ -10,7 +10,7 @@ import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
-import { ModalidadesPModel } from 'src/src/app/administrar-polizas/modelos/modalidades';
+import { ModalidadesPModel } from 'src/app/administrar-polizas/modelos/modalidades';
 
 @Component({
   selector: 'app-gestionar-polizas',
