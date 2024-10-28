@@ -116,18 +116,18 @@ export class ModalCapacidadComponent implements OnInit {
     })
   }
 
-  fechaValida(event: any, tipoModalidad: number){
-    if(fechaValida(event)){
+  fechaValida(event: any, tipoModalidad: number) {
+    if (fechaValida(event)) {
       Swal.fire({
-        titleText:"La fecha ingresada no puede ser superior o igual a la fecha actual",
+        titleText: "La fecha ingresada no puede ser superior o igual a la fecha actual",
         icon: "error"
       })
       console.log(event.target.name);
-      if(tipoModalidad == 1){
+      if (tipoModalidad == 1) {
         this.formMX.controls[event.target.name].setValue('')
-      }else if(tipoModalidad == 2){
+      } else if (tipoModalidad == 2) {
         this.formES.controls[event.target.name].setValue('')
-      }else if(tipoModalidad == 3){
+      } else if (tipoModalidad == 3) {
         this.formPC.controls[event.target.name].setValue('')
       }
     }
@@ -150,7 +150,7 @@ export class ModalCapacidadComponent implements OnInit {
         titleText: "¡No se ha realizado el envío a ST!",
       })
       return;
-    }else if(controlMX['numeroRMX'].value){
+    } else if (controlMX['numeroRMX'].value) {
       MX = {
         numero: controlMX['numeroRMX'].value,
         vigencia: controlMX['fechaRMX'].value,
@@ -169,7 +169,7 @@ export class ModalCapacidadComponent implements OnInit {
         titleText: "¡No se ha realizado el envío a ST!",
       })
       return;
-    }else if(controlES['numeroRES'].value){
+    } else if (controlES['numeroRES'].value) {
       ES = {
         numero: controlES['numeroRES'].value,
         vigencia: controlES['fechaRES'].value,
@@ -188,7 +188,7 @@ export class ModalCapacidadComponent implements OnInit {
         titleText: "¡No se ha realizado el envío a ST!",
       })
       return;
-    }else if(controlPC['numeroRPC'].value){
+    } else if (controlPC['numeroRPC'].value) {
       PC = {
         numero: this.formPC.controls['numeroRPC'].value,
         vigencia: this.formPC.controls['fechaRPC'].value,
@@ -221,153 +221,156 @@ export class ModalCapacidadComponent implements OnInit {
       capacidadJson.capacidades = [MX, ES, PC]
     }
 
-    if (MX || ES || PC) {
-      console.log(this.capacidadJson);
-      Swal.fire({
-        icon: 'info',
-        allowOutsideClick: false,
-        text: 'Espere por favor...',
-      });
-      Swal.showLoading(null);
-      this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
-        next: (respuesta) => {
-          this.formMX.reset()
-          this.formES.reset()
-          this.formPC.reset()
-          Swal.fire({
-            text: respuesta.mensaje,
-            icon: "success",
-            confirmButtonText: "Finalizar",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.servicioModal.dismissAll();
-            }
-          })
-        },
-        error: (error: HttpErrorResponse) => {
-          Swal.fire({
-            text: error.error.mensaje,
-            icon: "error",
-          })
-        }
-      })
-    } else {
-      Swal.fire({
-        titleText: 'Debe llenar al menos una Modalidad',
-        icon: "warning",
-      })
-    }
-  }
-
-  cargarArchivoPDf(event: any, tipoModalidad: number) {
-    const archivoSeleccionado = event.target.files[0];
-    if (archivoSeleccionado) {
-      if(tamanioValido(archivoSeleccionado,5)){
-        Swal.fire({
-          icon: 'error',
-          titleText: 'Excede el tamaño de archivo permitido',
-          text: 'El archivo debe pesar máximo 5MB',
-        });
-        if (tipoModalidad == 1) {
-          this.formMX.controls['PDFRMX'].setValue('')
-        } else if (tipoModalidad == 2) {
-          this.formES.controls['PDFRES'].setValue('')
-        } else if (tipoModalidad == 3) {
-          this.formPC.controls['PDFRPC'].setValue('')
-        }
-        return;
-      }
-      Swal.fire({
-        icon: 'info',
-        allowOutsideClick: false,
-        text: 'Espere por favor...',
-      });
-      Swal.showLoading(null);
-      this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
-        next: (respuesta) => {
-          if (tipoModalidad == 1) {
-            this.archivoPDFMX = respuesta
-          } else if (tipoModalidad == 2) {
-            this.archivoPDFES = respuesta
-          } else if (tipoModalidad == 3) {
-            this.archivoPDFPC = respuesta
-          }
-          Swal.close()
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log('Error: ', error.error.mensaje)
-          Swal.fire({
-            text: "¡Lo sentimos! No hemos podido cargar el archivo",
-            icon: "warning",
-          })
-          if (tipoModalidad == 1) {
-            this.formMX.controls['PDFMX'].setValue('')
-          } else if (tipoModalidad == 2) {
-            this.formES.controls['PDFES'].setValue('')
-          } else if (tipoModalidad == 3) {
-            this.formPC.controls['PDFPC'].setValue('')
-          }
-
-        }
-      })
-    }
-  }
-
-  alternarDesplegarMX() {
-    this.desplegarMX = !this.desplegarMX
-  }
-  alternarDesplegarES() {
-    this.desplegarES = !this.desplegarES
-  }
-  alternarDesplegarPC() {
-    this.desplegarPC = !this.desplegarPC
-  }
-
-  /* resolucionLLeno(event: any, modalidad: number) {
-    if (modalidad == 1) {
-      const controlMX = this.formMX.controls
-      const resolucion = event.target.value; console.log(resolucion, this.archivoPDFMX);
-      if (resolucion) {
-        controlMX['numeroRMX'].setValidators([Validators.required, valorCeroValidar()])
-        controlMX['fechaRMX'].setValidators(Validators.required)
-        controlMX['PDFRMX'].setValidators(Validators.required)
-        this.formMX.updateValueAndValidity()
-      } else {
-        this.formMX.reset(); this.archivoPDFMX = undefined
-        //this.formMX.clearValidators()
-        this.formMX.updateValueAndValidity()
-      }
-    } else if (modalidad == 2) {
-      const controlES = this.formES.controls
-      if (controlES['numeroRES'].value) {
-        controlES['numeroRES'].setValidators([Validators.required, valorCeroValidar()])
-        controlES['fechaRES'].setValidators(Validators.required)
-        controlES['PDFRES'].setValidators(Validators.required)
-        this.formES.updateValueAndValidity()
-      } else {
+    Swal.fire({
+      icon: 'info',
+      allowOutsideClick: false,
+      text: 'Espere por favor...',
+    });
+    Swal.showLoading(null);
+    this.servicioAdministrarPoliza.guardarCapacidades(capacidadJson).subscribe({
+      next: (respuesta) => {
+        this.formMX.reset()
         this.formES.reset()
-        this.formES.clearValidators()
-        this.formES.updateValueAndValidity()
-      }
-    } else if (modalidad == 3) {
-      const controlPC = this.formPC.controls
-      if (controlPC['numeroRPC'].value) {
-        controlPC['numeroRPC'].setValidators([Validators.required, valorCeroValidar()])
-        controlPC['fechaRPC'].setValidators(Validators.required)
-        controlPC['PDFRPC'].setValidators(Validators.required)
-        this.formMX.updateValueAndValidity()
-      } else {
         this.formPC.reset()
-        this.formPC.clearValidators()
-        this.formPC.updateValueAndValidity()
+        Swal.fire({
+          text: respuesta.mensaje,
+          icon: "success",
+          confirmButtonText: "Finalizar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.servicioModal.dismissAll();
+          }
+        })
+      },
+      error: (error: HttpErrorResponse) => {
+        Swal.fire({
+          text: error.error.mensaje,
+          icon: "error",
+        })
       }
-    }
-  } */
+    })
 
-  closeModal() {
-    this.servicioModal.dismissAll();
-    this.formMX.reset()
-    this.formES.reset()
-    this.formPC.reset()
+
+  if (MX || ES || PC) {
+    //console.log(this.capacidadJson);
+
+  }else {
+    Swal.fire({
+      titleText: 'Debe llenar al menos una Modalidad',
+      icon: "warning",
+    })
   }
+}
+
+cargarArchivoPDf(event: any, tipoModalidad: number) {
+  const archivoSeleccionado = event.target.files[0];
+  if (archivoSeleccionado) {
+    if (tamanioValido(archivoSeleccionado, 5)) {
+      Swal.fire({
+        icon: 'error',
+        titleText: 'Excede el tamaño de archivo permitido',
+        text: 'El archivo debe pesar máximo 5MB',
+      });
+      if (tipoModalidad == 1) {
+        this.formMX.controls['PDFRMX'].setValue('')
+      } else if (tipoModalidad == 2) {
+        this.formES.controls['PDFRES'].setValue('')
+      } else if (tipoModalidad == 3) {
+        this.formPC.controls['PDFRPC'].setValue('')
+      }
+      return;
+    }
+    Swal.fire({
+      icon: 'info',
+      allowOutsideClick: false,
+      text: 'Espere por favor...',
+    });
+    Swal.showLoading(null);
+    this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
+      next: (respuesta) => {
+        if (tipoModalidad == 1) {
+          this.archivoPDFMX = respuesta
+        } else if (tipoModalidad == 2) {
+          this.archivoPDFES = respuesta
+        } else if (tipoModalidad == 3) {
+          this.archivoPDFPC = respuesta
+        }
+        Swal.close()
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log('Error: ', error.error.mensaje)
+        Swal.fire({
+          text: "¡Lo sentimos! No hemos podido cargar el archivo",
+          icon: "warning",
+        })
+        if (tipoModalidad == 1) {
+          this.formMX.controls['PDFMX'].setValue('')
+        } else if (tipoModalidad == 2) {
+          this.formES.controls['PDFES'].setValue('')
+        } else if (tipoModalidad == 3) {
+          this.formPC.controls['PDFPC'].setValue('')
+        }
+
+      }
+    })
+  }
+}
+
+alternarDesplegarMX() {
+  this.desplegarMX = !this.desplegarMX
+}
+alternarDesplegarES() {
+  this.desplegarES = !this.desplegarES
+}
+alternarDesplegarPC() {
+  this.desplegarPC = !this.desplegarPC
+}
+
+/* resolucionLLeno(event: any, modalidad: number) {
+  if (modalidad == 1) {
+    const controlMX = this.formMX.controls
+    const resolucion = event.target.value; console.log(resolucion, this.archivoPDFMX);
+    if (resolucion) {
+      controlMX['numeroRMX'].setValidators([Validators.required, valorCeroValidar()])
+      controlMX['fechaRMX'].setValidators(Validators.required)
+      controlMX['PDFRMX'].setValidators(Validators.required)
+      this.formMX.updateValueAndValidity()
+    } else {
+      this.formMX.reset(); this.archivoPDFMX = undefined
+      //this.formMX.clearValidators()
+      this.formMX.updateValueAndValidity()
+    }
+  } else if (modalidad == 2) {
+    const controlES = this.formES.controls
+    if (controlES['numeroRES'].value) {
+      controlES['numeroRES'].setValidators([Validators.required, valorCeroValidar()])
+      controlES['fechaRES'].setValidators(Validators.required)
+      controlES['PDFRES'].setValidators(Validators.required)
+      this.formES.updateValueAndValidity()
+    } else {
+      this.formES.reset()
+      this.formES.clearValidators()
+      this.formES.updateValueAndValidity()
+    }
+  } else if (modalidad == 3) {
+    const controlPC = this.formPC.controls
+    if (controlPC['numeroRPC'].value) {
+      controlPC['numeroRPC'].setValidators([Validators.required, valorCeroValidar()])
+      controlPC['fechaRPC'].setValidators(Validators.required)
+      controlPC['PDFRPC'].setValidators(Validators.required)
+      this.formMX.updateValueAndValidity()
+    } else {
+      this.formPC.reset()
+      this.formPC.clearValidators()
+      this.formPC.updateValueAndValidity()
+    }
+  }
+} */
+
+closeModal() {
+  this.servicioModal.dismissAll();
+  this.formMX.reset()
+  this.formES.reset()
+  this.formPC.reset()
+}
 }
