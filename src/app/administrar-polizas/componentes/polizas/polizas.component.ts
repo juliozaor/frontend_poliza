@@ -705,7 +705,7 @@ export class PolizasComponent implements OnInit {
         }else{return}
       } else {
         Swal.fire({
-          text: "No has agregado un número de poliza",
+          text: "No has agregado un número de póliza",
           icon: "warning",
         })
         this.formContractual.controls['cargarExcel'].setValue('')
