@@ -6,6 +6,33 @@
       PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL CONTRACTUAL
     </h2>
   </div>
+  <!--CODIGO PAOLO-->
+  <div class="borderP mt-1">
+    <div class="row encabezado-PModalidad borderP">
+      <div class="col-12 d-flex ">
+        <h2 class="fs-14px fw-semibold texto-azul-004884 aligPModalidad">DATOS DE MODALIDAD</h2>
+      </div>
+    </div>
+    <div class="row py-2 alingFilaP">
+
+      <div *ngFor="let modalidad of modalidadesP; let i=index" class="col-md-2">
+        <div class="col form-check">
+          
+            <input class="form-check-input aligPModalidad" [name]="modalidad.nombre" type="checkbox" [value]="modalidad.id" (change)="onCheckChange($event)">
+            <label>
+               {{modalidad.nombre}}
+            </label>
+        </div>
+      </div>
+    </div>
+    <div class="row py-2 alingFilaP" *ngIf="isMsjmodalidad==true">
+      <div class="col-12 pt-4">
+        <p class="text-danger msjCkpModalidadP">Debe haber por lo menos un registro de modalidad.</p>
+
+      </div>
+    </div>
+  </div>
+  <!--FIN DEL CODIGO DE PAOLO-->
   <hr class="hr">
   <div class="clasificacion d-flex w-100 ">
     <!-- <span>

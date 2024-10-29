@@ -22,7 +22,7 @@ import { AlertasModalGovComponent } from './componentes/alertas-modal-gov/alerta
     NotificacionComponent,
     ModalComponent,
     AlertasGovComponent,
-    AlertasModalGovComponent
+    AlertasModalGovComponent,
   ],
   imports: [
     CommonModule,
