@@ -1,16 +1,18 @@
 <div class="p-5 pt-0 mt-3">
 <form [formGroup]="formContractual">
   <!-- /////////////////////////////////////////RESPONSABILIDAD CIVIL CONTRACTUAL///////////////////////////////////// -->
-  <div>
-    <h2 class="fs-20px fw-semibold texto-azul-004884 mb-3 text-center mt-3 w-100">
-      PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL CONTRACTUAL
-    </h2>
-  </div>
   <!--CODIGO PAOLO-->
+  <div class="py-2">
+    <span class="TamTituloP texto-azul-004884">
+      Pólizas Vigentes responsabilidad civil contractual
+    </span>
+  </div>
   <div class="borderP mt-1">
     <div class="row encabezado-PModalidad borderP">
       <div class="col-12 d-flex ">
-        <h2 class="fs-14px fw-semibold texto-azul-004884 aligPModalidad">DATOS DE MODALIDAD</h2>
+        <span class="SubtituloP  texto-azul-004884">
+          Datos de modalidad
+        </span>
       </div>
     </div>
     <div class="row py-2 alingFilaP">
@@ -33,116 +35,128 @@
     </div>
   </div>
   <!--FIN DEL CODIGO DE PAOLO-->
-  <hr class="hr">
+
+
   <div class="clasificacion d-flex w-100 ">
     <!-- <span>
                 <img alt="" *ngIf="desplegarRCC" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
                 <img alt="" *ngIf="!desplegarRCC" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-            </span> -->
-    <div>
-      <span class="fs-14px fw-semibold texto-azul-004884">
-        INFORMACIÓN SOBRE PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL CONTRACTUAL:
-      </span>
-    </div>
+            </span> -->        
+
   </div>
-  <hr class="hr">
-  <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !desplegarRCC, 'd-block': desplegarRCC}">
-    <div class="d-flex mx-3 mb-3">
-      <div class="col-6 encabezado">
-        <div class="row mx-0 mb-3">
-          <div class="col-6 justify-content-start">
-            <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
-          </div>
-          <div class="col-6">
-            <input formControlName="numeroPolizaC" ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
-              class="form-control" type="number" placeholder="Número de póliza">
-            <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser
-              máximo 18 digitos.</span>
-            <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('cero')" class="validacion">No debe ser
-              0.</span>
-            <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('negativo')" class="validacion">No debe ser
-              número negativo.</span>
-            <app-validacion [validacion]="'required'" [texto]="'El número de la poliza es requerido.'"
-              [control]="this.formContractual.controls['numeroPolizaC']" />
-          </div>
-        </div>
-        <div class="row mx-0 mb-3">
-          <div class="col-6 justify-content-center">
-            <span class="fs-14px">Seleccione Entidad Aseguradora</span><span class="validacion">*</span>
-          </div>
-          <div class="col-6 justify-content-start">
-            <select formControlName="aseguradorasC" class="form-select" title="Lista de aseguradoras">
-              <option value="">Seleccione una opción</option>
-              <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">
-                {{aseguradora.nombre}}
-              </option>
-            </select>
-            <app-validacion [validacion]="'required'" [texto]="'La aseguradora es requerida.'"
-              [control]="this.formContractual.controls['aseguradorasC']" />
-          </div>
-        </div>
-      </div>
-      <div class="col-6 encabezado">
-        <div class="row mx-0 mb-3">
-          <div class="col-7 justify-content-start">
-            <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span><span
-              class="validacion">*</span>
-          </div>
-          <div class="col-5">
-            <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial"
-            (change)="fechasVerificar(1)">
-            <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
-              [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
-          </div>
-        </div>
-        <div class="row mx-0 mb-3">
-          <div class="col-7 justify-content-center">
-            <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span><span class="validacion">*</span>
-          </div>
-          <div class="col-5">
-            <input formControlName="vigenciaPolizaFinalC" class="form-control" type="date" placeholder="Fecha final"
-            (change)="fechasVerificar(1)">
-            <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
-              [control]="this.formContractual.controls['vigenciaPolizaFinalC']" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr class="hr">
-    <!-- ['AMPAROS BÁSICOS'] -->
-    <div class="clasificacion d-flex w-100">
-      <div class="mx-3">
-        <!-- <span>
-                    <img alt="" *ngIf="desplegarAmparosB1" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                    <img alt="" *ngIf="!desplegarAmparosB1" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                </span> -->
-        <span class="fs-14px fw-semibold texto-azul-004884">
-          AMPAROS BÁSICOS:
+
+  <div class="borderP mt-3">
+    <div class="row encabezado-PModalidad borderP">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Información sobre pólizas vigentes responsabilidad civil contractual:
         </span>
       </div>
     </div>
-    <hr class="hr">
-    <div class="w-100 overflow-auto custom-scroll"
-      [ngClass]="{'d-none': !desplegarAmparosB1, 'd-block': desplegarAmparosB1}">
+  </div>
+
+  <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !desplegarRCC, 'd-block': desplegarRCC}">
+    <div class="borderP row py-2 alingFilaP">
       <div class="d-flex mx-3 mb-3">
-        <div class="col-12">
-          <div class="row mx-0 mb-3 encabezado">
-            <div class="col-4 justify-content-start">
-              <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
+        <div class="col-6 encabezado">
+          <div class="row mx-0 mb-3">
+            <div class="col-6 justify-content-start">
+              <span class="fs-14px">Número de póliza</span><span class="validacion">*</span>
             </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Cobertura</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
+            <div class="col-6">
+              <input formControlName="numeroPolizaC" ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
+                class="form-control" type="number" placeholder="Número de póliza">
+              <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser
+                máximo 18 digitos.</span>
+              <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('cero')" class="validacion">No debe ser
+                0.</span>
+              <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('negativo')" class="validacion">No debe ser
+                número negativo.</span>
+              <app-validacion [validacion]="'required'" [texto]="'El número de la poliza es requerido.'"
+                [control]="this.formContractual.controls['numeroPolizaC']" />
             </div>
           </div>
+          <div class="row mx-0 mb-3">
+            <div class="col-6 justify-content-center">
+              <span class="fs-14px">Seleccione Entidad Aseguradora</span><span class="validacion">*</span>
+            </div>
+            <div class="col-6 justify-content-start">
+              <select formControlName="aseguradorasC" class="form-select" title="Lista de aseguradoras">
+                <option value="">Seleccione una opción</option>
+                <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">
+                  {{aseguradora.nombre}}
+                </option>
+              </select>
+              <app-validacion [validacion]="'required'" [texto]="'La aseguradora es requerida.'"
+                [control]="this.formContractual.controls['aseguradorasC']" />
+            </div>
+          </div>
+        </div>
+        <div class="col-6 encabezado">
+          <div class="row mx-0 mb-3">
+            <div class="col-7 justify-content-start">
+              <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span><span
+                class="validacion">*</span>
+            </div>
+            <div class="col-5">
+              <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial"
+              (change)="fechasVerificar(1)">
+              <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
+                [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
+            </div>
+          </div>
+          <div class="row mx-0 mb-3">
+            <div class="col-7 justify-content-center">
+              <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span><span class="validacion">*</span>
+            </div>
+            <div class="col-5">
+              <input formControlName="vigenciaPolizaFinalC" class="form-control" type="date" placeholder="Fecha final"
+              (change)="fechasVerificar(1)">
+              <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
+                [control]="this.formContractual.controls['vigenciaPolizaFinalC']" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ['AMPAROS BÁSICOS'] -->
+    <br>
+
+    <div class="row ps-3">
+      <div class="col-12 d-flex py-2">
+      <span class="SubtituloP  texto-azul-004884">
+        Amparos Básicos
+      </span>
+    </div>
+    </div>
+
+    <div class="borderP w-100 overflow-auto custom-scroll"
+      [ngClass]="{'d-none': !desplegarAmparosB1, 'd-block': desplegarAmparosB1}">
+
+      <div class="row encabezado-PModalidad">
+
+        <div class="row ps-3 mx-0 mb-3 encabezado">
+          <div class="col-4 justify-content-start">
+            <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Cobertura</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div class="col-12">
+          
           <ul>
             <li class="row mx-0 mb-3" id="1">
               <div class="col-4 justify-content-start" name="descripcion">
@@ -188,7 +202,7 @@
             </li>
           </ul>
           <ul>
-            <li class="row mx-0 mb-3" id="2">
+            <li class="row  mx-0 mb-3" id="2">
               <div class="col-4 justify-content-start" name="descripcion">
                 <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
               </div>
@@ -232,7 +246,7 @@
             </li>
           </ul>
           <ul>
-            <li class="row mx-0 mb-3" id="3">
+            <li class="row  mx-0 mb-3" id="3">
               <div class="col-4 justify-content-start" name="descripcion">
                 <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
               </div>
@@ -322,41 +336,43 @@
         </div>
       </div>
     </div>
-    <hr class="hr">
+
+
     <!-- ['AMPAROS ADICIONALES'] -->
-    <div class="clasificacion d-flex w-100">
-      <div class="mx-3">
-        <!-- <span>
-                  <img alt="" *ngIf="desplegarAmparosB1" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                  <img alt="" *ngIf="!desplegarAmparosB1" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-              </span> -->
-        <span class="fs-14px fw-semibold texto-azul-004884">
-          AMPAROS ADICIONALES:
+    <div class="row ps-3 mt-3">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Amparos Adicionales
         </span>
       </div>
     </div>
-    <hr class="hr">
-    <div class="w-100 overflow-auto custom-scroll"
+      
+    <div class="borderP w-100 overflow-auto custom-scroll"
       [ngClass]="{'d-none': !desplegarAmparosA1, 'd-block': desplegarAmparosA1}">
-      <div class="d-flex mx-3 mb-3">
-        <div class="col-12">
-          <div class="row mx-0 mb-3 encabezado">
-            <div class="col-4 justify-content-start">
-              <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Cobertura</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
-            </div>
+
+      <div class="row encabezado-PModalidad">               
+        <div class="row ps-3 encabezado-PModalidad py-2">          
+        
+          <div class="col-4 justify-content-start">
+            <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
           </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Cobertura</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-12">
+          
           <ul>
             <li class="row mx-0 mb-3" id="5">
               <div class="col-4 justify-content-start" name="descripcion">
@@ -534,33 +550,37 @@
             </li>
           </ul>
         </div>
-      </div>
+      
     </div>
-    <hr class="hr">
+    
     <!-- FONDO RESPONSABILIDAD -->
-    <div class="w-100 d-flex mb-3 fondo-desplegable-azul texto-blanco">
+    <div class="d-flex mb-3 mt-3 fondo-desplegable-azulbajo colorTextazul">
       <div class="encabezado mx-3">
         ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector
           Transporte?
       </div>
       <div class="row">
-        <div class="col-1 mx-3 texto">
+        <div class="col-1 mx-3 colorTextazul">
           <input type="checkbox" title="Si" formControlName="checkResponsabilidadC"
             (change)="DesplegarFondoResponsabilidad(1)">SI
         </div>
-        <div class="col-1 mx-3 texto">
+        <div class="col-1 mx-3 colorTextazul">
           <input type="checkbox" title="No" formControlName="checkNoResponsabilidadC"
             (change)="respuestaNoResponsabilidad(1)">NO
         </div>
       </div>
     </div>
+
     <div *ngIf="fondoResponsabilidadC" class="row d-flex mx-3 mb-3">
-      <div class="clasificacion d-flex w-100 mb-3 texto-azul-004884">
-        <span class="fs-14px fw-semibold centrar">
-          INFORMACIÓN SOBRE EL FONDO DE RESPONSABILIDAD
-        </span>
-      </div>
-      <hr>
+      
+      <div class="row ps-3 mt-3">
+        <div class="col-12 d-flex py-2">
+          <span class="SubtituloP  texto-azul-004884">
+            Información sobre el fondo de responsabilidad
+          </span>
+        </div>
+      </div>      
+      
       <div class="d-flex w-100 mb-3">
         <div class="encabezado col-12">
           <div class="row mx-0 mb-3">
@@ -689,162 +709,186 @@
         </div>
       </div>
     </div>
-    <hr class="hr">
+    
     <!-- ARCHIVO ESTRUCTURA -->
-    <div>
-      <span class="fs-14px fw-semibold texto-azul-004884 mx-3">
-        CARGAR ARCHIVOS
-      </span>
-    </div>
-    <hr class="hr">
-    <div class="d-flex mx-3 mb-3">
-      <div class="col-2 mx-3 mb-3">
-        <label>Descargar estructura</label>
-        <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
-          Descargar
-        </button>
-      </div>
-      <div class="col-4 mx-3 mb-3">
-        <label>Cargar el Excel, tamaño máximo 20MB</label><span class="validacion">*</span>
-        <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" formControlName="cargarExcel"
-          (change)="cargarArchivoXLSX($event,1)">
-        <app-validacion [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'"
-          [control]="this.formContractual.controls['cargarExcel']" />
-      </div>
-      <div class="col-5 mx-3 mb-3">
-        <label>Cargar clausulado y caratula en PDF, tamaño máximo 20MB</label><span class="validacion">*</span>
-        <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" formControlName="cargarPDF"
-          (change)="cargarArchivoPDf($event, 1)">
-        <app-validacion [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'"
-          [control]="this.formContractual.controls['cargarPDF']" />
+    <div class="row ps-3 mt-3">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Cargar Archivos
+        </span>
       </div>
     </div>
-    <hr class="hr">
+
+
+
+    <div class="borderP w-100 row ps-3"> 
+      <div class="row encabezado-PModalidad">               
+                 
+          <div class="col-2 mx-3 mb-3 justify-content-start">
+            <span class="fs-14px fw-semibold">Descargar estructura</span>
+          </div>
+              
+          <div class="col-3 mx-3 mb-3 justify-content-start">
+            <span class="fs-14px fw-semibold">Cargar el Excel, tamaño máximo 20MB</span>
+          </div>
+      
+                 
+          <div class="col-3 col-4 mx-3 mb-3 justify-content-start">
+            <span class="fs-14px fw-semibold">Cargar clausulado y caratula en PDF, tamaño máximo 20MB</span>
+          </div>
+       
+      </div>
+
+      <div class=" d-flex mx-3 mb-3 mt-2">
+        <div class="col-2 mx-3 mb-3">
+          <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
+            Descargar
+          </button>
+        </div>
+        <div class="col-3 mx-3 mb-3">
+          <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" formControlName="cargarExcel"
+            (change)="cargarArchivoXLSX($event,1)">
+          <app-validacion [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'"
+            [control]="this.formContractual.controls['cargarExcel']" />
+        </div>
+        <div class="col-3 mx-3 mb-3">
+          <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" formControlName="cargarPDF"
+            (change)="cargarArchivoPDf($event, 1)">
+          <app-validacion [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'"
+            [control]="this.formContractual.controls['cargarPDF']" />
+        </div>
+      </div>
+  
+    </div>
+    
+    
   </div>
+
 </form>
 
 <form [formGroup]="formExtracontractual">
   <!-- ///////////////////////////////////////RESPONSABILIDAD CIVIL EXTRACONTRACTUAL///////////////////////////////////// -->
-  <div>
-    <h2 class="fs-20px fw-semibold texto-azul-004884 mb-3 text-center mt-3 w-100">
-      PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL EXTRACONTRACTUAL
-    </h2>
-  </div>
-  <hr class="hr">
-  <div class="clasificacion d-flex w-100">
-    <div>
-      <!-- <span>
-                <img alt="" *ngIf="desplegarRCE" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                <img alt="" *ngIf="!desplegarRCE" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-            </span> -->
-      <span class="fs-14px fw-semibold texto-azul-004884">
-        INFORMACIÓN SOBRE PÓLIZAS VIGENTES RESPONSABILIDAD CIVIL EXTRACONTRACTUAL:
-      </span>
-    </div>
-  </div>
-  <hr class="hr">
+
+  <div class="py-3 mt-5">
+    <span class="TamTituloP texto-azul-004884">
+      Pólizas Vigentes responsabilidad civil extracontractual
+    </span>
+  </div>  
+      
   <div class="w-100 overflow-auto custom-scroll" [ngClass]="{'d-none': !desplegarRCE, 'd-block': desplegarRCE}">
-    <div class="d-flex mx-3 mb-3">
-      <div class="col-6 encabezado">
-        <div class="row mx-0 mb-3">
-          <div class="col-6 justify-content-start">
-            <span class="fs-14px">Número de póliza</span>
-            <span *ngIf="obligatorio" class="validacion">*</span>
-          </div>
-          <div class="col-6">
-            <input formControlName="numeroPolizaE" class="form-control" type="number" placeholder="Número de póliza"
-              (change)="[numeroPolizaELleno(),cambiarNumeroPoliza(2)]">
-            <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')"
-              class="validacion">Deben ser máximo 18 digitos.</span>
-            <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser
-              0.</span>
-            <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser
-              número negativo.</span>
-            <app-validacion [validacion]="'required'" [texto]="'El número de la poliza es requerido.'"
-              [control]="this.formExtracontractual.controls['numeroPolizaE']" />
-          </div>
-        </div>
-        <div class="row mx-0 mb-3">
-          <div class="col-6 justify-content-center">
-            <span class="fs-14px">Seleccione Entidad Aseguradora</span>
-            <span *ngIf="obligatorio" class="validacion">*</span>
-          </div>
-          <div class="col-6 justify-content-start">
-            <select formControlName="aseguradorasE" class="form-select" title="Lista de aseguradoras">
-              <option value="">Seleccione una opción</option>
-              <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">
-                {{aseguradora.nombre}}
-              </option>
-            </select>
-            <app-validacion [validacion]="'required'" [texto]="'La aseguradora es requerida.'"
-              [control]="this.formExtracontractual.controls['aseguradorasE']" />
+    <div class="row borderP">
+      <div class="py-2 encabezado-PModalidad ">
+        <div class="row ">
+          <div class="col-12 d-flex ">
+            <span class="Su22btituloP  texto-azul-004884">
+              Información sobre pólizas vigentes responsabilidad civil extracontractual:
+            </span>
           </div>
         </div>
       </div>
-      <div class="col-6 encabezado">
-        <div class="row mx-0 mb-3">
-          <div class="col-7 justify-content-start">
-            <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
-            <span *ngIf="obligatorio" class="validacion">*</span>
+      <div class="d-flex mx-3 mb-3 ">
+        <div class="col-6 encabezado">
+          <div class="row mx-0 mb-3">
+            <div class="col-6 justify-content-start">
+              <span class="fs-14px">Número de póliza</span>
+              <span *ngIf="obligatorio" class="validacion">*</span>
+            </div>
+            <div class="col-6">
+              <input formControlName="numeroPolizaE" class="form-control" type="number" placeholder="Número de póliza"
+                (change)="[numeroPolizaELleno(),cambiarNumeroPoliza(2)]">
+              <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')"
+                class="validacion">Deben ser máximo 18 digitos.</span>
+              <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser
+                0.</span>
+              <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser
+                número negativo.</span>
+              <app-validacion [validacion]="'required'" [texto]="'El número de la poliza es requerido.'"
+                [control]="this.formExtracontractual.controls['numeroPolizaE']" />
+            </div>
           </div>
-          <div class="col-5">
-            <input formControlName="vigenciaPolizaInicioE" class="form-control" type="date" placeholder="Fecha inicial"
-            (change)="fechasVerificar(2)">
-            <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
-              [control]="this.formExtracontractual.controls['vigenciaPolizaInicioE']" />
+          <div class="row mx-0 mb-3">
+            <div class="col-6 justify-content-center">
+              <span class="fs-14px">Seleccione Entidad Aseguradora</span>
+              <span *ngIf="obligatorio" class="validacion">*</span>
+            </div>
+            <div class="col-6 justify-content-start">
+              <select formControlName="aseguradorasE" class="form-select" title="Lista de aseguradoras">
+                <option value="">Seleccione una opción</option>
+                <option *ngFor="let aseguradora of aseguradoras" [value]="aseguradora.id">
+                  {{aseguradora.nombre}}
+                </option>
+              </select>
+              <app-validacion [validacion]="'required'" [texto]="'La aseguradora es requerida.'"
+                [control]="this.formExtracontractual.controls['aseguradorasE']" />
+            </div>
           </div>
         </div>
-        <div class="row mx-0 mb-3">
-          <div class="col-7 justify-content-center">
-            <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
-            <span *ngIf="obligatorio" class="validacion">*</span>
+        <div class="col-6 encabezado">
+          <div class="row mx-0 mb-3">
+            <div class="col-7 justify-content-start">
+              <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span>
+              <span *ngIf="obligatorio" class="validacion">*</span>
+            </div>
+            <div class="col-5">
+              <input formControlName="vigenciaPolizaInicioE" class="form-control" type="date" placeholder="Fecha inicial"
+              (change)="fechasVerificar(2)">
+              <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
+                [control]="this.formExtracontractual.controls['vigenciaPolizaInicioE']" />
+            </div>
           </div>
-          <div class="col-5">
-            <input formControlName="vigenciaPolizaFinalE" class="form-control" type="date" placeholder="Fecha final"
-            (change)="fechasVerificar(2)">
-            <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
-              [control]="this.formExtracontractual.controls['vigenciaPolizaFinalE']" />
+          <div class="row mx-0 mb-3">
+            <div class="col-7 justify-content-center">
+              <span class="fs-14px">Vigencia de la póliza: (Hasta: Final Vigencia)</span>
+              <span *ngIf="obligatorio" class="validacion">*</span>
+            </div>
+            <div class="col-5">
+              <input formControlName="vigenciaPolizaFinalE" class="form-control" type="date" placeholder="Fecha final"
+              (change)="fechasVerificar(2)">
+              <app-validacion [validacion]="'required'" [texto]="'La fecha final de la vigencia es requerida.'"
+                [control]="this.formExtracontractual.controls['vigenciaPolizaFinalE']" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <hr class="hr">
+  
+    
     <!-- 'AMPAROS BÁSICOS' -->
-    <div class="clasificacion d-flex w-100">
-      <div class="mx-3">
-        <!-- <span>
-                    <img alt="" *ngIf="desplegarAmparosB2" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                    <img alt="" *ngIf="!desplegarAmparosB2" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                </span> -->
-        <span class="fs-14px fw-semibold texto-azul-004884">
-          AMPAROS BÁSICOS:
+    <div class="row ps-3 mt-3">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Amparos Básicos
         </span>
       </div>
     </div>
-    <hr class="hr">
-    <div class="w-100 overflow-auto custom-scroll"
+    
+    <div class="borderP w-100 overflow-auto custom-scroll"
       [ngClass]="{'d-none': !desplegarAmparosB2, 'd-block': desplegarAmparosB2}">
-      <div class="d-flex mx-3 mb-3">
-        <div class="col-12">
-          <div class="row mx-0 mb-3 encabezado">
-            <div class="col-4 justify-content-start">
-              <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Cobertura</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
-              <span *ngIf="obligatorio" class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
-              <span *ngIf="obligatorio" class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
-            </div>
+
+
+      <div class="row encabezado-PModalidad">
+
+        <div class="row ps-3 mx-0 mb-3 encabezado">
+          <div class="col-4 justify-content-start">
+            <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
           </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Cobertura</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div class="col-12">
           <ul>
             <li class="row mx-0 mb-3" id="1">
               <div class="col-4 justify-content-start" name="descripcion">
@@ -980,43 +1024,43 @@
         </div>
       </div>
     </div>
-    <hr class="hr">
+    
     <!-- 'AMPAROS ADICIONALES' -->
-    <div class="clasificacion d-flex w-100">
-      <div class="mx-3">
-        <!-- <span>
-                    <img alt="" *ngIf="desplegarAmparosA2" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
-                    <img alt="" *ngIf="!desplegarAmparosA2" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-                </span> -->
-        <span class="fs-14px fw-semibold texto-azul-004884">
-          AMPAROS ADICIONALES:
+    <div class="row ps-3 mt-3">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Amparos Adicionales
         </span>
       </div>
     </div>
-    <hr class="hr">
-    <div class="w-100 overflow-auto custom-scroll"
+
+    <div class="borderP w-100 overflow-auto custom-scroll"
       [ngClass]="{'d-none': !desplegarAmparosA2, 'd-block': desplegarAmparosA2}">
-      <div class="d-flex mx-3 mb-3">
-        <div class="col-12">
-          <div class="row mx-0 mb-3 encabezado">
-            <div class="col-4 justify-content-start">
-              <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Cobertura</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
-              <span *ngIf="obligatorio" class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
-              <span *ngIf="obligatorio" class="validacion">*</span>
-            </div>
-            <div class="col-2 justify-content-start">
-              <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
-            </div>
+
+      
+      <div class="row encabezado-PModalidad">
+
+        <div class="row ps-3 mx-0 mb-3 encabezado">
+          <div class="col-4 justify-content-start">
+            <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
           </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Cobertura</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span><span class="validacion">*</span>
+          </div>
+          <div class="col-2 justify-content-start">
+            <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div class="col-12">
           <ul>
             <li class="row mx-0 mb-3" id="12">
               <div class="col-4 justify-content-start" name="descripcion">
@@ -1196,30 +1240,32 @@
         </div>
       </div>
     </div>
-    <hr class="hr">
+    
     <!-- RESPONSABILIDAD -->
-    <div class="d-flex mb-3 fondo-desplegable-azul texto-blanco">
+    <div class="d-flex mb-3 mt-4 fondo-desplegable-azulbajo colorTextazul">
       <div class="encabezado mx-3">
         ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector
           Transporte?
       </div>
       <div class="row">
-        <div class="col-1 mx-3 texto">
+        <div class="col-1 mx-3 colorTextazul">
           <input type="checkbox" title="Si" formControlName="checkResponsabilidadE"
             (change)="DesplegarFondoResponsabilidad(2)">SI
         </div>
-        <div class="col-1 mx-3 texto">
+        <div class="col-1 mx-3 colorTextazul">
           <input type="checkbox" title="No" formControlName="checkNoResponsabilidadE"
             (change)="respuestaNoResponsabilidad(2)">NO
         </div>
       </div>
     </div>
     <div *ngIf="fondoResponsabilidadE" class="row d-flex mx-3 mb-3">
-      <div class="clasificacion d-flex w-100 mb-3 texto-azul-004884">
-        <span class="fs-14px fw-semibold centrar">
-          INFORMACIÓN SOBRE EL FONDO DE RESPONSABILIDAD
-        </span>
-      </div>
+      <div class="row ps-3 mt-3">
+        <div class="col-12 d-flex py-2">
+          <span class="SubtituloP  texto-azul-004884">
+            Información sobre el fondo de responsabilidad
+          </span>
+        </div>
+      </div> 
       <div class="d-flex w-100 mb-3">
         <div class="encabezado col-12">
           <div class="row mx-0 mb-3">
@@ -1348,50 +1394,67 @@
         </div>
       </div>
     </div>
-    <hr class="hr">
+
     <!-- ARCHIVO ESTRUCTURA -->
-    <div>
-      <span class="fs-14px fw-semibold texto-azul-004884 mx-3">
-        CARGAR ARCHIVOS
-      </span>
+    <div class="row ps-3 mt-3">
+      <div class="col-12 d-flex py-2">
+        <span class="SubtituloP  texto-azul-004884">
+          Cargar Archivos
+        </span>
+      </div>
     </div>
-    <hr class="hr">
-    <div class="d-flex mx-3 mb-3">
-      <div class="col-2 mx-3 mb-3">
-        <label>Descargar estructura</label>
-        <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
-          Descargar
-        </button>
+
+    <div class="borderP">
+      <div class="row encabezado-PModalidad">
+
+        <div class="col-3 mx-3 mb-3 justify-content-start">
+          <span class="fs-14px">Descargar estructura</span>
+        </div>
+        <div class="col-3 mx-3 mb-3 justify-content-start">
+          <label>Cargar el Excel, tamaño máximo 20MB</label><span *ngIf="obligatorio" class="validacion">*</span>
+        </div>
+        <div class="col-4 mx-3 mb-3 justify-content-start">
+          <label>Cargar clausulado y caratula en PDF, tamaño máximo 20MB</label><span *ngIf="obligatorio" class="validacion">*</span>
+        </div>
       </div>
-      <div class="col-4 mx-3 mb-3">
-        <label>Cargar el Excel, tamaño máximo 20MB</label><span *ngIf="obligatorio" class="validacion">*</span>
-        <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" formControlName="cargarExcel"
-          (change)="cargarArchivoXLSX($event,2)">
-        <app-validacion [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'"
-          [control]="this.formExtracontractual.controls['cargarExcel']" />
-      </div>
-      <div class="col-5 mx-3 mb-3">
-        <label>Cargar clausulado y caratula en PDF, tamaño máximo 20MB</label><span *ngIf="obligatorio" class="validacion">*</span>
-        <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" formControlName="cargarPDF"
-          (change)="cargarArchivoPDf($event,2)">
-        <app-validacion [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'"
-          [control]="this.formExtracontractual.controls['cargarPDF']" />
+      <div class="d-flex mx-3 mb-3">
+        <div class="col-2 mx-3 mb-3">
+          
+          <button type="button" class="btn btn-primary" (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
+            Descargar
+          </button>
+        </div>
+        <div class="col-4 mx-3 mb-3">
+          
+          <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" formControlName="cargarExcel"
+            (change)="cargarArchivoXLSX($event,2)">
+          <app-validacion [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'"
+            [control]="this.formExtracontractual.controls['cargarExcel']" />
+        </div>
+        <div class="col-5 mx-3 mb-3">
+          
+          <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" formControlName="cargarPDF"
+            (change)="cargarArchivoPDf($event,2)">
+          <app-validacion [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'"
+            [control]="this.formExtracontractual.controls['cargarPDF']" />
+        </div>
       </div>
     </div>
   </div>
+
 </form>
 
 <div class="p-5 pt-0">
-  <hr>
-  <div class="row">
+  
+  <div class="row mt-4">
     <div class="col-6">
-      <div class="text-center">
+      <div class="text-end">
         <button class="btn btn-primary" type="button" (click)="guardarPolizas()"
           [disabled]="deshabilitado">Guardar</button>
       </div>
     </div>
     <div class="col-6">
-      <div class="text-center">
+      <div class="text-left">
         <button class="btn btn-primary" type="button" (click)="finalizar()" [disabled]="deshabilitado">Ir a
           modalidades</button>
       </div>
@@ -1399,6 +1462,22 @@
   </div>
 
 </div>
+</div>
+<!--FOOTER -->
+<div class="footerP ">
+  <nav class="navbar w-100 ps-5 ">
+    <div class="container-fluid d-flex">
+      <div class="logo logosuperP">
+        <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
+        <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
+      </div>
+      
+      <!--
+      <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
+        <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
+      </div> -->
+    </div>
+  </nav>
 </div>
 <app-modal-capacidad #modalCapacidad></app-modal-capacidad>
 <app-popup #popup />
