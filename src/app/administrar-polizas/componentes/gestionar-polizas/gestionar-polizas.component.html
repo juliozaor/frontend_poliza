@@ -1,18 +1,22 @@
 <div class="mt-4 px-sm-3 px-md-4 px-lg-5">
-  <h1 class="h1-tipografia-govco texto-primario">Gestionar Pólizas</h1>
+  <div class="py-2">
+    <span class="TamTituloP texto-azul-004884">
+      Gestionar Pólizas
+    </span>
+  </div>
   <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
   <div>
-    <table class="table tabla-primaria" aria-describedby="table-basic">
+    <table class="table tabla-primaria borderP" aria-describedby="table-basic">
       <thead class="encabezado-tabla" id="cabezera-tabla">
         <tr>
-          <th scope="col">TIPO DE PÓLIZA</th>
-          <th scope="col">N° DE PÓLIZA</th>
-          <th scope="col">ESTADO PÓLIZA</th>
-          <th scope="col">FECHA CARGUE</th>
-          <th scope="col">VIGENCIA - FECHA INICIO</th>
-          <th scope="col">VIGENCIA - FECHA FIN</th>
-          <th scope="col">ASEGURADORA</th>
-          <th scope="col">CANTIDAD DE VEHÍCULOS</th>
+          <th scope="col">Tipo Póliza</th>
+          <th scope="col">N° de Póliza</th>
+          <th scope="col">Estado Póliza</th>
+          <th scope="col">Fecha Cargue</th>
+          <th scope="col">Vigencia - Fecha Inicio</th>
+          <th scope="col">Vigencia - Fecha Fin</th>
+          <th scope="col">Aseguradora</th>
+          <th scope="col">Cantidad de Vehiculos</th>
         </tr>
       </thead>
       <tbody class="contenido-tablas">
@@ -32,7 +36,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-center">
       <ngb-pagination [collectionSize]="this.paginador.totalRegistros ?? 0" [page]="this.paginador.pagina"
         [pageSize]="paginador.limite" [directionLinks]="true" [maxSize]="5"
         (pageChange)="this.paginador.cambiarPagina($event)">
@@ -45,12 +49,12 @@
   </div>
     <!--///////////////////////////// Tabla para ver la cantidad de vehiculos ///////////////////////////////////////////////// -->
     <div>
-      <table class="table tabla-primaria" aria-describedby="table-basic">
+      <table class="table tabla-primaria " aria-describedby="table-basic">
         <thead class="encabezado-tabla" id="cabezera-cantidad-vehiculos">
           <tr>
-            <th scope="col">TOTAL DE VEHÍCULOS ACTIVOS</th>
-            <th scope="col">TOTAL DE PÓLIZAS CONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
-            <th scope="col">TOTAL DE PÓLIZAS EXTRACONTRACTUALES <br>DE VEHÍCULOS ACTIVOS</th>
+            <th scope="col">Total de vehículos activos</th>
+            <th scope="col">Total de pólizas contractuales <br>de vehículos activos</th>
+            <th scope="col">Total de pólizas extracontractuales <br>de vehículos activos</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
@@ -67,7 +71,7 @@
     <table class="table table-response" aria-describedby="tableDescResponsive">
       <tbody>
         <tr>
-          <th scope="col">PÓLIZA</th>
+          <th scope="col">Póliza</th>
           <td>{{numeroPoliza}}</td>
         </tr>
       </tbody>
@@ -79,7 +83,7 @@
               <div class="borderP mt-1 tabla-informacionP w-100 table-responsiveP">
                   <div class="row encabezado-PModalidad borderP">
                     <div class="col-12 d-flex ">
-                      <h2 class="fs-14px fw-semibold texto-azul-004884 aligPModalidad">DATOS DE MODALIDAD</h2>
+                      <h2 class="fs-14px fw-semibold texto-azul-004884 aligPModalidad">Datos de modalidad</h2>
                     </div>
                   </div>
                   <div class="row py-2 alingFilaP">
@@ -118,12 +122,12 @@
         <table class="table table-adaptative">
           <thead class="encabezado-tabla">
             <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
-              <th colspan="2">VINCULAR VEHÍCULO</th>
+              <th colspan="2">Vincular Vehículo</th>
               <th><button type="button" class="btn-govco fill-btn-govco" [disabled]="!esValido || !estadoPoliza" (click)="limpiarFormulario()">Limpiar</button></th>
             </tr>
             <tr class="w-100" style="display: flex; justify-content: space-around;">
-              <th scope="col">PLACA</th>
-              <th scope="col">CANTIDAD DE PASAJEROS</th>
+              <th scope="col">Placa</th>
+              <th scope="col">Cantidad de pasajeros</th>
             </tr>
           </thead>
           <tbody *ngFor="let vehiculo of vehiculos2; let i = index" class="contenido-tablas">
@@ -199,21 +203,21 @@
       <table class="table tabla-primaria" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
           <tr>
-            <th colspan="6" style="text-align: center !important;">NOVEDADES PÓLIZAS</th>
+            <th colspan="6" style="text-align: center !important;">Novedades Pólizas</th>
           </tr>
           <tr>
-            <th scope="col">TIPO DE PÓLIZA</th>
-            <th scope="col">N° DE PÓLIZA</th>
-            <th scope="col">PLACA</th>
-            <th scope="col">FECHA ACTUALIZACIÓN</th>
-            <th scope="col">ESTADO</th>
-            <th scope="col">OBSERVACIÓN</th>
+            <th scope="col">Tipo de póliza</th>
+            <th scope="col">N° de póliza</th>
+            <th scope="col">Placa</th>
+            <th scope="col">Fecha de actualización</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Observación</th>
           </tr>
         </thead>
         <tbody id="tabla-primaria-border" class="contenido-tablas">
           <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
-            <td *ngIf="novedad.tipoPoliza == 1">RESPONSABILIDAD CIVIL CONTRACTUAL</td>
-            <td *ngIf="novedad.tipoPoliza == 2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</td>
+            <td *ngIf="novedad.tipoPoliza == 1">Responsabilidad civil contractual</td>
+            <td *ngIf="novedad.tipoPoliza == 2">Responsabilidad civil Eontractual</td>
             <td>{{novedad.poliza}}</td>
             <td>{{novedad.placa}}</td>
             <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
@@ -222,7 +226,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-center">
         <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
           [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite" [directionLinks]="true"
           [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
@@ -235,5 +239,22 @@
     </div>
   </div>
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
+  
   <app-popup #popup />
+</div>
+<!--FOOTER -->
+<div class="footerP ">
+  <nav class="navbar w-100 ps-5 ">
+    <div class="container-fluid d-flex">
+      <div class="logo logosuperP">
+        <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
+        <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
+      </div>
+      
+      <!--
+      <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
+        <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
+      </div> -->
+    </div>
+  </nav>
 </div>
