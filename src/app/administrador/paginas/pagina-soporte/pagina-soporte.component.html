@@ -1,10 +1,12 @@
 <div class="p-5">
     <div class="contenedor-formulario mx-auto">
-        <h3 class="fw-semibold texto-azul-004884 mb-3">Solicitud de soporte</h3>
-        <hr>
-        <div class="d-flex align-items-center justify-content-center mb-3">
-            <button class="boton primario relleno" (click)="crearSoporte()">Guardar</button>
+        <div class="py-2 centrado row-2">
+            <span class="TamTituloP centrado">
+                Solicitud de soporte
+            </span> 
         </div>
+       
+        <hr class="hr1">
         <form [formGroup]="formulario">
             <div class="row mb-3">
                 <div class="col-2">
@@ -46,36 +48,25 @@
                         <div class="col-2">
                             <span>Evidencia <span class="validacion">*</span></span>
                         </div>
-                        <div class="col-5">
+                        <div class="col-8">
                             <app-input-archivo
                             (excedeTamano)="manejarExcedeTamanio()"
                             [tamanoMaximoMb]="7" 
                             [nombre]="'evidencia'"
                             [acepta]="['.pdf', '.docx', '.jpg', '.jpge', '.png']" 
                             formControlName="adjunto" />
-                            <span class="fw-semibold fs-12px">Máximo 7 Mb</span> <br> 
-                            <span class="fs-12px">(PDF, documento Word e imágenes)</span>
+                            
+                            <span class="fs-12px w-100">Formatos de archivo: PDF, Documentos Word e imágenes. Peso máximo: 7 MB</span>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+        <div class="d-flex align-items-center justify-content-center mb-3">
+            <button class="boton primario relleno" (click)="crearSoporte()">Guardar</button>
+        </div>        
     </div>
 </div>
 <!--FOOTER -->
-<div class="footerP">
-    <nav class="navbar w-100 ps-5 ">
-      <div class="container-fluid d-flex">
-        <div class="logo logosuperP">
-          <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
-          <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
-        </div>
-        
-        <!--
-        <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
-          <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
-        </div> -->
-      </div>
-    </nav>
-  </div>
+
 <app-popup #popup/>
