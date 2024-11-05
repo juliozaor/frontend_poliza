@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Paginacion } from '../compartido/modelos/Paginacion';
 import { FiltrarPolizas } from './modelos/FiltrosPoliza';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MenuHeaderPService } from '../services-menu-p/menu-header-p-service';
 
 @Component({
   selector: 'app-administrar-polizas',
@@ -30,6 +31,7 @@ export class AdministrarPolizasComponent implements OnInit{
     private servicioAut: AutenticacionService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private ServiceMenuP:MenuHeaderPService
   ){
     this.localStorageUsuario = servicioAut.llaveUsuarioLocalStorage
     this.formulario = this.construirFormulario()
@@ -38,6 +40,7 @@ export class AdministrarPolizasComponent implements OnInit{
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem(this.localStorageUsuario)!)
     //this.listarPolizas()
+    this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
     this.activatedRoute.queryParams.subscribe({
       next: (query)=>{
         this.paginador.inicializar(undefined, undefined, {

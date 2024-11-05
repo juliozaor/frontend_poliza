@@ -13,7 +13,6 @@ import { AlertasModule } from '../alertas/alertas.module';
 import { InputsModule } from '../inputs/inputs.module';
 import { RouterModule } from '@angular/router';
 import { TemplatesModule } from '../templates/templates.module';
-import { InicioVigia2Component } from './componentes/inicio-vigia2/inicio-vigia2.component';
 
 
 @NgModule({
@@ -21,8 +20,7 @@ import { InicioVigia2Component } from './componentes/inicio-vigia2/inicio-vigia2
     InicioSesionComponent,
     ModalRecuperacionContrasenaComponent,
     ActualizarContrasenaComponent,
-    SoporteAccesoComponent,
-    InicioVigia2Component
+    SoporteAccesoComponent
   ],
   imports: [
     CommonModule,

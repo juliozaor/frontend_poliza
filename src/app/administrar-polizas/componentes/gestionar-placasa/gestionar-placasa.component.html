@@ -1,58 +1,68 @@
 <div class="mt-3 px-sm-3 px-md-4 px-lg-5">
-  <h1 class="h1-tipografia-govco texto-primario">Gestionar placas</h1>
+  <div class="py-2">
+    <span class="TamTituloP texto-azul-004884">
+      Gestionar placas
+    </span>
+  </div>
+
   <div class="d-flex align-items-center">
     <div class="entradas-de-texto-govco">
       <label for="numeroPlaca">Digite el número de la placa a consultar</label>
-      <input type="text" id="numeroPlaca" placeholder="Digite la placa." [(ngModel)]="placa">
+      <div class="input-wrapperP">
+        <input type="text" class="inputP" id="numeroPlaca" placeholder="Digite la placa." [(ngModel)]="placa">
+        <span  class="material-symbols-outlined input-iconP bg-primary" (click)="consultarPoliza(placa)">search</span>
+      </div>
+      
     </div>
+    <!--
     <button type="button" class="btn-govco fill-btn-govco" (click)="consultarPoliza(placa)"
       style="width: 165px; height: 42px; margin-left: 1rem;">
-      Consultar
-    </button>
+      Consultar  
+    </button>-->
   </div>
   <div class="row">
     <div class="col-md-6">
-      <div class="table-responsive">
-        <table class="table tabla-primaria" aria-describedby="tableDescBasic">
-          <thead class="encabezado-tabla">
+      <div class="table-responsiveP">
+        <table class="table tabla-informacionP" aria-describedby="table-basic">
+          <thead class="encabezado-PModalidad">
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="h4-tipografia-govco texto-primario" >PÓLIZA CONTRACTUAL ( ACTUAL )</h4>
+                <h4 class="SubtituloP" >Póliza Contractual( Actual )</h4>
               </th>
             </tr>
           </thead>
-          <tbody class="contenido-tablas">
+          <tbody class="contenido-tablas negrita">
             <tr>
-              <td class="fw-semibold">placa</td>
-              <td>{{placa}}</td>
+              <td class="tdxP fw-semibold">placa</td>
+              <td class="tdxP fw-semibold">{{placa}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Póliza</td>
-              <td>{{polizas.contractual?.poliza}}</td>
+              <td class="tdxP fw-semibold">Póliza</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.poliza}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Estado de Póliza</td>
-              <td>{{polizas.contractual?.estadoPoliza}}</td>
+              <td class="tdxP fw-semibold">Estado de Póliza</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.estadoPoliza}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Fecha de cargue</td>
-              <td>{{polizas.contractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Fecha de cargue</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Vigencia - Fecha inicio</td>
-              <td>{{polizas.contractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Vigencia - Fecha Inicio</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Vigencia - Fecha fin</td>
-              <td>{{polizas.contractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Vigencia - Fecha Fin</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Aseguradora</td>
-              <td>{{polizas.contractual?.aseguradora}}</td>
+              <td class="tdxP fw-semibold">Aseguradora</td>
+              <td class="tdxP fw-semibold">{{polizas.contractual?.aseguradora}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Estado vinculación placa</td>
-              <td>
+              <td class="tdxP fw-semibold">Estado vinculación Placa</td>
+              <td  class="tdxP fw-semibold">
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.contractual?.existe">
                   <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaCont" [(ngModel)]="vinculadaCont"
                   [disabled]="desVinculadaCont || !estadoPolizaCont!" (change)="estadoVinculacion(1)">
@@ -62,8 +72,8 @@
               </td>
             </tr>
             <tr>
-              <td class="fw-semibold">Observación</td>
-              <td>
+              <td class="tdxP fw-semibold">Observación</td>
+              <td class="tdxP fw-semibold">
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;" *ngIf="polizas.contractual?.existe">
                   <input type="text" id="input-basico-id" [(ngModel)]="observacionCont"
                   [disabled]="desVinculadaCont || !estadoPolizaCont!"/>
@@ -71,14 +81,14 @@
               </td>
             </tr>
             <tr>
-              <td colspan="2">
+              <td colspan="2"  class="tdxP fw-semibold">
                 <h4 class="h4-tipografia-govco">
                   {{polizas.contractual?.mensaje}}
                 </h4>
               </td>
             </tr>
             <tr>
-              <td colspan="2" class="text-center">
+              <td colspan="2" class="tdxP text-center">
                 <fieldset>
                   <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(1,polizas.contractual?.id,observacionCont!)"
                     style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaCont || !estadoPolizaCont! || estadoVinCont">
@@ -92,47 +102,51 @@
       </div>
     </div>
     <div class="col-md-6">
+      <div class="table-responsiveP">
+        <table class="table tabla-informacionP" aria-describedby="table-basic">
+          <thead class="encabezado-PModalidad">
+            <!--      
       <div class="table-responsive custom-scroll">
-        <table class="table tabla-primaria">
-          <thead class="encabezado-tabla">
+        <table class="table tabla-primaria borderP" aria-describedby="table-basic">
+          <thead class="encabezado-tabla">-->
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="h4-tipografia-govco texto-primario">PÓLIZA EXTRACONTRACTUAL ( ACTUAL )</h4>
+                <h4 class="SubtituloP">Póliza Extracontractual ( Actual )</h4>
               </th>
             </tr>
           </thead>
-          <tbody class="contenido-tablas">
+          <tbody class="contenido-tablas negrita">
             <tr>
-              <td class="fw-semibold">placa</td>
-              <td>{{placa}}</td>
+              <td class="tdxP fw-semibold ">Placa</td>
+              <td class="tdxP fw-semibold">{{placa}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Póliza</td>
-              <td>{{polizas.extraContractual?.poliza}}</td>
+              <td class="tdxP fw-semibold">Póliza</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.poliza}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Estado de Póliza</td>
-              <td>{{polizas.extraContractual?.estadoPoliza}}</td>
+              <td class="tdxP fw-semibold">Estado de Póliza</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.estadoPoliza}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Fecha de cargue</td>
-              <td>{{polizas.extraContractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Fecha de Cargue</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Vigencia - Fecha inicio</td>
-              <td>{{polizas.extraContractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Vigencia - Fecha Inicio</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Vigencia - Fecha fin</td>
-              <td>{{polizas.extraContractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+              <td class="tdxP fw-semibold">Vigencia - Fecha Fin</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Aseguradora</td>
-              <td>{{polizas.extraContractual?.aseguradora}}</td>
+              <td class="tdxP fw-semibold">Aseguradora</td>
+              <td class="tdxP fw-semibold">{{polizas.extraContractual?.aseguradora}}</td>
             </tr>
             <tr>
-              <td class="fw-semibold">Estado vinculación placa</td>
-              <td>
+              <td class="tdxP fw-semibold">Estado Vinculación Placa</td>
+              <td class="tdxP fw-semibold">
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.extraContractual?.existe">
                   <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaExtraCont"
                   [disabled]="desVinculadaExtraCont || !estadoPolizaExtraCont!"
@@ -143,8 +157,8 @@
               </td>
             </tr>
             <tr>
-              <td class="fw-semibold">Observación</td>
-              <td>
+              <td class="tdxP fw-semibold">Observación</td>
+              <td class="tdxP fw-semibold">
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;"
                   *ngIf="polizas.extraContractual?.existe">
                   <input type="text" id="input-basico-id" [(ngModel)]="observacionExtraCont"
@@ -153,7 +167,7 @@
               </td>
             </tr>
             <tr>
-              <td colspan="2">
+              <td colspan="2"  class="tdxP fw-semibold">
                 <h4 class="h4-tipografia-govco">
                   {{polizas.extraContractual?.mensaje}}
                 </h4>
@@ -175,31 +189,33 @@
     </div>
   </div>
   <!--  ////////////// TABLA DE NOVEDADES ///////////////  -->
-  <div class="d-flex">
-    <div class="table-responsive custom-scroll" style="width:1140px;">
-      <table class="table tabla-primaria">
+  <div class="d-flex w-100 py-4">
+    <div class="table-responsive custom-scroll w-100">
+      <div class="mt-2 clasificacion d-flex w-100">
+        <div class="mx-3">
+          <span class="SubtituloP">
+            Novedades Pólizas
+          </span>
+        </div>
+      </div>      
+      <table class="table w-100 borderP">
         <thead class="encabezado-tabla">
-          <tr>
-            <th colspan="7">
-              <h3 class="h3-tipografia-govco texto-primario text-center">NOVEDADES</h3>
-            </th>
-          </tr>
           <tr class="fs-14px">
             <th></th>
-            <th class="">TIPO DE PÓLIZA</th>
-            <th class="">N° DE PÓLIZA</th>
-            <th class="">PLACA</th>
-            <th class="">FECHA DE ACTUALIZACIÓN</th>
-            <th class="">ESTADO</th>
-            <th>OBSERVACIÓN</th>
+            <th class="">Tipo de Póliza</th>
+            <th class="">N° de Póliza</th>
+            <th class="">Placa</th>
+            <th class="">Fecha de Actualizacion</th>
+            <th class="">Estado</th>
+            <th>Observción</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
           <tr *ngFor="let novedad of novedadesPaginadas">
             <td></td>
             <td *ngIf="novedad.tipoPoliza">
-              <p *ngIf="novedad.tipoPoliza == 1">CONTRACTUAL</p>
-              <p *ngIf="novedad.tipoPoliza != 1 && novedad.tipoPoliza == 2">EXTRACONTRACTUAL</p>
+              <p *ngIf="novedad.tipoPoliza == 1">Contractual</p>
+              <p *ngIf="novedad.tipoPoliza != 1 && novedad.tipoPoliza == 2">Extracontractual</p>
             </td>
             <td>{{novedad.poliza}}</td>
             <td>{{novedad.placa}}</td>
@@ -209,7 +225,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-center">
         <ngb-pagination [collectionSize]="this.paginadorNovedades.totalRegistros"
           [page]="this.paginadorNovedades.pagina" [pageSize]="paginadorNovedades.limite" [directionLinks]="true"
           [maxSize]="5" (pageChange)="cambiarPaginaNovedades($event)">
@@ -222,25 +238,27 @@
     </div>
   </div>
   <!--  ////////////// TABLA DE HISTORIAL ///////////////  -->
-  <div class="d-flex">
-    <div class="table-responsive custom-scroll">
-      <table class="table tabla-primaria">
+  <div class="d-flex w-100">
+    <div class="table-responsive custom-scroll w-100">
+      <div class="mt-2 clasificacion d-flex w-100">
+        <div class="mx-3">
+          <span class="SubtituloP">
+            Historia de pólizas
+          </span>
+        </div>
+      </div>      
+      <table class="table borderP">
         <thead class="encabezado-tabla">
-          <tr>
-            <th colspan="10">
-              <h3 class="h3-tipografia-govco texto-primario text-center">HISTORIAL DE PÓLIZAS</h3>
-            </th>
-          </tr>
           <tr class="fs-14px">
             <th></th>
-            <th class="">TIPO DE PÓLIZA</th>
-            <th class="">N° DE PÓLIZA</th>
-            <th class="">PLACA</th>
-            <th class="">ESTADO</th>
-            <th class="">FECHA DE CARGUE</th>
-            <th>VIGENCIA - FECHA DE INICIO</th>
-            <th>VIGENCIA - FECHA FINAL</th>
-            <th>ASEGURADORA</th>
+            <th class="">Tipo de Póliza</th>
+            <th class="">N° de Póliza</th>
+            <th class="">Placa</th>
+            <th class="">Estado</th>
+            <th class="">Fecha de Cargue</th>
+            <th>Vigencia - Fecha de Inicio</th>
+            <th>Vigencia - Fecha Final</th>
+            <th>Aseguradora</th>
             <th></th>
           </tr>
         </thead>
@@ -259,7 +277,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-center">
         <ngb-pagination [collectionSize]="this.paginadorHistorial.totalRegistros"
           [page]="this.paginadorHistorial.pagina" [pageSize]="paginadorHistorial.limite" [directionLinks]="true"
           [maxSize]="5" (pageChange)="cambiarPaginaHistorial($event)">
@@ -273,4 +291,5 @@
   </div>
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
 </div>
+
 <app-popup #popup></app-popup>

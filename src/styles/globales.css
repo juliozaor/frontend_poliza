@@ -8,8 +8,13 @@
 }
 body{
     background-color: #FFF;
+    position: relative;
 }
-
+.htmlP{
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 77px;
+}
 h1,h2,h3,h4,h5,h6{
   font-weight: 600;
   color: var(--azul-oscuro);
@@ -365,6 +370,25 @@ h1,h2{
 .borderP
 {
   border: 2px solid #E6EFFD !important;
+  
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.borderxyP
+{
+  border: 2px solid #E6EFFD !important;  
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px 5px 0px 0px;
+  opacity: 1;
+}
+.borderyxP
+{
+  border: 2px solid #E6EFFD !important;  
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius:  0px 0px 5px 5px;
+  opacity: 1;
 }
 
 .encabezado-PModalidad {
@@ -387,4 +411,207 @@ h1,h2{
 .msjCkpModalidadP
 {
   font-size: x-small;
+}
+
+.colorUserP{
+
+  color: white;
+  }
+  
+  .escudoGoP
+  {
+  height: 45px;
+  }
+  
+  .navbar{
+    position: relative;
+    height: var(--alto-barra-navegacion);
+    z-index: var(--z-index-barra-navegacion);
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: var(--azul-cabecera);
+    height: 77px;
+  }
+  
+  .TamTituloP{
+    top: 356px;
+    left: 104px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal bold 32px/16px Montserrat;
+    letter-spacing: 0px;
+    color: #004884;
+    opacity: 1;
+  
+  }
+  .SubtituloP{
+    top: 435px;
+    left: 114px;
+    /* UI Properties */
+    text-align: left;
+    font: normal normal bold 20px/20px Montserrat;
+    letter-spacing: 0px;
+    color: #004884;
+    opacity: 1;
+  }
+  .colorTextazul{
+    color: #004884;
+    font: normal normal bold 16px/16px Work Sans;
+   
+  }
+  .fondo-desplegable-azulbajo{
+    background-color: rgb(230, 239, 253);
+    border-radius: 10px;
+    
+  }
+
+  .AlinearAmparoP
+  {
+    margin-left: -15px;
+  }
+
+  .btnPRadiusDescaga
+  {
+    /*
+    width: 132px;
+    height: 19px;
+     UI Properties */
+    text-align: center;
+    font: normal normal normal 16px/16px Montserrat;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    background: #3366CC 0% 0% no-repeat padding-box;
+    border-radius: 22px;
+  }
+  
+  .tdyP
+  {
+      border-right: 1px solid #dcdcdc;
+      
+  }
+  .tdxP
+  {
+      border-bottom: 1px solid #dcdcdc;
+      
+  }
+  .encabezado-tabla{
+    background: #E6EFFD 0% 0% no-repeat padding-box;
+    /*border-radius: 5px 5px 0px 0px;*/
+    color: #004884;
+    padding: 12px 15px;
+    text-align: center;
+    vertical-align: middle;   
+    font: normal normal bold 16px/16px Montserrat;
+    letter-spacing: 0px;    
+  }
+  .negrita{
+    text-align: left;
+  font: normal normal bold 16px/16px 'Work Sans';
+  letter-spacing: 0px;
+  color: #4B4B4B;
+  text-transform: capitalize;
+  opacity: 1;
+  }
+  
+  .hr1{
+    border: 1px solid #707070;
+    opacity: 1;
+  }
+  .centrado{
+    text-align: center  !important;
+  }
+  
+.navbar{
+  position: relative;
+  height: var(--alto-barra-navegacion);
+  z-index: var(--z-index-barra-navegacion);
+  box-shadow: 0px 3px 6px #00000029;
+  background-color: var(--azul-cabecera);
+  height: 77px;
+}
+
+.izq{
+  text-align: left;
+}
+.footerP
+{
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+/*04-11-2024*/
+.input-wrapperP {
+  position: relative;
+ 
+}
+.inputP {
+  box-sizing: border-box;
+  
+  padding: 15px 15px 15px 35px;
+  width: 100%;
+  border-radius: 21px !important;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 0.5px solid #4B4B4B; 
+  opacity: 1;
+ 
+}
+.input-iconP {
+  color: #ffffff;
+  position: absolute;
+  margin-top: -4px;
+  width: 37px;
+  height: 37px;
+  right: 2px;
+  top: 50%;
+  border-radius: 21px;
+  transform: translateY(-50%);
+  align-content: center;
+  text-align: center;
+}
+.table-responsiveP {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 5px;
+  /* border: solid 0.1px var(--azul-claro); */
+  box-shadow: 0px 3px 6px #00000029;
+}
+
+.tabla-linea-topP
+{
+  border-top: 1px solid #dcdcdc;
+}
+
+.buttonDerechaP
+{
+  margin-right: 50px;
+}
+
+
+/*
+.encabezado-tabla{
+  background-color: #E6EFFD !important;
+  color: #004884;
+  padding: 12px 15px;
+  vertical-align: middle;
+}*/
+.encabezado-tabla{
+  background: #E6EFFD 0% 0% no-repeat padding-box;
+  /*border-radius: 5px 5px 0px 0px;*/
+  color: #004884;
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;   
+  font: normal normal bold 16px/16px Montserrat;
+  letter-spacing: 0px;    
+}
+.tabla-informacionP td, .tabla-informacionP th{
+  /*border: 1px solid gainsboro;*/
+  padding: 7px 10px;
+ /* border: solid 0.1px var(--azul-claro); */
+}
+.tabla-informacionP th{
+  font-weight: 600;
+  background-color: var(--azul-claro);
+  color: var(--azul-oscuro);
+ /* border: solid 0.1px var(--azul-claro); */
+  
 }

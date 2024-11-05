@@ -18,7 +18,6 @@ import { PolizasExtracontractualesComponent } from './administrar-polizas/compon
 import { PolizasComponent } from './administrar-polizas/componentes/polizas/polizas.component';
 import { GestionarPlacasaComponent } from './administrar-polizas/componentes/gestionar-placasa/gestionar-placasa.component';
 import { GestionarPolizasComponent } from './administrar-polizas/componentes/gestionar-polizas/gestionar-polizas.component';
-import { InicioVigia2Component } from './autenticacion/componentes/inicio-vigia2/inicio-vigia2.component';
 
 
 
@@ -83,8 +82,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'inicio-vigia2',
-    component: InicioVigia2Component
+    path: 'inicio-sesion',
+    component: InicioSesionComponent
   },
   {
     path: 'actualizar-contrasena',
@@ -97,7 +96,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'inicio-vigia2'
+    redirectTo: 'inicio-sesion'
   }
 ];
 
