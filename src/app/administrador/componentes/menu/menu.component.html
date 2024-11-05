@@ -1,6 +1,6 @@
 <nav class="menu d-flex" *ngIf="this.rol && this.rol.modulos">
   <ul class="modulos">
-    <li [routerLinkActive]="'ActiveLinkP'" class="modulo" *ngFor="let modulo of this.rol.modulos">
+    <li [routerLinkActive]="'activo'" class="modulo" *ngFor="let modulo of this.rol.modulos">
       <span class="nombre-modulo" routerLink="/administrar{{modulo.ruta}}">{{modulo.nombre}}</span>
       <ul class="submodulos" *ngIf="modulo.submodulos">
         <li class="submodulo" *ngFor="let submodulo of modulo.submodulos" (click)="navegarAlSubmodulo(submodulo)">
@@ -10,28 +10,14 @@
     </li>
     <li class="modulo">
       <span class="nombre-modulo">Seguridad</span>
-      <ul class="submodulos borderMenu">
+      <ul class="submodulos">
         <li class="submodulo" (click)="cerrarSesion()" style="width: 110px;">
-          <span class="nombre-submodulo">Salir</span>
+          <span class="nombre-submodulo">Cerrar PÓLIZA</span>
         </li>
       </ul>
     </li>
   </ul>
-  
-  
+  <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
+    <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
+  </div>
 </nav>
-
-
-<div class="frajaP d-flex ps-4">
-  <h1 class="ciglaSistemaP alinh1P">PÓLIZAS</h1>
-</div>
-<div class="frajaP2 d-flex"></div>
-
-<div class="d-flex ps-4 pt-2" *ngIf="(MostrarNombrePanP() !='')">
-  <nav class="inicioMigaPanP" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item migaPanP" routerLink="/administrar/crear-polizas" aria-current="page">Póliza</li>    
-        <li class="breadcrumb-item migaPanP active" routerLink="{{ServiceMenuP.RutaModelo}}" aria-current="page">{{MostrarNombrePanP()}}</li>
-    </ol>
-  </nav>
-</div>

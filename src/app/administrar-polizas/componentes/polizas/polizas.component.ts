@@ -17,7 +17,6 @@ import { negativoValidar } from './validadores/negativo-verificar';
 import { tamanioValido } from './validadores/tamanio-archivo-validar';
 import { fechaValida } from './validadores/fecha-validador';
 import { ModalidadesPModel } from '../../modelos/modalidades';
-import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
 
 @Component({
   selector: 'app-polizas',
@@ -66,7 +65,7 @@ export class PolizasComponent implements OnInit {
   formContractual: FormGroup;
   formExtracontractual: FormGroup;
 
-  constructor(private ServiceMenuP:MenuHeaderPService,
+  constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
   ) {
     //-- Formulario Responsabilidad contractual
@@ -210,7 +209,6 @@ export class PolizasComponent implements OnInit {
     //this.deshabilitarFormularios()
     this.obtenerAseguradora()
     this.ListarModalidadesP()
-    this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
     /**codigo paolo */
 
     /**fin de Paolo */

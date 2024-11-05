@@ -1,18 +1,7 @@
 <nav class="navbar w-100 ps-5">
-  <div class="container-fluid d-flex">
-    <div class="logo logosuperP">
-      <img class="img-fluid" src="assets/img/cabecera/gov.png" alt="">
+    <div class="container-fluid d-flex">
+      <div class="logo">
+        <img class="img-fluid" src="assets/img/cabecera/gov.png" alt="">
+      </div>
     </div>
-    <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="nombre">
-        <span class="fs-12px p-3 cursor-pointer colorUserP">{{ nombre }}</span>
-        <span class="material-symbols-outlined">
-          account_circle
-        </span>
-        
-    </div>
-    <!--
-    <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
-      <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
-    </div> -->
-  </div>
 </nav>
