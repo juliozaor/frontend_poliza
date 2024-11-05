@@ -11,23 +11,23 @@
       </div>
         <form >
             <!-- Modal MX -->
-            <div *ngIf="modalidades[0].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarMX()">
+            <div *ngIf="modalidades[0].estado" class="encabezado-PModalidad SubtituloP clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul mb-3" (click)="alternarDesplegarMX()">
                     <div class="mx-3">
                         <span>
                             <img alt="" *ngIf="desplegarMX" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
                             <img alt="" *ngIf="!desplegarMX" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
                         </span>
-                        <span class="fs-14px fw-semibold texto">
+                        <span class="fs-14px fw-semibold texto ">
                             {{modalidades[0].nombre}}
                         </span>
                     </div>
             </div>
-            <div *ngIf="modalidades[0].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarMX, 'd-block': desplegarMX}">
-                <form [formGroup]="formMX">
-                    <div class="col-12">
+            <div *ngIf="modalidades[0].estado" class="d-flex w-100 mb-3" [ngClass]="{'d-none': !desplegarMX, 'd-block': desplegarMX}">
+                <form [formGroup]="formMX" class="w-100">
+                    <div class="col-12 " >
                             <div class="row">
-                                <fieldset>
-                                    <label for="numeroResolucionVigente" class="fw-semibold">
+                                <fieldset class="">
+                                    <label for="numeroResolucionVigente" class="fs-14px">
                                         Número de resolución vigente
                                     </label>
                                     <input title="número resolución" type="number" class="form-control"
@@ -43,7 +43,7 @@
                             </div>
                             <div class="row">
                                 <fieldset>
-                                    <label for="fechaResolucionVigente" class="fw-semibold">
+                                    <label for="fechaResolucionVigente" class="fs-14px">
                                         Fecha de la resolución vigente
                                     </label>
                                     <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRMX"
@@ -57,9 +57,10 @@
                             </div>
                             <div class="row">
                                 <fieldset>
-                                    <label for="PDFResolucionVigente" class="fw-semibold">
+                                    <label for="PDFResolucionVigente" class="fs-14px">
                                       Resolución (PDF, tamaño máximo 5MB)
                                     </label>
+                                    <!--
                                     <input title="PDF resolución" type="file" class="form-control"
                                     formControlName="PDFRMX" accept=".pdf" maxlength="1"
                                     (change)="cargarArchivoPDf($event,1)">
@@ -68,13 +69,19 @@
                                     [texto]="'El documento es requerido.'"
                                     [control]="this.formMX.controls['PDFRMX']"
                                     />
+                                -->
+
+                                    <app-input-archivo formControlName="PDFRMX" [acepta]="['.pdf']" [nombre]="'PDFRMX'" [tamanoMaximoMb]="5" />
+                                    <app-validacion [control]="this.formMX.controls['PDFRMX']"
+                                      [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
+                      
                                 </fieldset>
                             </div>
                     </div>
                 </form>
             </div>
             <!--  Modal ES -->
-            <div *ngIf="modalidades[1].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarES()">
+            <div *ngIf="modalidades[1].estado" class="encabezado-PModalidad SubtituloP clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul mb-3" (click)="alternarDesplegarES()">
                 <div class="mx-3">
                     <span>
                         <img alt="" *ngIf="desplegarES" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
@@ -85,12 +92,12 @@
                     </span>
                 </div>
             </div>
-            <div *ngIf="modalidades[1].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarES, 'd-block': desplegarES}">
-                <form [formGroup]="formES">
+            <div *ngIf="modalidades[1].estado" class="d-flex w-100 mb-3" [ngClass]="{'d-none': !desplegarES, 'd-block': desplegarES}">
+                <form [formGroup]="formES"  class="w-100">
                     <div class="col-12">
                         <div class="row">
                             <fieldset>
-                                <label for="numeroResolucionVigente" class="fw-semibold">
+                                <label for="numeroResolucionVigente" class="fs-14px">
                                     Número de resolución vigente
                                 </label>
                                 <input title="número resolución" type="number" class="form-control"
@@ -106,7 +113,7 @@
                         </div>
                         <div class="row">
                             <fieldset>
-                                <label for="fechaResolucionVigente" class="fw-semibold">
+                                <label for="fechaResolucionVigente" class="fs-14px">
                                     Fecha de la resolución vigente
                                 </label>
                                 <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRES"
@@ -120,9 +127,14 @@
                         </div>
                         <div class="row">
                             <fieldset>
-                                <label for="PDFResolucionVigente" class="fw-semibold">
+                                <label for="PDFResolucionVigente" class="fs-14px">
                                   Resolución vigente (PDF, tamaño máximo 5MB)
                                 </label>
+
+                                <app-input-archivo formControlName="PDFRES" [acepta]="['.pdf']" [nombre]="'PDFRES'" [tamanoMaximoMb]="5" />
+                                <app-validacion [control]="this.formES.controls['PDFRES']"
+                                  [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
+                                <!--
                                 <input title="PDF resolución" type="file" class="form-control"
                                 formControlName="PDFRES" accept=".pdf" maxlength="1"
                                 (change)="cargarArchivoPDf($event,2)">
@@ -131,13 +143,14 @@
                                     [texto]="'El documento requerido.'"
                                     [control]="this.formES.controls['PDFRES']"
                                     />
+                                -->
                             </fieldset>
                         </div>
                     </div>
                 </form>
             </div>
              <!-- Modal PC  -->
-            <div *ngIf="modalidades[2].estado" class="clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul texto-blanco mb-3" (click)="alternarDesplegarPC()">
+            <div *ngIf="modalidades[2].estado" class="encabezado-PModalidad SubtituloP clasificacion d-flex w-100 cursor-pointer fondo-desplegable-azul mb-3" (click)="alternarDesplegarPC()">
                 <div class="mx-3">
                     <span>
                         <img alt="" *ngIf="desplegarPC" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
@@ -148,12 +161,12 @@
                     </span>
                 </div>
             </div>
-            <div *ngIf="modalidades[2].estado" class="d-flex w-100 overflow-auto mb-3" [ngClass]="{'d-none': !desplegarPC, 'd-block': desplegarPC}">
-                <form [formGroup]="formPC">
+            <div *ngIf="modalidades[2].estado" class=" d-flex w-100  mb-3" [ngClass]="{'d-none': !desplegarPC, 'd-block': desplegarPC}">
+                <form [formGroup]="formPC"  class="w-100">
                     <div class="col-12">
                         <div class="row">
                             <fieldset>
-                                <label for="numeroResolucionVigente" class="fw-semibold">
+                                <label for="numeroResolucionVigente" class="fs-14px">
                                     Número de resolución vigente
                                 </label>
                                 <input title="número resolución" type="number" class="form-control"
@@ -169,7 +182,7 @@
                         </div>
                         <div class="row">
                             <fieldset>
-                                <label for="fechaResolucionVigente" class="fw-semibold">
+                                <label for="fechaResolucionVigente" class="fs-14px">
                                     Fecha de la resolución vigente
                                 </label>
                                 <input title="fecha resolución" type="date" class="form-control" formControlName="fechaRPC"
@@ -183,9 +196,14 @@
                         </div>
                         <div class="row">
                                 <fieldset>
-                                <label for="PDFResolucionVigente" class="fw-semibold">
+                                <label for="PDFResolucionVigente" class="fs-14px">
                                   Resolución (PDF, tamaño máximo 5MB)
                                 </label>
+                                <app-input-archivo formControlName="PDFRPC" [acepta]="['.pdf']" [nombre]="'PDFRPC'" [tamanoMaximoMb]="5" />
+                                <app-validacion [control]="this.formPC.controls['PDFRPC']"
+                                  [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
+
+                                <!--
                                 <input title="PDF resolución" type="file" class="form-control"
                                 formControlName="PDFRPC" accept=".pdf" maxlength="1"
                                 (change)="cargarArchivoPDf($event,3)">
@@ -194,6 +212,7 @@
                                         [texto]="'El documento es requerido.'"
                                         [control]="this.formPC.controls['PDFRPC']"
                                         />
+                                -->
                             </fieldset>
                         </div>
                     </div>
@@ -205,7 +224,7 @@
         <div class="d-flex justify-content-end">
             <button type="button" class="boton primario relleno"
             (click)="guardarCapacidades()">
-              <span class="fw-semibold">Enviar a ST</span>
+              <span class="fw-semibold">Enviar</span>
             </button>
           </div>
     </div>

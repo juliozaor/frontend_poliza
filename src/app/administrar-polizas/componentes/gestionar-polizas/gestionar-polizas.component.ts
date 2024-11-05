@@ -11,6 +11,7 @@ import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 import { ModalidadesPModel } from 'src/app/administrar-polizas/modelos/modalidades';
+import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -62,12 +63,14 @@ export class GestionarPolizasComponent implements OnInit {
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
+    private ServiceMenuP:MenuHeaderPService,
     private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
+    this.ServiceMenuP.RutaModelo='/gestionar-polizas' //paolo
   }
 
   agregarVehiculoForm(): void {

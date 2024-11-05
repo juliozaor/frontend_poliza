@@ -7,8 +7,9 @@
   <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
   <div>
     <table class="table tabla-primaria borderP" aria-describedby="table-basic">
-      <thead class="encabezado-tabla" id="cabezera-tabla">
-        <tr>
+      <thead class="encabezado-tabla">
+ <!--       <thead class="encabezado-tabla" id="cabezera-tabla"> -->
+          <tr>
           <th scope="col">Tipo Póliza</th>
           <th scope="col">N° de Póliza</th>
           <th scope="col">Estado Póliza</th>
@@ -21,18 +22,18 @@
       </thead>
       <tbody class="contenido-tablas">
         <tr *ngFor="let poliza of polizas; let i = index">
-          <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
+          <td class="pointer tdxP" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
             {{poliza.tipoPoliza}}
           </td>
-          <td class="pointer" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
+          <td class="pointer tdxP" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
             {{poliza.poliza}}
           </td>
-          <td>{{poliza.estadoPoliza}}</td>
-          <td>{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
-          <td>{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
-          <td>{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
-          <td>{{poliza.aseguradora}}</td>
-          <td class="center">{{poliza.cantidadVehiculos}}</td>
+          <td class=" tdxP">{{poliza.estadoPoliza}}</td>
+          <td class=" tdxP">{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
+          <td class=" tdxP">{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
+          <td class=" tdxP">{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+          <td class=" tdxP">{{poliza.aseguradora}}</td>
+          <td class=" tdxP">{{poliza.cantidadVehiculos}}</td>
         </tr>
       </tbody>
     </table>
@@ -49,12 +50,13 @@
   </div>
     <!--///////////////////////////// Tabla para ver la cantidad de vehiculos ///////////////////////////////////////////////// -->
     <div>
-      <table class="table tabla-primaria " aria-describedby="table-basic">
+
+      <table class="table tabla-primaria borderP" aria-describedby="table-basic">
         <thead class="encabezado-tabla" id="cabezera-cantidad-vehiculos">
           <tr>
             <th scope="col">Total de vehículos activos</th>
-            <th scope="col">Total de pólizas contractuales <br>de vehículos activos</th>
-            <th scope="col">Total de pólizas extracontractuales <br>de vehículos activos</th>
+            <th scope="col">Total de Pólizas contractuales <br>de vehículos activos</th>
+            <th scope="col">Total de Pólizas extracontractuales <br>de vehículos activos</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
@@ -68,10 +70,12 @@
     </div>
   <!--///////////////////////////// Tabla para ver la poliza seleccionada ///////////////////////////////////////////////////// -->
   <div class="d-block mb-3">
-    <table class="table table-response" aria-describedby="tableDescResponsive">
+    <table class="table tabla-primaria borderP">
       <tbody>
         <tr>
-          <th scope="col">Póliza</th>
+          <th scope="col borderP encabezado-PModalidad">Póliza</th>
+        </tr>
+        <tr>
           <td>{{numeroPoliza}}</td>
         </tr>
       </tbody>
@@ -119,12 +123,15 @@
   <div class="d-flex mb-3">
     <div class="table-responsive custom-scroll">
       <form #vehiculosForm="ngForm" class="scroll-formulario">
-        <table class="table table-adaptative">
+        <div class="mt-2 clasificacion d-flex w-100">
+          <div class="mx-3">
+            <span class="SubtituloP">
+              Vincular Vehículo
+            </span>
+          </div>
+        </div>        
+        <table class="table tabla-primaria borderP">
           <thead class="encabezado-tabla">
-            <tr style="display: flex; justify-content: center; align-items: center;  text-align: center;">
-              <th colspan="2">Vincular Vehículo</th>
-              <th><button type="button" class="btn-govco fill-btn-govco" [disabled]="!esValido || !estadoPoliza" (click)="limpiarFormulario()">Limpiar</button></th>
-            </tr>
             <tr class="w-100" style="display: flex; justify-content: space-around;">
               <th scope="col">Placa</th>
               <th scope="col">Cantidad de pasajeros</th>
@@ -141,6 +148,7 @@
                        [disabled]="!vehiculo.placaValida"  (input)="limitarDigitos($event, 2)" required/>
               </td>
               <button type="button" id="eliminarInputsVehiculos" class="btn-govco fill-btn-govco" (click)="eliminarVehiculo(i)"><i class="bi bi-trash"></i></button>
+              <button type="button" class="btn-govco fill-btn-govco" [disabled]="!esValido || !estadoPoliza" (click)="limpiarFormulario()">Limpiar</button>
             </tr>
           </tbody>
           <tbody *ngIf="vehiculos2.length === 0 && estadoPoliza" class="contenido-tablas" id="arregloVehiculosVacio">
@@ -200,14 +208,18 @@
   <!--///////////////////////////// Tabla para ver las novedades de la poliza ////////////////////////////////////////////// -->
   <div class="d-flex mb-3">
     <div class="table custom-scroll">
-      <table class="table tabla-primaria" aria-describedby="table-basic">
+      <div class="mt-2 clasificacion d-flex w-100">
+        <div class="mx-3">
+          <span class="SubtituloP">
+            Novedades Pólizas
+          </span>
+        </div>
+      </div>           
+      <table class="table tabla-primaria borderP" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
           <tr>
-            <th colspan="6" style="text-align: center !important;">Novedades Pólizas</th>
-          </tr>
-          <tr>
-            <th scope="col">Tipo de póliza</th>
-            <th scope="col">N° de póliza</th>
+            <th scope="col">Tipo de Póliza</th>
+            <th scope="col">N° de Póliza</th>
             <th scope="col">Placa</th>
             <th scope="col">Fecha de actualización</th>
             <th scope="col">Estado</th>
@@ -241,20 +253,4 @@
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
   
   <app-popup #popup />
-</div>
-<!--FOOTER -->
-<div class="footerP ">
-  <nav class="navbar w-100 ps-5 ">
-    <div class="container-fluid d-flex">
-      <div class="logo logosuperP">
-        <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
-        <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
-      </div>
-      
-      <!--
-      <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
-        <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>
-      </div> -->
-    </div>
-  </nav>
 </div>
