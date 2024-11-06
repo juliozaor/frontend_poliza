@@ -26,7 +26,7 @@ export class SoportesService extends Autenticable {
     }
   ]
   private readonly host = environment.urlBackend
-  private readonly llaveLocalStorage = 'soporte'
+  private readonly llaveLocalStorage = 'soportePoliza'
 
   constructor(private http: HttpClient) {
     super()
@@ -71,7 +71,7 @@ export class SoportesService extends Autenticable {
 
   obtenerDeLocalSotrage(): Soporte | null{
     const soporte = localStorage.getItem(this.llaveLocalStorage)
-    return soporte ? JSON.parse(soporte) as Soporte : null 
+    return soporte ? JSON.parse(soporte) as Soporte : null
   }
 
   descargarArchivo(nombreArchivo: string, idSoporte: string){

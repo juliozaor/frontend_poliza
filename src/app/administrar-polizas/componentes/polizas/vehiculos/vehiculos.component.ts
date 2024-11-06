@@ -24,21 +24,21 @@ export class VehiculosComponent {
 
   constructor(
     private servicio: ServicioAdministrarPolizas,
-  ){ 
-    const Usuario = JSON.parse(localStorage.getItem('Usuario')!)
+  ){
+    const Usuario = JSON.parse(localStorage.getItem('UsuarioPoliza')!)
     this.id = Usuario.id
-   
-    this.paginador = new Paginador<FiltrosVehiculos>(this.obtenerVehiculos)    
+
+    this.paginador = new Paginador<FiltrosVehiculos>(this.obtenerVehiculos)
   }
 
   ngOnInit(): void {
     this.paginador.inicializar(this.paginaInicial, this.limiteInicial, {})
-    
+
   }
   obtenerVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
     return new Observable<Paginacion>( sub => {
       this.servicio.vehiculos(pagina, limite, filtros).subscribe({
-        next: ( respuesta:any )=>{                  
+        next: ( respuesta:any )=>{
           this.vehiculos = respuesta.placas
           sub.next(respuesta.paginacion)
         }
@@ -47,7 +47,7 @@ export class VehiculosComponent {
   }
 
   exportarVehiculos = (pagina: number, limite: number, filtros?:FiltrosVehiculos)=>{
-    
+
     this.servicio.exportar(pagina, limite, { termino: this.termino })
   }
 
