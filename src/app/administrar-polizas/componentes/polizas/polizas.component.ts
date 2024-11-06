@@ -172,6 +172,17 @@ export class PolizasComponent implements OnInit {
   isMsjmodalidad:boolean=true;
   public modalidadesP: Array<ModalidadesPModel> = [];
   AgregarModalidadP :Array<ModalidadesPModel>=[]; /**la que se tiene en cuenta las seleccionadas */
+
+  ngOnInit(): void {
+    //this.deshabilitarFormularios()
+    this.obtenerAseguradora()
+    this.ListarModalidadesP()
+    this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
+    /**codigo paolo */
+
+    /**fin de Paolo */
+  }
+
   onCheckChange(event :any) /**función seleccionar o desmarcar check */
   {
 
@@ -204,16 +215,6 @@ export class PolizasComponent implements OnInit {
 
       }
     }) ;
-  }
-
-  ngOnInit(): void {
-    //this.deshabilitarFormularios()
-    this.obtenerAseguradora()
-    this.ListarModalidadesP()
-    this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
-    /**codigo paolo */
-
-    /**fin de Paolo */
   }
 
   fechasVerificar(tipoPoliza: number){
