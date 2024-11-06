@@ -47,6 +47,7 @@ export class InicioSesionComponent implements OnInit {
     ).subscribe({
       next: (respuesta: IniciarSesionRespuesta) => {
         Swal.close()
+        localStorage.setItem('inicio-sesion', JSON.stringify(true))
         this.servicioAutenticacion.guardarInformacionInicioSesion(respuesta.token,respuesta.rol,respuesta.usuario)
         if (respuesta.claveTemporal === true) {
           this.enrutador.navigateByUrl('/actualizar-contrasena')

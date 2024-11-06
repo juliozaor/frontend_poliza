@@ -38,6 +38,7 @@ export class InicioVigia2Component {
         this.servicioAutenticacion.inicioVigia2(this.token).subscribe({
           next: (respuesta: IniciarSesionRespuesta) => {
             Swal.close()
+            localStorage.setItem('inicio-vigia2', JSON.stringify(true))
             this.servicioAutenticacion.guardarInformacionInicioSesion(
               respuesta.token,
               respuesta.rol,

@@ -12,13 +12,14 @@
       <span class="nombre-modulo">Seguridad</span>
       <ul class="submodulos borderMenu">
         <li class="submodulo" (click)="cerrarSesion()" style="width: 110px;">
-          <span class="nombre-submodulo">Salir</span>
+          <span *ngIf="inicioSesion" class="nombre-submodulo">Salir</span>
+          <span *ngIf="inicioVigia2" class="nombre-submodulo">Volver</span>
         </li>
       </ul>
     </li>
   </ul>
-  
-  
+
+
 </nav>
 
 
@@ -30,7 +31,7 @@
 <div class="d-flex ps-4 pt-2" *ngIf="(MostrarNombrePanP() !='')">
   <nav class="inicioMigaPanP" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item migaPanP" routerLink="/administrar/crear-polizas" aria-current="page">Póliza</li>    
+      <li class="breadcrumb-item migaPanP" routerLink="/administrar/crear-polizas" aria-current="page">Póliza</li>
         <li class="breadcrumb-item migaPanP active" routerLink="{{ServiceMenuP.RutaModelo}}" aria-current="page">{{MostrarNombrePanP()}}</li>
     </ol>
   </nav>
