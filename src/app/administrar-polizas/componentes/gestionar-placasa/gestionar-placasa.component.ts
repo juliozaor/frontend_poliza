@@ -4,6 +4,7 @@ import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.
 import { Paginador } from 'src/app/administrador/modelos/compartido/Paginador';
 import { AlertasModalGovComponent } from 'src/app/alertas/componentes/alertas-modal-gov/alertas-modal-gov.component';
 import Swal from 'sweetalert2';
+import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
 
 @Component({
   selector: 'app-gestionar-placasa',
@@ -31,13 +32,15 @@ export class GestionarPlacasaComponent implements OnInit {
 
   textoAlert: string = ''; alert: string = ''
 
-  constructor(private servicioAdministrarPoliza: ServicioAdministrarPolizas) {
+  constructor(private servicioAdministrarPoliza: ServicioAdministrarPolizas, private ServiceMenuP:MenuHeaderPService) {
     this.paginadorNovedades = { totalRegistros: 0, pagina: 1, limite: 5 }
     this.paginadorHistorial = { totalRegistros: 0, pagina: 1, limite: 5 }
   }
 
-  ngOnInit(): void { }
-
+  ngOnInit(): void { 
+    this.ServiceMenuP.RutaModelo='/gestionar-placas' //paolo
+  }
+  
   consultarPoliza(placa: string) {
     this.servicioAdministrarPoliza.obtenerPolizaPlaca(placa).subscribe({
       next: (polizas: any) => {
