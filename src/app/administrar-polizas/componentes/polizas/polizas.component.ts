@@ -175,6 +175,8 @@ export class PolizasComponent implements OnInit {
 
   ngOnInit(): void {
     //this.deshabilitarFormularios()
+    console.log('Init');
+
     this.obtenerAseguradora()
     this.ListarModalidadesP()
     this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
