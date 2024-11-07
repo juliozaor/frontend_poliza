@@ -302,7 +302,7 @@ h1,h2{
   background-color: #E6EFFD !important;
   color: #004884;
   padding: 12px 15px;
-  vertical-align: middle;
+  vertical-align: center;
 }
 .celda-centrada{
   vertical-align: middle;
@@ -475,12 +475,13 @@ h1,h2{
     width: 132px;
     height: 19px;
      UI Properties */
-    text-align: center;
-    font: normal normal normal 16px/16px Montserrat;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    background: #3366CC 0% 0% no-repeat padding-box;
-    border-radius: 22px;
+     text-align: center;
+     font: normal normal normal 16px/16px Montserrat;
+     letter-spacing: 0px;
+     color: #FFFFFF;
+     background: #3366CC;
+     border-radius: 22px;
+     padding: 9px; 
   }
   
   .tdyP
@@ -615,3 +616,18 @@ h1,h2{
  /* border: solid 0.1px var(--azul-claro); */
   
 }
+
+.texto-azul-004884{
+  color: #004884;
+}
+
+.page-item .page-link
+{
+  border: none;
+  background: #fff;
+}
+
+.page-item.active .page-link {
+  background: #004884 !important;
+}
+
