@@ -9,7 +9,7 @@
     <table class="table tabla-primaria borderP" aria-describedby="table-basic">
       <thead class="encabezado-tabla">
  <!--       <thead class="encabezado-tabla" id="cabezera-tabla"> -->
-          <tr>
+          <tr class="izq">
           <th scope="col">Tipo Póliza</th>
           <th scope="col">N° de Póliza</th>
           <th scope="col">Estado Póliza</th>
@@ -51,16 +51,16 @@
     <!--///////////////////////////// Tabla para ver la cantidad de vehiculos ///////////////////////////////////////////////// -->
     <div>
 
-      <table class="table tabla-primaria borderP" aria-describedby="table-basic">
+      <table class="table tabla-primaria borderP " aria-describedby="table-basic">
         <thead class="encabezado-tabla" id="cabezera-cantidad-vehiculos">
-          <tr>
+          <tr class="izq">
             <th scope="col">Total de vehículos activos</th>
             <th scope="col">Total de Pólizas contractuales <br>de vehículos activos</th>
             <th scope="col">Total de Pólizas extracontractuales <br>de vehículos activos</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
-          <tr class="center">
+          <tr class="izq">
             <td>{{totalVehiculos}}</td>
             <td>{{totalVehiculosContractuales}}</td>
             <td>{{totalVehiculosExtracontractuales}}</td>
@@ -132,13 +132,13 @@
         </div>        
         <table class="table tabla-primaria borderP">
           <thead class="encabezado-tabla">
-            <tr class="w-100" style="display: flex; justify-content: space-around;">
+            <tr class="w-100 izq">
               <th scope="col">Placa</th>
               <th scope="col">Cantidad de pasajeros</th>
             </tr>
           </thead>
           <tbody *ngFor="let vehiculo of vehiculos2; let i = index" class="contenido-tablas">
-            <tr>
+            <tr class="izq">
               <td class="entradas-de-texto-govco">
                 <input type="text" name="placa{{i}}" [(ngModel)]="vehiculo.placa" placeholder="Ej: CKV341"
                        (change)="validarPlaca(vehiculo.placa, i)" maxlength="6" required/>
@@ -152,7 +152,7 @@
             </tr>
           </tbody>
           <tbody *ngIf="vehiculos2.length === 0 && estadoPoliza" class="contenido-tablas" id="arregloVehiculosVacio">
-            <tr>
+            <tr class="izq">
               <td colspan="2">
                 <h5 style="color: black;">Agregué un vehículo</h5>
               </td>
@@ -209,7 +209,7 @@
   <div class="d-flex mb-3">
     <div class="table custom-scroll">
       <div class="mt-2 clasificacion d-flex w-100">
-        <div class="mx-3">
+        <div class="mx-2">
           <span class="SubtituloP">
             Novedades Pólizas
           </span>
@@ -217,7 +217,7 @@
       </div>           
       <table class="table tabla-primaria borderP" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
-          <tr>
+          <tr class="izq">
             <th scope="col">Tipo de Póliza</th>
             <th scope="col">N° de Póliza</th>
             <th scope="col">Placa</th>

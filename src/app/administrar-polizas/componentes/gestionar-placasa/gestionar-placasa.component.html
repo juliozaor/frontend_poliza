@@ -10,7 +10,7 @@
       <label for="numeroPlaca">Digite el número de la placa a consultar</label>
       <div class="input-wrapperP">
         <input type="text" class="inputP" id="numeroPlaca" placeholder="Digite la placa." [(ngModel)]="placa">
-        <span  class="material-symbols-outlined input-iconP bg-primary" (click)="consultarPoliza(placa)">search</span>
+        <span  class="material-symbols-outlined input-iconP bg-primary" style="background: #004884 !important;" (click)="consultarPoliza(placa)">search</span>
       </div>
       
     </div>
@@ -25,42 +25,42 @@
       <div class="table-responsiveP">
         <table class="table tabla-informacionP" aria-describedby="table-basic">
           <thead class="encabezado-PModalidad">
-            <tr>
+            <tr class="izq">
               <th scope="col" colspan="2">
                 <h4 class="SubtituloP" >Póliza Contractual( Actual )</h4>
               </th>
             </tr>
           </thead>
           <tbody class="contenido-tablas negrita">
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">placa</td>
               <td class="tdxP fw-semibold">{{placa}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Póliza</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.poliza}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Estado de Póliza</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.estadoPoliza}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Fecha de cargue</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Vigencia - Fecha Inicio</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Vigencia - Fecha Fin</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Aseguradora</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.aseguradora}}</td>
             </tr>
-            <tr>
+            <tr class="izq">
               <td class="tdxP fw-semibold">Estado vinculación Placa</td>
               <td  class="tdxP fw-semibold">
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.contractual?.existe">
@@ -90,7 +90,7 @@
             <tr>
               <td colspan="2" class="tdxP text-center">
                 <fieldset>
-                  <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(1,polizas.contractual?.id,observacionCont!)"
+                  <button type="button" class="btn-govco fill-btn-govco btnPRadiusDescaga" (click)="desvincular(1,polizas.contractual?.id,observacionCont!)"
                     style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaCont || !estadoPolizaCont! || estadoVinCont">
                     Guardar
                   </button>
@@ -176,7 +176,7 @@
             <tr>
               <td colspan="2" class="text-center">
                 <fieldset>
-                  <button type="button" class="btn-govco fill-btn-govco" (click)="desvincular(2,polizas.extraContractual?.id,observacionExtraCont!)"
+                  <button type="button" class="btn-govco fill-btn-govco btnPRadiusDescaga" (click)="desvincular(2,polizas.extraContractual?.id,observacionExtraCont!)"
                     style="width: 165px; height: 42px; margin-left: 1rem;" [disabled]="desVinculadaExtraCont || !estadoPolizaExtraCont! || estadoVinExtraCont">
                     Guardar
                   </button>
@@ -198,10 +198,9 @@
           </span>
         </div>
       </div>      
-      <table class="table w-100 borderP">
+      <table class="table tabla-primaria  borderP">
         <thead class="encabezado-tabla">
-          <tr class="fs-14px">
-            <th></th>
+          <tr class="izq">
             <th class="">Tipo de Póliza</th>
             <th class="">N° de Póliza</th>
             <th class="">Placa</th>
@@ -211,8 +210,7 @@
           </tr>
         </thead>
         <tbody class="contenido-tablas">
-          <tr *ngFor="let novedad of novedadesPaginadas">
-            <td></td>
+          <tr *ngFor="let novedad of novedadesPaginadas" class="izq">
             <td *ngIf="novedad.tipoPoliza">
               <p *ngIf="novedad.tipoPoliza == 1">Contractual</p>
               <p *ngIf="novedad.tipoPoliza != 1 && novedad.tipoPoliza == 2">Extracontractual</p>
@@ -247,10 +245,9 @@
           </span>
         </div>
       </div>      
-      <table class="table borderP">
+      <table class="table tabla-primaria  borderP">
         <thead class="encabezado-tabla">
-          <tr class="fs-14px">
-            <th></th>
+          <tr class="izq">
             <th class="">Tipo de Póliza</th>
             <th class="">N° de Póliza</th>
             <th class="">Placa</th>
@@ -264,7 +261,6 @@
         </thead>
         <tbody class="contenido-tablas">
           <tr *ngFor="let historial of historialPaginado">
-            <td></td>
             <td>{{historial.tipoPoliza}}</td>
             <td>{{historial.poliza}}</td>
             <td>{{historial.placa}}</td>

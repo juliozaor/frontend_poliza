@@ -106,11 +106,12 @@
                         <span class="fs-14px">Vigencia de la póliza: (Desde: inicio Vigencia)</span><span
                           class="validacion">*</span>
                       </div>
-                      <div class="col-5">
-                        <input formControlName="vigenciaPolizaInicioC" class="form-control" type="date" placeholder="Fecha inicial"
-                        (change)="fechasVerificar(1)">
-                        <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
-                          [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
+                      <div class="col-5">                       
+                          <input formControlName="vigenciaPolizaInicioC" class="form-control " type="date" placeholder="Fecha inicial"
+                          (change)="fechasVerificar(1)">
+                          <app-validacion [validacion]="'required'" [texto]="'La fecha inicial de la vigencia es requerida.'"
+                            [control]="this.formContractual.controls['vigenciaPolizaInicioC']" />
+                           
                       </div>
                     </div>
                     <div class="row">
@@ -1450,10 +1451,10 @@
       <div class="col-12 encabezado-PModalidad w-100">
         <div class="row encabezado-PModalidad ">
 
-          <div class="col-3  justify-content-start">
+          <div class="col-2  justify-content-start">
             <span class="fs-14px fw-semibold mx-2">Descargar estructura</span>
           </div>
-          <div class="col-3  justify-content-start">
+          <div class="col-4  justify-content-start">
             <label class="fs-14px fw-semibold">Cargar el Excel, tamaño máximo 20MB</label><span *ngIf="obligatorio" class="validacion">*</span>
           </div>
           <div class="col-4  justify-content-start">
@@ -1463,13 +1464,13 @@
       </div>
       <div class="col-12">
         <div class="row py-2">
-          <div class="col-3">
+          <div class="col-2">
           
             <button type="button" class="btn btn-primary btnPRadiusDescaga " (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
               Descargar
             </button>
           </div>
-          <div class="col-3">
+          <div class="col-4">
             <!--
             <input type="file" class="form-control" title="Cargar Excel" accept=".xlsx" formControlName="cargarExcel"
               (change)="cargarArchivoXLSX($event,2)">
@@ -1509,13 +1510,13 @@
   <div class="row mt-4">
     <div class="col-6">
       <div class="text-end">
-        <button class="btn btn-primary" type="button" (click)="guardarPolizas()"
+        <button class="btn btn-primary btnPRadiusDescaga" type="button" (click)="guardarPolizas()"
           [disabled]="deshabilitado">Guardar</button>
       </div>
     </div>
     <div class="col-6">
       <div class="text-left">
-        <button class="btn btn-primary" type="button" (click)="finalizar()" [disabled]="deshabilitado">Ir a
+        <button class="btn btn-primary btnPRadiusDescaga" type="button" (click)="finalizar()" [disabled]="deshabilitado">Ir a
           modalidades</button>
       </div>
     </div>
