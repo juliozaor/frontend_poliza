@@ -17,10 +17,10 @@
         </div>
       </div>
       <div class="row py-2 alingFilaP">
-  
+
         <div *ngFor="let modalidad of modalidadesP; let i=index" class="col-md-2">
           <div class="col form-check">
-            
+
               <input class="form-check-input aligPModalidad" [name]="modalidad.nombre" type="checkbox" [value]="modalidad.id" (change)="onCheckChange($event)">
               <label>
                  {{modalidad.nombre}}
@@ -31,12 +31,12 @@
       <div class="row py-2 alingFilaP" *ngIf="isMsjmodalidad==true">
         <div class="col-12 pt-4">
           <p class="text-danger msjCkpModalidadP">Debe haber por lo menos un registro de modalidad.</p>
-  
+
         </div>
       </div>
     </div>
 
-    
+
 
 
   </div>
@@ -47,7 +47,7 @@
     <!-- <span>
                 <img alt="" *ngIf="desplegarRCC" src="assets/img/desplegado.png" class="cursor-pointer" draggable="false">
                 <img alt="" *ngIf="!desplegarRCC" src="assets/img/replegado.png" class="cursor-pointer" draggable="false">
-            </span> -->        
+            </span> -->
 
   </div>
   <div [ngClass]="{'d-none': !desplegarRCC, 'd-block': desplegarRCC}">
@@ -62,9 +62,9 @@
             </div>
           </div>
           <div class="row">
-            
+
               <div class="row py-2 alingFilaP">
-                
+
                   <div class="col-6 ">
                     <div class="row py-2">
                       <div class="col-6 justify-content-start">
@@ -125,17 +125,17 @@
                       </div>
                     </div>
                   </div>
-                
+
               </div>
 
-            
+
           </div>
 
         </div>
-        
+
       </div>
       <div class="py-3"></div><!--div para espacio-->
-      
+
       <!-- ['AMPAROS BÁSICOS'] -->
       <div class=" w-100 "
       [ngClass]="{'d-none': !desplegarAmparosB1, 'd-block': desplegarAmparosB1}">
@@ -148,7 +148,7 @@
         </div>
         <div class="row borderP">
           <div class="col-12 encabezado-PModalidad">
-            <div class="row  py-2">  
+            <div class="row  py-2">
               <div class="col-4 justify-content-start ps-4" >
                 <span class="fs-14px fw-semibold ">Coberturas y/o amparos básicos</span>
               </div>
@@ -164,10 +164,10 @@
               <div class="col-2 justify-content-start">
                 <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
               </div>
-            
+
             </div>
           </div>
-          
+
           <div class="col-12">
             <div class="row">
               <div class="col-12">
@@ -269,7 +269,7 @@
                   </div>
                   <div class="col-2 justify-content-start" name="nombre">
                     <span class="fs-14px">{{amparosBasicosC[2].nombre}}</span>
-                  </div> 
+                  </div>
                   <div class="col-2 justify-content-start">
                     <input formControlName="valorAseguradoAB3" class="form-control" type="number"
                       placeholder="Valor Asegurado">
@@ -305,7 +305,7 @@
                       [control]="this.formContractual.controls['deducibleAB3']" />
                   </div>
 
-                </div> 
+                </div>
                 <div class="row py-2" id="4">
                   <div class="col-4 justify-content-start ps-4" name="descripcion">
                     <span class="fs-14px ">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
@@ -348,13 +348,13 @@
                       [control]="this.formContractual.controls['deducibleAB4']" />
                   </div>
 
-                </div> 
+                </div>
               </div>
 
             </div>
           </div>
 
-          
+
 
         </div>
       </div>
@@ -372,7 +372,7 @@
           </div>
           <div class="row borderP">
             <div class="col-12 encabezado-PModalidad">
-              <div class="row  py-2">  
+              <div class="row  py-2">
                 <div class="col-4 justify-content-start ps-4" >
                   <span class="fs-14px fw-semibold ">Coberturas y/o amparos básicos</span>
                 </div>
@@ -388,7 +388,7 @@
                 <div class="col-2 justify-content-start">
                   <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
                 </div>
-              
+
               </div>
             </div>
             <div class="col-12">
@@ -442,7 +442,7 @@
                     <div class="col-4 justify-content-start ps-4" name="descripcion">
                       <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Límites - Deducible</span>
                     </div>
-                    
+
                     <div class="col-2 justify-content-start" name="nombre">
                       <span class="fs-14px">{{amparosAdicionales[1].nombre}}</span>
                     </div>
@@ -574,7 +574,7 @@
 
           </div>
       </div>
-    
+
       <!-- FONDO RESPONSABILIDAD -->
       <div class="py-3"></div><!--div para espacio-->
       <div class="row">
@@ -584,7 +584,7 @@
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector
                   Transporte?
               </div>
-              
+
                 <div class=" col-1  colorTextazul">
                   <input type="checkbox" title="Si" formControlName="checkResponsabilidadC"
                     (change)="DesplegarFondoResponsabilidad(1)"> SI
@@ -593,10 +593,10 @@
                   <input type="checkbox" title="No" formControlName="checkNoResponsabilidadC"
                     (change)="respuestaNoResponsabilidad(1)"> NO
                 </div>
-              
+
 
             </div>
-            
+
           </div>
       </div>
       <div *ngIf="fondoResponsabilidadC" class="row">
@@ -751,22 +751,22 @@
       </div>
       <div class="row borderP">
         <div class="col-12 encabezado-PModalidad w-100">
-          <div class="row py-2">               
-                    
+          <div class="row py-2">
+
             <div class="col-2  justify-content-start">
               <span class="fs-14px fw-semibold mx-2">Descargar estructura</span>
             </div>
-                
+
             <div class="col-4  justify-content-start">
               <span class="fs-14px fw-semibold">Cargar el Excel, tamaño máximo 20MB</span>
             </div>
-        
-                  
+
+
             <div class="col-4  justify-content-start">
               <span class="fs-14px fw-semibold">Cargar clausulado y caratula en PDF, tamaño máximo 20MB</span>
             </div>
-        
-          </div> 
+
+          </div>
 
         </div>
         <div class="col-12">
@@ -777,7 +777,7 @@
               </button>
             </div>
             <div class="col-4 ">
-              
+
               <app-input-archivo formControlName="cargarExcel" [acepta]="['.xlsx']" [nombre]="'cargarExcel'" [tamanoMaximoMb]="20" />
               <app-validacion [control]="this.formExtracontractual.controls['cargarExcel']"
                 [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'" />
@@ -815,7 +815,7 @@
       Pólizas Vigentes responsabilidad civil extracontractual
     </span>
   </div>
-     
+
   <div class="" [ngClass]="{'d-none': !desplegarRCE, 'd-block': desplegarRCE}">
     <div class="row borderP">
       <div class="col-12">
@@ -891,8 +891,8 @@
         </div>
       </div>
     </div>
-    
-    <!-- 'AMPAROS BÁSICOS' -->   
+
+    <!-- 'AMPAROS BÁSICOS' -->
     <div class="row ps-2">
       <div class="col-12 d-flex py-2">
         <span class="SubtituloP texto-azul-004884 py-2">
@@ -900,11 +900,11 @@
         </span>
       </div>
     </div>
-    
+
     <div class=""[ngClass]="{'d-none': !desplegarAmparosB2, 'd-block': desplegarAmparosB2}">
       <div class="row borderP">
         <div class="col-12 encabezado-PModalidad">
-          <div class="row  py-2">  
+          <div class="row  py-2">
             <div class="col-4 justify-content-start ps-4" >
               <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
             </div>
@@ -920,10 +920,10 @@
             <div class="col-2 justify-content-start">
               <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
             </div>
-          
+
           </div>
 
-          
+
         </div>
         <div class="row py-2" id="1">
           <div class="col-4 justify-content-start ps-4" name="descripcion">
@@ -1058,7 +1058,7 @@
       </div> <!--fin del marco-->
 
     </div>
-    
+
     <!-- 'AMPAROS ADICIONALES' -->
     <div class="row ps-2">
       <div class="col-12 d-flex py-2">
@@ -1072,7 +1072,7 @@
 
       <div class="row borderP">
         <div class="col-12 encabezado-PModalidad">
-          <div class="row  py-2">  
+          <div class="row  py-2">
             <div class="col-4 justify-content-start ps-4" >
               <span class="fs-14px fw-semibold ">Coberturas y/o amparos básicos</span>
             </div>
@@ -1088,10 +1088,10 @@
             <div class="col-2 justify-content-start">
               <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
             </div>
-          
+
           </div>
 
-          
+
         </div>
 
         <div class="col-12">
@@ -1269,14 +1269,14 @@
 
 
         </div>
-    
+
 
       </div> <!--fin de amparaadicionales-->
     </div>
-    
+
     <!-- RESPONSABILIDAD -->
-    
-    
+
+
     <div class="py-3"></div><!--div para espacio-->
       <div class="row">
           <div class="col-12 fondo-desplegable-azulbajo colorTextazul ">
@@ -1285,7 +1285,7 @@
                 ¿La empresa tiene constituido un Fondo de Responsabilidad de que trata el Decreto Único Reglamentario del Sector
           Transporte?
               </div>
-              
+
                 <div class=" col-1  colorTextazul">
                   <input type="checkbox" title="Si" formControlName="checkResponsabilidadE"
                     (change)="DesplegarFondoResponsabilidad(2)"> SI
@@ -1294,10 +1294,10 @@
                   <input type="checkbox" title="No" formControlName="checkNoResponsabilidadE"
                     (change)="respuestaNoResponsabilidad(2)"> NO
                 </div>
-              
+
 
             </div>
-            
+
           </div>
       </div>
 
@@ -1308,7 +1308,7 @@
             Información sobre el fondo de responsabilidad
           </span>
         </div>
-      </div> 
+      </div>
       <div class="d-flex w-100 mb-3">
         <div class="encabezado col-12">
           <div class="row mx-0 mb-3">
@@ -1464,7 +1464,7 @@
       <div class="col-12">
         <div class="row py-2">
           <div class="col-3">
-          
+
             <button type="button" class="btn btn-primary btnPRadiusDescaga " (click)="descargarArchivoXLSX()" [disabled]="deshabilitado">
               Descargar
             </button>
@@ -1476,17 +1476,17 @@
             <app-validacion [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'"
               [control]="this.formExtracontractual.controls['cargarExcel']" />
             -->
-  
-            <app-input-archivo formControlName="cargarExcel" [acepta]="['.xlsx']" [nombre]="'cargarExcel'" [tamanoMaximoMb]="20" />
+
+            <app-input-archivo formControlName="cargarExcel2" [acepta]="['.xlsx']" [nombre]="'cargarExcel2'" [tamanoMaximoMb]="20" />
             <app-validacion [control]="this.formExtracontractual.controls['cargarExcel']"
               [validacion]="'required'" [texto]="'El documento es requerido.'" />
-  
+
           </div>
           <div class="col-4">
-            <app-input-archivo formControlName="cargarPDF" [acepta]="['.pdf']" [nombre]="'cargarPDF'" [tamanoMaximoMb]="20" />
+            <app-input-archivo formControlName="cargarPDF2" [acepta]="['.pdf']" [nombre]="'cargarPDF2'" [tamanoMaximoMb]="20" />
             <app-validacion [control]="this.formExtracontractual.controls['cargarPDF']"
               [validacion]="'required'" [texto]="'El documento es requerido.'" />
-            <!-- 
+            <!--
             <input type="file" class="form-control" title="Cargar PDF" accept=".pdf" formControlName="cargarPDF"
               (change)="cargarArchivoPDf($event,2)">
             <app-validacion [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'"
@@ -1497,15 +1497,15 @@
       </div>
 
     </div>
-    
 
-    
+
+
   </div>
 
 </form>
 
 <div class="p-5 pt-0">
-  
+
   <div class="row mt-4">
     <div class="col-6">
       <div class="text-end">
@@ -1531,7 +1531,7 @@
         <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
         <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
       </div>
-      
+
       <!--
       <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
         <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>

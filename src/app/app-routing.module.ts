@@ -87,6 +87,10 @@ const routes: Routes = [
     component: InicioVigia2Component
   },
   {
+    path: 'inicio-sesion',
+    component: InicioSesionComponent
+  },
+  {
     path: 'actualizar-contrasena',
     component: ActualizarContrasenaComponent
   },
