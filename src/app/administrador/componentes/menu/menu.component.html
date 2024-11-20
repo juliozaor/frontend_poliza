@@ -1,5 +1,8 @@
-<nav class="menu d-flex" *ngIf="this.rol && this.rol.modulos">
+<nav class="menu d-flex ps-3 w-100" *ngIf="this.rol && this.rol.modulos">
   <ul class="modulos">
+    <li class="logosuperP">
+      <img src="assets/img/menu/logo.png" class="logoP">
+    </li>
     <li [routerLinkActive]="'ActiveLinkP'" class="modulo" *ngFor="let modulo of this.rol.modulos">
       <span class="nombre-modulo" routerLink="/administrar{{modulo.ruta}}">{{modulo.nombre}}</span>
       <ul class="submodulos" *ngIf="modulo.submodulos">
@@ -27,7 +30,7 @@
 </div>
 <div class="frajaP2 d-flex"></div>
 
-<div class="d-flex ps-4 pt-2" *ngIf="(MostrarNombrePanP() !='')">
+<div class="d-flex ps-4 mx-3 pt-2" *ngIf="(MostrarNombrePanP() !='')">
   <nav class="inicioMigaPanP" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item migaPanP" routerLink="/administrar/crear-polizas" aria-current="page">Póliza</li>    
