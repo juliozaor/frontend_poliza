@@ -23,7 +23,7 @@ export class InicioSesionComponent implements OnInit {
 
   constructor(private servicioAutenticacion: AutenticacionService, private enrutador: Router) {
     this.formulario = new FormGroup({
-      usuario: new FormControl('', [Validators.required]),
+      usuario: new FormControl('', [Validators.required,Validators.minLength(6)]),
       clave: new FormControl('', [Validators.required]),
       captcha: new FormControl(undefined, [Validators.required])
     })

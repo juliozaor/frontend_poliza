@@ -43,6 +43,9 @@
                           this.formulario.controls['usuario'].dirty && this.formulario.controls['usuario'].errors['required']">
                   Ingrese su usuario
                 </span>
+                <span class="validacion" *ngIf="this.formulario.controls['usuario'].errors?.['minlength'] ">
+                  Debe tener al menos 6 dígitos.
+                </span>                
               </fieldset>
               <fieldset class="mb-4">
                 <label class="fs-16px mb-2 texto-gris-4B4B4B" for="clave">Contraseña*</label>

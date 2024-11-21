@@ -9,7 +9,7 @@
     <table class="table tabla-primaria borderP" aria-describedby="table-basic">
       <thead class="encabezado-tabla">
  <!--       <thead class="encabezado-tabla" id="cabezera-tabla"> -->
-          <tr class="izq">
+          <tr class="centrado">
           <th scope="col">Tipo Póliza</th>
           <th scope="col">N° de Póliza</th>
           <th scope="col">Estado Póliza</th>
@@ -20,7 +20,7 @@
           <th scope="col">Cantidad de Vehiculos</th>
         </tr>
       </thead>
-      <tbody class="contenido-tablas">
+      <tbody class="contenido-tablas centrado">
         <tr *ngFor="let poliza of polizas; let i = index">
           <td class="pointer tdxP" (click)="visualizarPoliza(poliza.poliza, poliza.tipoPoliza, poliza.estadoPoliza)">
             {{poliza.tipoPoliza}}
@@ -53,14 +53,14 @@
 
       <table class="table tabla-primaria borderP " aria-describedby="table-basic">
         <thead class="encabezado-tabla" id="cabezera-cantidad-vehiculos">
-          <tr class="izq">
+          <tr class="centrado">
             <th scope="col">Total de vehículos activos</th>
             <th scope="col">Total de Pólizas contractuales <br>de vehículos activos</th>
             <th scope="col">Total de Pólizas extracontractuales <br>de vehículos activos</th>
           </tr>
         </thead>
         <tbody class="contenido-tablas">
-          <tr class="izq">
+          <tr class="centrado">
             <td>{{totalVehiculos}}</td>
             <td>{{totalVehiculosContractuales}}</td>
             <td>{{totalVehiculosExtracontractuales}}</td>
@@ -217,7 +217,7 @@
       </div>           
       <table class="table tabla-primaria borderP" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
-          <tr class="izq">
+          <tr class="centrado">
             <th scope="col">Tipo de Póliza</th>
             <th scope="col">N° de Póliza</th>
             <th scope="col">Placa</th>
@@ -226,7 +226,7 @@
             <th scope="col">Observación</th>
           </tr>
         </thead>
-        <tbody id="tabla-primaria-border" class="contenido-tablas">
+        <tbody id="tabla-primaria-border" class="contenido-tablas centrado">
           <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
             <td *ngIf="novedad.tipoPoliza == 1">Responsabilidad civil contractual</td>
             <td *ngIf="novedad.tipoPoliza == 2">Responsabilidad civil Eontractual</td>
