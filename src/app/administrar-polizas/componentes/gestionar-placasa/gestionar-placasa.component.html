@@ -25,44 +25,44 @@
       <div class="table-responsiveP">
         <table class="table tabla-informacionP" aria-describedby="table-basic">
           <thead class="encabezado-PModalidad">
-            <tr class="izq">
+            <tr class="centrado">
               <th scope="col" colspan="2">
-                <h4 class="SubtituloP" >Póliza Contractual( Actual )</h4>
+                <h4 class="SubtituloP centrado" >Póliza Contractual( Actual )</h4>
               </th>
             </tr>
           </thead>
           <tbody class="contenido-tablas negrita">
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">placa</td>
               <td class="tdxP fw-semibold">{{placa}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Póliza</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.poliza}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Estado de Póliza</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.estadoPoliza}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Fecha de cargue</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Vigencia - Fecha Inicio</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Vigencia - Fecha Fin</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Aseguradora</td>
               <td class="tdxP fw-semibold">{{polizas.contractual?.aseguradora}}</td>
             </tr>
-            <tr class="izq">
+            <tr class="centrado">
               <td class="tdxP fw-semibold">Estado vinculación Placa</td>
-              <td  class="tdxP fw-semibold">
+              <td  class="tdxP fw-semibold centrado">
                 <div class="switch-seleccion-govco form-switch m-2 mt-2" *ngIf="polizas.contractual?.existe">
                   <input class="form-check-input" type="checkbox" id="opt3" [checked]="vinculadaCont" [(ngModel)]="vinculadaCont"
                   [disabled]="desVinculadaCont || !estadoPolizaCont!" (change)="estadoVinculacion(1)">
@@ -72,7 +72,7 @@
               </td>
             </tr>
             <tr>
-              <td class="tdxP fw-semibold">Observación</td>
+              <td class="tdxP fw-semibold centrado">Observación</td>
               <td class="tdxP fw-semibold">
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;" *ngIf="polizas.contractual?.existe">
                   <input type="text" id="input-basico-id" [(ngModel)]="observacionCont"
@@ -111,11 +111,11 @@
           <thead class="encabezado-tabla">-->
             <tr>
               <th scope="col" colspan="2">
-                <h4 class="SubtituloP">Póliza Extracontractual ( Actual )</h4>
+                <h4 class="SubtituloP centrado">Póliza Extracontractual ( Actual )</h4>
               </th>
             </tr>
           </thead>
-          <tbody class="contenido-tablas negrita">
+          <tbody class="contenido-tablas negrita centrado">
             <tr>
               <td class="tdxP fw-semibold ">Placa</td>
               <td class="tdxP fw-semibold">{{placa}}</td>
@@ -156,9 +156,9 @@
                 </div>
               </td>
             </tr>
-            <tr>
-              <td class="tdxP fw-semibold">Observación</td>
-              <td class="tdxP fw-semibold">
+            <tr class="centrado">
+              <td class="tdxP fw-semibold centrado">Observación</td>
+              <td class="tdxP fw-semibold centrado">
                 <div class="entradas-de-texto-govco" style="margin-right: 1rem;"
                   *ngIf="polizas.extraContractual?.existe">
                   <input type="text" id="input-basico-id" [(ngModel)]="observacionExtraCont"
@@ -200,7 +200,7 @@
       </div>      
       <table class="table tabla-primaria  borderP">
         <thead class="encabezado-tabla">
-          <tr class="izq">
+          <tr class="centrado">
             <th class="">Tipo de Póliza</th>
             <th class="">N° de Póliza</th>
             <th class="">Placa</th>
@@ -210,7 +210,7 @@
           </tr>
         </thead>
         <tbody class="contenido-tablas">
-          <tr *ngFor="let novedad of novedadesPaginadas" class="izq">
+          <tr *ngFor="let novedad of novedadesPaginadas" class="centrado">
             <td *ngIf="novedad.tipoPoliza">
               <p *ngIf="novedad.tipoPoliza == 1">Contractual</p>
               <p *ngIf="novedad.tipoPoliza != 1 && novedad.tipoPoliza == 2">Extracontractual</p>
@@ -247,7 +247,7 @@
       </div>      
       <table class="table tabla-primaria  borderP">
         <thead class="encabezado-tabla">
-          <tr class="izq">
+          <tr class="centrado">
             <th class="">Tipo de Póliza</th>
             <th class="">N° de Póliza</th>
             <th class="">Placa</th>
@@ -259,7 +259,7 @@
             <th></th>
           </tr>
         </thead>
-        <tbody class="contenido-tablas">
+        <tbody class="contenido-tablas centrado">
           <tr *ngFor="let historial of historialPaginado">
             <td>{{historial.tipoPoliza}}</td>
             <td>{{historial.poliza}}</td>

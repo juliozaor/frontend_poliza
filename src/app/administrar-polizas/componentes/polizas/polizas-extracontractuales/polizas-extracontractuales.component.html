@@ -3,11 +3,10 @@
         <!-- ///////////////////////////////////////RESPONSABILIDAD CIVIL EXTRACONTRACTUAL///////////////////////////////////// -->
         <div class="py-2">
           <span class="TamTituloP texto-azul-004884">
-            Pólizas Vigentes responsabilidad civil extracontractual
+            Pólizas vigentes responsabilidad civil extracontractual
           </span>
         </div>
         
-
         <div class="w-100 custom-scroll" [ngClass]="{'d-none': !desplegarRCE, 'd-block': desplegarRCE}">
 
           <div class="borderP">
@@ -66,10 +65,10 @@
           </div>
 
           <!-- 'AMPAROS BÁSICOS' -->
-          <div class="mt-2 clasificacion d-flex w-100">
+          <div class="mt-4 clasificacion d-flex w-100">
             <div class="mx-3">
               <span class="SubtituloP">
-                Amparos básicos:
+                Amparos básicos
               </span>
             </div>
           </div>
@@ -78,20 +77,20 @@
             [ngClass]="{'d-none': !desplegarAmparosB2, 'd-block': desplegarAmparosB2}">
             
               <div class="col-12 ">
-                <div class="row  mb-3   encabezado-PModalidad py-2">
-                  <div class="col-4 justify-content-start">
+                <div class="row  mb-3   encabezado-PModalidad py-2 centrado">
+                  <div class="col-4 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Cobertura</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
                   </div>
                 </div>
@@ -99,20 +98,20 @@
                 <div class="row ">
                   <ul>
                     <li class="row mx-0 mb-3" id="1">
-                      <div class="col-4 justify-content-start" name="descripcion">
+                      <div class="col-4 justify-content-start centrado" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <ul class="col-2 justify-content-start" name="nombre">
+                      <ul class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosBasicosE[0].nombre}}</span>
                       </ul>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAB9" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAB9" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAB9" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -124,17 +123,17 @@
                       <div class="col-4 justify-content-start" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <ul class="col-2 justify-content-start" name="nombre">
+                      <ul class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosBasicosE[1].nombre}}</span>
                       </ul>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAB10" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAB10" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAB10" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -146,17 +145,17 @@
                       <div class="col-4 justify-content-start" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos básicos - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <ul class="col-2 justify-content-start" name="nombre">
+                      <ul class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosBasicosE[2].nombre}}</span>
                       </ul>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAB11" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAB11" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAB11" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -167,10 +166,10 @@
           </div>
           
           <!-- 'AMPAROS ADICIONALES' -->
-          <div class="mt-2 clasificacion d-flex w-100">
+          <div class="mt-4 clasificacion d-flex w-100">
             <div class="mx-3">
               <span class="SubtituloP">
-                Amparos Adicionales:
+                Amparos adicionales
               </span>
             </div>
           </div>
@@ -182,16 +181,16 @@
                   <div class="col-4 justify-content-start">
                     <span class="fs-14px fw-semibold">Coberturas y/o amparos básicos</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Cobertura</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Valor Asegurado (SMMLV)</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Límites (SMMLV POR PERSONA)</span>
                   </div>
-                  <div class="col-2 justify-content-start">
+                  <div class="col-2 justify-content-start centrado">
                     <span class="fs-14px fw-semibold">Deducible (Si lo tiene)</span>
                   </div>
                 </div>
@@ -202,17 +201,17 @@
                       <div class="col-4 justify-content-start" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <div class="col-2 justify-content-start" name="nombre">
+                      <div class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosAdicionales[0].nombre}}</span>
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAA12" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAA12" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAA12" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -224,17 +223,17 @@
                       <div class="col-4 justify-content-start" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <div class="col-2 justify-content-start" name="nombre">
+                      <div class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosAdicionales[1].nombre}}</span>
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAA13" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAA13" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAA13" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -246,17 +245,17 @@
                       <div class="col-4 justify-content-start" name="descripcion">
                         <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Límites - Deducible</span>
                       </div>
-                      <div class="col-2 justify-content-start" name="nombre">
+                      <div class="col-2 justify-content-start centrado" name="nombre">
                         <span class="fs-14px">{{amparosAdicionales[2].nombre}}</span>
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="valorAseguradoAA14" class="form-control" type="number"
                           placeholder="Valor Asegurado">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="limitesAA14" class="form-control" type="number" placeholder="Límites">
                       </div>
-                      <div class="col-2 justify-content-start">
+                      <div class="col-2 justify-content-start centrado">
                         <input formControlName="deducibleAA14" class="form-control" type="number" placeholder="Deducible">
                       </div>
                     </li>
@@ -268,17 +267,17 @@
                     <div class="col-4 justify-content-start" name="descripcion">
                       <span class="fs-14px">Coberturas y/o amparos adicionales - Valor Asegurado - Límites - Deducible</span>
                     </div>
-                    <div class="col-2 justify-content-start" name="nombre">
+                    <div class="col-2 justify-content-start centrado" name="nombre">
                       <span class="fs-14px">{{amparosAdicionales[3].nombre}}</span>
                     </div>
-                    <div class="col-2 justify-content-start">
+                    <div class="col-2 justify-content-start centrado">
                       <input formControlName="valorAseguradoAA15" class="form-control" type="number"
                         placeholder="Valor Asegurado">
                     </div>
-                    <div class="col-2 justify-content-start">
+                    <div class="col-2 justify-content-start centrado">
                       <input formControlName="limitesAA15" class="form-control" type="number" placeholder="Límites">
                     </div>
-                    <div class="col-2 justify-content-start">
+                    <div class="col-2 justify-content-start centrado">
                       <input formControlName="deducibleAA15" class="form-control" type="number" placeholder="Deducible">
                     </div>
                   </li>

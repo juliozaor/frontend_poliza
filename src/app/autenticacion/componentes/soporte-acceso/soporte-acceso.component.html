@@ -23,12 +23,20 @@
                         <label>
                             NIT <span class="">*</span>
                         </label>
+                    
+                        <input type="text" class="form-control"  formControlName="nit" />
+                        
                     </fieldset>
-                    <input type="number" class="form-control" formControlName="nit"/>
+                    <app-validacion  
+                            [control]="this.formulario.controls['nit']" 
+                            [texto]="'Debe tener al menos 6 dígitos.'" 
+                            [validacion]="'minlength'"/>
+                    
                     <app-validacion  
                             [control]="this.formulario.controls['nit']" 
                             [texto]="'El nit es requerido.'" 
                             [validacion]="'required'"/>
+                  
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <fieldset>
@@ -41,6 +49,7 @@
                             [control]="this.formulario.controls['razonSocial']" 
                             [texto]="'La razón social es requerida.'" 
                             [validacion]="'required'"/>
+                            
                 </div>
             </div>
             <div class="row mb-3">
@@ -51,6 +60,11 @@
                         </label>
                     </fieldset>
                     <input type="text" class="form-control" formControlName="correo"/>
+                    
+                    <app-validacion  
+                            [control]="this.formulario.controls['correo']" 
+                            [texto]="'Ingrese un correo valido'" 
+                            [validacion]="'email'"/>
                     <app-validacion  
                             [control]="this.formulario.controls['correo']" 
                             [texto]="'El correo es requerido.'" 

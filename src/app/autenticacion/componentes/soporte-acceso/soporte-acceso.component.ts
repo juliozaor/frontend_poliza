@@ -15,11 +15,12 @@ export class SoporteAccesoComponent {
   @ViewChild('popup') popup!: PopupComponent
   formulario: FormGroup
   generandoRadicado: boolean = false
-
+  
+  
   constructor(private servicioSoporte: AutenticacionService, private router: Router){
     this.formulario = new FormGroup({
-      nit: new FormControl<string | undefined>( undefined, [ Validators.required ] ),
-      correo: new FormControl<string | undefined>( undefined, [ Validators.required ] ),
+      nit: new FormControl('', [ Validators.required,Validators.minLength(6) ] ),
+      correo: new FormControl( '', [ Validators.required,Validators.email ] ),
       telefono: new FormControl<string | undefined>( undefined ),
       razonSocial: new FormControl<string | undefined>( undefined, [ Validators.required ] ),
       descripcion: new FormControl<string | undefined>( undefined, [ Validators.required ] ),
