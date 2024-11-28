@@ -91,26 +91,26 @@
                     </div>
                   </div>
                   <div class="row py-2 alingFilaP">
-                    
+
                     <div *ngFor="let modalidad of modalidadesP; let i=index" class="col-md-2">
-                      
+
                       <div class="col form-check">
-                        
+
                           <input class="form-check-input aligPModalidad"  type="checkbox" checked disabled [value]="modalidad.obj_modalidad.modpol_id" >
                           <label>
                               {{modalidad.obj_modalidad.modpol_nombre}}
                           </label>
                       </div>
                     </div>
-                  
+
                   </div>
-                  
+
               </div>
           </div>
       </div>
         <!----FIN DE LAS MODALIDADES PAOLO-->
-  
- 
+
+
 
   <!--///////////////////////////// llamada componentes polizas contractuales y polizas extracontractuales///////////////////// -->
   <div class="mt-4 mb-3">
@@ -129,7 +129,7 @@
               Vincular vehículo
             </span>
           </div>
-        </div>        
+        </div>
         <table class="table tabla-primaria borderP">
           <thead class="encabezado-tabla">
             <tr class="w-100 izq">
@@ -214,7 +214,7 @@
             Novedades pólizas
           </span>
         </div>
-      </div>           
+      </div>
       <table class="table tabla-primaria borderP" aria-describedby="table-basic">
         <thead class="encabezado-tabla">
           <tr class="centrado">
@@ -228,13 +228,14 @@
         </thead>
         <tbody id="tabla-primaria-border" class="contenido-tablas centrado">
           <tr *ngFor="let novedad of novedadesPolizaPaginacion; let i = index">
-            <td *ngIf="novedad.tipoPoliza == 1">Responsabilidad civil contractual</td>
-            <td *ngIf="novedad.tipoPoliza == 2">Responsabilidad civil Eontractual</td>
+            <td>{{convertirTipoOracion(novedad.tipopolizanombre!)}}</td>
+            <!-- <td *ngIf="novedad.tipoPoliza == 1">Responsabilidad civil contractual</td>
+            <td *ngIf="novedad.tipoPoliza == 2">Responsabilidad civil extracontractual</td> -->
             <td>{{novedad.poliza}}</td>
             <td>{{novedad.placa}}</td>
             <td>{{novedad.fechaActualizacion | fecha: 'dd/MM/yyyy'}}</td>
-            <td>{{novedad.estado}}</td>
-            <td>{{novedad.observacion}}</td>
+            <td>{{convertirTipoOracion(novedad.estado)}}</td>
+            <td>{{convertirTipoOracion(novedad.observacion)}}</td>
           </tr>
         </tbody>
       </table>
@@ -251,6 +252,6 @@
     </div>
   </div>
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
-  
+
   <app-popup #popup />
 </div>
