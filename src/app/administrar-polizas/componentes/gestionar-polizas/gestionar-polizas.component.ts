@@ -11,6 +11,7 @@ import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 import { ModalidadesPModel } from 'src/app/administrar-polizas/modelos/modalidades';
+import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -22,7 +23,7 @@ export class GestionarPolizasComponent implements OnInit {
 
   polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = []
   novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
-  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
+  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string, tipopolizanombre?:string }> = []
   placasInteroperabilidad: Array<string> = []
   placasInteroperabilidadPaginacion: Array<string> = []
 
@@ -62,12 +63,14 @@ export class GestionarPolizasComponent implements OnInit {
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
+    private ServiceMenuP:MenuHeaderPService,
     private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
+    this.ServiceMenuP.RutaModelo='/gestionar-polizas' //paolo
   }
 
   agregarVehiculoForm(): void {
@@ -326,6 +329,11 @@ export class GestionarPolizasComponent implements OnInit {
 
   limpiarFormulario() {
     this.vehiculos2 = [];
+  }
+
+  convertirTipoOracion(texto: string): string {
+    if (!texto) return ''; // Manejar casos donde el texto esté vacío o sea null
+    return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
   }
 
 }

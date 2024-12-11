@@ -12,6 +12,7 @@ import { PaginaSoporteComponent } from './paginas/pagina-soporte/pagina-soporte.
 import { InputsModule } from '../inputs/inputs.module';
 import { AlertasModule } from '../alertas/alertas.module';
 import { SoportesModule } from '../soportes/soportes.module';
+import { FooterComponent } from './componentes/footer/footer.component';
 
 
 
@@ -22,6 +23,7 @@ import { SoportesModule } from '../soportes/soportes.module';
     BarraNavegacionComponent,
     PaginaInformacionGeneralVigiladoComponent,
     PaginaSoporteComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

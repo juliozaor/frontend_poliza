@@ -251,15 +251,15 @@ export class ModalCapacidadComponent implements OnInit {
     })
 
 
-  if (MX || ES || PC) {
-    //console.log(this.capacidadJson);
+  /* if (MX || ES || PC) {
+    console.log(this.capacidadJson);
 
   }else {
     Swal.fire({
       titleText: 'Debe llenar al menos una Modalidad',
       icon: "warning",
     })
-  }
+  } */
 }
 
 cargarArchivoPDf(event: any, tipoModalidad: number) {

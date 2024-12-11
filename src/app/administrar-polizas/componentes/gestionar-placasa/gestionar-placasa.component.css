@@ -9,4 +9,18 @@
 .tabla-primaria{
   border: 2px solid #E6EFFD !important;
   border-color: #E6EFFD;
+
+}
+.tablaRedonda{
+  border: 2px solid #E6EFFD !important;
+  border-color: #E6EFFD;
+  top: 517px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 15px;
+  opacity: 1;
+  -moz-border-radius: 20px;
+  padding: 2px; 
+ 
+  
 }
