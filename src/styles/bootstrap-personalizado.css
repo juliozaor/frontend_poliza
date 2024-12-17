@@ -24,7 +24,7 @@
     border: 1px solid #CFCBCB;
     -webkit-appearance: none;
     appearance: none;
-    border-radius: 7px;
+    border-radius: 3px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     overflow: visible;
 }
@@ -68,7 +68,7 @@ input.form-control[type=number] {
     font-weight: 400;
     line-height: 1.5;
     border: 1px solid #CFCBCB;
-    border-radius: 7px;
+    border-radius: 3px;
     color: var(--gris) !important;
 }
 .form-select.sm{
@@ -145,4 +145,22 @@ padding:0px;
 
 .accordion-button:not(.collapsed)::after{
   background-image: url('../assets/img/menos.png');
+}
+
+.custom-modal-class {
+  position: fixed !important;
+  margin-top: 50px;
+}
+
+.custom-modal-class .modal-content {
+  /* background-color: black !important; */
+  border-radius: 3px !important;
+  padding: 20px !important;
+}
+
+.custom-modal-class .modal-dialog {
+  width: auto !important; /* Cambia al tamaño deseado */
+  height: auto !important;
+  max-width: 65% !important; /* Asegúrate de que no se restrinja */
+  max-height: 80% !important;
 }

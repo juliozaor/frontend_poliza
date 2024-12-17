@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AdministrarPolizasComponent } from './administrar-polizas.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { PolizasExtracontractualesComponent } from './componentes/polizas/poliza
 import { ListarVehiculosComponent } from './componentes/polizas/listar-vehiculos/listar-vehiculos.component';
 import { GestionarPolizasComponent } from './componentes/gestionar-polizas/gestionar-polizas.component';
 import { GestionarPlacasaComponent } from './componentes/gestionar-placasa/gestionar-placasa.component';
+import { ActualizarPolizaComponent } from './componentes/actualizar-poliza/actualizar-poliza.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { GestionarPlacasaComponent } from './componentes/gestionar-placasa/gesti
         ListarVehiculosComponent,
         GestionarPolizasComponent,
         GestionarPlacasaComponent,
+        ActualizarPolizaComponent,
     ],
     imports: [
         CommonModule,
@@ -42,6 +44,7 @@ import { GestionarPlacasaComponent } from './componentes/gestionar-placasa/gesti
         FormsModule,
         AutenticacionModule,
         TemplatesModule,
-    ]
+    ],
+    providers: [DatePipe]
 })
 export class AdministrarPolizasModule{ }

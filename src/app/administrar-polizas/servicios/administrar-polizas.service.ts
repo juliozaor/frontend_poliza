@@ -21,6 +21,7 @@ import { vincularVehiculoPolizaModel } from "../modelos/vincularVehiculosPoliza"
 export class ServicioAdministrarPolizas extends Autenticable {
 
   private readonly host = environment.urlBackend
+  private readonly hostArchivo = environment.urlBackendArchivos
 
   constructor(
     private http: HttpClient,
@@ -116,12 +117,14 @@ export class ServicioAdministrarPolizas extends Autenticable {
     )
   }
 
-  cargarArchivoPDF(archivoPDF: File) {
+  cargarArchivoPDF(idVigilado:any,archivoPDF: File) {
     const endpoint = `/api/v1/archivos`
     const formData = new FormData()
     formData.append('archivo', archivoPDF)
+    formData.append('ruta', 'polizas')
+    formData.append('idVigilado', idVigilado)
     return this.http.post<ArchivoGuardado>(
-      `${this.host}${endpoint}`,
+      `${this.hostArchivo}${endpoint}`,
       formData,
       { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
     )
@@ -261,5 +264,14 @@ export class ServicioAdministrarPolizas extends Autenticable {
   }
   /**fin de paolo */
 
+  /* RENOVAR POLIZA */
+  renovar(JSONRenovar: any){
+    let endpoint = `/api/v1/poliza/actualizar-poliza`
+    return this.http.patch<any>(
+      `${this.host}${endpoint}`,
+      JSONRenovar,
+      { headers: { Authorization: `Bearer ${this.obtenerTokenAutorizacion()}` } }
+    )
+  }
 
 }

@@ -44,8 +44,8 @@ margin-top:10px;
 }
 
 .scroll-formulario{
-  display:block; 
-  max-height: 450px; 
+  display:block;
+  max-height: 450px;
   overflow-y: auto;
 }
 
@@ -82,4 +82,18 @@ margin-top:10px;
 
 .table-responsive{
   min-width: 360px !important;
+}
+
+.icono-editar{
+  color: #434b84 ;
+  align-items: center !important;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.icono-editar:disabled{
+  color: gray;
+  pointer-events:none
 }

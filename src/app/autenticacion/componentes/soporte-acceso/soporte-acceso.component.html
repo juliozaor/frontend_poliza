@@ -2,20 +2,20 @@
 <div class="fondo ">
   <div class="fondo-imagen">
     <div class="d-flex justify-content-center py-3">
-      
+
       <div class="card contenedor-inicio-sesion ">
         <div class="card-body">
           <div class="logos d-flex w-100 px-2 justify-content-between">
             <div class="col-12 ms-auto text-center">
               <img draggable="false" class="img-fluid logo-supertransporte" src="assets/img/cabecera/supertransporte.jpg"
                 alt="ministerio-de-transporte">
-              
+
             </div>
           </div>
           <div class="contenedor-formulario">
             <h3 class="fw-semibold texto-azul-004884 mb-3 w-100 text-center">Problemas de acceso</h3>
         <hr class="w-100">
-        
+
         <form [formGroup]="formulario">
             <div class="row mb-3">
                 <div class="col-sm-12 col-md-6">
@@ -23,20 +23,20 @@
                         <label>
                             NIT <span class="">*</span>
                         </label>
-                    
+
                         <input type="text" class="form-control"  formControlName="nit" />
-                        
+
                     </fieldset>
-                    <app-validacion  
-                            [control]="this.formulario.controls['nit']" 
-                            [texto]="'Debe tener al menos 6 dígitos.'" 
+                    <app-validacion
+                            [control]="this.formulario.controls['nit']"
+                            [texto]="'Debe tener al menos 6 dígitos.'"
                             [validacion]="'minlength'"/>
-                    
-                    <app-validacion  
-                            [control]="this.formulario.controls['nit']" 
-                            [texto]="'El nit es requerido.'" 
+
+                    <app-validacion
+                            [control]="this.formulario.controls['nit']"
+                            [texto]="'El nit es requerido.'"
                             [validacion]="'required'"/>
-                  
+
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <fieldset>
@@ -45,11 +45,11 @@
                         </label>
                     </fieldset>
                     <input type="text" class="form-control" formControlName="razonSocial"/>
-                    <app-validacion  
-                            [control]="this.formulario.controls['razonSocial']" 
-                            [texto]="'La razón social es requerida.'" 
+                    <app-validacion
+                            [control]="this.formulario.controls['razonSocial']"
+                            [texto]="'La razón social es requerida.'"
                             [validacion]="'required'"/>
-                            
+
                 </div>
             </div>
             <div class="row mb-3">
@@ -60,14 +60,14 @@
                         </label>
                     </fieldset>
                     <input type="text" class="form-control" formControlName="correo"/>
-                    
-                    <app-validacion  
-                            [control]="this.formulario.controls['correo']" 
-                            [texto]="'Ingrese un correo valido'" 
+
+                    <app-validacion
+                            [control]="this.formulario.controls['correo']"
+                            [texto]="'Ingrese un correo valido'"
                             [validacion]="'email'"/>
-                    <app-validacion  
-                            [control]="this.formulario.controls['correo']" 
-                            [texto]="'El correo es requerido.'" 
+                    <app-validacion
+                            [control]="this.formulario.controls['correo']"
+                            [texto]="'El correo es requerido.'"
                             [validacion]="'required'"/>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -77,9 +77,9 @@
                         </label>
                     </fieldset>
                     <input type="text" class="form-control" formControlName="telefono"/>
-                    <app-validacion  
-                            [control]="this.formulario.controls['telefono']" 
-                            [texto]="'El teléfono es requerido.'" 
+                    <app-validacion
+                            [control]="this.formulario.controls['telefono']"
+                            [texto]="'El teléfono es requerido.'"
                             [validacion]="'required'"/>
                 </div>
             </div>
@@ -90,15 +90,15 @@
                             <span>Motivo/Error<span class="">*</span></span>
                         </div>
                         <div class="col-8">
-                            
+
                             <select class="form-select" formControlName="errorAcceso" >
                                 <option value="">Seleccione una opción</option>
                                 <option value="001">001 - Error de usuario</option>
                                 <option value="002">002 - Error de correo electrónico</option>
                             </select>
-                            <app-validacion  
-                            [control]="this.formulario.controls['errorAcceso']" 
-                            [texto]="'Seleccione una opción.'" 
+                            <app-validacion
+                            [control]="this.formulario.controls['errorAcceso']"
+                            [texto]="'Seleccione una opción.'"
                             [validacion]="'required'"/>
                         </div>
                     </div>
@@ -112,9 +112,9 @@
                         </div>
                         <div class="col-8">
                             <textarea class="form-control alto-textarea" formControlName="descripcion" cols="30" rows="50" ></textarea>
-                            <app-validacion  
-                            [control]="this.formulario.controls['descripcion']" 
-                            [texto]="'La descripción es requerida.'" 
+                            <app-validacion
+                            [control]="this.formulario.controls['descripcion']"
+                            [texto]="'La descripción es requerida.'"
                             [validacion]="'required'"/>
                         </div>
                     </div>
@@ -131,7 +131,12 @@
                             [acepta]="['.pdf','.docx','.jpg','.png','.jpge']"
                             [tamanoMaximoMb]="7"
                             (excedeTamano)="manejarExcedeTamano()"
-                            formControlName="adjunto" />                            
+                            (tipoIncorrecto)="manejarTipoIncorrecto()"
+                            [tipo]="[
+                              'application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                              'image/jpeg', 'image/jpg', 'image/png'
+                              ]"
+                            formControlName="adjunto" />
                             <span class="fs-12px">Formatos de archivo: PDF, Documentos Word e imágenes, Peso máximo 7 Mb</span>
                         </div>
                     </div>
@@ -160,7 +165,7 @@
                   Preguntas frecuentes
                 </a>
               </span><br>-->
-              
+
             </div>
           </div>
         </div>
@@ -178,7 +183,7 @@
         <img class="img-fluid escudoGoP" src="assets/img/footer/co_colombia.png" alt="">
         <img class="img-fluid escudoGoP" src="assets/img/cabecera/gov.png" alt="">
       </div>
-      
+
       <!--
       <div class="d-flex align-items-center justify-content-end ms-auto" *ngIf="usuario">
         <span class="fs-12px p-3 cursor-pointer"><b>Usuario: </b>{{ usuario.nombre }} {{ usuario.apellido }}</span>

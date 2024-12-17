@@ -6,3 +6,64 @@
     top: 5px;
     right: 10px;
 }
+
+.search-govco .search-icon-search-govco {
+  right: 0.45rem;
+  background-color: #3366CC;
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.625rem;
+}
+.search-govco .bar-search-govco.active .search-icon-search-govco {
+  background-color: #3366CC;
+}
+
+.search-govco .bar-search-govco {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  z-index: 12;
+  padding: 0
+  /* border: 0; */
+}
+
+.search-govco .input-search-govco{
+  width: 100%;
+  font-family: WorkSans-Regular;
+  height: 36px;
+  border-radius: 1.5rem;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 0.5px solid #4B4B4B;
+
+  opacity: 1;
+  background-color: #FFFFFF;
+  color: #4B4B4B;
+  outline: 0;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0 5.5rem 0 1rem;
+}
+
+.search-govco .search-icon-search-govco {
+  right: 2px;
+  background-color: #3366CC;
+  border-radius: 50%;
+  width: 2.25rem;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.625rem;
+}
+
+.search-govco .bar-search-govco:not(.active):not(.disabled) input:focus-visible {
+  outline: none;
+  outline-offset: max(0.125rem, 0.15em);
+}

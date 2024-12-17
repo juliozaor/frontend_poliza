@@ -13,6 +13,9 @@ import { valorCeroValidar } from '../../validadores/cero-validacion';
 import { negativoValidar } from '../../validadores/negativo-verificar';
 import { tamanioValido } from '../../validadores/tamanio-archivo-validar';
 import { fechaValida } from '../../validadores/fecha-validador';
+import { validarArchivo } from 'src/app/compartido/ValidarFormatoArchivo';
+import { Usuario } from 'src/app/autenticacion/modelos/IniciarSesionRespuesta';
+import { ServicioLocalStorage } from 'src/app/administrador/servicios/local-storage.service';
 
 @Component({
   selector: 'app-modal-capacidad',
@@ -37,10 +40,22 @@ export class ModalCapacidadComponent implements OnInit {
   archivoPDFES?: ArchivoGuardado
   archivoPDFPC?: ArchivoGuardado
 
+  excedeTamano1: boolean = false
+  excedeTamano2: boolean = false
+  excedeTamano3: boolean = false
+
+  tipoIncorrecto1: boolean = false
+  tipoIncorrecto2: boolean = false
+  tipoIncorrecto3: boolean = false
+
+  usuario: Usuario | null
+
   constructor(
     private servicioModal: NgbModal,
-    private servicioAdministrarPoliza: ServicioAdministrarPolizas
+    private servicioAdministrarPoliza: ServicioAdministrarPolizas,
+    private servicioLocalStorage: ServicioLocalStorage
   ) {
+    this.usuario = servicioLocalStorage.obtenerUsuario()
     this.formMX = new FormGroup({
       // Modalidad MX
       numeroRMX: new FormControl(undefined, [maxLengthNumberValidator(18), negativoValidar()]),
@@ -219,7 +234,13 @@ export class ModalCapacidadComponent implements OnInit {
     }
     else if (MX && ES && PC) {
       capacidadJson.capacidades = [MX, ES, PC]
-    }
+    }/*  else if (!MX && !ES && !PC) {
+      Swal.fire({
+        text: 'Debe diligenciar al menos una modlidad',
+        icon: "error",
+      })
+      return;
+    } */
 
     Swal.fire({
       icon: 'info',
@@ -265,11 +286,25 @@ export class ModalCapacidadComponent implements OnInit {
 cargarArchivoPDf(event: any, tipoModalidad: number) {
   const archivoSeleccionado = event.target.files[0];
   if (archivoSeleccionado) {
-    if (tamanioValido(archivoSeleccionado, 5)) {
+    if (this.excedeTamano1 || this.excedeTamano2 || this.excedeTamano3) {
       Swal.fire({
         icon: 'error',
         titleText: 'Excede el tamaño de archivo permitido',
         text: 'El archivo debe pesar máximo 5MB',
+      });
+      if (tipoModalidad == 1) {
+        this.formMX.controls['PDFRMX'].setValue('')
+      } else if (tipoModalidad == 2) {
+        this.formES.controls['PDFRES'].setValue('')
+      } else if (tipoModalidad == 3) {
+        this.formPC.controls['PDFRPC'].setValue('')
+      }
+      return;
+    }if (this.tipoIncorrecto1 || this.tipoIncorrecto2 || this.tipoIncorrecto3) {
+      Swal.fire({
+        icon: 'error',
+        titleText: 'Formato de archivo incorrecto',
+        text: 'Solo se permiten archivos PDF',
       });
       if (tipoModalidad == 1) {
         this.formMX.controls['PDFRMX'].setValue('')
@@ -286,7 +321,7 @@ cargarArchivoPDf(event: any, tipoModalidad: number) {
       text: 'Espere por favor...',
     });
     Swal.showLoading(null);
-    this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
+    this.servicioAdministrarPoliza.cargarArchivoPDF(this.usuario!.id,archivoSeleccionado).subscribe({
       next: (respuesta) => {
         if (tipoModalidad == 1) {
           this.archivoPDFMX = respuesta
@@ -366,6 +401,31 @@ alternarDesplegarPC() {
     }
   }
 } */
+
+  manejarExcedeTamano(tipo:number){
+    if(tipo === 1) {this.excedeTamano1 = true; this.tipoIncorrecto1 = false}
+    if(tipo === 2) {this.excedeTamano2 = true; this.tipoIncorrecto2 = false}
+    if(tipo === 3) {this.excedeTamano3 = true; this.tipoIncorrecto3 = false}
+  }
+  manejarTipoIncorrecto(tipo:number){
+    if(tipo === 1) {this.tipoIncorrecto1 = true; this.excedeTamano1 = false}
+    if(tipo === 2) {this.tipoIncorrecto2 = true; this.excedeTamano2 = false}
+    if(tipo === 3) {this.tipoIncorrecto3 = true; this.excedeTamano3 = false}
+  }
+  manejarArchivoCorrecto(tipo:number){
+    if(tipo === 1) {
+      this.excedeTamano1 = false
+      this.tipoIncorrecto1 = false
+    }
+    if(tipo === 2) {
+      this.excedeTamano2 = false
+      this.tipoIncorrecto2 = false
+    }
+    if(tipo === 3) {
+      this.excedeTamano3 = false
+      this.tipoIncorrecto3 = false
+    }
+  }
 
 closeModal() {
   this.servicioModal.dismissAll();

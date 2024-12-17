@@ -15,8 +15,8 @@ export class SoporteAccesoComponent {
   @ViewChild('popup') popup!: PopupComponent
   formulario: FormGroup
   generandoRadicado: boolean = false
-  
-  
+
+
   constructor(private servicioSoporte: AutenticacionService, private router: Router){
     this.formulario = new FormGroup({
       nit: new FormControl('', [ Validators.required,Validators.minLength(6) ] ),
@@ -59,5 +59,8 @@ export class SoporteAccesoComponent {
 
   manejarExcedeTamano(){
     this.popup.abrirPopupFallido("El archivo pesa más de 7 Mb")
+  }
+  manejarTipoIncorrecto(){
+    this.popup.abrirPopupFallido("El tipo de archivo seleccionado es incorrecto")
   }
 }

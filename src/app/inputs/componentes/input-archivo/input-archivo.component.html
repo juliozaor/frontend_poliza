@@ -2,18 +2,21 @@
     <div class="boton-adjuntar d-flex align-items-center justify-content-center">Seleccionar archivo</div>
     <div class="archivos">
         <div class="archivo d-flex" *ngIf="archivo">
-            <span class="nombre-archivo">{{ archivo.name }}</span>
+            <span *ngIf="archivo.name" class="nombre-archivo">{{ archivo.name }}</span>
             <button class="eliminar-archivo " (click)="manejarRemoverArchivo($event)"><span class="material-symbols-outlined  " style="color: #004884;"> delete </span></button>
             <!--<button class="eliminar-archivo" (click)="manejarRemoverArchivo($event)">x</button>-->
         </div>
+        <div style="font-size: 11px;" *ngIf="!archivo">
+          <span>Sin archivo seleccionado</span>
+        </div>
     </div>
-    
-    <input 
-    #input 
-    type="file" 
-    [accept]="unirAcepta()" 
-    [id]="nombre" 
+
+    <input
+    #input
+    type="file"
+    [accept]="unirAcepta()"
+    [id]="nombre"
     [disabled]="disabled"
     (change)="onChangeFiles($event)">
-     
+
 </label>

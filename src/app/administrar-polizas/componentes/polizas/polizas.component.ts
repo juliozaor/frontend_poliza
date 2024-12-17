@@ -18,6 +18,9 @@ import { tamanioValido } from './validadores/tamanio-archivo-validar';
 import { fechaValida } from './validadores/fecha-validador';
 import { ModalidadesPModel } from '../../modelos/modalidades';
 import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
+import { validarArchivo } from 'src/app/compartido/ValidarFormatoArchivo';
+import { Usuario } from 'src/app/autenticacion/modelos/IniciarSesionRespuesta';
+import { ServicioLocalStorage } from 'src/app/administrador/servicios/local-storage.service';
 
 @Component({
   selector: 'app-polizas',
@@ -66,12 +69,25 @@ export class PolizasComponent implements OnInit {
   formContractual: FormGroup;
   formExtracontractual: FormGroup;
 
-  constructor(private ServiceMenuP:MenuHeaderPService,
+  excelExcedeTamanoC: boolean = false
+  excelTipoIncorrectoC: boolean = false
+  excelExcedeTamanoE: boolean = false
+  excelTipoIncorrectoE: boolean = false
+  pdfExcedeTamanoC: boolean = false
+  pdfTipoIncorrectoC: boolean = false
+  pdfExcedeTamanoE: boolean = false
+  pdfTipoIncorrectoE: boolean = false
+
+  usuario: Usuario | null
+
+  constructor(private ServiceMenuP: MenuHeaderPService,
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
+    private servicioLocalStorage: ServicioLocalStorage
   ) {
+    this.usuario = servicioLocalStorage.obtenerUsuario()
     //-- Formulario Responsabilidad contractual
     this.formContractual = new FormGroup({
-      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
+      numeroPolizaC: new FormControl(undefined, [Validators.required, maxLengthNumberValidator(15), valorCeroValidar(), negativoValidar()]),
       aseguradorasC: new FormControl("", [Validators.required]),
       vigenciaPolizaInicioC: new FormControl(undefined, [Validators.required]),
       vigenciaPolizaFinalC: new FormControl(undefined, [Validators.required]),
@@ -121,7 +137,7 @@ export class PolizasComponent implements OnInit {
 
     //-- Formulario Responsabilidad extracontractual
     this.formExtracontractual = new FormGroup({
-      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]),
+      numeroPolizaE: new FormControl(undefined, [maxLengthNumberValidator(15), valorCeroValidar(), negativoValidar()]),
       aseguradorasE: new FormControl("",),
       vigenciaPolizaInicioE: new FormControl(undefined,),
       vigenciaPolizaFinalE: new FormControl(undefined,),
@@ -138,7 +154,7 @@ export class PolizasComponent implements OnInit {
       //----- Amparos adicionales -----//
       valorAseguradoAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       limitesAA12: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
-      deducibleAA12: new FormControl(undefined,[ maxLengthNumberValidator(3), negativoValidar()]),
+      deducibleAA12: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
       valorAseguradoAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       limitesAA13: new FormControl(undefined, [maxLengthNumberValidator(3), /* valorCeroValidar(), */ negativoValidar()]),
       deducibleAA13: new FormControl(undefined, [maxLengthNumberValidator(3), negativoValidar()]),
@@ -169,115 +185,112 @@ export class PolizasComponent implements OnInit {
   }
   /**codigo de paolo */
   ///arreglo de las modalidades, debe venir desde una ruta del servidor
-  isMsjmodalidad:boolean=true;
+  isMsjmodalidad: boolean = true;
   public modalidadesP: Array<ModalidadesPModel> = [];
-  AgregarModalidadP :Array<ModalidadesPModel>=[]; /**la que se tiene en cuenta las seleccionadas */
-  onCheckChange(event :any) /**función seleccionar o desmarcar check */
-  {
+  AgregarModalidadP: Array<ModalidadesPModel> = []; /**la que se tiene en cuenta las seleccionadas */
+  onCheckChange(event: any) /**función seleccionar o desmarcar check */ {
 
-    if(event.target.checked){
+    if (event.target.checked) {
       this.AgregarModalidadP.push(
         {
-          id:event.target.value,
-          nombre:event.target.name
+          id: event.target.value,
+          nombre: event.target.name
         }/** agraga la seleccion */
       );
-      this.isMsjmodalidad=false
+      this.isMsjmodalidad = false
       //console.log(this.AgregarModalidadP)
-    }else{
+    } else {
 
-      this.AgregarModalidadP=this.AgregarModalidadP.filter(modalidad => modalidad.id != event.target.value);/**elimina y actualiza la seleecion */
-      if(this.AgregarModalidadP.length == 0)
-      {
-        this.isMsjmodalidad=true
+      this.AgregarModalidadP = this.AgregarModalidadP.filter(modalidad => modalidad.id != event.target.value);/**elimina y actualiza la seleecion */
+      if (this.AgregarModalidadP.length == 0) {
+        this.isMsjmodalidad = true
       }
       //console.log(this.AgregarModalidadP)
     }
 
   }
   /**fin del codigo de paolo */
-  ListarModalidadesP()
-  {
+  ListarModalidadesP() {
     this.servicioAdministrarPoliza.gestionarModalidadP().subscribe({
       next: (respuesta) => {
         this.modalidadesP = respuesta;
 
       }
-    }) ;
+    });
   }
 
   ngOnInit(): void {
     //this.deshabilitarFormularios()
     this.obtenerAseguradora()
     this.ListarModalidadesP()
-    this.ServiceMenuP.RutaModelo='/crear-polizas' //paolo
+    this.ServiceMenuP.RutaModelo = '/crear-polizas' //paolo
     /**codigo paolo */
 
     /**fin de Paolo */
   }
 
-  fechasVerificar(tipoPoliza: number){
+  fechasVerificar(tipoPoliza: number) {
     const controlC = this.formContractual.controls
     const controlE = this.formExtracontractual.controls
 
-    if(tipoPoliza == 1){
-      if(controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value){
-        if(controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value){
+    if (tipoPoliza == 1) {
+      if (controlC['vigenciaPolizaInicioC'].value && controlC['vigenciaPolizaFinalC'].value) {
+        if (controlC['vigenciaPolizaInicioC'].value >= controlC['vigenciaPolizaFinalC'].value) {
           controlC['vigenciaPolizaInicioC'].setValue('')
           controlC['vigenciaPolizaFinalC'].setValue('')
           Swal.fire({
-            titleText:"El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
-            icon:"error"
+            titleText: "El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
+            icon: "error"
           })
         }
       }
-    }else if(tipoPoliza == 2){
-      if(controlE['vigenciaPolizaInicioE'].value && controlE['vigenciaPolizaFinalE'].value){
-        if(controlE['vigenciaPolizaInicioE'].value >= controlE['vigenciaPolizaFinalE'].value){
+    } else if (tipoPoliza == 2) {
+      if (controlE['vigenciaPolizaInicioE'].value && controlE['vigenciaPolizaFinalE'].value) {
+        if (controlE['vigenciaPolizaInicioE'].value >= controlE['vigenciaPolizaFinalE'].value) {
           controlE['vigenciaPolizaInicioE'].setValue('')
           controlE['vigenciaPolizaFinalE'].setValue('')
           Swal.fire({
-            titleText:"El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
-            icon:"error"
+            titleText: "El inicio de la fecha de vigencia no puede ser posterior o igual a la fecha final de vigencia.",
+            icon: "error"
           })
         }
       }
     }
   }
 
-  fechaValida(event: any, tipoPoliza: number){
-    if(fechaValida(event)){
+  fechaValida(event: any, tipoPoliza: number) {
+    if (fechaValida(event)) {
       Swal.fire({
-        titleText:"La fecha ingresada no puede ser superior o igual a la fecha actual",
+        titleText: "La fecha ingresada no puede ser superior o igual a la fecha actual",
         icon: "error"
       })
       console.log(event.target.name);
-      if(tipoPoliza == 1){
+      if (tipoPoliza == 1) {
         this.formContractual.controls[event.target.name].setValue('')
-      }else if(tipoPoliza == 2){
+      } else if (tipoPoliza == 2) {
         this.formExtracontractual.controls[event.target.name].setValue('')
       }
     }
   }
 
-  respuestaNoResponsabilidad( tipoPoliza: number){
+  respuestaNoResponsabilidad(tipoPoliza: number) {
     const controlC = this.formContractual.controls
     const controlE = this.formExtracontractual.controls
-    if(tipoPoliza == 1){
-      if(controlC['checkNoResponsabilidadC'].value){
+    if (tipoPoliza == 1) {
+      if (controlC['checkNoResponsabilidadC'].value) {
         controlC['checkResponsabilidadC'].disable()
         controlC['checkResponsabilidadC'].setValue(false)
-      }else{
+      } else {
         controlC['checkResponsabilidadC'].enable()
         controlC['checkResponsabilidadC'].setValue(false)
       }
     }
-    if(tipoPoliza == 2){
+    if (tipoPoliza == 2) {
       //console.log(controlC['checkNoResponsabilidadC'].value);
-      if(controlE['checkNoResponsabilidadE'].value){
+      if (controlE['checkNoResponsabilidadE'].value) {
         controlE['checkResponsabilidadE'].disable()
         controlE['checkResponsabilidadE'].setValue(false)
-      }else{
+      } else {
         controlE['checkResponsabilidadE'].enable()
         controlE['checkResponsabilidadE'].setValue(false)
       }
@@ -285,7 +298,10 @@ export class PolizasComponent implements OnInit {
   }
 
   finalizar() {
-    Swal.fire({
+    this.formContractual.reset()
+    this.formExtracontractual.reset()
+    this.abrirModalCapacidad()
+    /* Swal.fire({
       titleText: "¿Seguro que quiere finalizar?",
       text: "Después de enviar a la Superintendencia de Transporte no podrá llenar más polizas.",
       confirmButtonText: "Aceptar",
@@ -294,13 +310,10 @@ export class PolizasComponent implements OnInit {
       cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.formContractual.reset()
-        this.formExtracontractual.reset()
-        this.abrirModalCapacidad()
       } else if (result.isDismissed) {
         Swal.close()
       }
-    })
+    }) */
   }
 
   deshabilitarFormularios() {
@@ -327,9 +340,9 @@ export class PolizasComponent implements OnInit {
     })
   }
 
-  cambiarNumeroPoliza(tipoPoliza: number){
-    if(tipoPoliza == 1){this.formContractual.controls['cargarExcel'].reset()}
-    if(tipoPoliza == 2){this.formExtracontractual.controls['cargarExcel'].setValue('')}
+  cambiarNumeroPoliza(tipoPoliza: number) {
+    if (tipoPoliza == 1) { this.formContractual.controls['cargarExcel'].reset() }
+    if (tipoPoliza == 2) { this.formExtracontractual.controls['cargarExcel'].setValue('') }
   }
 
   guardarPolizas() {
@@ -338,8 +351,7 @@ export class PolizasComponent implements OnInit {
     const controlsE = this.formExtracontractual.controls
 
     /*****CODIGO PARA VALIDAR LAS MODALIDADES PAOLO*/
-    if(this.AgregarModalidadP.length == 0)/**que exista al meno una selección */
-    {
+    if (this.AgregarModalidadP.length == 0)/**que exista al meno una selección */ {
       Swal.fire({
         /*text: "Debe seleccionar por lo menos una  modalidad",*/
         icon: "error",
@@ -358,7 +370,7 @@ export class PolizasComponent implements OnInit {
       return;
     }
     //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en contarctual
-    if(!controlsC['checkResponsabilidadC'].value && !controlsC['checkNoResponsabilidadC'].value){
+    if (!controlsC['checkResponsabilidadC'].value && !controlsC['checkNoResponsabilidadC'].value) {
       Swal.fire({
         icon: "error",
         titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la póliza CONTRACTUAL!",
@@ -548,7 +560,7 @@ export class PolizasComponent implements OnInit {
         return;
       } */
       //Valida que se haya respondido la pregunta sobre fondos de responsabilidad en extracontarctual
-      if(!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value){
+      if (!controlsE['checkResponsabilidadE'].value && !controlsE['checkNoResponsabilidadE'].value) {
         Swal.fire({
           icon: "error",
           titleText: "¡No ha respondido la pregunta sobre el Fondo de Responsabilidad en la póliza EXTRACONTRACTUAL!",
@@ -565,7 +577,7 @@ export class PolizasComponent implements OnInit {
     Swal.showLoading(null);
     //Guarda la poliza y devuelve la respuesta correspondiente
     /****paolo */
-    //console.log(polizaJson);
+    console.log(polizaJson);
     /*****fin paolo */
     this.servicioAdministrarPoliza.guardarPoliza(polizaJson).subscribe({
       next: (respuesta) => {
@@ -618,11 +630,15 @@ export class PolizasComponent implements OnInit {
   }
 
   descargarArchivoXLSX(): any {
-    this.servicioAdministrarPoliza.descargarCadenaBase64().subscribe({
+    const link = document.createElement('a');
+    link.href = 'assets/documentos/vehiculos.xlsx'; // Ruta del archivo
+    link.download = 'vehiculos.xlsx'; // Nombre sugerido para la descarga
+    link.click();
+    /* this.servicioAdministrarPoliza.descargarCadenaBase64().subscribe({
       next: (respuesta) => { // Cadena base64 del archivo, que obtienes de tu API
         this.servicioAdministrarPoliza.descargarArchivoXLSX(respuesta, 'vehiculos.xlsx');
       }
-    });
+    }); */
   }
 
   cargarArchivoXLSX(event: any, tipoPoliza: number) {
@@ -630,16 +646,9 @@ export class PolizasComponent implements OnInit {
       const numeroPliza = this.formContractual.controls['numeroPolizaC'].value
       if (numeroPliza) {
         const archivoSeleccionado = event.target.files[0];
-        if(archivoSeleccionado){
-          if(tamanioValido(archivoSeleccionado,20)){
-            Swal.fire({
-              icon: 'error',
-              titleText: 'Excede el tamaño de archivo permitido',
-              text: 'El archivo debe pesar máximo 20MB',
-            });
-            this.formContractual.controls['cargarExcel'].setValue('')
-            return;
-          }
+        if (archivoSeleccionado) {
+          if (this.excelExcedeTamanoC) { this.formContractual.controls['cargarExcel'].setValue(''); return }
+          if (this.excelTipoIncorrectoC) { this.formContractual.controls['cargarExcel'].setValue(''); return; }
           Swal.fire({
             icon: 'info',
             allowOutsideClick: false,
@@ -682,7 +691,7 @@ export class PolizasComponent implements OnInit {
                     }
                   })
                   this.formContractual.controls['cargarExcel'].setValue('')
-                } else if(error.status == 500){
+                } else if (error.status == 500) {
                   Swal.close();
                   Swal.fire({
                     text: error.error.mensaje,
@@ -690,7 +699,7 @@ export class PolizasComponent implements OnInit {
                   })
                   this.formContractual.controls['cargarExcel'].setValue('')
                 }
-                else{
+                else {
                   Swal.close();
                   Swal.fire({
                     text: "Hubo un error de conexión, intentelo más tarde.",
@@ -704,7 +713,7 @@ export class PolizasComponent implements OnInit {
             })
           }
           reader.readAsDataURL(archivoSeleccionado);
-        }else{return}
+        } else { return }
       } else {
         Swal.fire({
           text: "No has agregado un número de póliza",
@@ -717,7 +726,9 @@ export class PolizasComponent implements OnInit {
       const numeroPliza = this.formExtracontractual.controls['numeroPolizaE'].value
       if (numeroPliza) {
         const archivoSeleccionado = event.target.files[0];
-        if(archivoSeleccionado){
+        if (archivoSeleccionado) {
+          if (this.excelExcedeTamanoE) { this.formExtracontractual.controls['cargarExcel'].setValue(''); return; }
+          if (this.excelTipoIncorrectoE) { this.formExtracontractual.controls['cargarExcel'].setValue(''); return; }
           Swal.fire({
             icon: 'info',
             allowOutsideClick: false,
@@ -758,14 +769,14 @@ export class PolizasComponent implements OnInit {
                     }
                   })
                   this.formExtracontractual.controls['cargarExcel'].setValue('')
-                }else if(error.status == 500){
+                } else if (error.status == 500) {
                   Swal.close();
                   Swal.fire({
                     text: error.error.mensaje,
                     icon: "error"
                   })
                   this.formExtracontractual.controls['cargarExcel'].setValue('')
-                }else{
+                } else {
                   Swal.close();
                   Swal.fire({
                     text: "Hubo un error de conexión, intentelo más tarde.",
@@ -778,7 +789,7 @@ export class PolizasComponent implements OnInit {
             })
           };
           reader.readAsDataURL(archivoSeleccionado);
-        }else{return}
+        } else { return }
       } else {
         Swal.fire({
           text: "No has agregado un número de poliza",
@@ -792,13 +803,23 @@ export class PolizasComponent implements OnInit {
   cargarArchivoPDf(event: any, tipoPoliza: number) {
     const archivoSeleccionado = event.target.files[0];
     if (archivoSeleccionado) {
-      if(tamanioValido(archivoSeleccionado,20)){
+      if (this.pdfExcedeTamanoC || this.pdfExcedeTamanoE) {
         Swal.fire({
           icon: 'error',
           titleText: 'Excede el tamaño de archivo permitido',
           text: 'El archivo debe pesar máximo 20MB',
         });
-        this.formContractual.controls['cargarPDF'].setValue('')
+        if (tipoPoliza === 1) { this.formContractual.controls['cargarPDF'].setValue('') }
+        if (tipoPoliza === 2) { this.formExtracontractual.controls['cargarPDF'].setValue('') }
+        return;
+      } if (this.pdfTipoIncorrectoC || this.pdfTipoIncorrectoE) {
+        Swal.fire({
+          icon: 'error',
+          titleText: 'Formato de archivo incorrecto',
+          text: 'Solo se permiten archivos PDF',
+        });
+        if (tipoPoliza === 1) { this.formContractual.controls['cargarPDF'].setValue('') }
+        if (tipoPoliza === 2) { this.formExtracontractual.controls['cargarPDF'].setValue('') }
         return;
       }
       Swal.fire({
@@ -807,7 +828,7 @@ export class PolizasComponent implements OnInit {
         text: 'Espere por favor...',
       });
       Swal.showLoading(null);
-      this.servicioAdministrarPoliza.cargarArchivoPDF(archivoSeleccionado).subscribe({
+      this.servicioAdministrarPoliza.cargarArchivoPDF(this.usuario!.id, archivoSeleccionado).subscribe({
         next: (respuesta) => {
           Swal.fire({
             titleText: "¡Archivo cargado correctamente!",
@@ -840,12 +861,12 @@ export class PolizasComponent implements OnInit {
     this.desplegarRCE = !this.desplegarRCE
   }
   alternarDesplegarAB(tipoPoliza: number) {
-    if(tipoPoliza == 1){this.desplegarAmparosB1 = !this.desplegarAmparosB1}
-    if(tipoPoliza == 2){this.desplegarAmparosB2 = !this.desplegarAmparosB2}
+    if (tipoPoliza == 1) { this.desplegarAmparosB1 = !this.desplegarAmparosB1 }
+    if (tipoPoliza == 2) { this.desplegarAmparosB2 = !this.desplegarAmparosB2 }
   }
   alternarDesplegarAA(tipoPoliza: number) {
-    if(tipoPoliza == 1){this.desplegarAmparosA1 = !this.desplegarAmparosA1}
-    if(tipoPoliza == 2){this.desplegarAmparosA2 = !this.desplegarAmparosA2}
+    if (tipoPoliza == 1) { this.desplegarAmparosA1 = !this.desplegarAmparosA1 }
+    if (tipoPoliza == 2) { this.desplegarAmparosA2 = !this.desplegarAmparosA2 }
   }
   abrirModalCapacidad() {
     this.modalCapacidad.abrir()
@@ -853,7 +874,8 @@ export class PolizasComponent implements OnInit {
 
   DesplegarFondoResponsabilidad(tipoPoliza: number) {
     if (tipoPoliza == 1) {
-      if (this.formContractual.controls['checkResponsabilidadC'].value) {console.log(this.formContractual.controls['checkResponsabilidadC'].value);
+      if (this.formContractual.controls['checkResponsabilidadC'].value) {
+        console.log(this.formContractual.controls['checkResponsabilidadC'].value);
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
         this.formContractual.controls['checkNoResponsabilidadC'].disable()
         //this.formContractual.get('checkResponsabilidadC')?.disable()
@@ -868,7 +890,7 @@ export class PolizasComponent implements OnInit {
         this.formContractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
         this.fondoResponsabilidadC = this.formContractual.controls['checkResponsabilidadC'].value
-        console.log(this.formContractual.controls['checkResponsabilidadC'].value,this.fondoResponsabilidadC);
+        console.log(this.formContractual.controls['checkResponsabilidadC'].value, this.fondoResponsabilidadC);
         this.formContractual.controls['checkNoResponsabilidadC'].enable()
         this.formContractual.get('checkResponsabilidadC')?.setValue(false); this.formContractual.get('checkResponsabilidadE')?.updateValueAndValidity()
         this.formContractual.get('fechaConstitucion')?.clearValidators(); this.formContractual.get('fechaConstitucion')?.updateValueAndValidity()
@@ -905,7 +927,7 @@ export class PolizasComponent implements OnInit {
         this.formExtracontractual.get('capa2')?.setValidators([Validators.required, maxLengthNumberValidator(4), negativoValidar(), valorCeroValidar()])
       } else {
         this.fondoResponsabilidadE = this.formExtracontractual.controls['checkResponsabilidadE'].value
-        if(this.formExtracontractual.controls['numeroPolizaE'].value){
+        if (this.formExtracontractual.controls['numeroPolizaE'].value) {
           this.formExtracontractual.get('checkNoResponsabilidadE')?.enable()
         }
         this.formExtracontractual.get('checkResponsabilidadE')?.setValue(false); this.formExtracontractual.get('checkResponsabilidadE')?.updateValueAndValidity()
@@ -934,7 +956,7 @@ export class PolizasComponent implements OnInit {
   numeroPolizaELleno() {
     if (this.formExtracontractual.controls['numeroPolizaE'].value) {
       this.obligatorio = true
-      this.formExtracontractual.get('checkResponsabilidadE')?.enable();this.formExtracontractual.get('checkNoResponsabilidadE')?.enable()
+      this.formExtracontractual.get('checkResponsabilidadE')?.enable(); this.formExtracontractual.get('checkNoResponsabilidadE')?.enable()
       this.formExtracontractual.get('numeroPolizaE')?.setValidators([Validators.required, maxLengthNumberValidator(18), valorCeroValidar(), negativoValidar()]); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.setValidators([Validators.required]); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.setValidators([Validators.required]); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
@@ -967,7 +989,7 @@ export class PolizasComponent implements OnInit {
       this.formExtracontractual.get('cargarPDF')?.setValidators([Validators.required]); this.formExtracontractual.get('cargarPDF')?.updateValueAndValidity()
     } else {
       this.obligatorio = false
-      this.formExtracontractual.get('checkResponsabilidadE')?.disable();this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
+      this.formExtracontractual.get('checkResponsabilidadE')?.disable(); this.formExtracontractual.get('checkNoResponsabilidadE')?.disable()
       this.formExtracontractual.get('numeroPolizaE')?.clearValidators(); this.formExtracontractual.get('numeroPolizaE')?.updateValueAndValidity()
       this.formExtracontractual.get('aseguradorasE')?.clearValidators(); this.formExtracontractual.get('aseguradorasE')?.updateValueAndValidity()
       this.formExtracontractual.get('vigenciaPolizaInicioE')?.clearValidators(); this.formExtracontractual.get('vigenciaPolizaInicioE')?.updateValueAndValidity()
@@ -1002,6 +1024,74 @@ export class PolizasComponent implements OnInit {
       this.formExtracontractual.controls['checkResponsabilidadE'].setValue(false); this.formExtracontractual.get('checkResponsabilidadE')?.updateValueAndValidity()
       this.formExtracontractual.controls['checkNoResponsabilidadE'].setValue(false); this.formExtracontractual.get('checkNoResponsabilidadE')?.updateValueAndValidity()
       this.DesplegarFondoResponsabilidad(2)
+    }
+  }
+
+  manejarExcedeTamano(tipoDoc: string, tipoPoliza: number) {
+    if (tipoDoc === 'excel') {
+      if (tipoPoliza === 1) {
+        this.excelExcedeTamanoC = true
+      } else if (tipoPoliza === 2) {
+        this.excelExcedeTamanoE = true
+      }
+    } else if (tipoDoc === 'pdf') {
+      if (tipoPoliza === 1) {
+        this.pdfExcedeTamanoC = true
+      } else if (tipoPoliza === 2) {
+        this.pdfExcedeTamanoE = true
+      }
+    }
+
+  }
+
+  manejarTipoIncorrecto(tipoDoc: string, tipoPoliza: number) {
+    if (tipoDoc === 'excel') {
+      Swal.fire({
+        icon: 'error',
+        titleText: 'Formato de archivo incorrecto',
+        text: 'Solo se permiten archivos .xlsx',
+      });
+      if (tipoPoliza === 1) {
+        this.excelTipoIncorrectoC = true
+        this.pdfTipoIncorrectoC = false
+      } else if (tipoPoliza === 2) {
+        this.excelTipoIncorrectoE = true
+        this.pdfTipoIncorrectoE = false
+      }
+    } else if (tipoDoc === 'pdf') {
+      if (tipoPoliza === 1) {
+        this.pdfTipoIncorrectoC = true
+        this.excelTipoIncorrectoC = false
+      } else if (tipoPoliza === 2) {
+        this.pdfTipoIncorrectoE = true
+        this.excelTipoIncorrectoE = false
+      }
+    }
+
+  }
+
+  manejarArchivoCorrecto(tipoDoc: string, tipoPoliza: number) {
+    if (tipoDoc === 'excel') {
+      Swal.fire({
+        icon: 'error',
+        titleText: 'Excede el tamaño de archivo permitido',
+        text: 'El archivo debe pesar máximo 20MB',
+      });
+      if (tipoPoliza === 1) {
+        this.excelTipoIncorrectoC = false
+        this.excelExcedeTamanoC = false
+      } else if (tipoPoliza === 2) {
+        this.excelTipoIncorrectoE = false
+        this.excelExcedeTamanoE = false
+      }
+    } else if (tipoDoc === 'pdf') {
+      if (tipoPoliza === 1) {
+        this.pdfTipoIncorrectoC = false
+        this.pdfExcedeTamanoC = false
+      } else if (tipoPoliza === 2) {
+        this.pdfTipoIncorrectoE = false
+        this.pdfExcedeTamanoE = false
+      }
     }
   }
 
