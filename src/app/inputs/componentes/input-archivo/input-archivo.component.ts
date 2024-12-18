@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { validarArchivo } from 'src/app/compartido/ValidarFormatoArchivo';
 
 @Component({
   selector: 'app-input-archivo',
@@ -16,14 +17,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputArchivoComponent implements OnInit, ControlValueAccessor {
   @ViewChild('input') input!: ElementRef<HTMLInputElement>
   @Output('excedeTamano') excedeTamano: EventEmitter<void>
+  @Output('tipoIncorrecto') tipoIncorrecto: EventEmitter<void>
+  @Output('archivoCorrecto') archivoCorrecto: EventEmitter<void>
   @Input('nombre') nombre!: string
   @Input('acepta') acepta: string[] = []
+  @Input('tipo') tipo: string[] = []
   @Input('tamanoMaximoMb') tamanoMaximoMb?: number
   archivo?: File | null;
   disabled: boolean = false
 
   constructor() {
     this.excedeTamano = new EventEmitter<void>();
+    this.tipoIncorrecto = new EventEmitter<void>();
+    this.archivoCorrecto = new EventEmitter<void>();
   }
 
   onChangeFiles = (evento: Event) => {
@@ -34,8 +40,14 @@ export class InputArchivoComponent implements OnInit, ControlValueAccessor {
     if (input.files) {
       const file = input.files.item(0)
       if(file && !this.tamanoValido(file)){
+        console.log('true')
         this.excedeTamano.emit()
         return;
+      } else if(file && this.validarArchivo(file,this.tipo)){
+        this.tipoIncorrecto.emit()
+        return;
+      } else {
+        this.archivoCorrecto.emit()
       }
       this.archivo = input.files.item(0)
       this.onChange(this.archivo)
@@ -89,10 +101,24 @@ export class InputArchivoComponent implements OnInit, ControlValueAccessor {
 
   private tamanoValido(archivo: File): boolean{
     if(this.tamanoMaximoMb){
-      return this.tamanoMaximoMb * 1000000 >= archivo.size ? true : false 
+      /* console.log('tamaño archivo:', archivo.size)
+      console.log('tamaño permitido:', this.tamanoMaximoMb * 1048576) */
+      return this.tamanoMaximoMb * 1048576 >= archivo.size ? true : false
     }else{
       return true
     }
+  }
+
+  private validarArchivo(archivo: File, tiposPermitidos: string[]): boolean {
+
+    if (archivo) {
+      // Verifica si el tipo del archivo está dentro de los tipos permitidos
+      if (!tiposPermitidos.includes(archivo.type)) {
+        return true; // Indica que el archivo no es válido
+      }
+      return false; // Archivo válido
+    }
+    return false; // No se seleccionó ningún archivo
   }
 
 }

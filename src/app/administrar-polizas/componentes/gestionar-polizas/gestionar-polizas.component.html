@@ -1,10 +1,47 @@
 <div class="mt-4 px-sm-3 px-md-4 px-lg-5">
-  <div class="py-2">
-    <span class="TamTituloP texto-azul-004884">
-      Gestionar Pólizas
-    </span>
+  <div class="d-flex">
+    <h2 class="fw-bolder">Gestionar Pólizas</h2>
   </div>
   <!--///////////////////////////// Tabla gestionar polizas ///////////////////////////////////////////////////// -->
+  <div class="d-flex" style="margin-bottom: 15px;">
+    <div style="margin-right: 15px;">
+      <label for="termino">Filtros</label>
+      <app-input-busqueda
+      [(ngModel)]="nPoliza"
+      (ngModelChange)="setnPoliza($event)"
+      [placeholder]="'Ingrese n° de póliza'"
+      (buscar)="actualizarFiltros()"></app-input-busqueda>
+      <!-- <input type="text" class="form-control" id="termino" placeholder="Buscar por N° de póliza" [(ngModel)]="nPoliza"> -->
+    </div>
+    <div style="margin-right: 15px;">
+      <label for="tipoPoliza"></label>
+      <select id="tipoPoliza" class="form-select" [(ngModel)]="tPoliza" (ngModelChange)="actualizarFiltros()">
+        <option [value]="''">Seleccione un tipo de póliza</option>
+        <option [value]="1">RESPONSABILIDAD CIVIL CONTRACTUAL</option>
+        <option [value]="2">RESPONSABILIDAD CIVIL EXTRACONTRACTUAL</option>
+      </select>
+    </div>
+    <div style="margin-right: 15px;">
+      <label for="tipoPoliza"></label>
+      <select id="tipoPoliza" class="form-select" [(ngModel)]="ePoliza" (ngModelChange)="actualizarFiltros()">
+        <option [value]="null">Seleccione un estado</option>
+        <option [value]="1">ACTIVA</option>
+        <option [value]="0">INACTIVA</option>
+      </select>
+    </div>
+    <!-- <div style="margin-right: 15px; display: block;">
+      <br>
+      <button type="button" id="filtrar" class="boton primario relleno" (click)="actualizarFiltros()">
+        Filtrar
+      </button>
+    </div> -->
+    <div style="margin-right: 15px;">
+      <br>
+      <button type="button" id="limpiar" class="boton primario relleno" (click)="limpiarFiltros()">
+        Limpiar filtros
+      </button>
+    </div>
+  </div>
   <div>
     <table class="table tabla-primaria borderP" aria-describedby="table-basic">
       <thead class="encabezado-tabla">
@@ -18,6 +55,7 @@
           <th scope="col">Vigencia - Fecha fin</th>
           <th scope="col">Aseguradora</th>
           <th scope="col">Cantidad de vehiculos</th>
+          <th scope="col">Renovar</th>
         </tr>
       </thead>
       <tbody class="contenido-tablas centrado">
@@ -29,11 +67,23 @@
             {{poliza.poliza}}
           </td>
           <td class=" tdxP">{{poliza.estadoPoliza}}</td>
-          <td class=" tdxP">{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td>
-          <td class=" tdxP">{{poliza.fechaInicio | fecha: 'dd/MM/yyyy'}}</td>
-          <td class=" tdxP">{{poliza.fechaFin | fecha: 'dd/MM/yyyy'}}</td>
+          <!-- <td class=" tdxP">{{poliza.fechaCargue | fecha: 'dd/MM/yyyy'}}</td> -->
+          <td class=" tdxP">{{formatearFecha(poliza.fechaCargue) | fecha: 'dd/MM/yyyy'}}</td>
+          <td class=" tdxP">{{formatearFecha(poliza.fechaInicio) | fecha: 'dd/MM/yyyy'}}</td>
+          <td class=" tdxP">{{formatearFecha(poliza.fechaFin) | fecha: 'dd/MM/yyyy'}}</td>
           <td class=" tdxP">{{poliza.aseguradora}}</td>
           <td class=" tdxP">{{poliza.cantidadVehiculos}}</td>
+          <td class=" tdxP">
+            <button type="button" class="icono-editar" title="Renovar" [disabled]="poliza.estadoPoliza === 'ACTIVA'"
+            (click)="abrirModalActualizar(poliza)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="polizas.length <= 0">
+          <td colspan="9">
+            <h5>No se encontraron registros</h5>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -254,4 +304,5 @@
   <app-alertas-gov [alert]="alert" [text]="textoAlert"></app-alertas-gov>
 
   <app-popup #popup />
+  <app-actualizar-poliza #actualizarPoliza (renovada)="inicializarPaginador()"></app-actualizar-poliza>
 </div>

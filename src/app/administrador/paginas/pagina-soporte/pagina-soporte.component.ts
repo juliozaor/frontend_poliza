@@ -24,7 +24,7 @@ export class PaginaSoporteComponent implements OnInit {
       adjunto: new FormControl<File | null>( null )
     })
   }
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.ServiceMenuP.RutaModelo='' //paolo
   }
 
@@ -55,5 +55,8 @@ export class PaginaSoporteComponent implements OnInit {
 
   manejarExcedeTamanio(){
     this.popup.abrirPopupFallido("El archivo pesa más de 7 Mb")
+  }
+  manejarTipoIncorrecto(){
+    this.popup.abrirPopupFallido("El tipo de archivo seleccionado es incorrecto")
   }
 }

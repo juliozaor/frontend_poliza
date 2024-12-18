@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/autenticacion/modelos/IniciarSesionRespuesta';
 import { AutenticacionService } from 'src/app/autenticacion/servicios/autenticacion.service';
 import { Router } from '@angular/router';
 import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -16,20 +17,29 @@ export class MenuComponent implements OnInit {
   usuario?: Usuario | null;
   isCollapsed = false;
   desplegado = true
+
+  inicioSesion: boolean = false
+  inicioVigia2: boolean = false
+
   rutasMenu:any//paolo
   constructor(
-    private servicioLocalStorage: ServicioLocalStorage, 
+    private servicioLocalStorage: ServicioLocalStorage,
     private servicioAutenticacion: AutenticacionService,
     private router: Router,
     public ServiceMenuP:MenuHeaderPService
-  ) { 
+  ) {
   }
 
   ngOnInit(): void {
+    const inicioSesion = JSON.parse(localStorage.getItem('inicio-sesion') || 'false');
+    if(inicioSesion){this.inicioSesion = inicioSesion}
+    const inicioVigia2 = JSON.parse(localStorage.getItem('inicio-vigia2') || 'false');
+    if(inicioVigia2){this.inicioVigia2 = inicioVigia2}
+
     this.rol = this.servicioLocalStorage.obtenerRol()
     this.usuario = this.servicioLocalStorage.obtenerUsuario()
     this.rutasMenu=this.rol?.modulos
-    
+
   }
 
   public abrir():void{
@@ -41,8 +51,18 @@ export class MenuComponent implements OnInit {
   }
 
   public cerrarSesion(){
+    /* this.servicioAutenticacion.cerrarSesion()
+    this.router.navigateByUrl('/inicio-sesion') */
     this.servicioAutenticacion.cerrarSesion()
     this.router.navigateByUrl('/inicio-sesion')
+    /* localStorage.removeItem('inicio-sesion')
+    localStorage.removeItem('inicio-vigia2')
+    window.location.href = environment.urlUTP+'/transversales/usuarios/logout' */
+    /* if(this.inicioVigia2){
+      window.location.href = environment.urlVigia2+'/administrar/administrar-aplicativos'
+    }else if(this.inicioSesion){
+      this.router.navigateByUrl('/inicio-sesion')
+    } */
   }
   imprimirRuta(submodulo: Submodulo){
     console.log(`/administrar${submodulo.ruta}`)
@@ -53,19 +73,19 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl(`/administrar${submodulo.ruta}`)
   }
   public MostrarNombrePanP() : string
-  {    
+  {
    for (let modulo of this.rutasMenu) {
-      
+
       for(let submodulo of modulo.submodulos )
       {
         if(`${this.ServiceMenuP.RutaModelo}`===`${submodulo.ruta}`)
-          {       
-            return submodulo.nombre         
-          }  
+          {
+            return submodulo.nombre
+          }
       }
-      
+
     }
-    
+
     return ''
   }
 }

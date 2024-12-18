@@ -71,10 +71,12 @@
                                     />
                                 -->
 
-                                    <app-input-archivo formControlName="PDFRMX" [acepta]="['.pdf']" [nombre]="'PDFRMX'" [tamanoMaximoMb]="5" />
+                                    <app-input-archivo formControlName="PDFRMX" [acepta]="['.pdf']" [nombre]="'PDFRMX'" [tamanoMaximoMb]="5"
+                                    (change)="cargarArchivoPDf($event,1)" [tipo]="['application/pdf']" (excedeTamano)="manejarExcedeTamano(1)"
+                                    (tipoIncorrecto)="manejarTipoIncorrecto(1)" (archivoCorrecto)="manejarArchivoCorrecto(1)"/>
                                     <app-validacion [control]="this.formMX.controls['PDFRMX']"
                                       [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
-                      
+
                                 </fieldset>
                             </div>
                     </div>
@@ -131,7 +133,9 @@
                                   Resolución vigente (PDF, tamaño máximo 5MB)
                                 </label>
 
-                                <app-input-archivo formControlName="PDFRES" [acepta]="['.pdf']" [nombre]="'PDFRES'" [tamanoMaximoMb]="5" />
+                                <app-input-archivo formControlName="PDFRES" [acepta]="['.pdf']" [nombre]="'PDFRES'" [tamanoMaximoMb]="5"
+                                (change)="cargarArchivoPDf($event,2)" [tipo]="['application/pdf']" (excedeTamano)="manejarExcedeTamano(2)"
+                                (tipoIncorrecto)="manejarTipoIncorrecto(2)" (archivoCorrecto)="manejarArchivoCorrecto(2)"/>
                                 <app-validacion [control]="this.formES.controls['PDFRES']"
                                   [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
                                 <!--
@@ -199,7 +203,9 @@
                                 <label for="PDFResolucionVigente" class="fs-14px">
                                   Resolución (PDF, tamaño máximo 5MB)
                                 </label>
-                                <app-input-archivo formControlName="PDFRPC" [acepta]="['.pdf']" [nombre]="'PDFRPC'" [tamanoMaximoMb]="5" />
+                                <app-input-archivo formControlName="PDFRPC" [acepta]="['.pdf']" [nombre]="'PDFRPC'" [tamanoMaximoMb]="5"
+                                (change)="cargarArchivoPDf($event,3)" [tipo]="['application/pdf']" (excedeTamano)="manejarExcedeTamano(3)"
+                                (tipoIncorrecto)="manejarTipoIncorrecto(3)" (archivoCorrecto)="manejarArchivoCorrecto(3)"/>
                                 <app-validacion [control]="this.formPC.controls['PDFRPC']"
                                   [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
 

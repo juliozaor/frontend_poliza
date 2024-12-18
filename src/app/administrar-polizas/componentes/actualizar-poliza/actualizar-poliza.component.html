@@ -1,0 +1,48 @@
+<ng-template #modal let-modal style="width: auto;">
+  <div class="d-flex">
+    <h3 class="modal-title fw-bolder">Renovar póliza N° {{poliza?.poliza}}</h3>
+    <!-- Botón de cierre -->
+    <span class="cerrar fw-bolder" (click)="cerrar()">
+      <i class="bi bi-x"></i>
+    </span>
+  </div>
+  <div class="modal-body justify-content-center">
+    <div class="justify-content-center d-flex">
+      <div class="inputs">
+        <label class="fw-semibold" for="fechaInicio">Vigencia - Fecha inicio</label>
+        <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="fechaInicio"
+          (change)="validarFecha(fechaInicio, 'inicio')" [ngClass]="{'error': errorFechaInicio}">
+          <span *ngIf="errorFechaInicio" style="color: #a80521; font-size: small;">
+            La fecha ingresada debe ser menor a la fecha final de vigencia
+          </span>
+      </div>
+      <div class="inputs">
+        <label class="fw-semibold" for="fechaFin">Vigencia - Fecha fin</label>
+        <input type="date" class="form-control" id="fechaFin" [(ngModel)]="fechaFin"
+        (change)="validarFecha(fechaFin, 'fin')" [ngClass]="{'error': errorFechaFin}">
+        <span *ngIf="errorFechaFin" style="color: #a80521; font-size: small;">
+          La fecha ingresada debe ser mayor a la fecha inicial de la vigencia
+        </span>
+      </div>
+      <div class="inputs">
+        <label class="fw-semibold" for="fechaFin">Clausulado y caratula en PDF</label>
+        <app-input-archivo [acepta]="['.pdf']"  [id]="'cargarExcel'" [tamanoMaximoMb]="5" [tipo]="['application/pdf']"
+        (change)="cargarArchivoPDf($event)" (excedeTamano)="manejarExcedeTamano()" (tipoIncorrecto)="manejarTipoIncorrecto()"
+        (archivoCorrecto)="manejarArchivoCorrecto()"/>
+        <span style="font-size: x-small;">Max. 5mb</span>
+        <span *ngIf="tipoIncorrecto" style="color: #a80521; font-size: small;">
+          Solo se permiten archivos PDF
+        </span>
+        <span *ngIf="exedeTamano" style="color: #a80521; font-size: small;">
+          El tamaño del archivo debe ser de máximo 5mb
+        </span>
+      </div>
+    </div>
+    <br>
+    <div class="justify-content-center d-flex">
+      <button type="button" class="boton primario relleno" style="margin-right: 20px;" (click)="renovar()">Renovar</button>
+      <button type="button" class="boton primario delineado" (click)="cerrar()">Cancelar</button>
+    </div>
+  </div>
+
+</ng-template>

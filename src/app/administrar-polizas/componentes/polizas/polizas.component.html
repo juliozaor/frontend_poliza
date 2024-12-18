@@ -74,7 +74,7 @@
                         <input formControlName="numeroPolizaC" ngModel maxLengt="4" (change)="cambiarNumeroPoliza(1)"
                           class="form-control" type="number" placeholder="Número de póliza">
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('maxLengthNumber')" class="validacion">Deben ser
-                          máximo 18 digitos.</span>
+                          máximo 15 digitos.</span>
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('cero')" class="validacion">No debe ser
                           0.</span>
                         <span *ngIf="formContractual.get('numeroPolizaC')?.hasError('negativo')" class="validacion">No debe ser
@@ -779,7 +779,9 @@
             <div class="col-4 ">
 
               <app-input-archivo formControlName="cargarExcel" [acepta]="['.xlsx']"  [nombre]="'cargarExcel'" [tamanoMaximoMb]="20"
-              (change)="cargarArchivoXLSX($event,1)"/>
+              (change)="cargarArchivoXLSX($event,1)" [tipo]="['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']"
+              (excedeTamano)="manejarExcedeTamano('excel',1)" (tipoIncorrecto)="manejarTipoIncorrecto('excel',1)"
+              (archivoCorrecto)="manejarArchivoCorrecto('excel',1)"/>
               <app-validacion [control]="this.formContractual.controls['cargarExcel']"
                 [validacion]="'required'" [texto]="'El Archivo excel correspondiente es requerido.'" />
               <!--
@@ -791,7 +793,9 @@
             </div>
             <div class="col-4 ">
               <app-input-archivo formControlName="cargarPDF" [acepta]="['.pdf']" [nombre]="'cargarPDF'"  [tamanoMaximoMb]="20"
-              (change)="cargarArchivoPDf($event, 1)"/>
+              (change)="cargarArchivoPDf($event, 1)" [tipo]="['application/pdf']"
+              (excedeTamano)="manejarExcedeTamano('pdf',1)" (tipoIncorrecto)="manejarTipoIncorrecto('pdf',1)"
+              (archivoCorrecto)="manejarArchivoCorrecto('pdf',1)"/>
               <app-validacion [control]="this.formContractual.controls['cargarPDF']"
                 [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
 
@@ -839,7 +843,7 @@
             <input formControlName="numeroPolizaE" class="form-control" type="number" placeholder="Número de póliza"
               (change)="[numeroPolizaELleno(),cambiarNumeroPoliza(2)]">
             <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('maxLengthNumber')"
-              class="validacion">Deben ser máximo 18 digitos.</span>
+              class="validacion">Deben ser máximo 15 digitos.</span>
             <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('cero')" class="validacion">No debe ser
               0.</span>
             <span *ngIf="formExtracontractual.get('numeroPolizaE')?.hasError('negativo')" class="validacion">No debe ser
@@ -1479,7 +1483,9 @@
             -->
 
             <app-input-archivo formControlName="cargarExcel" [acepta]="['.xlsx']"  [nombre]="'cargarExcel1'"  [tamanoMaximoMb]="20"
-            (change)="cargarArchivoXLSX($event,2)"/>
+            (change)="cargarArchivoXLSX($event,2)" [tipo]="['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']"
+              (excedeTamano)="manejarExcedeTamano('excel',2)" (tipoIncorrecto)="manejarTipoIncorrecto('excel',2)"
+              (archivoCorrecto)="manejarArchivoCorrecto('excel',2)"/>
             <app-validacion [control]="this.formExtracontractual.controls['cargarExcel1']"
               [validacion]="'required'" [texto]="'El documento es requerido.'" />
 
@@ -1488,7 +1494,9 @@
           </div>
           <div class="col-4">
             <app-input-archivo formControlName="cargarPDF" [acepta]="['.pdf']"  [nombre]="'cargarPDF1'" [tamanoMaximoMb]="20"
-            (change)="cargarArchivoPDf($event, 2)"/>
+            (change)="cargarArchivoPDf($event, 2)" [tipo]="['application/pdf']"
+              (excedeTamano)="manejarExcedeTamano('pdf',2)" (tipoIncorrecto)="manejarTipoIncorrecto('pdf',2)"
+              (archivoCorrecto)="manejarArchivoCorrecto('pdf',2)"/>
             <app-validacion [control]="this.formExtracontractual.controls['cargarPDF1']"
               [validacion]="'required'" [texto]="'El Archivo PDF correspondiente es requerido.'" />
             <!--
@@ -1500,13 +1508,8 @@
           </div>
         </div>
       </div>
-
     </div>
-
-
-
   </div>
-
 </form>
 
 <div class="p-5 pt-0">

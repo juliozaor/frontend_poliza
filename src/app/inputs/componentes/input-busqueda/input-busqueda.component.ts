@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -16,6 +16,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputBusquedaComponent implements OnInit, ControlValueAccessor{
   texto: string = ""
   estaDeshabilitado: boolean = false
+  @Input() placeholder: string = ''
+
+  @Output() buscar = new EventEmitter<string>();
 
   constructor() {
   }
@@ -27,8 +30,11 @@ export class InputBusquedaComponent implements OnInit, ControlValueAccessor{
     this.texto = texto
     this.onChange(texto)
   }
+  realizarBusqueda() {
+    this.buscar.emit(this.texto);
+  }
 
-  
+
 
   //Control value accesor interface
   onChange = (texto: string)=>{}

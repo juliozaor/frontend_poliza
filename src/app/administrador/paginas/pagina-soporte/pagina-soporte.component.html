@@ -3,9 +3,9 @@
         <div class="py-2 centrado row-2">
             <span class="TamTituloP centrado">
                 Solicitud de soporte
-            </span> 
+            </span>
         </div>
-       
+
         <hr class="hr1">
         <form [formGroup]="formulario">
             <div class="row mb-3">
@@ -17,11 +17,11 @@
                     <fieldset>
                         <select formControlName="motivo" class="form-select">
                             <option value="" selected>Selecciona un motivo</option>
-                            <option *ngFor="let motivo of motivos" [value]="motivo.id">{{ motivo.id }} - {{ motivo.descripcion }}</option> 
+                            <option *ngFor="let motivo of motivos" [value]="motivo.id">{{ motivo.id }} - {{ motivo.descripcion }}</option>
                         </select>
-                        <app-validacion  
-                        [control]="this.formulario.controls['motivo']" 
-                        [texto]="'Selecciona un motivo.'" 
+                        <app-validacion
+                        [control]="this.formulario.controls['motivo']"
+                        [texto]="'Selecciona un motivo.'"
                         [validacion]="'required'"/>
                     </fieldset>
                 </div>
@@ -34,9 +34,9 @@
                         </div>
                         <div class="col-10">
                             <textarea class="form-control" formControlName="descripcion" cols="30" rows="50" style="height: 200px;"></textarea>
-                            <app-validacion  
-                            [control]="this.formulario.controls['descripcion']" 
-                            [texto]="'La descripción es requerida.'" 
+                            <app-validacion
+                            [control]="this.formulario.controls['descripcion']"
+                            [texto]="'La descripción es requerida.'"
                             [validacion]="'required'"/>
                         </div>
                     </div>
@@ -51,11 +51,16 @@
                         <div class="col-10">
                             <app-input-archivo
                             (excedeTamano)="manejarExcedeTamanio()"
-                            [tamanoMaximoMb]="7" 
+                            (tipoIncorrecto)="manejarTipoIncorrecto()"
+                            [tipo]="[
+                              'application/pdf','application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                              'image/jpeg', 'image/jpg', 'image/png'
+                              ]"
+                            [tamanoMaximoMb]="7"
                             [nombre]="'evidencia'"
-                            [acepta]="['.pdf', '.docx', '.jpg', '.jpge', '.png']" 
+                            [acepta]="['.pdf', '.docx', '.jpg', '.jpge', '.png']"
                             formControlName="adjunto" />
-                            
+
                             <span class="fs-12px w-100">Formatos de archivo: PDF, Documentos Word e imágenes. Peso máximo: 7 MB</span>
                         </div>
                     </div>
@@ -64,7 +69,7 @@
         </form>
         <div class="d-flex align-items-center justify-content-center mb-3 ">
             <button class="boton primario relleno" (click)="crearSoporte()">Guardar</button>
-        </div>        
+        </div>
     </div>
 </div>
 <!--FOOTER -->

@@ -1,0 +1,29 @@
+.inputs{
+  width: 340px;
+  padding: 10px;
+}
+
+.cerrar {
+  color: #3366cc; /* Cambia el color si es necesario */
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Animaciones */
+}
+
+.cerrar:focus {
+  outline: none;
+}
+
+.cerrar:hover {
+  /*content: '×';  Símbolo de "X" */
+  transform: scale(1.1); /* Efecto de zoom */
+  color: #004884; /* Cambia el color si es necesario */
+}
+
+.error{
+  border: 2px solid #a80521 !important;
+}

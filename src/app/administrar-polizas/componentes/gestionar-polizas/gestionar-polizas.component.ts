@@ -4,14 +4,17 @@ import { FiltrarPolizas } from '../../modelos/FiltrosPoliza';
 import { Paginacion } from 'src/app/compartido/modelos/Paginacion';
 import { Observable } from 'rxjs';
 import { ServicioAdministrarPolizas } from '../../servicios/administrar-polizas.service';
-import { ActivatedRoute} from '@angular/router';
-import { FormArray, FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { valorCeroValidar } from '../polizas/validadores/cero-validacion';
 import { negativoValidar } from '../polizas/validadores/negativo-verificar';
 import Swal from 'sweetalert2';
 import { maxLengthNumberValidator } from '../polizas/validadores/maximo-validador';
 import { ModalidadesPModel } from 'src/app/administrar-polizas/modelos/modalidades';
 import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-service';
+import { ActualizarPolizaComponent } from '../actualizar-poliza/actualizar-poliza.component';
+import { PopupComponent } from 'src/app/alertas/componentes/popup/popup.component';
+import { Poliza } from '../../modelos/Poliza';
 
 @Component({
   selector: 'app-gestionar-polizas',
@@ -20,10 +23,12 @@ import { MenuHeaderPService } from 'src/app/services-menu-p/menu-header-p-servic
 })
 export class GestionarPolizasComponent implements OnInit {
   @ViewChild('pasajeros') myInputRef!: ElementRef;
+  @ViewChild('actualizarPoliza') actualizarPoliza!: ActualizarPolizaComponent
+  @ViewChild('popup') popup!: PopupComponent
 
-  polizas: Array<{ poliza: string, tipoPoliza: string | number, estadoPoliza: string, fechaInicio: string, fechaFin: string, fechaCargue: string, aseguradora: string, cantidadVehiculos: string }> = []
+  polizas: Array<Poliza> = []
   novedadesPoliza: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string }> = []
-  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string, tipopolizanombre?:string }> = []
+  novedadesPolizaPaginacion: Array<{ poliza: string, tipoPoliza: string | number, placa: string, fechaActualizacion: string, estado: string, observacion: string, tipopolizanombre?: string }> = []
   placasInteroperabilidad: Array<string> = []
   placasInteroperabilidadPaginacion: Array<string> = []
 
@@ -41,7 +46,7 @@ export class GestionarPolizasComponent implements OnInit {
   poliza: any;
   vehiculos: { placa?: string, pasajeros?: number, index?: number }[] = [];
   placa?: String;
-  estadoPoliza?:boolean
+  estadoPoliza?: boolean
 
   vehiculos2: { placa: string; pasajeros?: number; placaValida: boolean }[] = [];
 
@@ -60,17 +65,21 @@ export class GestionarPolizasComponent implements OnInit {
     limite: 5,
   };
 
+  nPoliza: string = '';
+  tPoliza: string | number = ''
+  ePoliza: string | number | null = null
+
   constructor(
     private servicioAdministrarPoliza: ServicioAdministrarPolizas,
     private activatedRoute: ActivatedRoute,
-    private ServiceMenuP:MenuHeaderPService,
+    private ServiceMenuP: MenuHeaderPService,
     private fb: FormBuilder) {
     this.paginador = new Paginador<FiltrarPolizas>(this.obtenerPolizas)
   }
 
   ngOnInit(): void {
     this.inicializarPaginador();
-    this.ServiceMenuP.RutaModelo='/gestionar-polizas' //paolo
+    this.ServiceMenuP.RutaModelo = '/gestionar-polizas' //paolo
   }
 
   agregarVehiculoForm(): void {
@@ -129,12 +138,12 @@ export class GestionarPolizasComponent implements OnInit {
     })
   }
 
-  visualizarPoliza(numero: any, tipoPoliza: any, estadoPoliza?:any) {
+  visualizarPoliza(numero: any, tipoPoliza: any, estadoPoliza?: any) {
     let idTipo;
     this.numeroPoliza = numero;
     this.verPoliza = false;
-    if('ACTIVA' === estadoPoliza){this.estadoPoliza = true}
-    else if('INACTIVA' === estadoPoliza){this.estadoPoliza = false}
+    if ('ACTIVA' === estadoPoliza) { this.estadoPoliza = true }
+    else if ('INACTIVA' === estadoPoliza) { this.estadoPoliza = false }
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL CONTRACTUAL') idTipo = 1, this.tipoPoliza = 1
     if (tipoPoliza === 'RESPONSABILIDAD CIVIL EXTRACONTRACTUAL') idTipo = 2, this.tipoPoliza = 2
     this.servicioAdministrarPoliza.visualizarPoliza(numero, idTipo).subscribe({
@@ -144,11 +153,11 @@ export class GestionarPolizasComponent implements OnInit {
         this.actualizarEstadoBoton();
         this.visualizarNovedadesPolizas(numero, tipoPoliza);
         this.obtenerInteroperabilidad(numero, tipoPoliza);
-        this.modalidadesP=poliza.modalidades
+        this.modalidadesP = poliza.modalidades
         //console.log(poliza.modalidades)
       }
     })
-      this.actualizarEstadoBoton();
+    this.actualizarEstadoBoton();
   }
 
   visualizarNovedadesPolizas(numero: any, tipoPoliza: any) {
@@ -238,7 +247,7 @@ export class GestionarPolizasComponent implements OnInit {
     }
 
     for (const vehiculo of this.vehiculos2) {
-      if (!vehiculo.pasajeros || !vehiculo.placa || vehiculo.pasajeros<=0) {
+      if (!vehiculo.pasajeros || !vehiculo.placa || vehiculo.pasajeros <= 0) {
         Swal.fire({
           titleText: "Cada vehículo debe tener una placa válida y cantidad de pasajeros",
           confirmButtonText: "Aceptar",
@@ -248,8 +257,8 @@ export class GestionarPolizasComponent implements OnInit {
       }
     }
 
-    let vehiculosIndex: { placa?: string, pasajeros?: number}[] = [];
-    for (let i = 0; i < this.vehiculos2.length; i++){
+    let vehiculosIndex: { placa?: string, pasajeros?: number }[] = [];
+    for (let i = 0; i < this.vehiculos2.length; i++) {
       vehiculosIndex.push({
         placa: this.vehiculos2[i].placa,
         pasajeros: this.vehiculos2[i].pasajeros
@@ -334,6 +343,34 @@ export class GestionarPolizasComponent implements OnInit {
   convertirTipoOracion(texto: string): string {
     if (!texto) return ''; // Manejar casos donde el texto esté vacío o sea null
     return texto.charAt(0).toUpperCase() + texto.slice(1).toLowerCase();
+  }
+
+  /* ACTUALIZAR POLIZAS */
+  abrirModalActualizar(poliza: Poliza) {
+    const estadoModal = this.actualizarPoliza.abrir(poliza)
+  }
+
+  setnPoliza(nPoliza:string){
+    this.nPoliza = nPoliza
+  }
+
+  actualizarFiltros() {
+    this.paginador.filtrar({
+      poliza: this.nPoliza ?? undefined,
+      tipoPoliza: this.tPoliza ?? undefined,
+      estado: this.ePoliza ?? undefined,
+    });
+  }
+
+  limpiarFiltros() {
+    this.nPoliza = '';
+    this.tPoliza = '';
+    this.ePoliza = null;
+    this.paginador.filtrar({});
+  }
+
+  formatearFecha(fechaString: string): string {
+    return new Date(fechaString).toISOString().split('T')[0];
   }
 
 }
